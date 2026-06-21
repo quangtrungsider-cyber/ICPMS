@@ -1,0 +1,296 @@
+probod:
+  api:
+    addr: :8080
+    cors:
+      allowed-origins:
+      - http://localhost:8080
+      - http://localhost:5173
+      - http://localhost:5174
+      - http://172.21.48.1:5173
+      - http://172.21.48.1:5174
+    extra-header-fields: {}
+    proxy-protocol:
+      trusted-proxies: null
+  auth:
+    cookie:
+      domain: localhost
+      duration: 24
+      name: SSID
+      secret: this-is-a-secure-secret-for-cookie-signing-at-least-32-bytes
+      secure: false
+    disable-signup: false
+    google:
+      client-id: ""
+      client-secret: ""
+      enabled: false
+    invitation-confirmation-token-validity: 3600
+    magic-link-token-validity: 900
+    microsoft:
+      client-id: ""
+      client-secret: ""
+      enabled: false
+    oauth2-server:
+      access-token-duration: 3600
+      authorization-code-duration: 600
+      device-code-duration: 600
+      refresh-token-duration: 2592000
+      signing-keys:
+      - active: true
+        kid: default
+        private-key: |
+          -----BEGIN PRIVATE KEY-----
+          MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDZUglS8tbJSLh/
+          bupoB7eqQoUccs1VDpzuxlFvVIIhfesN5qROa2pAV71w5i2qkm8eOZNJTJKzhRD3
+          yOCZvIcE+UCrFlgLQ1Wkgz6f9jDi18G0mK4HDngy6OOMq7jbnTWBiFeRdB2FS7Oo
+          ENGHOg2boC0PvGgETL2tRxt7y88b+JtTFGK+6Lj3sZSduAjqNjEZfBHfPM1JobPk
+          RLNGAx5Qed5I5FWJs/JAfu5Gb7AoQUS8A0MOouaPQy8AK9uKpbnyMiZFLwSnqmI9
+          aBN5sK3UjrRgL/1R8zUsKHxMwPaENgmDiHZ1zTUn1oy49QQcLvcC4Psc8pjxX0Rp
+          FmyPO/bFAgMBAAECggEAAi5Re2+5c33gPOzBiHeI9dOPrDhQuQMZ1K5qOc1/NgcI
+          xic9TElfek06UJKjlnvvhorTk6w9J3UOtW98JYuftUKR56wK1Se0IwY4KV9nBsr2
+          6pePqfCqVYrcLovr1OeWfMbMzizJCqhQVL/A3Cd05IEIHFZqzgQ98RCIhS0HicNn
+          svBndrS4gQfiyW+YA9fFMmsGtmvOqU3cA4oTMNsnJ0b+ABL26VdbKQtb8SsWaqYL
+          ac33LbiLzOxbGABWnJZC2+lAEOA0E1m2exLUP9ZgTAPsgzZAy03Hy5OS7dbab73n
+          hiYqWcr0rTf+SQt31kuHtkyoZ6VCpFxZTXERzAu4LwKBgQD7AsVfjBSRlY1GLx21
+          NMOgg9kuUaDAPLJ1lepgZLbU9DIee2DnA/ma/WBt8sMy22ZSVJL8zBD7JMVu3LDW
+          769LwpqPTWD4o4EOUPKkhgWB9fiaeavsIGzfFOQhyx3M2o/dbfmAjWttsPpxFbin
+          mykuReD6IhEDzw6AMBt4yuivOwKBgQDdo9ZZNzG43APqRfllt1JSE+8gzOQ41cWW
+          lcgnd+BFJRueYW+99op23i7QxWWToNQSfzCuEwjmhgbzBz+dmpV+Mbq1KZmY0hJF
+          4Kk7UDgFsFZLb6glmyxOeoizev0B9m3m72rg58Gy2EIWBJAN0KJK9wH8vGwntjp6
+          RYZIiU+R/wKBgQDo5AtIuWmkIgPv6GtB43DWjz6EUUw60JYrryrEwO057FBMI+Em
+          tnNysEA2AxXFK/dlz/6I+rWOrvFYCP8yjTQxsJ9C8mJUjy+Anu5iY87cY+GDQfyX
+          mwYofPOlvxUpKmhs5EqoUY4pOhlDrwmiyL2Op1sz+UOcKxKjMP9sNadqXQKBgQDW
+          j8jtzTThVHylyt/IzFNxCcMw6aj2LFx/jriZHL+LsISwKntWVtlsgWKo0K+o3sTu
+          sxqZKewv3gfUNWwsUn3uEI5C2ubKvnLaGsc5mErjlvWzSYBqB3I49v5nYeSUhc+X
+          BKde2nz1ec1gK0KZXSP/lmfiFzZMq2io/a0lg2f4WQKBgQDIudmTJ4HkoksslXwL
+          6wPBNAtMxrNoNdtHra5/hzM1yKkdT2+a/6xftOzoLTBGyRLzi9Bu8Umhck542AMp
+          s4DI2Gj5JmO8E+nWgCncw87kZS9pH2Viz1L5IJ4B6VhFvNRcsHOCgRdXb4wmTN9N
+          0vEIXhXLVlnXdk8YVlgVa37GtQ==
+          -----END PRIVATE KEY-----
+    password:
+      iterations: 1000000
+      pepper: this-is-a-secure-pepper-for-password-hashing-at-least-32-bytes
+    password-reset-token-validity: 3600
+    saml:
+      certificate: |
+        -----BEGIN CERTIFICATE-----
+        MIIDJDCCAgygAwIBAgIRAMT4QQt4yLlqDYkVuu7oEpQwDQYJKoZIhvcNAQELBQAw
+        MjELMAkGA1UEBhMCVVMxDjAMBgNVBAoTBVByb2JvMRMwEQYDVQQDEwpwcm9iby1z
+        YW1sMB4XDTI2MDYwOTE3MDYzMloXDTM2MDYwOTE3MDYzMlowMjELMAkGA1UEBhMC
+        VVMxDjAMBgNVBAoTBVByb2JvMRMwEQYDVQQDEwpwcm9iby1zYW1sMIIBIjANBgkq
+        hkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtTCE1ntbfwndVX1HBU5PXB1DgJrnmuFq
+        sx1mjmc1GPkTR4SyaSXxDZaQxpmOePrwclw9k9P5Zq09mjX3pDXxeqpTKMix1MUT
+        tKe/bAk15NABiMis6QojQSQB1Kng3WY/JKZIrQ3UqYUovCnx/C9qxGPUdxEl45qK
+        obkBh1TyNwiKp/Q+7l/IIDvKno61AwbUgOn/6BtvPAz8rZaF1u64MRa3/0EakJSF
+        0ecoF4RMLX2on7V0jrF/Hth+Jh/TQ1IF7H1KRHb1o7T9p1+jvF00j8T8mB0mjoY4
+        dfrsCHCaGl3FA0n1wyoOvdWMf3CyOF795YipXJq8SNnukh7UG5ifAQIDAQABozUw
+        MzAOBgNVHQ8BAf8EBAMCBaAwEwYDVR0lBAwwCgYIKwYBBQUHAwEwDAYDVR0TAQH/
+        BAIwADANBgkqhkiG9w0BAQsFAAOCAQEAS9jItQcGKDg+KHs1eUffZ5+yoq/QEdRl
+        EB0pRIl9mBC1/hzWPsxt60EfPi1ddGjUcfC8u7Eu6LH79xhxbqn82DlxaGcRhOCh
+        Cy9t8otUM2yFmNruTIsDxJ0AbqyXFnrV4i46YxCsOzjEhDnr0JFayVNXw9NQJnfx
+        7g76W7L/v7OWTstSJiaW11ruFCGiASseYuLDT7F0D1Jl+hlzrek7U8ldt3PdfOet
+        7hD+4aAHG2BrHMSbrNxlNROPGZJNsC+E9oPSqm4gcN5YYr+Y0AAvl+Da7UrJupGa
+        kGtUBZi/7q6nxniesNh2MxxBGniLwnjC6iJ4ha/2XYZrjX4w4rkyWQ==
+        -----END CERTIFICATE-----
+      cleanup-interval-seconds: 0
+      domain-verification-interval-seconds: 60
+      domain-verification-resolver-addr: 8.8.8.8:53
+      private-key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        MIIEogIBAAKCAQEAtTCE1ntbfwndVX1HBU5PXB1DgJrnmuFqsx1mjmc1GPkTR4Sy
+        aSXxDZaQxpmOePrwclw9k9P5Zq09mjX3pDXxeqpTKMix1MUTtKe/bAk15NABiMis
+        6QojQSQB1Kng3WY/JKZIrQ3UqYUovCnx/C9qxGPUdxEl45qKobkBh1TyNwiKp/Q+
+        7l/IIDvKno61AwbUgOn/6BtvPAz8rZaF1u64MRa3/0EakJSF0ecoF4RMLX2on7V0
+        jrF/Hth+Jh/TQ1IF7H1KRHb1o7T9p1+jvF00j8T8mB0mjoY4dfrsCHCaGl3FA0n1
+        wyoOvdWMf3CyOF795YipXJq8SNnukh7UG5ifAQIDAQABAoIBAAEhPP18EMVUBxX3
+        Yq/9HbA8sSUQ0jeRsZv4UkwPsgcRK+DwSjnZoLfYToLOhlLpeFezjOFqcE2xmtwR
+        UMACDhrDtne0o1c+ULHPB083J3zhHIFWhFgtAKyb+t7xSD5ZMDTxodZiawcQ64DG
+        NNoWZEYL5qaaFsW6kE692+0/cbCM0buIL4xjT4goY6HzB2RnJMBFlrZ6OIaMyMO0
+        l2eBS1fKl0vJmns6jJdQ4H9BBTzVkYQZ1I11tKf2GVSN36b7hxvTtUkMN4xWbvvc
+        9LDLtAL0ynfFw/xcXn2cEpY4FZHXwf9rwLxUtoFHXIgcICfyDvAeVl5h1AiR035F
+        Es+G6hkCgYEA2dGw3GOieVfNWwK29TPkc5x6kbWSSEb+KWsL0Fix3Nt9UHMxq03w
+        MCGt/QkbUKAQIrSx1gEf3mckBd7nMDC5KSHO8Qdh5aplX59ZITISrqP0s9KeTVI1
+        UuC/0XNQ+jo2NOVOETsJqrmvUvtERhDqFzX4/fS/ao1bm9nF7Jpu2QsCgYEA1PMh
+        THdolNuw9/U3YPK2vs4WsjpNo8KKc7x45DS3heC1Hw/hvuv3jbvVDpOD0eGzC8NV
+        ECwaHctHFHnViDnzAsgUzbK+qORxCMF8WVoEsVumdzEYRBEUOfSDOo5wW26Q5xQe
+        ChCdkfWdyEFcSDHDRwt5OwiEMb6BNQJUDSGzZ6MCgYBizrVc9DGCu+qiy1N1XanX
+        K/eJ24TVFqc64J1GUMW2OzbYZLj2TW+UVeLYMuZaJ5HKPI+jVXVAbScxJpFXEfMc
+        joKSYdft1+MOgnlrDozc/fEGFZfL2WvpAZziBV6JdBic3BwSwuY6tOqsSOEKq6eV
+        Cd2+TeT7D86rnxkioFeCSwKBgCTmLDLvzfNdTgDpQLtP01Kkq1IewC1MHGmJkvkY
+        GWTdVwUW32sRwEeS8IwiC4lmrnuvUSIIQk4/VwW5RsLgJ7enq9Mo0di6HMwDmuRw
+        sLd6xhGJNEc3HmYcdFDFNbriIcGovrvHvUX5ZWm5yZ/I36mD13HfO+jStdjVmnLc
+        EBY5AoGAIdqrM059Ny4J0/PMAB0z7hlbEXBKTp57myFjgyr7sZ5hxwT8dwlO86Wz
+        xkGw5jLz2A9cJDjX8TRzpyjRC8fqPJPSG40hMBVdSTOyEyTRtq9IC4J+Z+gpnZWg
+        jwnDhbkxkza1PGNgHreK0KVEwENFvFj1kZHyfzoM1f2wEu/rVso=
+        -----END RSA PRIVATE KEY-----
+      session-duration: 604800
+  aws:
+    access-key-id: probod
+    bucket: probod
+    endpoint: http://127.0.0.1:8333
+    region: us-east-1
+    secret-access-key: thisisnotasecret
+    use-path-style: false
+  base-url: http://localhost:8080
+  branding: true
+  chrome-dp-addr: localhost:9222
+  common-pattern-enrichment-worker:
+    agent-max-turns: 10
+    agent-timeout: 45
+    interval: 10
+    max-concurrency: 2
+    stale-after: 600
+  connectors: null
+  custom-domains:
+    acme:
+      account-key: ""
+      directory: https://localhost:14000/dir
+      email: admin@getprobo.com
+      key-type: EC256
+      root-ca: |
+        -----BEGIN CERTIFICATE-----
+        MIIEjTCCAvWgAwIBAgIQeywoRXA0uJopmWi2H1inojANBgkqhkiG9w0BAQsFADBf
+        MR4wHAYDVQQKExVta2NlcnQgZGV2ZWxvcG1lbnQgQ0ExGjAYBgNVBAsMEXJvb3RA
+        NzgzMjEzNGM5Nzk5MSEwHwYDVQQDDBhta2NlcnQgcm9vdEA3ODMyMTM0Yzk3OTkw
+        HhcNMjYwNjA5MTcwMTIwWhcNMzYwNjA5MTcwMTIwWjBfMR4wHAYDVQQKExVta2Nl
+        cnQgZGV2ZWxvcG1lbnQgQ0ExGjAYBgNVBAsMEXJvb3RANzgzMjEzNGM5Nzk5MSEw
+        HwYDVQQDDBhta2NlcnQgcm9vdEA3ODMyMTM0Yzk3OTkwggGiMA0GCSqGSIb3DQEB
+        AQUAA4IBjwAwggGKAoIBgQCqyiQBJ5Gj7kHlNjUXvZhBX7ZyNF8G+2E2/QaD3Xuz
+        9iFC1kV7STi98fQRBQm8pfaGQNoszWUE2wCD4dfHFBa97tkf1SezkM2PXKhwRLc0
+        UuZNK0J+f5etFhNfiGqR+E2zx+zrClHZzO+l/iDTGkryi+r8LkWB3yAdZlT1EVez
+        3l8eHtO/JJ9CBEfTVfAOVLMf9rGii9tQyjsGKw165KYi3IPkKvZarTfYJxEaYGMA
+        DsL58Nc1l3vX0VNVFvgoXGM3RDd8vBBmNdmeiSzdHxcNwk2Hn8OZ+8K/svmVwONT
+        28sJtv+HGnzC8tS4++ViS9LElZb0CAGwdI1/cjoA8JxWTjRK4r4NkrBoRl/Mkiaw
+        UCN0DKgQdlUkugxgkFqB+TGaSQ8J70t2xk7VQZj9hxcNwL3g6hEkxtsObs8jtQfU
+        iI/AlQNY7K9dSBIdrl6Q59NISH2EG0GQTlA9uIscEF1SLYuD5Z+kzEm4ig8QwBmJ
+        CS9V3RS2dW4XEXlAwV9FWecCAwEAAaNFMEMwDgYDVR0PAQH/BAQDAgIEMBIGA1Ud
+        EwEB/wQIMAYBAf8CAQAwHQYDVR0OBBYEFL3JiuHrdM8U6KdMPxWTh8uDfXbCMA0G
+        CSqGSIb3DQEBCwUAA4IBgQBj6i2zGrLaX9iDnu0ZoLwup3QGeDKZz/275Bs8919p
+        x7B6dUDN+SbrRSim9M+BUPuEyBa9cqYT0nSStBrRLHsSb+pm0oI6f4ziUg5xhaXE
+        dKTAFGutDPMz/fN2n1k26n8rBgsefI8+dl7JGb5/PeIo5jJoU5fL/axUsx5bi5C7
+        4otirH7EHJjtBhrJHEDFq84cnO/ElY3oeHkhe9sdR6wJAo+JT9x1vUcVpx37xDmB
+        cb1DZgbGQ3MYLYsxWGrDuQAuV1vrVYuMy6V/icTOVvq9VcyaX78h6pHlUuJ1sJJ9
+        Egwb48zmTZIs3zdMUnvCzXK67JrkkImogvkRxX4Ej1CLUldyNVuzJOR0gDBUioFS
+        pJds0vWD9k3nra2QjwnKe7Udwvmd46xHyki3cx8FFF+0P8HjMnFlrbOf9ZmjIlJQ
+        4yqmaoTTHhBsiAMwoECvAh0ukmc3Q2nFa83dUElwrjrUbLK0aeJTif/eocpKVdqt
+        umVcJI3cm260CT6rACgT8xo=
+        -----END CERTIFICATE-----
+    caa-issuer-domain: letsencrypt.org
+    cname-target: custom.getprobo.com
+    provision-interval: 30
+    renewal-interval: 3600
+    resolver-addr: 8.8.8.8:53
+  encryption-key: thisisnotasecretAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+  esign:
+    tsa-url: http://timestamp.digicert.com
+  evidence-describer:
+    interval: 10
+    max-concurrency: 10
+    stale-after: 300
+  llm:
+    defaults:
+      max-tokens: 4096
+      model-name: gpt-4o
+      provider: openai
+      temperature: 0.1
+    evidence-describer:
+      max-tokens: null
+      model-name: ""
+      provider: ""
+      temperature: null
+    probo:
+      max-tokens: null
+      model-name: ""
+      provider: ""
+      temperature: null
+    providers:
+      anthropic:
+        api-key: ""
+        type: anthropic
+      openai:
+        api-key: thisisnotasecret
+        type: openai
+    third-party-disambiguation:
+      max-tokens: 4096
+      model-name: ""
+      provider: ""
+      temperature: null
+    third-party-vetter:
+      max-tokens: null
+      model-name: ""
+      provider: openai
+      temperature: null
+    tools:
+      firecrawl-api-key: ""
+    tracker-enrichment:
+      max-tokens: 4096
+      model-name: ""
+      provider: ""
+      temperature: null
+    tracker-mapping:
+      max-tokens: 4096
+      model-name: ""
+      provider: ""
+      temperature: null
+  notifications:
+    mailer:
+      mailer-interval: 60
+      sender-email: no-reply@notification.getprobo.com
+      sender-name: Probo
+      smtp:
+        addr: localhost:1025
+        hello-name: ""
+        password: ""
+        tls-required: false
+        user: ""
+    slack:
+      sender-interval: 60
+      signing-secret: ""
+    webhook:
+      cache-ttl: 86400
+      sender-interval: 5
+  pg:
+    addr: localhost:5432
+    ca-cert-bundle: ""
+    database: probod
+    debug: false
+    health-check-period-seconds: 60
+    max-conn-idle-time-seconds: 1800
+    max-conn-lifetime-jitter-seconds: 300
+    max-conn-lifetime-seconds: 3600
+    min-pool-size: 10
+    password: probod
+    pool-size: 100
+    username: probod
+  scim-bridge:
+    poll-interval: 30
+    sync-interval: 900
+  third-party-vetting-worker:
+    interval: 10
+    max-concurrency: 1
+    stale-after: 1500
+  tracker-mapping-worker:
+    agent-max-turns: 10
+    agent-timeout: 45
+    disambiguation-agent-timeout: 45
+    interval: 10
+    max-concurrency: 3
+    stale-after: 600
+  icpms-ocr-service:
+    url: "http://localhost:8765"
+    timeout-seconds: 600
+    enabled: true
+
+  trust-center:
+    http-addr: :80
+    https-addr: :443
+    proxy-protocol:
+      trusted-proxies: null
+unit:
+  metrics:
+    addr: localhost:8081
+  tracing:
+    addr: localhost:4318
+    batch-timeout: 5
+    export-timeout: 30
+    max-batch-size: 512
+    max-queue-size: 2048

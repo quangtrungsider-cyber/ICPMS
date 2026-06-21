@@ -1,0 +1,113 @@
+# Copyright (c) 2026 VATM ICPMS <sms@vatm.vn>.
+
+enum IcpmsDocumentFileStatus {
+  UPLOADED
+  FAILED
+  DELETED
+}
+
+enum IcpmsDocumentFileOrderField {
+  CREATED_AT
+}
+
+input IcpmsDocumentFileFilter {
+  documentId: ID
+  documentVersionId: ID
+  uploadStatuses: [IcpmsDocumentFileStatus!]
+  isActive: Boolean
+}
+
+type IcpmsDocumentFile implements Node {
+  id: ID!
+
+  organization: Organization!
+  document: IcpmsDocument!
+  documentVersion: IcpmsDocumentVersion!
+
+  originalFileName: String!
+  storedFileName: String!
+  fileType: String!
+  fileExtension: String!
+  mimeType: String!
+  fileSize: BigInt!
+  storagePath: String!
+  uploadStatus: IcpmsDocumentFileStatus!
+  isActive: Boolean!
+  textExtractable: Boolean!
+  scanWarning: Boolean!
+  checksum: String
+  notes: String
+
+  uploadedBy: ID!
+  uploadedAt: Datetime!
+  deletedAt: Datetime
+  createdAt: Datetime!
+  updatedAt: Datetime!
+}
+
+type IcpmsDocumentFileEdge {
+  cursor: CursorKey!
+  node: IcpmsDocumentFile!
+}
+
+type IcpmsDocumentFileConnection {
+  edges: [IcpmsDocumentFileEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+input UploadIcpmsDocumentFileInput {
+  documentVersionId: ID!
+  file: Upload!
+}
+
+input ReplaceIcpmsDocumentFileInput {
+  documentVersionId: ID!
+  file: Upload!
+}
+
+input DeleteIcpmsDocumentFileInput {
+  id: ID!
+}
+
+input GenerateIcpmsDocumentFileDownloadUrlInput {
+  id: ID!
+}
+
+type UploadIcpmsDocumentFilePayload {
+  file: IcpmsDocumentFile!
+  documentVersion: IcpmsDocumentVersion!
+}
+
+type ReplaceIcpmsDocumentFilePayload {
+  file: IcpmsDocumentFile!
+  documentVersion: IcpmsDocumentVersion!
+}
+
+type DeleteIcpmsDocumentFilePayload {
+  id: ID!
+}
+
+type GenerateIcpmsDocumentFileDownloadUrlPayload {
+  downloadUrl: String!
+}
+
+extend type Mutation {
+  uploadIcpmsDocumentFile(
+    input: UploadIcpmsDocumentFileInput!
+  ): UploadIcpmsDocumentFilePayload!
+
+  replaceIcpmsDocumentFile(
+    input: ReplaceIcpmsDocumentFileInput!
+  ): ReplaceIcpmsDocumentFilePayload!
+
+  deleteIcpmsDocumentFile(
+    input: DeleteIcpmsDocumentFileInput!
+  ): DeleteIcpmsDocumentFilePayload!
+
+  generateIcpmsDocumentFileDownloadUrl(
+    input: GenerateIcpmsDocumentFileDownloadUrlInput!
+  ): GenerateIcpmsDocumentFileDownloadUrlPayload!
+}
+
+

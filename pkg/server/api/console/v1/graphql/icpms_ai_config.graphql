@@ -1,0 +1,37 @@
+# Copyright (c) 2026 VATM ICPMS <sms@vatm.vn>.
+# Phase 13 — Cấu hình AI provider theo tổ chức
+
+# IcpmsAiConfig stores AI provider settings per organization.
+# The apiKeyMasked field returns only a masked version (e.g. "AIza...abcd").
+# Full API keys are never exposed via the API.
+type IcpmsAiConfig {
+  organizationId: ID!
+  provider: IcpmsAiProvider!
+  apiKeyMasked: String
+  defaultModel: String
+  isEnabled: Boolean!
+  isKeyConfigured: Boolean!
+  updatedAt: Datetime!
+}
+
+input UpsertIcpmsAiConfigInput {
+  organizationId: ID!
+  provider: IcpmsAiProvider!
+  # Pass null or omit to keep the existing key. Pass empty string to clear it.
+  apiKey: String
+  defaultModel: String
+  isEnabled: Boolean
+}
+
+type UpsertIcpmsAiConfigPayload {
+  config: IcpmsAiConfig!
+}
+
+extend type Query {
+  icpmsAiConfigs(organizationId: ID!): [IcpmsAiConfig!]! @goField(forceResolver: true)
+  icpmsAiConfig(organizationId: ID!, provider: IcpmsAiProvider!): IcpmsAiConfig @goField(forceResolver: true)
+}
+
+extend type Mutation {
+  upsertIcpmsAiConfig(input: UpsertIcpmsAiConfigInput!): UpsertIcpmsAiConfigPayload!
+}

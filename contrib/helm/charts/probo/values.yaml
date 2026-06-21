@@ -1,0 +1,473 @@
+# Default values for probo.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: artifact.probo.inc/probo/probo
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext:
+  runAsUser: 0
+  runAsGroup: 0
+#  runAsNonRoot: false
+#  runAsUser: 1000  # probo user (UID defined in Dockerfile)
+#  fsGroup: 1000    # probo group
+
+securityContext:
+  runAsUser: 0
+  runAsGroup: 0
+  privileged: true
+#  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false  # /data directory requires write access for file uploads
+
+service:
+  type: ClusterIP
+  port: 8080
+  httpPort: 80
+  httpsPort: 443
+  # nodePort: 30080
+  # clusterIP: ""
+  # loadBalancerIP: ""
+  # loadBalancerSourceRanges: []
+  annotations: {}
+
+haproxy-ingress:
+  enabled: true
+  controller:
+    ingressClass: haproxy  # This tells the controller to create an IngressClass
+    ingressClassResource:
+      enabled: true  # Enable IngressClass resource creation
+      name: haproxy
+      default: false
+    name: controller
+    service:
+      type: LoadBalancer
+      annotations: {}
+    extraArgs:
+      - --tcp-services-configmap=$(POD_NAMESPACE)/haproxy-tcp-services
+    config:
+      # HAProxy Ingress global config
+      ssl-redirect: "false"
+
+ingress:
+  enabled: true
+  className: "haproxy"
+  annotations:
+    kubernetes.io/ingress.class: haproxy
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: probo.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+          # backend service name and port are automatically set to the probo service
+          # unless explicitly overridden here
+  tls: []
+  #  - secretName: probo-tls
+  #    hosts:
+  #      - probo.example.com
+
+resources:
+  limits:
+    cpu: 2000m
+    memory: 2Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: backoffice
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: backoffice
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Persistent data volume
+persistence:
+  enabled: false
+  # existingClaim: ""
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 10Gi
+  annotations: {}
+
+# Prometheus Operator ServiceMonitor
+metrics:
+  serviceMonitor:
+    enabled: false
+    interval: 30s
+    scrapeTimeout: 10s
+    labels: {}
+    relabelings: []
+
+# Probo application configuration
+probo:
+  # Public hostname where Probo will be accessible
+  # This should match your ingress host
+  baseUrl: probo.example.com
+  # REQUIRED: Generate with openssl rand -base64 32
+  encryptionKey: ""
+
+  service:
+    port: 8080
+
+  metrics:
+    port: 8081
+
+  # OpenTelemetry tracing configuration
+  tracing:
+    enabled: false
+    # OTLP gRPC endpoint (e.g., tempo:4317)
+    addr: ""
+    maxBatchSize: 512
+    batchTimeout: 5
+    exportTimeout: 30
+    maxQueueSize: 2048
+
+  # OAuth2 signing key used by bootstrap to sign auth tokens
+  # REQUIRED: PEM-encoded private key (RSA is recommended)
+  # Generate with: openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048
+  oauth2:
+    signingKey: ""
+
+  # CORS configuration
+  cors:
+    allowedOrigins:
+      - "https://probo.example.com"
+      - "http://probo.example.com"
+
+  # Show Probo branding
+  branding: true
+
+  # Extra HTTP headers to add to responses
+  extraHeaderFields: {}
+
+  # Authentication configuration
+  auth:
+    disableSignup: false
+    invitationTokenValidity: 3600
+    cookieName: "SSID"
+    cookieDomain: "probo.example.com"
+    # REQUIRED: Generate with openssl rand -base64 32
+    cookieSecret: ""
+    cookieDuration: 24
+    # REQUIRED: Generate with openssl rand -base64 32
+    passwordPepper: ""
+    passwordIterations: 1000000
+
+  # SAML authentication (optional)
+  saml:
+    # Enable SAML authentication
+    enabled: false
+    # SAML session validity duration in seconds (default: 604800 = 7 days)
+    sessionDuration: 604800
+    # Cleanup interval in seconds for expired SAML sessions (0 = disabled)
+    cleanupIntervalSeconds: 0
+
+  # Trust center authentication
+  trustAuth:
+    cookieName: "TCT"
+    cookieDomain: "probo.example.com"
+    cookieDuration: 24
+    tokenDuration: 168
+    reportUrlDuration: 15
+    ports:
+      httpChallenge: 80
+      tlsHttpServer: 443
+    # Trust token signing secret (REQUIRED, at least 32 bytes)
+    # Generate with: openssl rand -base64 32
+    tokenSecret: ""
+    scope: "trust_center_readonly"
+    tokenType: "trust_center_access"
+
+  # Email configuration
+  mailer:
+    senderName: "Probo"
+    senderEmail: "no-reply@notification.getprobo.com"
+    smtp:
+      addr: ""
+      user: ""
+      password: ""
+      tlsRequired: true
+      helloName: ""
+#    smtp:
+#      addr: "localhost:1025"
+#      user: ""
+#      password: ""
+#      tlsRequired: false
+#      helloName: ""
+
+  # OpenAI integration (optional)
+  openai:
+    apiKey: ""
+    temperature: 0.1
+    modelName: "gpt-4o"
+    maxTokens: 4096
+
+  # Agent tools (optional, shared across agents)
+  agentTools:
+    # Firecrawl web search API key (used by tracker mapping and third-party vetter agents)
+    firecrawlApiKey: ""
+
+  # Third-party vetter agent (optional, requires openai.apiKey or anthropic key)
+  thirdPartyVetter:
+    provider: ""
+    modelName: ""
+    temperature: ""
+    maxTokens: ""
+
+  # Third-party vetting background worker tuning (optional). interval and
+  # staleAfter are in seconds. Keep concurrency modest to stay under LLM
+  # rate limits and the database connection pool.
+  thirdPartyVettingWorker:
+    interval: 10
+    maxConcurrency: 1
+    staleAfter: 1500
+
+  # Third-party disambiguation agent (optional; runs inside the tracker
+  # mapping worker to pick the best matching org third party). Falls back
+  # to trackerMapping when its provider is unset.
+  thirdPartyDisambiguation:
+    provider: ""
+    modelName: ""
+    temperature: ""
+    maxTokens: ""
+
+  # Tracker mapping agent (optional, requires openai.apiKey or anthropic key)
+  trackerMapping:
+    provider: ""
+    modelName: ""
+    temperature: ""
+    maxTokens: ""
+
+  # Tracker enrichment agent (optional; researches catalog descriptions).
+  # Falls back to trackerMapping when its provider is unset.
+  trackerEnrichment:
+    provider: ""
+    modelName: ""
+    temperature: ""
+    maxTokens: ""
+
+  # Tracker mapping background worker tuning (optional). interval,
+  # staleAfter, agentTimeout, and disambiguationAgentTimeout are in
+  # seconds. Keep concurrency modest to stay under OpenAI/Firecrawl rate
+  # limits and the database connection pool.
+  trackerMappingWorker:
+    interval: 10
+    maxConcurrency: 3
+    staleAfter: 600
+    agentTimeout: 45
+    agentMaxTurns: 10
+    disambiguationAgentTimeout: 45
+
+  # Common-pattern enrichment background worker tuning (optional).
+  # interval, staleAfter, and agentTimeout are in seconds.
+  commonPatternEnrichmentWorker:
+    interval: 10
+    maxConcurrency: 2
+    staleAfter: 600
+    agentTimeout: 45
+    agentMaxTurns: 10
+
+  # Custom domains configuration (optional)
+  customDomains:
+    enabled: false
+    renewalInterval: 3600
+    provisionInterval: 30
+    cnameTarget: "probo.example.com"
+    acme:
+      directory: "https://acme-v02.api.letsencrypt.org/directory"
+      email: "admin@example.com"
+      keyType: "EC256"
+      insecureTls: false
+      # Optional persisted ACME account key (PEM-encoded)
+      # If unset, a new account may be created on each restart
+      accountKey: ""
+
+  # External OAuth2 connectors (optional)
+  connectors: []
+  # - name: "github"
+  #   type: "oauth2"
+  #   config:
+  #     client-id: "github-client-id"
+  #     client-secret: "github-client-secret"
+  #     redirect-uri: "https://probo.example.com/api/console/v1/connectors/complete"
+  #     auth-url: "https://github.com/login/oauth/authorize"
+  #     token-url: "https://github.com/login/oauth/access_token"
+
+# PostgreSQL configuration
+# For production: Use external managed PostgreSQL (AWS RDS, GCP Cloud SQL, etc.)
+# For testing: Enable the included PostgreSQL chart
+postgresql:
+  # -- enabled included Postgres container for demo purposes only using cloudnative-pg
+  enabled: true
+  resources:
+    limits:
+      memory: "2Gi"
+      ephemeral-storage: "5Gi"
+  auth:
+    postgresUser: probod
+    postgresPassword: probod
+    database: probod
+  # External PostgreSQL configuration (used when enabled=false)
+  host: ""  # REQUIRED when enabled=false: PostgreSQL host
+  port: 5432
+  username: probod
+  password: ""  # REQUIRED when enabled=false: PostgreSQL password
+  database: probod
+  poolSize: 100
+  # Minimum number of warm connections kept in the pool. Raising this
+  # value avoids TLS + PostgreSQL startup handshake latency on bursty
+  # workloads (visible as spikes on pgxpool_acquire_duration_seconds).
+  minPoolSize: 10
+  # Maximum time a connection can be idle before being destroyed, in
+  # seconds. Default 1800 (30 minutes) matches pgx defaults.
+  maxConnIdleTimeSeconds: 1800
+  # Maximum lifetime of a connection before being recycled, in
+  # seconds. Default 3600 (1 hour) matches pgx defaults.
+  maxConnLifetimeSeconds: 3600
+  # Jitter added to maxConnLifetime to spread reconnect storms, in
+  # seconds. Default 300 (5 minutes).
+  maxConnLifetimeJitterSeconds: 300
+  # How often the pool checks idle connections, in seconds. Default 60
+  # (1 minute).
+  healthCheckPeriodSeconds: 60
+  # PostgreSQL TLS/SSL configuration
+  # caBundle: |
+  #   -----BEGIN CERTIFICATE-----
+  #   ...certificate content...
+  #   -----END CERTIFICATE-----
+  # Or use caBundlePath to mount from a ConfigMap/Secret
+  # caBundlePath: /etc/ssl/certs/ca-certificates.crt
+
+# S3 storage configuration
+# For production: Use external S3 (AWS S3, GCS, etc.)
+# For testing: Enable the included SeaweedFS chart
+s3:
+  # External S3 configuration (used when seaweedfs.enabled=false)
+  region: "us-east-1"
+  bucket: "probod"
+  # For AWS S3, leave endpoint empty
+  # For S3-compatible storage (SeaweedFS, DigitalOcean Spaces, etc.), set the endpoint
+  endpoint: ""
+  accessKeyId: ""  # REQUIRED when seaweedfs.enabled=false: S3 access key
+  secretAccessKey: ""  # REQUIRED when seaweedfs.enabled=false: S3 secret key
+  # Use path-style URLs for selected S3-compatible services
+  # When true: https://endpoint/bucket/key
+  # When false (default): https://bucket.endpoint/key
+  usePathStyle: false
+
+# SeaweedFS configuration
+# Enable included SeaweedFS for testing/development (NOT for production)
+seaweedfs:
+  # -- Enable included SeaweedFS for S3-compatible object storage
+  enabled: true
+
+  image:
+    repository: chrislusf/seaweedfs
+    tag: "4.20@sha256:cea8339d21dad1b200adce581dd7434d254b8f5975f142c3b4c930ba78647eef"
+    pullPolicy: IfNotPresent
+
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+  persistence:
+    enabled: false
+    size: 10Gi
+    storageClass: ""
+
+  auth:
+    accessKey: probod
+    secretKey: probod
+
+# Headless Chrome for PDF generation
+chrome:
+  # Deploy Chrome in the cluster
+  enabled: true
+
+  replicaCount: 1
+
+  image:
+    repository: chromedp/headless-shell
+    tag: "149.0.7779.3@sha256:b24482ae166e2c67135f5a8ba9575c257efdd8e2fd6b2e931f9d88ede3d72f3b"
+    pullPolicy: IfNotPresent
+
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+
+  # External Chrome configuration
+  # Used when chrome.enabled=false
+  external:
+    addr: ""

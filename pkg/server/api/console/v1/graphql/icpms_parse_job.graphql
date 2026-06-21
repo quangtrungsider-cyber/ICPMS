@@ -1,0 +1,110 @@
+# Copyright (c) 2026 VATM ICPMS <sms@vatm.vn>.
+
+enum IcpmsParseJobParserType {
+  VIETNAMESE
+  ICAO_ENGLISH
+}
+
+enum IcpmsParseJobStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+enum IcpmsDocumentSectionType {
+  PART
+  CHAPTER
+  SECTION
+  SUBSECTION
+  PARAGRAPH
+  SUBPARAGRAPH
+  ARTICLE
+  CLAUSE
+  POINT
+  APPENDIX
+  ATTACHMENT
+  TABLE
+  FIGURE
+  NOTE
+  EXAMPLE
+  DEFINITION
+  UNKNOWN
+}
+
+type IcpmsDocumentParseJob implements Node @goModel(model: "go.probo.inc/probo/pkg/coredata.IcpmsDocumentParseJob") {
+  id: ID!
+  ingestionJobId: ID!
+  parserType: IcpmsParseJobParserType!
+  status: IcpmsParseJobStatus!
+  totalSections: Int!
+  maxDepth: Int!
+  language: String!
+  errorMessage: String
+  warningMessage: String
+  totalChapters: Int!
+  totalParagraphs: Int!
+  totalSubparagraphs: Int!
+  totalAppendices: Int!
+  totalTables: Int!
+  totalFigures: Int!
+  startedAt: Datetime
+  finishedAt: Datetime
+  createdAt: Datetime!
+  updatedAt: Datetime!
+}
+
+type IcpmsDocumentParseJobConnection {
+  edges: [IcpmsDocumentParseJobEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type IcpmsDocumentParseJobEdge {
+  cursor: CursorKey!
+  node: IcpmsDocumentParseJob!
+}
+
+type IcpmsParsedDocumentSection implements Node @goModel(model: "go.probo.inc/probo/pkg/coredata.IcpmsParsedDocumentSection") {
+  id: ID!
+  parseJobId: ID!
+  parentId: ID
+  sectionType: IcpmsDocumentSectionType!
+  sectionNumber: String
+  title: String!
+  fullHeading: String!
+  contentStartLine: Int!
+  contentEndLine: Int!
+  depthLevel: Int!
+  sortOrder: Int!
+  confidenceScore: Int!
+  rawText: String
+  contentText: String
+  path: String
+  warnings: String
+  createdAt: Datetime!
+  updatedAt: Datetime!
+}
+
+input CreateIcpmsDocumentParseJobInput {
+  ingestionJobId: ID!
+}
+
+type CreateIcpmsDocumentParseJobPayload {
+  parseJob: IcpmsDocumentParseJob
+}
+
+extend type Mutation {
+  createAndRunVietnameseParseJob(
+    input: CreateIcpmsDocumentParseJobInput!
+  ): CreateIcpmsDocumentParseJobPayload!
+  createAndRunIcaoParseJob(
+    input: CreateIcpmsDocumentParseJobInput!
+  ): CreateIcpmsDocumentParseJobPayload!
+}
+
+extend type Query {
+  latestParseJobForIngestionJob(ingestionJobId: ID!): IcpmsDocumentParseJob @goField(forceResolver: true)
+  latestIcaoParseJobForIngestionJob(ingestionJobId: ID!): IcpmsDocumentParseJob @goField(forceResolver: true)
+  parsedSectionsForJob(parseJobId: ID!): [IcpmsParsedDocumentSection!]! @goField(forceResolver: true)
+}

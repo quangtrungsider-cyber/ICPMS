@@ -1,0 +1,96 @@
+============================================================
+  VATM ICPMS AIS — Hướng dẫn triển khai lên Windows Server
+============================================================
+
+YÊU CẦU TRƯỚC KHI CÀI ĐẶT
+---------------------------
+1. Windows Server 2019/2022 (hoặc Windows 10/11 x64)
+2. Docker Desktop for Windows (tải tại: https://www.docker.com/products/docker-desktop)
+   - Sau khi cài Docker, KHỞI ĐỘNG LẠI máy tính
+3. Ít nhất 4GB RAM, 20GB dung lượng trống
+
+CHUẨN BỊ (TRÊN MÁY HIỆN TẠI — trước khi chuyển)
+--------------------------------------------------
+Bước 1: Xuất database từ máy đang dùng
+   → Chạy: deploy\XUAT-DB.bat
+   → File backup sẽ được tạo trong thư mục deploy\
+
+Bước 2: Chỉnh sửa cfg\docker.yaml
+   → Tìm "SERVER_IP" và thay bằng IP thực của Windows Server
+   → Ví dụ: 192.168.1.100 hoặc tên domain
+
+CHUYỂN CODE LÊN SERVER
+-----------------------
+Chỉ cần chuyển các thư mục/file sau (KHÔNG cần node_modules):
+  ✓ apps/
+  ✓ packages/
+  ✓ pkg/
+  ✓ cmd/
+  ✓ cfg/
+  ✓ deploy/
+  ✓ go.mod
+  ✓ go.sum
+  ✓ go.work (nếu có)
+  ✓ package.json
+  ✓ package-lock.json
+  ✓ turbo.json
+  ✓ Dockerfile.prod
+  ✓ docker-compose.yml
+  ✓ .dockerignore (tạo thêm nếu chưa có)
+
+Cách chuyển nhanh (dùng xcopy hoặc robocopy):
+  robocopy . \\SERVER\ICPMS /E /XD node_modules .git
+
+KHỞI ĐỘNG HỆ THỐNG (TRÊN SERVER)
+----------------------------------
+LẦN ĐẦU TIÊN:
+  1. Chạy: deploy\CHAY.bat
+     (Lần đầu sẽ mất 5-15 phút để build)
+  2. Khi thấy "He thong da san sang!", truy cập http://SERVER_IP
+
+NHẬP DỮ LIỆU CŨ (nếu cần):
+  3. Sao chép file db-backup-*.sql vào thư mục deploy\
+  4. Chạy: deploy\NHAP-DB.bat db-backup-TEN-FILE.sql
+  5. Chạy lại: deploy\CHAY.bat
+
+TỰ ĐỘNG KHỞI ĐỘNG KHI SERVER BẬT
+-----------------------------------
+Cách 1 (đơn giản): Thêm shortcut CHAY.bat vào Startup
+  - Nhấn Win+R, gõ: shell:startup
+  - Tạo shortcut đến CHAY.bat
+
+Cách 2 (chuyên nghiệp): Dùng Task Scheduler
+  - Tạo task mới, chạy khi system starts
+  - Action: chạy docker compose up -d
+  - Working directory: đường dẫn đến thư mục dự án
+
+CÁC LỆNH HAY DÙNG
+------------------
+  CHAY.bat     → Khởi động hệ thống (mở browser tự động)
+  DUNG.bat     → Dừng hệ thống (data vẫn giữ)
+  REBUILD.bat  → Build lại sau khi cập nhật code
+  XEM-LOG.bat  → Xem log realtime để debug
+  XUAT-DB.bat  → Backup database
+  NHAP-DB.bat  → Restore database từ backup
+
+THAY ĐỔI PORT
+--------------
+Mặc định hệ thống chạy trên port 80.
+Để đổi sang port khác (ví dụ 8080), sửa docker-compose.yml:
+  ports:
+    - "8080:8080"   ← đổi "80" thành "8080"
+
+LỖI THƯỜNG GẶP
+---------------
+1. "Docker not found" → Cài Docker Desktop và restart máy
+2. "Port 80 already in use" → Đổi port trong docker-compose.yml
+3. Build mất quá lâu → Bình thường lần đầu, lần sau sẽ nhanh hơn
+4. Không vào được web → Kiểm tra Firewall Windows cho phép port 80
+
+BACKUP TỰ ĐỘNG
+---------------
+Nên đặt lịch backup database hàng ngày:
+  Tạo task trong Task Scheduler chạy lệnh:
+  docker exec icpms-db pg_dump -U probod probod > backup_%date%.sql
+
+============================================================

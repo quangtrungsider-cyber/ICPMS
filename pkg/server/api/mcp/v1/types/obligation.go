@@ -1,0 +1,98 @@
+// Copyright (c) 2025-2026 VATM ICPMS <sms@vatm.vn>.
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+// REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+// AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+// INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+// LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+// OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+
+package types
+
+import (
+	"go.probo.inc/probo/pkg/coredata"
+	"go.probo.inc/probo/pkg/page"
+)
+
+func NewObligation(o *coredata.Obligation) *Obligation {
+	obligation := &Obligation{
+		ID:                     o.ID,
+		OrganizationID:         o.OrganizationID,
+		Area:                   o.Area,
+		Source:                 o.Source,
+		Requirement:            o.Requirement,
+		ActionsToBeImplemented: o.ActionsToBeImplemented,
+		Regulator:              o.Regulator,
+		OwnerID:                o.OwnerID,
+		LastReviewDate:         o.LastReviewDate,
+		DueDate:                o.DueDate,
+		Status:                 o.Status,
+		Type:                   o.Type,
+		CreatedAt:              o.CreatedAt,
+		UpdatedAt:              o.UpdatedAt,
+	}
+
+	return obligation
+}
+
+func NewListObligationsOutput(obligationPage *page.Page[*coredata.Obligation, coredata.ObligationOrderField]) ListObligationsOutput {
+	obligations := make([]*Obligation, 0, len(obligationPage.Data))
+	for _, v := range obligationPage.Data {
+		obligations = append(obligations, NewObligation(v))
+	}
+
+	var nextCursor *page.CursorKey
+
+	if len(obligationPage.Data) > 0 {
+		cursorKey := obligationPage.Data[len(obligationPage.Data)-1].CursorKey(obligationPage.Cursor.OrderBy.Field)
+		nextCursor = &cursorKey
+	}
+
+	return ListObligationsOutput{
+		NextCursor:  nextCursor,
+		Obligations: obligations,
+	}
+}
+
+func NewListControlObligationsOutput(obligationPage *page.Page[*coredata.Obligation, coredata.ObligationOrderField]) ListControlObligationsOutput {
+	obligations := make([]*Obligation, 0, len(obligationPage.Data))
+	for _, v := range obligationPage.Data {
+		obligations = append(obligations, NewObligation(v))
+	}
+
+	var nextCursor *page.CursorKey
+
+	if len(obligationPage.Data) > 0 {
+		cursorKey := obligationPage.Data[len(obligationPage.Data)-1].CursorKey(obligationPage.Cursor.OrderBy.Field)
+		nextCursor = &cursorKey
+	}
+
+	return ListControlObligationsOutput{
+		NextCursor:  nextCursor,
+		Obligations: obligations,
+	}
+}
+
+func NewListRiskObligationsOutput(obligationPage *page.Page[*coredata.Obligation, coredata.ObligationOrderField]) ListRiskObligationsOutput {
+	obligations := make([]*Obligation, 0, len(obligationPage.Data))
+	for _, v := range obligationPage.Data {
+		obligations = append(obligations, NewObligation(v))
+	}
+
+	var nextCursor *page.CursorKey
+
+	if len(obligationPage.Data) > 0 {
+		cursorKey := obligationPage.Data[len(obligationPage.Data)-1].CursorKey(obligationPage.Cursor.OrderBy.Field)
+		nextCursor = &cursorKey
+	}
+
+	return ListRiskObligationsOutput{
+		NextCursor:  nextCursor,
+		Obligations: obligations,
+	}
+}

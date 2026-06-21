@@ -1,0 +1,43 @@
+# Git history
+.git
+bin
+tmp
+
+# Node dependencies — Node.js build happens inside Docker
+node_modules
+**/node_modules
+
+# Built output — rebuilt inside Docker
+dist
+**/dist
+apps/console/dist
+!apps/trust/dist
+!packages/emails/dist
+
+# Docker files (not needed inside container)
+Dockerfile
+Dockerfile*
+docker-compose*
+.dockerignore
+compose
+
+# Dev artifacts
+*.exe
+*.test
+*.log
+.env*
+probod.exe
+
+# IDE / OS
+.vscode
+.idea
+*.swp
+.DS_Store
+Thumbs.db
+
+# Deploy scripts
+deploy/
+
+# Local dev config
+cfg/dev.yaml
+

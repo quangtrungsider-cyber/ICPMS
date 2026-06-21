@@ -1,0 +1,122 @@
+schema:
+  - "graphql/*.graphql"
+
+exec:
+  filename: "schema/schema.go"
+  package: "schema"
+
+model:
+  filename: "types/types.go"
+  package: "types"
+
+resolver:
+  layout: "follow-schema"
+  dir: "."
+  package: "console_v1"
+  filename_template: "{name}_resolvers.go"
+
+autobind: []
+call_argument_directives_with_null: true
+skip_mod_tidy: true
+
+directives:
+  mustBeAuthorized:
+    skip_runtime: false
+
+models:
+  ID:
+    model:
+      - "go.probo.inc/probo/pkg/server/gqlutils/types/gid.GIDScalar"
+  Datetime:
+    model:
+      - "github.com/99designs/gqlgen/graphql.Time"
+  CursorKey:
+    model:
+      - "go.probo.inc/probo/pkg/server/gqlutils/types/cursor.CursorKeyScalar"
+  Duration:
+    model:
+      - "github.com/99designs/gqlgen/graphql.Duration"
+  BigInt:
+    model:
+      - "go.probo.inc/probo/pkg/server/gqlutils/types/bigint.BigIntScalar"
+  EmailAddr:
+    model:
+      - "go.probo.inc/probo/pkg/server/gqlutils/types/mail.AddrScalar"
+  IcpmsDocumentVersionConnection:
+    model:
+      - "go.probo.inc/probo/pkg/server/api/console/v1/types.IcpmsDocumentVersionConnection"
+  IcpmsDocumentFileConnection:
+    model:
+      - go.probo.inc/probo/pkg/server/api/console/v1/types.IcpmsDocumentFileConnection
+  IcpmsDocument:
+    fields:
+      versions:
+        resolver: true
+  IcpmsDocumentVersion:
+    fields:
+      files:
+        resolver: true
+      latestIngestionJob:
+        resolver: true
+  IcpmsDocumentParseJob:
+    model:
+      - go.probo.inc/probo/pkg/coredata.IcpmsDocumentParseJob
+  IcpmsParsedDocumentSection:
+    model:
+      - go.probo.inc/probo/pkg/coredata.IcpmsParsedDocumentSection
+  IcpmsRequirement:
+    model:
+      - go.probo.inc/probo/pkg/coredata.IcpmsRequirement
+  IcpmsRequirementGenerationJob:
+    model:
+      - go.probo.inc/probo/pkg/coredata.IcpmsRequirementGenerationJob
+  IcpmsAiReviewJob:
+    model:
+      - go.probo.inc/probo/pkg/coredata.IcpmsAiReviewJob
+    fields:
+      suggestions:
+        resolver: true
+  IcpmsAiReviewSuggestion:
+    model:
+      - go.probo.inc/probo/pkg/coredata.IcpmsAiReviewSuggestion
+  IcpmsChecklist:
+    model:
+      - go.probo.inc/probo/pkg/coredata.IcpmsChecklist
+    fields:
+      organization:
+        resolver: true
+      document:
+        resolver: true
+      documentVersion:
+        resolver: true
+      requirement:
+        resolver: true
+      status:
+        resolver: true
+      approvalStatus:
+        resolver: true
+      createdFrom:
+        resolver: true
+  IcpmsAssignment:
+    model:
+      - go.probo.inc/probo/pkg/coredata.IcpmsAssignment
+    fields:
+      organization:
+        resolver: true
+      document:
+        resolver: true
+      documentVersion:
+        resolver: true
+      requirement:
+        resolver: true
+      checklist:
+        resolver: true
+      status:
+        resolver: true
+      evidenceStatus:
+        resolver: true
+      createdFrom:
+        resolver: true
+      isOverdue:
+        resolver: true
+

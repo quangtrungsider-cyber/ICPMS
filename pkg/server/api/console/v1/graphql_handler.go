@@ -1,0 +1,77 @@
+// Copyright (c) 2026 VATM ICPMS <sms@vatm.vn>.
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+// REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+// AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+// INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+// LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+// OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+
+package console_v1
+
+import (
+	"net/http"
+
+	"go.gearno.de/kit/log"
+	"go.probo.inc/probo/pkg/accessreview"
+	"go.probo.inc/probo/pkg/agentrun"
+	"go.probo.inc/probo/pkg/connector"
+	"go.probo.inc/probo/pkg/connector/provider"
+	"go.probo.inc/probo/pkg/cookiebanner"
+	"go.probo.inc/probo/pkg/esign"
+	"go.probo.inc/probo/pkg/iam"
+	"go.probo.inc/probo/pkg/mailman"
+	"go.probo.inc/probo/pkg/probo"
+	"go.probo.inc/probo/pkg/riskmanagement"
+	"go.probo.inc/probo/pkg/server/api/authz"
+	"go.probo.inc/probo/pkg/server/api/console/v1/dataloader"
+	"go.probo.inc/probo/pkg/server/api/console/v1/schema"
+	"go.probo.inc/probo/pkg/server/gqlutils"
+	"go.probo.inc/probo/pkg/thirdparty"
+)
+
+func NewGraphQLHandler(
+	iamSvc *iam.Service,
+	proboSvc *probo.Service,
+	esignSvc *esign.Service,
+	accessReviewSvc *accessreview.Service,
+	agentRunSvc *agentrun.Service,
+	mailmanSvc *mailman.Service,
+	cookieBannerSvc *cookiebanner.Service,
+	connectorRegistry *connector.ConnectorRegistry,
+	providerRegistry *provider.Registry,
+	customDomainCname string,
+	logger *log.Logger,
+	thirdPartySvc *thirdparty.Service,
+	riskManagementSvc *riskmanagement.Service,
+) http.Handler {
+	config := schema.Config{
+		Resolvers: &Resolver{
+			authorize:         dataloader.NewAuthorizeFunc(logger),
+			batchAuthorize:    authz.NewBatchAuthorizeFunc(iamSvc, logger),
+			probo:             proboSvc,
+			iam:               iamSvc,
+			esign:             esignSvc,
+			accessReview:      accessReviewSvc,
+			agentRun:          agentRunSvc,
+			mailman:           mailmanSvc,
+			cookieBanner:      cookieBannerSvc,
+			connectorRegistry: connectorRegistry,
+			providerRegistry:  providerRegistry,
+			riskManagement:    riskManagementSvc,
+			thirdParty:        thirdPartySvc,
+			customDomainCname: customDomainCname,
+			logger:            logger,
+		},
+	}
+
+	es := schema.NewExecutableSchema(config)
+	gqlh := gqlutils.NewHandler(es, logger)
+
+	return gqlh
+}

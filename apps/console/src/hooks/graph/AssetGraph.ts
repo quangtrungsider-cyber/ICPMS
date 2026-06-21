@@ -1,0 +1,259 @@
+// Copyright (c) 2025-2026 VATM ICPMS <sms@vatm.vn>.
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+// REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+// AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+// INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+// LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+// OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+
+import { promisifyMutation, sprintf } from "@probo/helpers";
+import { useTranslate } from "@probo/i18n";
+import { useConfirm } from "@probo/ui";
+import { useMutation } from "react-relay";
+import { graphql } from "relay-runtime";
+
+import type {
+  AssetGraphCreateMutation,
+  AssetType,
+} from "#/__generated__/core/AssetGraphCreateMutation.graphql";
+import type { AssetGraphDeleteMutation } from "#/__generated__/core/AssetGraphDeleteMutation.graphql";
+import type { AssetGraphUpdateMutation } from "#/__generated__/core/AssetGraphUpdateMutation.graphql";
+
+/* eslint-disable relay/unused-fields, relay/must-colocate-fragment-spreads */
+
+export const assetsQuery = graphql`
+  query AssetGraphListQuery($organizationId: ID!) {
+    node(id: $organizationId) {
+      ... on Organization {
+        canCreateAsset: permission(action: "core:asset:create")
+        canPublishAssets: permission(action: "core:asset:publish")
+        assetListDocument {
+          id
+          defaultApprovers {
+            id
+          }
+        }
+        ...AssetsPageFragment
+      }
+    }
+  }
+`;
+
+export const assetNodeQuery = graphql`
+  query AssetGraphNodeQuery($assetId: ID!) {
+    node(id: $assetId) {
+      ... on Asset {
+        id
+        name
+        amount
+        assetType
+        dataTypesStored
+        owner {
+          id
+          fullName
+        }
+        thirdParties(first: 50) {
+          edges {
+            node {
+              id
+              name
+              websiteUrl
+              category
+            }
+          }
+        }
+        createdAt
+        updatedAt
+        canUpdate: permission(action: "core:asset:update")
+        canDelete: permission(action: "core:asset:delete")
+      }
+    }
+  }
+`;
+
+export const createAssetMutation = graphql`
+  mutation AssetGraphCreateMutation(
+    $input: CreateAssetInput!
+    $connections: [ID!]!
+  ) {
+    createAsset(input: $input) {
+      assetEdge @appendEdge(connections: $connections) {
+        node {
+          id
+          name
+          amount
+          assetType
+          dataTypesStored
+          owner {
+            id
+            fullName
+          }
+          thirdParties(first: 50) {
+            edges {
+              node {
+                id
+                name
+                websiteUrl
+              }
+            }
+          }
+          createdAt
+          canUpdate: permission(action: "core:asset:update")
+          canDelete: permission(action: "core:asset:delete")
+        }
+      }
+    }
+  }
+`;
+
+export const updateAssetMutation = graphql`
+  mutation AssetGraphUpdateMutation($input: UpdateAssetInput!) {
+    updateAsset(input: $input) {
+      asset {
+        id
+        name
+        amount
+        assetType
+        dataTypesStored
+        owner {
+          id
+          fullName
+        }
+        thirdParties(first: 50) {
+          edges {
+            node {
+              id
+              name
+              websiteUrl
+            }
+          }
+        }
+        updatedAt
+      }
+    }
+  }
+`;
+
+export const deleteAssetMutation = graphql`
+  mutation AssetGraphDeleteMutation(
+    $input: DeleteAssetInput!
+    $connections: [ID!]!
+  ) {
+    deleteAsset(input: $input) {
+      deletedAssetId @deleteEdge(connections: $connections)
+    }
+  }
+`;
+
+export const useDeleteAsset = (
+  asset: { id?: string; name?: string },
+  connectionId: string,
+) => {
+  const [mutate] = useMutation<AssetGraphDeleteMutation>(deleteAssetMutation);
+  const confirm = useConfirm();
+  const { __ } = useTranslate();
+
+  return () => {
+    if (!asset.id || !asset.name) {
+      return alert(__("Failed to delete asset: missing id or name"));
+    }
+    confirm(
+      () =>
+        promisifyMutation(mutate)({
+          variables: {
+            input: {
+              assetId: asset.id!,
+            },
+            connections: [connectionId],
+          },
+        }),
+      {
+        message: sprintf(
+          __(
+            "This will permanently delete \"%s\". This action cannot be undone.",
+          ),
+          asset.name,
+        ),
+      },
+    );
+  };
+};
+
+export const useCreateAsset = (connectionId: string) => {
+  const [mutate, isMutating] = useMutation<AssetGraphCreateMutation>(createAssetMutation);
+  const { __ } = useTranslate();
+
+  return [
+    (input: {
+      name: string;
+      amount: number;
+      assetType: AssetType;
+      ownerId: string;
+      organizationId: string;
+      thirdPartyIds?: string[];
+      dataTypesStored: string;
+    }) => {
+      if (!input.name?.trim()) {
+        return alert(__("Failed to create asset: name is required"));
+      }
+      if (!input.ownerId) {
+        return alert(__("Failed to create asset: owner is required"));
+      }
+      if (!input.organizationId) {
+        return alert(__("Failed to create asset: organization is required"));
+      }
+      if (!input.dataTypesStored) {
+        return alert(
+          __("Failed to create asset: data types stored is required"),
+        );
+      }
+
+      return promisifyMutation(mutate)({
+        variables: {
+          input: {
+            name: input.name,
+            amount: input.amount,
+            assetType: input.assetType,
+            dataTypesStored: input.dataTypesStored || "",
+            ownerId: input.ownerId,
+            organizationId: input.organizationId,
+            thirdPartyIds: input.thirdPartyIds || [],
+          },
+          connections: [connectionId],
+        },
+      });
+    },
+    isMutating,
+  ] as const;
+};
+
+export const useUpdateAsset = () => {
+  const { __ } = useTranslate();
+  const [mutate] = useMutation<AssetGraphUpdateMutation>(updateAssetMutation);
+
+  return (input: {
+    id: string;
+    name?: string;
+    amount?: number;
+    assetType?: AssetType;
+    dataTypesStored?: string;
+    ownerId?: string;
+    thirdPartyIds?: string[];
+  }) => {
+    if (!input.id) {
+      return alert(__("Failed to update asset: asset ID is required"));
+    }
+
+    return promisifyMutation(mutate)({
+      variables: {
+        input,
+      },
+    });
+  };
+};

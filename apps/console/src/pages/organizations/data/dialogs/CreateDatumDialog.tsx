@@ -1,0 +1,123 @@
+// Copyright (c) 2025-2026 VATM ICPMS <sms@vatm.vn>.
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+// REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+// AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+// INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+// LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+// OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+
+import { useTranslate } from "@probo/i18n";
+import {
+  Breadcrumb,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  Field,
+  Option,
+  useDialogRef,
+} from "@probo/ui";
+import { z } from "zod";
+
+import { ControlledField } from "#/components/form/ControlledField";
+import { PeopleSelectField } from "#/components/form/PeopleSelectField";
+import { ThirdPartiesMultiSelectField } from "#/components/form/ThirdPartiesMultiSelectField";
+import { useFormWithSchema } from "#/hooks/useFormWithSchema";
+
+import { useCreateDatum } from "../../../../hooks/graph/DatumGraph";
+
+const schema = z.object({
+  name: z.string().min(1, "Name is required"),
+  dataClassification: z.enum(["PUBLIC", "INTERNAL", "CONFIDENTIAL", "SECRET"]),
+  ownerId: z.string().min(1, "Owner is required"),
+  thirdPartyIds: z.array(z.string()).optional(),
+});
+
+type Props = {
+  children: React.ReactNode;
+  connection: string;
+  organizationId: string;
+  onCreated?: () => void;
+};
+
+export function CreateDatumDialog({
+  children,
+  connection,
+  organizationId,
+  onCreated,
+}: Props) {
+  const { __ } = useTranslate();
+  const { control, handleSubmit, register, formState, reset }
+    = useFormWithSchema(schema, {
+      defaultValues: {
+        name: "",
+        dataClassification: "PUBLIC",
+        ownerId: "",
+        thirdPartyIds: [],
+      },
+    });
+  const ref = useDialogRef();
+  const createDatum = useCreateDatum(connection);
+
+  const onSubmit = async (data: z.infer<typeof schema>) => {
+    try {
+      await createDatum({
+        ...data,
+        organizationId,
+      });
+      ref.current?.close();
+      reset();
+      onCreated?.();
+    } catch (error) {
+      console.error("Failed to create datum:", error);
+    }
+  };
+
+  return (
+    <Dialog
+      ref={ref}
+      trigger={children}
+      title={<Breadcrumb items={[__("Data"), __("New Data")]} />}
+    >
+      <form onSubmit={e => void handleSubmit(onSubmit)(e)} className="space-y-4">
+        <DialogContent padded className="space-y-4">
+          <Field label={__("Name")} {...register("name")} type="text" />
+          <ControlledField
+            control={control}
+            name="dataClassification"
+            type="select"
+            label={__("Classification")}
+          >
+            <Option value="PUBLIC">{__("Public")}</Option>
+            <Option value="INTERNAL">{__("Internal")}</Option>
+            <Option value="CONFIDENTIAL">{__("Confidential")}</Option>
+            <Option value="SECRET">{__("Secret")}</Option>
+          </ControlledField>
+          <PeopleSelectField
+            organizationId={organizationId}
+            control={control}
+            name="ownerId"
+            label={__("Owner")}
+          />
+          <ThirdPartiesMultiSelectField
+            organizationId={organizationId}
+            control={control}
+            name="thirdPartyIds"
+            label={__("Third parties")}
+          />
+        </DialogContent>
+        <DialogFooter>
+          <Button disabled={formState.isSubmitting} type="submit">
+            {__("Create")}
+          </Button>
+        </DialogFooter>
+      </form>
+    </Dialog>
+  );
+}

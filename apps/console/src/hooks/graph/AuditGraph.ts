@@ -1,0 +1,316 @@
+// Copyright (c) 2025-2026 VATM ICPMS <sms@vatm.vn>.
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+// REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+// AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+// INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+// LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+// OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+
+import { promisifyMutation, sprintf } from "@probo/helpers";
+import { useTranslate } from "@probo/i18n";
+import { useConfirm } from "@probo/ui";
+import { useMutation } from "react-relay";
+import { graphql } from "relay-runtime";
+
+import { useMutationWithToasts } from "../useMutationWithToasts";
+
+/* eslint-disable relay/unused-fields, relay/must-colocate-fragment-spreads */
+
+export const auditsQuery = graphql`
+  query AuditGraphListQuery($organizationId: ID!) {
+    node(id: $organizationId) {
+      ... on Organization {
+        canCreateAudit: permission(action: "core:audit:create")
+        ...AuditsPageFragment
+      }
+    }
+  }
+`;
+
+export const auditNodeQuery = graphql`
+  query AuditGraphNodeQuery($auditId: ID!) {
+    node(id: $auditId) {
+      ... on Audit {
+        id
+        name
+        validFrom
+        validUntil
+        reportFile {
+          id
+          fileName
+          mimeType
+          size
+          downloadUrl
+          createdAt
+        }
+        state
+        framework {
+          id
+          name
+          lightLogoURL
+          darkLogoURL
+        }
+        organization {
+          id
+          name
+        }
+        createdAt
+        updatedAt
+        canUpdate: permission(action: "core:audit:update")
+        canDelete: permission(action: "core:audit:delete")
+      }
+    }
+  }
+`;
+
+export const createAuditMutation = graphql`
+  mutation AuditGraphCreateMutation(
+    $input: CreateAuditInput!
+    $connections: [ID!]!
+  ) {
+    createAudit(input: $input) {
+      auditEdge @prependEdge(connections: $connections) {
+        node {
+          id
+          name
+          validFrom
+          validUntil
+          reportFile {
+            id
+            fileName
+          }
+          state
+          framework {
+            id
+            name
+          }
+          createdAt
+          canUpdate: permission(action: "core:audit:update")
+          canDelete: permission(action: "core:audit:delete")
+        }
+      }
+    }
+  }
+`;
+
+export const updateAuditMutation = graphql`
+  mutation AuditGraphUpdateMutation($input: UpdateAuditInput!) {
+    updateAudit(input: $input) {
+      audit {
+        id
+        name
+        validFrom
+        validUntil
+        reportFile {
+          id
+          fileName
+        }
+        state
+        framework {
+          id
+          name
+        }
+        updatedAt
+      }
+    }
+  }
+`;
+
+export const deleteAuditMutation = graphql`
+  mutation AuditGraphDeleteMutation(
+    $input: DeleteAuditInput!
+    $connections: [ID!]!
+  ) {
+    deleteAudit(input: $input) {
+      deletedAuditId @deleteEdge(connections: $connections)
+    }
+  }
+`;
+
+export const useDeleteAudit = (
+  audit: { id: string; framework?: { name: string } | null },
+  connectionId: string,
+  onSuccess?: () => void,
+) => {
+  const { __ } = useTranslate();
+  const [mutate] = useMutationWithToasts(deleteAuditMutation, {
+    successMessage: __("Audit deleted successfully"),
+    errorMessage: __("Failed to delete audit"),
+  });
+  const confirm = useConfirm();
+
+  return () => {
+    confirm(
+      async () => {
+        await mutate({
+          variables: {
+            input: {
+              auditId: audit.id,
+            },
+            connections: [connectionId],
+          },
+        });
+        onSuccess?.();
+      },
+      {
+        message: sprintf(
+          __(
+            "This will permanently delete the audit for %s. This action cannot be undone.",
+          ),
+          audit.framework?.name ?? "",
+        ),
+      },
+    );
+  };
+};
+
+export const useCreateAudit = (connectionId: string) => {
+  // eslint-disable-next-line relay/generated-typescript-types
+  const [mutate] = useMutation(createAuditMutation);
+  const { __ } = useTranslate();
+
+  return (input: {
+    organizationId: string;
+    frameworkId: string;
+    name?: string | null;
+    validFrom?: string;
+    validUntil?: string;
+    reportKey?: string;
+    state?: string;
+    file?: File | null;
+  }) => {
+    if (!input.organizationId) {
+      return alert(__("Failed to create audit: organization is required"));
+    }
+    if (!input.frameworkId) {
+      return alert(__("Failed to create audit: framework is required"));
+    }
+
+    return promisifyMutation(mutate)({
+      variables: {
+        input: {
+          organizationId: input.organizationId,
+          frameworkId: input.frameworkId,
+          name: input.name,
+          validFrom: input.validFrom,
+          validUntil: input.validUntil,
+          reportKey: input.reportKey,
+          state: input.state || "NOT_STARTED",
+          file: input.file ? null : undefined,
+        },
+        connections: [connectionId],
+      },
+      ...(input.file ? { uploadables: { "input.file": input.file } } : {}),
+    });
+  };
+};
+
+export const useUpdateAudit = () => {
+  // eslint-disable-next-line relay/generated-typescript-types
+  const [mutate] = useMutation(updateAuditMutation);
+  const { __ } = useTranslate();
+
+  return (input: {
+    id: string;
+    name?: string | null;
+    validFrom?: string | null;
+    validUntil?: string | null;
+    state?: string;
+  }) => {
+    if (!input.id) {
+      return alert(__("Failed to update audit: audit ID is required"));
+    }
+
+    return promisifyMutation(mutate)({
+      variables: {
+        input,
+      },
+    });
+  };
+};
+
+export const uploadAuditReportMutation = graphql`
+  mutation AuditGraphUploadReportMutation($input: UploadAuditReportInput!) {
+    uploadAuditReport(input: $input) {
+      audit {
+        id
+        reportFile {
+          id
+          fileName
+          downloadUrl
+          createdAt
+        }
+        updatedAt
+      }
+    }
+  }
+`;
+
+export const useUploadAuditReport = () => {
+  const { __ } = useTranslate();
+  const [mutate, isLoading] = useMutationWithToasts(uploadAuditReportMutation, {
+    successMessage: __("Audit report uploaded successfully"),
+    errorMessage: __("Failed to upload audit report"),
+  });
+
+  const uploadAuditReport = (input: { auditId: string; file: File }) => {
+    if (!input.auditId) {
+      return alert(__("Failed to upload report: audit ID is required"));
+    }
+
+    return mutate({
+      variables: {
+        input: {
+          auditId: input.auditId,
+          file: null,
+        },
+      },
+      uploadables: {
+        "input.file": input.file,
+      },
+    });
+  };
+
+  return [uploadAuditReport, isLoading] as const;
+};
+
+export const deleteAuditReportMutation = graphql`
+  mutation AuditGraphDeleteReportMutation($input: DeleteAuditReportInput!) {
+    deleteAuditReport(input: $input) {
+      audit {
+        id
+        reportFile {
+          id
+          fileName
+          downloadUrl
+          createdAt
+        }
+        updatedAt
+      }
+    }
+  }
+`;
+
+export const useDeleteAuditReport = () => {
+  const { __ } = useTranslate();
+  const [mutate] = useMutationWithToasts(deleteAuditReportMutation, {
+    successMessage: __("Audit report deleted successfully"),
+    errorMessage: __("Failed to delete audit report"),
+  });
+
+  return (input: { auditId: string }) => {
+    return mutate({
+      variables: {
+        input: {
+          auditId: input.auditId,
+        },
+      },
+    });
+  };
+};

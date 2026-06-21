@@ -1,0 +1,26 @@
+# Dockerfile cho icpms-ocr-service (VATM DocAI Pro OCR, đóng gói thành microservice)
+FROM python:3.11-slim
+
+# poppler-utils: bắt buộc cho pdf2image (convert_from_path).
+# libgl1 / libglib2.0-0: opencv-python-headless vẫn cần các lib hệ thống này.
+# python3-tk: vatm_pdf_to_word_app.py có "import tkinter" ở đầu file (chỉ dùng
+#   trong phần GUI, không gọi tới trong service này) -> cần cài để import không lỗi.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    poppler-utils \
+    libgl1 \
+    libglib2.0-0 \
+    python3-tk \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY requirements-ocr.txt .
+RUN pip install --no-cache-dir -r requirements-ocr.txt
+
+# vatm_pdf_to_word_app.py (file gốc, KHÔNG sửa) + service wrapper mới
+COPY vatm_pdf_to_word_app.py .
+COPY ocr_service.py .
+
+EXPOSE 8765
+
+CMD ["uvicorn", "ocr_service:app", "--host", "0.0.0.0", "--port", "8765"]

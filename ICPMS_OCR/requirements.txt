@@ -1,0 +1,15 @@
+numpy
+opencv-python
+onnxruntime
+torch
+Pillow
+pdfplumber
+huggingface_hub
+shapely
+pyclipper
+ruamel.yaml
+cachetools
+matplotlib
+fastapi
+uvicorn[standard]
+python-multipart

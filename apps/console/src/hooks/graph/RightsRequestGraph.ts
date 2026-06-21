@@ -1,0 +1,226 @@
+// Copyright (c) 2025-2026 VATM ICPMS <sms@vatm.vn>.
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+// REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+// AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+// INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+// LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+// OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+
+import { promisifyMutation, sprintf } from "@probo/helpers";
+import { useTranslate } from "@probo/i18n";
+import { useConfirm } from "@probo/ui";
+import { useMutation } from "react-relay";
+import { graphql } from "relay-runtime";
+
+import { useMutationWithToasts } from "../useMutationWithToasts";
+
+/* eslint-disable relay/unused-fields, relay/must-colocate-fragment-spreads */
+
+export const RightsRequestsConnectionKey = "RightsRequestsPage_rightsRequests";
+
+export const rightsRequestsQuery = graphql`
+  query RightsRequestGraphListQuery($organizationId: ID!) {
+    node(id: $organizationId) {
+      ... on Organization {
+        canCreateRightsRequest: permission(action: "core:rights-request:create")
+        ...RightsRequestsPageFragment
+      }
+    }
+  }
+`;
+
+export const rightsRequestNodeQuery = graphql`
+  query RightsRequestGraphNodeQuery($rightsRequestId: ID!) {
+    node(id: $rightsRequestId) {
+      ... on RightsRequest {
+        id
+        requestType
+        requestState
+        dataSubject
+        contact
+        details
+        deadline
+        actionTaken
+        canUpdate: permission(action: "core:rights-request:update")
+        canDelete: permission(action: "core:rights-request:delete")
+        organization {
+          id
+          name
+        }
+        createdAt
+        updatedAt
+        canUpdate: permission(action: "core:rights-request:update")
+        canDelete: permission(action: "core:rights-request:delete")
+      }
+    }
+  }
+`;
+
+export const createRightsRequestMutation = graphql`
+  mutation RightsRequestGraphCreateMutation(
+    $input: CreateRightsRequestInput!
+    $connections: [ID!]!
+  ) {
+    createRightsRequest(input: $input) {
+      rightsRequestEdge @prependEdge(connections: $connections) {
+        node {
+          id
+          canDelete: permission(action: "core:rights-request:delete")
+          canUpdate: permission(action: "core:rights-request:update")
+          requestType
+          requestState
+          dataSubject
+          contact
+          details
+          deadline
+          actionTaken
+          createdAt
+        }
+      }
+    }
+  }
+`;
+
+export const updateRightsRequestMutation = graphql`
+  mutation RightsRequestGraphUpdateMutation($input: UpdateRightsRequestInput!) {
+    updateRightsRequest(input: $input) {
+      rightsRequest {
+        id
+        requestType
+        requestState
+        dataSubject
+        contact
+        details
+        deadline
+        actionTaken
+        updatedAt
+      }
+    }
+  }
+`;
+
+export const deleteRightsRequestMutation = graphql`
+  mutation RightsRequestGraphDeleteMutation(
+    $input: DeleteRightsRequestInput!
+    $connections: [ID!]!
+  ) {
+    deleteRightsRequest(input: $input) {
+      deletedRightsRequestId @deleteEdge(connections: $connections)
+    }
+  }
+`;
+
+export const useDeleteRightsRequest = (
+  request: { id: string },
+  connectionId: string,
+) => {
+  const { __ } = useTranslate();
+  const [mutate] = useMutationWithToasts(deleteRightsRequestMutation, {
+    successMessage: __("Rights request deleted successfully"),
+    errorMessage: __("Failed to delete rights request"),
+  });
+  const confirm = useConfirm();
+
+  return () => {
+    confirm(
+      () =>
+        mutate({
+          variables: {
+            input: {
+              rightsRequestId: request.id,
+            },
+            connections: [connectionId],
+          },
+        }),
+      {
+        message: sprintf(
+          __(
+            "This will permanently delete the rights request. This action cannot be undone.",
+          ),
+        ),
+      },
+    );
+  };
+};
+
+export const useCreateRightsRequest = (connectionId: string) => {
+  // eslint-disable-next-line relay/generated-typescript-types
+  const [mutate] = useMutation(createRightsRequestMutation);
+  const { __ } = useTranslate();
+
+  return (input: {
+    organizationId: string;
+    requestType: string;
+    requestState: string;
+    dataSubject?: string;
+    contact?: string;
+    details?: string;
+    deadline?: string;
+    actionTaken?: string;
+  }) => {
+    if (!input.organizationId) {
+      return alert(
+        __("Failed to create rights request: organization is required"),
+      );
+    }
+    if (!input.requestType) {
+      return alert(
+        __("Failed to create rights request: request type is required"),
+      );
+    }
+    if (!input.requestState) {
+      return alert(
+        __("Failed to create rights request: request state is required"),
+      );
+    }
+
+    return promisifyMutation(mutate)({
+      variables: {
+        input: {
+          organizationId: input.organizationId,
+          requestType: input.requestType,
+          requestState: input.requestState,
+          dataSubject: input.dataSubject,
+          contact: input.contact,
+          details: input.details,
+          deadline: input.deadline,
+          actionTaken: input.actionTaken,
+        },
+        connections: [connectionId],
+      },
+    });
+  };
+};
+
+export const useUpdateRightsRequest = () => {
+  // eslint-disable-next-line relay/generated-typescript-types
+  const [mutate] = useMutation(updateRightsRequestMutation);
+  const { __ } = useTranslate();
+
+  return (input: {
+    id: string;
+    requestType?: string;
+    requestState?: string;
+    dataSubject?: string;
+    contact?: string;
+    details?: string;
+    deadline?: string | null;
+    actionTaken?: string;
+  }) => {
+    if (!input.id) {
+      return alert(__("Failed to update rights request: ID is required"));
+    }
+
+    return promisifyMutation(mutate)({
+      variables: {
+        input,
+      },
+    });
+  };
+};

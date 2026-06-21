@@ -1,0 +1,44 @@
+# ─── Stage 1: Build frontend ────────────────────────────────────────────────
+FROM node:24-alpine AS frontend-builder
+WORKDIR /app
+# Copy workspace root manifests
+COPY package.json package-lock.json turbo.json ./
+# Copy shared packages manifests (needed for workspace install)
+COPY packages/ packages/
+# Copy the console app
+COPY apps/console/ apps/console/
+# Copy relay config (rút gọn, chỉ core+iam) + GraphQL schemas cần cho codegen
+COPY relay.config.docker.json ./relay.config.json
+COPY pkg/server/api/console/v1/schema.graphql pkg/server/api/console/v1/schema.graphql
+COPY pkg/server/api/connect/v1/schema.graphql pkg/server/api/connect/v1/schema.graphql
+# Install all workspace deps, generate Relay artifacts, then build
+RUN npm install --ignore-scripts
+RUN npx relay-compiler
+RUN npm run build --workspace=packages/emails
+RUN npm run build --workspace=apps/console
+# ─── Stage 2: Build Go binary ────────────────────────────────────────────────
+FROM golang:1.26-alpine AS go-builder
+WORKDIR /app
+# Cache Go modules
+COPY go.mod go.sum ./
+RUN go mod download
+# Copy all Go source
+COPY . .
+# Copy built frontend so embed.FS picks it up
+COPY --from=frontend-builder /app/apps/console/dist ./apps/console/dist
+COPY --from=frontend-builder /app/packages/emails/dist ./packages/emails/dist
+RUN cd pkg/server/api/connect/v1 && go run github.com/99designs/gqlgen generate --config gqlgen.yaml
+RUN cd pkg/server/api/console/v1 && go run github.com/99designs/gqlgen generate --config gqlgen.yaml
+RUN cd pkg/server/api/trust/v1 && go run github.com/99designs/gqlgen generate --config gqlgen.yaml
+RUN go generate ./pkg/server/api/mcp/v1
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+    go build -ldflags="-s -w" -o /probod ./cmd/probod/
+# ─── Stage 3: Minimal runtime image ──────────────────────────────────────────
+FROM alpine:3.21
+RUN apk add --no-cache ca-certificates tzdata && \
+    addgroup -S probod && adduser -S -G probod probod
+COPY --from=go-builder /probod /usr/local/bin/probod
+RUN mkdir -p /etc/probod && chown probod:probod /etc/probod
+USER probod
+EXPOSE 8080
+CMD ["probod", "--cfg-file", "/etc/probod/config.yaml"]

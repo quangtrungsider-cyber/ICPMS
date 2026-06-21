@@ -1,0 +1,283 @@
+// Copyright (c) 2025-2026 VATM ICPMS <sms@vatm.vn>.
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+// REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+// AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+// INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+// LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+// OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+
+import { faviconUrl } from "@probo/helpers";
+import { usePageTitle } from "@probo/hooks";
+import { useTranslate } from "@probo/i18n";
+import {
+  ActionDropdown,
+  Avatar,
+  Badge,
+  Button,
+  DropdownItem,
+  IconPageTextLine,
+  IconPlusLarge,
+  IconTrashCan,
+  IconUpload,
+  PageHeader,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from "@probo/ui";
+import {
+  graphql,
+  type PreloadedQuery,
+  usePaginationFragment,
+  usePreloadedQuery,
+} from "react-relay";
+import { Link, useNavigate } from "react-router";
+
+import type { DataListQuery } from "#/__generated__/core/DataListQuery.graphql";
+import type {
+  DataPageFragment$data,
+  DataPageFragment$key,
+} from "#/__generated__/core/DataPageFragment.graphql";
+import type { DatumGraphListQuery } from "#/__generated__/core/DatumGraphListQuery.graphql";
+import { SortableTable } from "#/components/SortableTable";
+import { useOrganizationId } from "#/hooks/useOrganizationId";
+import type { NodeOf } from "#/types";
+
+import { dataQuery, useDeleteDatum } from "../../../hooks/graph/DatumGraph";
+
+import { CreateDatumDialog } from "./dialogs/CreateDatumDialog";
+import { PublishDataListDialog } from "./dialogs/PublishDataListDialog";
+
+const paginatedDataFragment = graphql`
+  fragment DataPageFragment on Organization
+  @refetchable(queryName: "DataListQuery")
+  @argumentDefinitions(
+    first: { type: "Int", defaultValue: 10 }
+    order: { type: "DatumOrder", defaultValue: null }
+    after: { type: "CursorKey", defaultValue: null }
+    before: { type: "CursorKey", defaultValue: null }
+    last: { type: "Int", defaultValue: null }
+  ) {
+    data(
+      first: $first
+      after: $after
+      last: $last
+      before: $before
+      orderBy: $order
+    ) @connection(key: "DataPage_data") {
+      __id
+      edges {
+        node {
+          id
+          name
+          dataClassification
+          owner {
+            fullName
+          }
+          thirdParties(first: 50) {
+            edges {
+              node {
+                id
+                name
+                websiteUrl
+              }
+            }
+          }
+          canUpdate: permission(action: "core:datum:update")
+          canDelete: permission(action: "core:datum:delete")
+        }
+      }
+    }
+  }
+`;
+
+type DataEntry = NodeOf<DataPageFragment$data["data"]>;
+
+type Props = {
+  queryRef: PreloadedQuery<DatumGraphListQuery>;
+};
+
+export default function DataPage(props: Props) {
+  const { __ } = useTranslate();
+  const organizationId = useOrganizationId();
+  const navigate = useNavigate();
+
+  const { node: data } = usePreloadedQuery<DatumGraphListQuery>(
+    dataQuery,
+    props.queryRef,
+  );
+
+  const pagination = usePaginationFragment<DataListQuery, DataPageFragment$key>(
+    paginatedDataFragment,
+    data,
+  );
+
+  const dataEntries = pagination.data.data.edges.map(edge => edge.node);
+  const connectionId = pagination.data.data.__id;
+  const defaultApproverIds = (data.dataListDocument?.defaultApprovers ?? []).map(a => a.id);
+
+  const refetch = ({
+    order,
+  }: {
+    order: { direction: string; field: string };
+  }) => {
+    pagination.refetch({
+      order: {
+        direction: order.direction as "ASC" | "DESC",
+        field: order.field as "CREATED_AT" | "DATA_CLASSIFICATION" | "NAME",
+      },
+    });
+  };
+
+  usePageTitle(__("Data"));
+
+  const hasAnyAction
+    = dataEntries.some(({ canDelete, canUpdate }) => canUpdate || canDelete);
+
+  return (
+    <div className="space-y-6">
+      <PageHeader
+        title={__("Data")}
+        description={__(
+          "Manage your organization's data assets and their classifications.",
+        )}
+      >
+        <div className="flex gap-2">
+          {data.dataListDocument?.id && (
+            <Button variant="secondary" asChild>
+              <Link
+                to={`/organizations/${organizationId}/documents/${data.dataListDocument.id}`}
+              >
+                <IconPageTextLine size={16} />
+                {__("Document")}
+              </Link>
+            </Button>
+          )}
+          {data.canPublishData && (
+            <PublishDataListDialog
+              organizationId={organizationId}
+              defaultApproverIds={defaultApproverIds}
+              onPublished={(documentId) => {
+                void navigate(
+                  `/organizations/${organizationId}/documents/${documentId}`,
+                );
+              }}
+            >
+              <Button variant="secondary" icon={IconUpload}>
+                {__("Publish")}
+              </Button>
+            </PublishDataListDialog>
+          )}
+          {data.canCreateDatum && (
+            <CreateDatumDialog
+              connection={connectionId}
+              organizationId={organizationId}
+              onCreated={() => pagination.refetch({})}
+            >
+              <Button icon={IconPlusLarge}>{__("Add data")}</Button>
+            </CreateDatumDialog>
+          )}
+        </div>
+      </PageHeader>
+      <SortableTable {...pagination} refetch={refetch} pageSize={10}>
+        <Thead>
+          <Tr>
+            <Th>{__("Name")}</Th>
+            <Th>{__("Classification")}</Th>
+            <Th>{__("Owner")}</Th>
+            <Th>{__("Third parties")}</Th>
+            {hasAnyAction && <Th></Th>}
+          </Tr>
+        </Thead>
+        <Tbody>
+          {dataEntries.map(entry => (
+            <DataRow
+              key={entry.id}
+              entry={entry}
+              connectionId={connectionId}
+              hasAnyAction={hasAnyAction}
+            />
+          ))}
+        </Tbody>
+      </SortableTable>
+    </div>
+  );
+}
+
+function DataRow({
+  entry,
+  connectionId,
+  hasAnyAction,
+}: {
+  entry: DataEntry;
+  connectionId: string;
+  hasAnyAction: boolean;
+}) {
+  const organizationId = useOrganizationId();
+  const { __ } = useTranslate();
+  const deleteDatum = useDeleteDatum(entry, connectionId);
+  const thirdParties = entry.thirdParties?.edges.map(edge => edge.node) ?? [];
+  const detailUrl = `/organizations/${organizationId}/data/${entry.id}`;
+
+  return (
+    <Tr to={detailUrl}>
+      <Td>{entry.name}</Td>
+      <Td>
+        <Badge variant="info">{entry.dataClassification}</Badge>
+      </Td>
+      <Td>{entry.owner?.fullName ?? __("Unassigned")}</Td>
+      <Td>
+        {thirdParties.length > 0
+          ? (
+            <div className="flex flex-wrap gap-1">
+              {thirdParties.slice(0, 3).map(thirdParty => (
+                <Badge
+                  key={thirdParty.id}
+                  variant="neutral"
+                  className="flex items-center gap-1"
+                >
+                  <Avatar
+                    name={thirdParty.name}
+                    src={faviconUrl(thirdParty.websiteUrl)}
+                    size="s"
+                  />
+                  <span className="text-xs">{thirdParty.name}</span>
+                </Badge>
+              ))}
+              {thirdParties.length > 3 && (
+                <Badge variant="neutral" className="text-xs">
+                  +
+                  {thirdParties.length - 3}
+                </Badge>
+              )}
+            </div>
+          )
+          : (
+            <span className="text-txt-secondary text-sm">{__("None")}</span>
+          )}
+      </Td>
+      {hasAnyAction && (
+        <Td noLink width={50} className="text-end">
+          <ActionDropdown>
+            {entry.canDelete && (
+              <DropdownItem
+                onClick={deleteDatum}
+                variant="danger"
+                icon={IconTrashCan}
+              >
+                {__("Delete")}
+              </DropdownItem>
+            )}
+          </ActionDropdown>
+        </Td>
+      )}
+    </Tr>
+  );
+}

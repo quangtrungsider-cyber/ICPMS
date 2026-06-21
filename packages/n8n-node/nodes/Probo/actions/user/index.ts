@@ -1,0 +1,107 @@
+// Copyright (c) 2026 VATM ICPMS <sms@vatm.vn>.
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+// REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+// AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+// INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+// LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+// OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+
+import type { INodeProperties } from 'n8n-workflow';
+import * as archiveUserOp from './archiveUser.operation';
+import * as listUsersOp from './listUsers.operation';
+import * as getUserOp from './getUser.operation';
+import * as createUserOp from './createUser.operation';
+import * as inviteUserOp from './inviteUser.operation';
+import * as updateUserOp from './updateUser.operation';
+import * as updateMembershipOp from './updateMembership.operation';
+import * as removeUserOp from './removeUser.operation';
+
+export const description: INodeProperties[] = [
+	{
+		displayName: 'Operation',
+		name: 'operation',
+		type: 'options',
+		noDataExpression: true,
+		displayOptions: {
+			show: {
+				resource: ['user'],
+			},
+		},
+		options: [
+			{
+				name: 'Archive',
+				value: 'archiveUser',
+				description: 'Archive a user in the organization',
+				action: 'Archive a user',
+			},
+			{
+				name: 'Create',
+				value: 'createUser',
+				description: 'Create a new user in the organization',
+				action: 'Create a user',
+			},
+			{
+				name: 'Get',
+				value: 'getUser',
+				description: 'Get a user (profile) by ID',
+				action: 'Get a user',
+			},
+			{
+				name: 'Invite',
+				value: 'inviteUser',
+				description: 'Invite a user to the organization',
+				action: 'Invite a user',
+			},
+			{
+				name: 'List',
+				value: 'listUsers',
+				description: 'List all users in the organization',
+				action: 'List users',
+			},
+			{
+				name: 'Remove',
+				value: 'removeUser',
+				description: 'Remove a user from the organization',
+				action: 'Remove a user',
+			},
+			{
+				name: 'Update',
+				value: 'updateUser',
+				description: 'Update a user (profile)',
+				action: 'Update a user',
+			},
+			{
+				name: 'Update Membership',
+				value: 'updateMembership',
+				description: 'Update a user\'s membership role',
+				action: 'Update membership role',
+			},
+		],
+		default: 'listUsers',
+	},
+	...archiveUserOp.description,
+	...listUsersOp.description,
+	...getUserOp.description,
+	...createUserOp.description,
+	...inviteUserOp.description,
+	...updateUserOp.description,
+	...updateMembershipOp.description,
+	...removeUserOp.description,
+];
+
+export {
+	archiveUserOp as archiveUser,
+	listUsersOp as listUsers,
+	getUserOp as getUser,
+	createUserOp as createUser,
+	inviteUserOp as inviteUser,
+	updateUserOp as updateUser,
+	updateMembershipOp as updateMembership,
+	removeUserOp as removeUser,
+};

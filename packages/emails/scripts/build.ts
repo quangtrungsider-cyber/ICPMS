@@ -1,0 +1,123 @@
+// Copyright (c) 2025-2026 VATM ICPMS <sms@vatm.vn>.
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+// REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+// AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+// INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+// LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+// OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+
+import { render } from "@react-email/components";
+import { copyFile, mkdir, writeFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import * as React from "react";
+
+import MailingListUpdates from "../src/MailingListUpdates";
+import ConfirmEmail from "../src/ConfirmEmail";
+import DocumentExport from "../src/DocumentExport";
+import DocumentApproval from "../src/DocumentApproval";
+import DocumentSigning from "../src/DocumentSigning";
+import FrameworkExport from "../src/FrameworkExport";
+import Invitation from "../src/Invitation";
+import PasswordReset from "../src/PasswordReset";
+import TrustCenterAccess from "../src/TrustCenterAccess";
+import TrustCenterDocumentAccessRejected from "../src/TrustCenterDocumentAccessRejected";
+import ElectronicSignatureCertificate from "../src/ElectronicSignatureCertificate";
+import MailingListSubscription from "../src/MailingListSubscription";
+import MailingListUnsubscription from "../src/MailingListUnsubscription";
+import MagicLink from "../src/MagicLink";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+type TemplateConfig = {
+  name: string;
+  render: () => React.ReactElement;
+};
+
+const templates: TemplateConfig[] = [
+  {
+    name: "confirm-email",
+    render: () => ConfirmEmail(),
+  },
+  {
+    name: "password-reset",
+    render: () => PasswordReset(),
+  },
+  {
+    name: "invitation",
+    render: () => Invitation(),
+  },
+  {
+    name: "document-approval",
+    render: () => DocumentApproval(),
+  },
+  {
+    name: "document-signing",
+    render: () => DocumentSigning(),
+  },
+  {
+    name: "document-export",
+    render: () => DocumentExport(),
+  },
+  {
+    name: "framework-export",
+    render: () => FrameworkExport(),
+  },
+  {
+    name: "trust-center-access",
+    render: () => TrustCenterAccess(),
+  },
+  {
+    name: "trust-center-document-access-rejected",
+    render: () => TrustCenterDocumentAccessRejected(),
+  },
+  {
+    name: "magic-link",
+    render: () => MagicLink(),
+  },
+  {
+    name: "electronic-signature-certificate",
+    render: () => ElectronicSignatureCertificate(),
+  },
+  {
+    name: "mailing-list-subscription",
+    render: () => MailingListSubscription(),
+  },
+  {
+    name: "mailing-list-unsubscription",
+    render: () => MailingListUnsubscription(),
+  },
+  {
+    name: "mailing-list-updates",
+    render: () => MailingListUpdates(),
+  },
+];
+
+async function build() {
+  const outputDir = join(__dirname, "..", "dist");
+  const templatesDir = join(__dirname, "..", "templates");
+  await mkdir(outputDir, { recursive: true });
+
+  for (const template of templates) {
+    const html = await render(template.render(), { pretty: true });
+
+    const htmlPath = join(outputDir, `${template.name}.html.tmpl`);
+    const txtSrcPath = join(templatesDir, `${template.name}.txt`);
+    const txtDstPath = join(outputDir, `${template.name}.txt.tmpl`);
+
+    await writeFile(htmlPath, html);
+    await copyFile(txtSrcPath, txtDstPath);
+  }
+}
+
+build().catch((err) => {
+  console.error("Failed to build email templates:", err);
+  process.exit(1);
+});

@@ -1,0 +1,723 @@
+// Copyright (c) 2025-2026 VATM ICPMS <sms@vatm.vn>.
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+// REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+// AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+// INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+// LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+// OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+
+package coredata
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"maps"
+	"time"
+
+	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
+	"go.gearno.de/kit/pg"
+	"go.probo.inc/probo/pkg/gid"
+	"go.probo.inc/probo/pkg/iam/policy"
+	"go.probo.inc/probo/pkg/page"
+)
+
+type (
+	Task struct {
+		ID             gid.GID        `db:"id"`
+		OrganizationID gid.GID        `db:"organization_id"`
+		MeasureID      *gid.GID       `db:"measure_id"`
+		Name           string         `db:"name"`
+		Description    *string        `db:"description"`
+		State          TaskState      `db:"state"`
+		Priority       TaskPriority   `db:"priority"`
+		ReferenceID    string         `db:"reference_id"`
+		TimeEstimate   *time.Duration `db:"time_estimate"`
+		AssignedToID   *gid.GID       `db:"assigned_to_profile_id"`
+		Deadline       *time.Time     `db:"deadline"`
+		Rank           int            `db:"rank"`
+		CreatedAt      time.Time      `db:"created_at"`
+		UpdatedAt      time.Time      `db:"updated_at"`
+
+		// ordering only
+		PriorityRank int `db:"priority_rank"`
+	}
+
+	Tasks []*Task
+)
+
+func (t Task) CursorKey(orderBy TaskOrderField) page.CursorKey {
+	switch orderBy {
+	case TaskOrderFieldPriorityRank:
+		return page.NewCursorKey(t.ID, t.PriorityRank)
+	case TaskOrderFieldCreatedAt:
+		return page.NewCursorKey(t.ID, t.CreatedAt)
+	}
+
+	panic(fmt.Sprintf("unsupported order by: %s", orderBy))
+}
+
+func (t *Task) AuthorizationAttributes(
+	ctx context.Context,
+	conn pg.Querier,
+	resourceIDs []gid.GID,
+) (policy.AttributesByID, error) {
+	q := `SELECT id, organization_id FROM tasks WHERE id = ANY(@resource_ids::text[])`
+
+	args := pgx.StrictNamedArgs{
+		"resource_ids": resourceIDs,
+	}
+
+	rows, err := conn.Query(ctx, q, args)
+	if err != nil {
+		return nil, fmt.Errorf("cannot query authorization attributes: %w", err)
+	}
+
+	defer rows.Close()
+
+	attrsByID := make(policy.AttributesByID)
+
+	for rows.Next() {
+		var id, organizationID gid.GID
+
+		if err := rows.Scan(&id, &organizationID); err != nil {
+			return nil, fmt.Errorf("cannot scan authorization attributes: %w", err)
+		}
+
+		attrsByID[id] = policy.Attributes{
+			"organization_id": organizationID.String(),
+		}
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("cannot iterate authorization attributes: %w", err)
+	}
+
+	return attrsByID, nil
+}
+
+func (t *Task) LoadByID(
+	ctx context.Context,
+	conn pg.Querier,
+	scope Scoper,
+	taskID gid.GID,
+) error {
+	q := `
+SELECT
+    id,
+	organization_id,
+    measure_id,
+    name,
+    description,
+    state,
+    priority,
+    reference_id,
+    time_estimate,
+    assigned_to_profile_id,
+    deadline,
+    rank,
+    priority_rank,
+    created_at,
+    updated_at
+FROM
+    tasks
+WHERE
+    %s
+    AND id = @task_id
+LIMIT 1;
+`
+
+	q = fmt.Sprintf(q, scope.SQLFragment())
+
+	args := pgx.StrictNamedArgs{"task_id": taskID}
+	maps.Copy(args, scope.SQLArguments())
+
+	rows, err := conn.Query(ctx, q, args)
+	if err != nil {
+		return fmt.Errorf("cannot query tasks: %w", err)
+	}
+
+	task, err := pgx.CollectExactlyOneRow(rows, pgx.RowToStructByName[Task])
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return ErrResourceNotFound
+		}
+
+		return fmt.Errorf("cannot collect tasks: %w", err)
+	}
+
+	*t = task
+
+	return nil
+}
+
+func (t *Tasks) LoadByIDs(
+	ctx context.Context,
+	conn pg.Querier,
+	scope Scoper,
+	taskIDs []gid.GID,
+) error {
+	q := `
+SELECT
+    id,
+    organization_id,
+    measure_id,
+    name,
+    description,
+    state,
+    priority,
+    reference_id,
+    time_estimate,
+    assigned_to_profile_id,
+    deadline,
+    rank,
+    priority_rank,
+    created_at,
+    updated_at
+FROM
+    tasks
+WHERE
+    %s
+    AND id = ANY(@task_ids)
+`
+
+	q = fmt.Sprintf(q, scope.SQLFragment())
+
+	args := pgx.StrictNamedArgs{"task_ids": taskIDs}
+	maps.Copy(args, scope.SQLArguments())
+
+	rows, err := conn.Query(ctx, q, args)
+	if err != nil {
+		return fmt.Errorf("cannot query tasks: %w", err)
+	}
+
+	tasks, err := pgx.CollectRows(rows, pgx.RowToAddrOfStructByName[Task])
+	if err != nil {
+		return fmt.Errorf("cannot collect tasks: %w", err)
+	}
+
+	*t = tasks
+
+	return nil
+}
+
+func (t *Task) Insert(
+	ctx context.Context,
+	conn pg.Tx,
+	scope Scoper,
+) error {
+	q := `
+WITH next_rank AS (
+    SELECT COALESCE(MAX(rank), 0) + 1 AS value
+    FROM tasks
+    WHERE organization_id = @organization_id AND state = @state AND priority = @priority
+)
+INSERT INTO
+    tasks (
+        tenant_id,
+        id,
+		organization_id,
+        measure_id,
+        name,
+        description,
+        reference_id,
+        state,
+        priority,
+        time_estimate,
+        assigned_to_profile_id,
+        deadline,
+        rank,
+        created_at,
+        updated_at
+    )
+VALUES (
+    @tenant_id,
+    @task_id,
+	@organization_id,
+    @measure_id,
+    @name,
+    @description,
+    @reference_id,
+    @state,
+    @priority,
+    @time_estimate,
+    @assigned_to_profile_id,
+    @deadline,
+    (SELECT value FROM next_rank),
+    @created_at,
+    @updated_at
+)
+RETURNING rank, priority_rank;
+`
+
+	args := pgx.StrictNamedArgs{
+		"tenant_id":              scope.GetTenantID(),
+		"task_id":                t.ID,
+		"organization_id":        t.OrganizationID,
+		"measure_id":             t.MeasureID,
+		"name":                   t.Name,
+		"description":            t.Description,
+		"reference_id":           t.ReferenceID,
+		"state":                  t.State,
+		"priority":               t.Priority,
+		"time_estimate":          t.TimeEstimate,
+		"assigned_to_profile_id": t.AssignedToID,
+		"deadline":               t.Deadline,
+		"created_at":             t.CreatedAt,
+		"updated_at":             t.UpdatedAt,
+	}
+
+	err := conn.QueryRow(ctx, q, args).Scan(&t.Rank, &t.PriorityRank)
+	if err != nil {
+		if pgErr, ok := errors.AsType[*pgconn.PgError](err); ok {
+			if pgErr.Code == "23505" && pgErr.ConstraintName == "tasks_reference_id_unique" {
+				return ErrResourceAlreadyExists
+			}
+		}
+
+		return fmt.Errorf("cannot insert task: %w", err)
+	}
+
+	return nil
+}
+
+func (t *Task) Upsert(
+	ctx context.Context,
+	conn pg.Querier,
+	scope Scoper,
+) error {
+	q := `
+WITH next_rank AS (
+    SELECT COALESCE(MAX(rank), 0) + 1 AS value
+    FROM tasks
+    WHERE organization_id = @organization_id AND state = @state AND priority = @priority
+)
+INSERT INTO
+    tasks (
+        tenant_id,
+        id,
+		organization_id,
+        measure_id,
+        name,
+        description,
+        reference_id,
+        state,
+        priority,
+        time_estimate,
+        assigned_to_profile_id,
+        deadline,
+        rank,
+        created_at,
+        updated_at
+    )
+VALUES (
+    @tenant_id,
+    @task_id,
+	@organization_id,
+    @measure_id,
+    @name,
+    @description,
+    @reference_id,
+    @state,
+    @priority,
+    @time_estimate,
+    @assigned_to_profile_id,
+    @deadline,
+    (SELECT value FROM next_rank),
+    @created_at,
+    @updated_at
+)
+ON CONFLICT (measure_id, reference_id) DO UPDATE SET
+    name = @name,
+    description = @description,
+    updated_at = @updated_at,
+    deadline = @deadline
+RETURNING
+    id,
+    organization_id,
+    measure_id,
+    name,
+    description,
+    reference_id,
+    state,
+    priority,
+    time_estimate,
+    assigned_to_profile_id,
+    deadline,
+    rank,
+    priority_rank,
+    created_at,
+    updated_at
+`
+
+	args := pgx.StrictNamedArgs{
+		"tenant_id":              scope.GetTenantID(),
+		"task_id":                t.ID,
+		"organization_id":        t.OrganizationID,
+		"measure_id":             t.MeasureID,
+		"name":                   t.Name,
+		"description":            t.Description,
+		"reference_id":           t.ReferenceID,
+		"state":                  t.State,
+		"priority":               t.Priority,
+		"time_estimate":          t.TimeEstimate,
+		"assigned_to_profile_id": t.AssignedToID,
+		"deadline":               t.Deadline,
+		"created_at":             t.CreatedAt,
+		"updated_at":             t.UpdatedAt,
+	}
+
+	rows, err := conn.Query(ctx, q, args)
+	if err != nil {
+		return fmt.Errorf("cannot upsert task: %w", err)
+	}
+
+	task, err := pgx.CollectExactlyOneRow(rows, pgx.RowToStructByName[Task])
+	if err != nil {
+		return fmt.Errorf("cannot collect tasks: %w", err)
+	}
+
+	*t = task
+
+	return nil
+}
+
+func (t *Tasks) CountByOrganizationID(
+	ctx context.Context,
+	conn pg.Querier,
+	scope Scoper,
+	organizationID gid.GID,
+) (int, error) {
+	q := `
+	SELECT
+		COUNT(id)
+	FROM
+		tasks
+	WHERE
+		%s
+		AND organization_id = @organization_id
+	`
+
+	q = fmt.Sprintf(q, scope.SQLFragment())
+
+	args := pgx.StrictNamedArgs{"organization_id": organizationID}
+	maps.Copy(args, scope.SQLArguments())
+
+	row := conn.QueryRow(ctx, q, args)
+
+	var count int
+
+	err := row.Scan(&count)
+	if err != nil {
+		return 0, fmt.Errorf("cannot collect tasks: %w", err)
+	}
+
+	return count, nil
+}
+
+func (t *Tasks) LoadByOrganizationID(
+	ctx context.Context,
+	conn pg.Querier,
+	scope Scoper,
+	organizationID gid.GID,
+	cursor *page.Cursor[TaskOrderField],
+) error {
+	q := `
+	SELECT
+		id,
+		measure_id,
+		organization_id,
+		name,
+		description,
+		state,
+		priority,
+		reference_id,
+		time_estimate,
+		assigned_to_profile_id,
+		deadline,
+		rank,
+		priority_rank,
+		created_at,
+		updated_at
+	FROM
+		tasks
+	WHERE
+		%s
+		AND organization_id = @organization_id
+		AND %s
+	`
+	q = fmt.Sprintf(q, scope.SQLFragment(), cursor.SQLFragment())
+
+	args := pgx.StrictNamedArgs{"organization_id": organizationID}
+	maps.Copy(args, scope.SQLArguments())
+	maps.Copy(args, cursor.SQLArguments())
+
+	rows, err := conn.Query(ctx, q, args)
+	if err != nil {
+		return fmt.Errorf("cannot query tasks: %w", err)
+	}
+
+	tasks, err := pgx.CollectRows(rows, pgx.RowToAddrOfStructByName[Task])
+	if err != nil {
+		return fmt.Errorf("cannot collect tasks: %w", err)
+	}
+
+	*t = tasks
+
+	return nil
+}
+
+func (t *Tasks) CountByMeasureID(
+	ctx context.Context,
+	conn pg.Querier,
+	scope Scoper,
+	measureID gid.GID,
+) (int, error) {
+	q := `
+SELECT
+    COUNT(id)
+FROM
+    tasks
+WHERE
+    %s
+    AND measure_id = @measure_id
+`
+
+	q = fmt.Sprintf(q, scope.SQLFragment())
+
+	args := pgx.StrictNamedArgs{"measure_id": measureID}
+	maps.Copy(args, scope.SQLArguments())
+
+	row := conn.QueryRow(ctx, q, args)
+
+	var count int
+
+	err := row.Scan(&count)
+	if err != nil {
+		return 0, fmt.Errorf("cannot collect tasks: %w", err)
+	}
+
+	return count, nil
+}
+
+func (t *Tasks) LoadByMeasureID(
+	ctx context.Context,
+	conn pg.Querier,
+	scope Scoper,
+	measureID gid.GID,
+	cursor *page.Cursor[TaskOrderField],
+) error {
+	q := `
+SELECT
+    id,
+    measure_id,
+	organization_id,
+    name,
+    description,
+    state,
+    priority,
+    reference_id,
+    time_estimate,
+    assigned_to_profile_id,
+    deadline,
+    rank,
+    priority_rank,
+    created_at,
+    updated_at
+FROM
+    tasks
+WHERE
+    %s
+    AND measure_id = @measure_id
+    AND %s
+`
+	q = fmt.Sprintf(q, scope.SQLFragment(), cursor.SQLFragment())
+
+	args := pgx.StrictNamedArgs{"measure_id": measureID}
+	maps.Copy(args, scope.SQLArguments())
+	maps.Copy(args, cursor.SQLArguments())
+
+	rows, err := conn.Query(ctx, q, args)
+	if err != nil {
+		return fmt.Errorf("cannot query tasks: %w", err)
+	}
+
+	tasks, err := pgx.CollectRows(rows, pgx.RowToAddrOfStructByName[Task])
+	if err != nil {
+		return fmt.Errorf("cannot collect tasks: %w", err)
+	}
+
+	*t = tasks
+
+	return nil
+}
+
+func (t *Task) Update(
+	ctx context.Context,
+	conn pg.Tx,
+	scope Scoper,
+) error {
+	q := `
+UPDATE tasks
+SET
+  name = @name,
+  description = @description,
+  state = @state,
+  priority = @priority,
+  rank = @rank,
+  time_estimate = @time_estimate,
+  updated_at = @updated_at,
+  assigned_to_profile_id = @assigned_to_profile_id,
+  deadline = @deadline
+WHERE %s
+    AND id = @task_id
+`
+	q = fmt.Sprintf(q, scope.SQLFragment())
+
+	args := pgx.NamedArgs{
+		"task_id":                t.ID,
+		"name":                   t.Name,
+		"description":            t.Description,
+		"state":                  t.State,
+		"priority":               t.Priority,
+		"rank":                   t.Rank,
+		"time_estimate":          t.TimeEstimate,
+		"updated_at":             t.UpdatedAt,
+		"assigned_to_profile_id": t.AssignedToID,
+		"deadline":               t.Deadline,
+	}
+
+	maps.Copy(args, scope.SQLArguments())
+
+	_, err := conn.Exec(ctx, q, args)
+
+	return err
+}
+
+func (t *Task) NextRankForStatePriority(
+	ctx context.Context,
+	conn pg.Querier,
+	scope Scoper,
+) error {
+	q := `
+SELECT COALESCE(MAX(rank), 0) + 1
+FROM tasks
+WHERE
+    organization_id = @organization_id
+    AND state = @state
+    AND priority = @priority
+    AND id != @id
+    AND %s;
+`
+	q = fmt.Sprintf(q, scope.SQLFragment())
+
+	args := pgx.StrictNamedArgs{
+		"id":              t.ID,
+		"organization_id": t.OrganizationID,
+		"state":           t.State,
+		"priority":        t.Priority,
+	}
+	maps.Copy(args, scope.SQLArguments())
+
+	rows, err := conn.Query(ctx, q, args)
+	if err != nil {
+		return fmt.Errorf("cannot get next rank: %w", err)
+	}
+
+	rank, err := pgx.CollectExactlyOneRow(rows, pgx.RowTo[int])
+	if err != nil {
+		return fmt.Errorf("cannot get next rank: %w", err)
+	}
+
+	t.Rank = rank
+
+	return nil
+}
+
+func (t *Task) UpdateRank(
+	ctx context.Context,
+	conn pg.Tx,
+	scope Scoper,
+) error {
+	q := `
+WITH old AS (
+  SELECT
+	rank AS old_rank
+  FROM tasks
+  WHERE %s AND id = @id AND organization_id = @organization_id AND state = @state AND priority = @priority
+)
+
+UPDATE tasks
+SET
+    rank = CASE
+        WHEN id = @id THEN @new_rank
+        ELSE rank + CASE
+            WHEN @new_rank < old.old_rank THEN 1
+            WHEN @new_rank > old.old_rank THEN -1
+        END
+    END,
+    updated_at = @updated_at
+FROM old
+WHERE %s
+  AND organization_id = @organization_id
+  AND state = @state
+  AND priority = @priority
+  AND (
+    id = @id
+    OR (rank BETWEEN LEAST(old.old_rank, @new_rank) AND GREATEST(old.old_rank, @new_rank))
+  );
+`
+
+	scopeFragment := scope.SQLFragment()
+	q = fmt.Sprintf(q, scopeFragment, scopeFragment)
+
+	args := pgx.StrictNamedArgs{
+		"id":              t.ID,
+		"new_rank":        t.Rank,
+		"organization_id": t.OrganizationID,
+		"state":           t.State,
+		"priority":        t.Priority,
+		"updated_at":      t.UpdatedAt,
+	}
+	maps.Copy(args, scope.SQLArguments())
+
+	_, err := conn.Exec(ctx, q, args)
+	if err != nil {
+		return fmt.Errorf("cannot update task rank: %w", err)
+	}
+
+	return nil
+}
+
+func (t *Task) Delete(
+	ctx context.Context,
+	conn pg.Tx,
+	scope Scoper,
+) error {
+	q := `
+DELETE FROM tasks
+WHERE %s
+    AND id = @task_id
+`
+	q = fmt.Sprintf(q, scope.SQLFragment())
+
+	args := pgx.NamedArgs{
+		"task_id": t.ID,
+	}
+
+	maps.Copy(args, scope.SQLArguments())
+
+	_, err := conn.Exec(ctx, q, args)
+	if err != nil {
+		return fmt.Errorf("cannot delete task: %w", err)
+	}
+
+	return nil
+}

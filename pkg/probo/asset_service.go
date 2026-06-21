@@ -1,0 +1,298 @@
+// Copyright (c) 2025-2026 VATM ICPMS <sms@vatm.vn>.
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+// REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+// AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+// INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+// LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+// OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+
+package probo
+
+import (
+	"context"
+	"fmt"
+	"time"
+
+	"go.gearno.de/kit/pg"
+	"go.probo.inc/probo/pkg/coredata"
+	"go.probo.inc/probo/pkg/gid"
+	"go.probo.inc/probo/pkg/page"
+	"go.probo.inc/probo/pkg/validator"
+)
+
+type AssetService struct {
+	svc *Service
+}
+
+type CreateAssetRequest struct {
+	OrganizationID  gid.GID
+	Name            string
+	Amount          int
+	OwnerID         gid.GID
+	AssetType       coredata.AssetType
+	DataTypesStored string
+	ThirdPartyIDs   []gid.GID
+}
+
+type UpdateAssetRequest struct {
+	ID              gid.GID
+	Name            *string
+	Amount          *int
+	OwnerID         *gid.GID
+	AssetType       *coredata.AssetType
+	DataTypesStored *string
+	ThirdPartyIDs   []gid.GID
+}
+
+func (car *CreateAssetRequest) Validate() error {
+	v := validator.New()
+
+	v.Check(car.OrganizationID, "organization_id", validator.Required(), validator.GID(coredata.OrganizationEntityType))
+	v.Check(car.Name, "name", validator.Required(), validator.SafeTextNoNewLine(TitleMaxLength))
+	v.Check(car.Amount, "amount", validator.Required(), validator.Min(1))
+	v.Check(car.OwnerID, "owner_id", validator.Required(), validator.GID(coredata.MembershipProfileEntityType))
+	v.Check(car.AssetType, "asset_type", validator.Required(), validator.OneOfSlice(coredata.AssetTypes()))
+	v.Check(car.DataTypesStored, "data_types_stored", validator.Required(), validator.SafeText(ContentMaxLength))
+	v.CheckEach(car.ThirdPartyIDs, "third_party_ids", func(index int, item any) {
+		v.Check(item, fmt.Sprintf("third_party_ids[%d]", index), validator.Required(), validator.GID(coredata.ThirdPartyEntityType))
+	})
+
+	return v.Error()
+}
+
+func (uar *UpdateAssetRequest) Validate() error {
+	v := validator.New()
+
+	v.Check(uar.ID, "id", validator.Required(), validator.GID(coredata.AssetEntityType))
+	v.Check(uar.Name, "name", validator.SafeTextNoNewLine(NameMaxLength))
+	v.Check(uar.Amount, "amount", validator.Min(1))
+	v.Check(uar.OwnerID, "owner_id", validator.GID(coredata.MembershipProfileEntityType))
+	v.Check(uar.AssetType, "asset_type", validator.OneOfSlice(coredata.AssetTypes()))
+	v.Check(uar.DataTypesStored, "data_types_stored", validator.SafeText(ContentMaxLength))
+	v.CheckEach(uar.ThirdPartyIDs, "third_party_ids", func(index int, item any) {
+		v.Check(item, fmt.Sprintf("third_party_ids[%d]", index), validator.GID(coredata.ThirdPartyEntityType))
+	})
+
+	return v.Error()
+}
+
+func (s AssetService) Get(
+	ctx context.Context, scope coredata.Scoper,
+	assetID gid.GID,
+) (*coredata.Asset, error) {
+	asset := &coredata.Asset{}
+
+	err := s.svc.pg.WithConn(
+		ctx,
+		func(ctx context.Context, conn pg.Querier) error {
+			return asset.LoadByID(ctx, conn, scope, assetID)
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return asset, nil
+}
+
+func (s AssetService) GetByOwnerID(
+	ctx context.Context, scope coredata.Scoper,
+	ownerID gid.GID,
+) (*coredata.Asset, error) {
+	asset := &coredata.Asset{OwnerID: ownerID}
+
+	err := s.svc.pg.WithConn(
+		ctx,
+		func(ctx context.Context, conn pg.Querier) error {
+			return asset.LoadByOwnerID(ctx, conn, scope)
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return asset, nil
+}
+
+func (s AssetService) CountForOrganizationID(
+	ctx context.Context, scope coredata.Scoper,
+	organizationID gid.GID,
+) (int, error) {
+	var count int
+
+	err := s.svc.pg.WithConn(
+		ctx,
+		func(ctx context.Context, conn pg.Querier) (err error) {
+			assets := coredata.Assets{}
+
+			count, err = assets.CountByOrganizationID(ctx, conn, scope, organizationID)
+			if err != nil {
+				return fmt.Errorf("cannot count assets: %w", err)
+			}
+
+			return nil
+		},
+	)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
+
+func (s AssetService) ListForOrganizationID(
+	ctx context.Context, scope coredata.Scoper,
+	organizationID gid.GID,
+	cursor *page.Cursor[coredata.AssetOrderField],
+) (*page.Page[*coredata.Asset, coredata.AssetOrderField], error) {
+	var assets coredata.Assets
+
+	err := s.svc.pg.WithConn(
+		ctx,
+		func(ctx context.Context, conn pg.Querier) error {
+			return assets.LoadByOrganizationID(
+				ctx,
+				conn,
+				scope,
+				organizationID,
+				cursor,
+			)
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return page.NewPage(assets, cursor), nil
+}
+
+func (s AssetService) Update(
+	ctx context.Context, scope coredata.Scoper,
+	req UpdateAssetRequest,
+) (*coredata.Asset, error) {
+	if err := req.Validate(); err != nil {
+		return nil, fmt.Errorf("invalid request: %w", err)
+	}
+
+	now := time.Now()
+	asset := &coredata.Asset{ID: req.ID}
+	assetThirdParties := &coredata.AssetThirdParties{}
+
+	err := s.svc.pg.WithTx(ctx, func(ctx context.Context, conn pg.Tx) error {
+		if err := asset.LoadByID(ctx, conn, scope, req.ID); err != nil {
+			return fmt.Errorf("cannot load asset: %w", err)
+		}
+
+		asset.UpdatedAt = now
+		if req.Name != nil {
+			asset.Name = *req.Name
+		}
+
+		if req.Amount != nil {
+			asset.Amount = *req.Amount
+		}
+
+		if req.OwnerID != nil {
+			profile := &coredata.MembershipProfile{}
+			if err := profile.LoadByID(ctx, conn, scope, *req.OwnerID); err != nil {
+				return fmt.Errorf("cannot load owner profile: %w", err)
+			}
+
+			asset.OwnerID = *req.OwnerID
+		}
+
+		if req.AssetType != nil {
+			asset.AssetType = *req.AssetType
+		}
+
+		if req.DataTypesStored != nil {
+			asset.DataTypesStored = *req.DataTypesStored
+		}
+
+		if err := asset.Update(ctx, conn, scope); err != nil {
+			return fmt.Errorf("cannot update asset: %w", err)
+		}
+
+		if req.ThirdPartyIDs != nil {
+			if err := assetThirdParties.Merge(ctx, conn, scope, asset.ID, asset.OrganizationID, req.ThirdPartyIDs); err != nil {
+				return fmt.Errorf("cannot update asset thirdParties: %w", err)
+			}
+		}
+
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return asset, nil
+}
+
+func (s AssetService) Create(
+	ctx context.Context, scope coredata.Scoper,
+	req CreateAssetRequest,
+) (*coredata.Asset, error) {
+	if err := req.Validate(); err != nil {
+		return nil, fmt.Errorf("invalid request: %w", err)
+	}
+
+	now := time.Now()
+	assetID := gid.New(scope.GetTenantID(), coredata.AssetEntityType)
+	assetThirdParties := &coredata.AssetThirdParties{}
+
+	asset := &coredata.Asset{
+		ID:              assetID,
+		OrganizationID:  req.OrganizationID,
+		Name:            req.Name,
+		Amount:          req.Amount,
+		OwnerID:         req.OwnerID,
+		AssetType:       req.AssetType,
+		DataTypesStored: req.DataTypesStored,
+		CreatedAt:       now,
+		UpdatedAt:       now,
+	}
+
+	err := s.svc.pg.WithTx(ctx, func(ctx context.Context, conn pg.Tx) error {
+		profile := &coredata.MembershipProfile{}
+		if err := profile.LoadByID(ctx, conn, scope, req.OwnerID); err != nil {
+			return fmt.Errorf("cannot load owner profile: %w", err)
+		}
+
+		if err := asset.Insert(ctx, conn, scope); err != nil {
+			return fmt.Errorf("cannot insert asset: %w", err)
+		}
+
+		if len(req.ThirdPartyIDs) > 0 {
+			if err := assetThirdParties.Insert(ctx, conn, scope, asset.ID, asset.OrganizationID, req.ThirdPartyIDs); err != nil {
+				return fmt.Errorf("cannot create asset thirdParties: %w", err)
+			}
+		}
+
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return asset, nil
+}
+
+func (s AssetService) Delete(
+	ctx context.Context, scope coredata.Scoper,
+	assetID gid.GID,
+) error {
+	asset := &coredata.Asset{ID: assetID}
+
+	return s.svc.pg.WithTx(
+		ctx,
+		func(ctx context.Context, tx pg.Tx) error {
+			return asset.Delete(ctx, tx, scope)
+		},
+	)
+}

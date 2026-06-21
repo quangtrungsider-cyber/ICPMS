@@ -1,0 +1,280 @@
+# Copyright (c) 2026 VATM ICPMS <sms@vatm.vn>.
+# Phase 12 — Module Giao việc
+
+enum IcpmsAssignmentStatus {
+  DRAFT
+  ASSIGNED
+  ACCEPTED
+  IN_PROGRESS
+  SUBMITTED
+  RETURNED
+  COMPLETED
+  CLOSED
+  OVERDUE
+  CANCELLED
+  DELETED
+}
+
+enum IcpmsAssignmentPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum IcpmsAssignmentCreatedFrom {
+  CHECKLIST
+  AI_REVIEW_SUGGESTION
+  MANUAL
+  SYSTEM
+}
+
+enum IcpmsAssignmentEvidenceStatus {
+  NOT_REQUIRED
+  REQUIRED_NOT_SUBMITTED
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+type IcpmsAssignment implements Node @goModel(model: "go.probo.inc/probo/pkg/coredata.IcpmsAssignment") {
+  id: ID!
+  organization: Organization! @goField(forceResolver: true)
+
+  assignmentCode: String!
+  assignmentTitle: String!
+  assignmentDescription: String
+
+  document: IcpmsDocument @goField(forceResolver: true)
+  documentVersion: IcpmsDocumentVersion @goField(forceResolver: true)
+  requirement: IcpmsRequirement @goField(forceResolver: true)
+  checklist: IcpmsChecklist @goField(forceResolver: true)
+
+  sourceReference: String
+  requirementText: String
+  checklistQuestion: String
+
+  leadUnitName: String!
+  coordinationUnitNames: String
+
+  assigneeUserId: ID
+  assigneeName: String
+  assignedById: ID
+  assignedAt: Datetime
+
+  dueDate: Datetime
+  dueDays: Int
+  priority: IcpmsAssignmentPriority!
+
+  status: IcpmsAssignmentStatus! @goField(forceResolver: true)
+  progressPercent: Int!
+
+  currentStatusText: String
+  actionPlanText: String
+  responseNote: String
+
+  requiresEvidence: Boolean!
+  evidenceStatus: IcpmsAssignmentEvidenceStatus! @goField(forceResolver: true)
+  createdFrom: IcpmsAssignmentCreatedFrom! @goField(forceResolver: true)
+
+  acceptedByUnitAt: Datetime
+  startedAt: Datetime
+  submittedAt: Datetime
+  completedAt: Datetime
+  closedAt: Datetime
+  cancelledAt: Datetime
+  closedById: ID
+  cancelledById: ID
+  cancelReason: String
+
+  isOverdue: Boolean! @goField(forceResolver: true)
+
+  createdAt: Datetime!
+  updatedAt: Datetime!
+}
+
+type IcpmsAssignmentEdge {
+  cursor: CursorKey!
+  node: IcpmsAssignment!
+}
+
+type IcpmsAssignmentConnection {
+  edges: [IcpmsAssignmentEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type IcpmsAssignmentStats {
+  totalAssignments: Int!
+  assigned: Int!
+  accepted: Int!
+  inProgress: Int!
+  submitted: Int!
+  completed: Int!
+  closed: Int!
+  overdue: Int!
+  cancelled: Int!
+}
+
+input IcpmsAssignmentFilter {
+  checklistId: ID
+  documentId: ID
+  documentVersionId: ID
+  requirementId: ID
+  leadUnitName: String
+  status: IcpmsAssignmentStatus
+  priority: IcpmsAssignmentPriority
+  overdueOnly: Boolean
+  keyword: String
+  createdFrom: IcpmsAssignmentCreatedFrom
+}
+
+input CreateIcpmsAssignmentInput {
+  organizationId: ID!
+  checklistId: ID
+  leadUnitName: String!
+  coordinationUnitNames: String
+  assigneeUserId: ID
+  assigneeName: String
+  dueDate: Datetime
+  dueDays: Int
+  priority: IcpmsAssignmentPriority
+  assignmentTitle: String
+  assignmentDescription: String
+  requiresEvidence: Boolean
+  note: String
+}
+
+type CreateIcpmsAssignmentPayload {
+  assignment: IcpmsAssignment!
+}
+
+input CreateIcpmsAssignmentsFromChecklistsInput {
+  checklistIds: [ID!]!
+  leadUnitName: String!
+  coordinationUnitNames: String
+  dueDate: Datetime
+  dueDays: Int
+  priority: IcpmsAssignmentPriority
+  requiresEvidence: Boolean
+}
+
+type CreateIcpmsAssignmentsFromChecklistsPayload {
+  assignments: [IcpmsAssignment!]!
+  createdCount: Int!
+  skippedCount: Int!
+  errorCount: Int!
+}
+
+input UpdateIcpmsAssignmentInput {
+  id: ID!
+  assignmentTitle: String
+  assignmentDescription: String
+  leadUnitName: String
+  coordinationUnitNames: String
+  assigneeUserId: ID
+  assigneeName: String
+  dueDate: Datetime
+  dueDays: Int
+  priority: IcpmsAssignmentPriority
+  currentStatusText: String
+  actionPlanText: String
+  responseNote: String
+  progressPercent: Int
+  requiresEvidence: Boolean
+}
+
+type UpdateIcpmsAssignmentPayload {
+  assignment: IcpmsAssignment!
+}
+
+input AcceptIcpmsAssignmentInput {
+  id: ID!
+}
+
+type AcceptIcpmsAssignmentPayload {
+  assignment: IcpmsAssignment!
+}
+
+input StartIcpmsAssignmentInput {
+  id: ID!
+}
+
+type StartIcpmsAssignmentPayload {
+  assignment: IcpmsAssignment!
+}
+
+input SubmitIcpmsAssignmentUpdateInput {
+  id: ID!
+  currentStatusText: String!
+  actionPlanText: String
+  responseNote: String
+  progressPercent: Int!
+}
+
+type SubmitIcpmsAssignmentUpdatePayload {
+  assignment: IcpmsAssignment!
+}
+
+input ReturnIcpmsAssignmentInput {
+  id: ID!
+  reason: String!
+}
+
+type ReturnIcpmsAssignmentPayload {
+  assignment: IcpmsAssignment!
+}
+
+input CompleteIcpmsAssignmentInput {
+  id: ID!
+}
+
+type CompleteIcpmsAssignmentPayload {
+  assignment: IcpmsAssignment!
+}
+
+input CloseIcpmsAssignmentInput {
+  id: ID!
+}
+
+type CloseIcpmsAssignmentPayload {
+  assignment: IcpmsAssignment!
+}
+
+input CancelIcpmsAssignmentInput {
+  id: ID!
+  cancelReason: String!
+}
+
+type CancelIcpmsAssignmentPayload {
+  assignment: IcpmsAssignment!
+}
+
+input DeleteIcpmsAssignmentInput {
+  id: ID!
+}
+
+type DeleteIcpmsAssignmentPayload {
+  deletedAssignmentId: ID!
+}
+
+extend type Query {
+  icpmsAssignments(organizationId: ID!, filter: IcpmsAssignmentFilter): IcpmsAssignmentConnection! @goField(forceResolver: true)
+  icpmsAssignment(id: ID!): IcpmsAssignment @goField(forceResolver: true)
+  icpmsAssignmentsByChecklist(checklistId: ID!): IcpmsAssignmentConnection! @goField(forceResolver: true)
+  icpmsAssignmentStats(organizationId: ID!): IcpmsAssignmentStats! @goField(forceResolver: true)
+}
+
+extend type Mutation {
+  createIcpmsAssignment(input: CreateIcpmsAssignmentInput!): CreateIcpmsAssignmentPayload!
+  createIcpmsAssignmentsFromChecklists(input: CreateIcpmsAssignmentsFromChecklistsInput!): CreateIcpmsAssignmentsFromChecklistsPayload!
+  updateIcpmsAssignment(input: UpdateIcpmsAssignmentInput!): UpdateIcpmsAssignmentPayload!
+  acceptIcpmsAssignment(input: AcceptIcpmsAssignmentInput!): AcceptIcpmsAssignmentPayload!
+  startIcpmsAssignment(input: StartIcpmsAssignmentInput!): StartIcpmsAssignmentPayload!
+  submitIcpmsAssignmentUpdate(input: SubmitIcpmsAssignmentUpdateInput!): SubmitIcpmsAssignmentUpdatePayload!
+  returnIcpmsAssignment(input: ReturnIcpmsAssignmentInput!): ReturnIcpmsAssignmentPayload!
+  completeIcpmsAssignment(input: CompleteIcpmsAssignmentInput!): CompleteIcpmsAssignmentPayload!
+  closeIcpmsAssignment(input: CloseIcpmsAssignmentInput!): CloseIcpmsAssignmentPayload!
+  cancelIcpmsAssignment(input: CancelIcpmsAssignmentInput!): CancelIcpmsAssignmentPayload!
+  deleteIcpmsAssignment(input: DeleteIcpmsAssignmentInput!): DeleteIcpmsAssignmentPayload!
+}

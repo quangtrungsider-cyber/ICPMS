@@ -1,0 +1,27 @@
+# --- Web server cho microservice OCR ---
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+python-multipart==0.0.9
+pydantic==2.9.2
+
+# --- Đúng các thư viện vatm_pdf_to_word_app.py cần (phần OCR, không cần phần Word) ---
+opencv-python-headless==4.10.0.84
+numpy==1.26.4
+Pillow==10.4.0
+beautifulsoup4==4.12.3
+python-docx==1.1.2
+pdf2image==1.17.0
+pypdf==4.3.1
+
+# --- OCR / layout engine ---
+paddlepaddle==3.2.2
+paddleocr[doc-parser]
+vietocr
+torch
+torchvision
+torchvision
+
+# Lưu ý: paddleocr[doc-parser] (PP-StructureV3) tự tải ~1.9GB model về
+# /root/.paddlex (hoặc theo PADDLE_PDX_CACHE_HOME) ở LẦN GỌI ĐẦU TIÊN — cần
+# container có Internet ra ngoài. Nếu muốn tránh tải lại mỗi khi rebuild image,
+# mount volume riêng cho thư mục cache (xem docker-compose.yml).

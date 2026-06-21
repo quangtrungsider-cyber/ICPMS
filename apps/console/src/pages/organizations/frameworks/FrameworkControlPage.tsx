@@ -1,0 +1,448 @@
+// Copyright (c) 2025-2026 VATM ICPMS <sms@vatm.vn>.
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+// REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+// AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+// INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+// LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+// OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+
+import {
+  formatError,
+  getControlMaturityLevelLabel,
+  type GraphQLError,
+} from "@probo/helpers";
+import { promisifyMutation } from "@probo/helpers";
+import { useTranslate } from "@probo/i18n";
+import {
+  ActionDropdown,
+  Badge,
+  Button,
+  Card,
+  DropdownItem,
+  IconPencil,
+  IconTrashCan,
+  useConfirm,
+  useToast,
+} from "@probo/ui";
+import {
+  type PreloadedQuery,
+  useMutation,
+  type UseMutationConfig,
+  usePreloadedQuery,
+} from "react-relay";
+import { useNavigate, useOutletContext } from "react-router";
+import { graphql, type MutationParameters } from "relay-runtime";
+
+import type { FrameworkDetailPageFragment$data } from "#/__generated__/core/FrameworkDetailPageFragment.graphql";
+import type { FrameworkGraphControlNodeQuery } from "#/__generated__/core/FrameworkGraphControlNodeQuery.graphql";
+import { LinkedAuditsCard } from "#/components/audits/LinkedAuditsCard";
+import { LinkedDocumentsCard } from "#/components/documents/LinkedDocumentsCard";
+import { LinkedMeasuresCard } from "#/components/measures/LinkedMeasuresCard";
+import { LinkedObligationsCard } from "#/components/obligations/LinkedObligationsCard";
+import { frameworkControlNodeQuery } from "#/hooks/graph/FrameworkGraph";
+import { useOrganizationId } from "#/hooks/useOrganizationId";
+
+import { FrameworkControlDialog } from "./dialogs/FrameworkControlDialog";
+
+const attachMeasureMutation = graphql`
+  mutation FrameworkControlPageAttachMutation(
+      $input: CreateControlMeasureMappingInput!
+      $connections: [ID!]!
+  ) {
+      createControlMeasureMapping(input: $input) {
+          measureEdge @prependEdge(connections: $connections) {
+              node {
+                  id
+                  ...LinkedMeasuresCardFragment
+              }
+          }
+      }
+  }
+`;
+
+const detachMeasureMutation = graphql`
+  mutation FrameworkControlPageDetachMutation(
+      $input: DeleteControlMeasureMappingInput!
+      $connections: [ID!]!
+  ) {
+      deleteControlMeasureMapping(input: $input) {
+          deletedMeasureId @deleteEdge(connections: $connections)
+      }
+  }
+`;
+
+const attachDocumentMutation = graphql`
+  mutation FrameworkControlPageAttachDocumentMutation(
+      $input: CreateControlDocumentMappingInput!
+      $connections: [ID!]!
+  ) {
+      createControlDocumentMapping(input: $input) {
+          documentEdge @prependEdge(connections: $connections) {
+              node {
+                  id
+                  ...LinkedDocumentsCardFragment
+              }
+          }
+      }
+  }
+`;
+
+const detachDocumentMutation = graphql`
+  mutation FrameworkControlPageDetachDocumentMutation(
+      $input: DeleteControlDocumentMappingInput!
+      $connections: [ID!]!
+  ) {
+      deleteControlDocumentMapping(input: $input) {
+          deletedDocumentId @deleteEdge(connections: $connections)
+      }
+  }
+`;
+
+const attachAuditMutation = graphql`
+  mutation FrameworkControlPageAttachAuditMutation(
+      $input: CreateControlAuditMappingInput!
+      $connections: [ID!]!
+  ) {
+      createControlAuditMapping(input: $input) {
+          auditEdge @prependEdge(connections: $connections) {
+              node {
+                  id
+                  ...LinkedAuditsCardFragment
+              }
+          }
+      }
+  }
+`;
+
+const detachAuditMutation = graphql`
+  mutation FrameworkControlPageDetachAuditMutation(
+      $input: DeleteControlAuditMappingInput!
+      $connections: [ID!]!
+  ) {
+      deleteControlAuditMapping(input: $input) {
+          deletedAuditId @deleteEdge(connections: $connections)
+      }
+  }
+`;
+
+const attachObligationMutation = graphql`
+  mutation FrameworkControlPageAttachObligationMutation(
+      $input: CreateControlObligationMappingInput!
+      $connections: [ID!]!
+  ) {
+      createControlObligationMapping(input: $input) {
+          obligationEdge @prependEdge(connections: $connections) {
+              node {
+                  id
+                  ...LinkedObligationsCardFragment
+              }
+          }
+      }
+  }
+`;
+
+const detachObligationMutation = graphql`
+  mutation FrameworkControlPageDetachObligationMutation(
+      $input: DeleteControlObligationMappingInput!
+      $connections: [ID!]!
+  ) {
+      deleteControlObligationMapping(input: $input) {
+          deletedObligationId @deleteEdge(connections: $connections)
+      }
+  }
+`;
+
+const deleteControlMutation = graphql`
+  mutation FrameworkControlPageDeleteControlMutation(
+      $input: DeleteControlInput!
+      $connections: [ID!]!
+  ) {
+      deleteControl(input: $input) {
+          deletedControlId @deleteEdge(connections: $connections)
+      }
+  }
+`;
+
+type Props = {
+  queryRef: PreloadedQuery<FrameworkGraphControlNodeQuery>;
+};
+
+/**
+* Display the control detail on the right panel
+*/
+export default function FrameworkControlPage({ queryRef }: Props) {
+  const { __ } = useTranslate();
+  const { toast } = useToast();
+  const { framework } = useOutletContext<{
+    framework: FrameworkDetailPageFragment$data;
+  }>();
+  const connectionId = framework.controls.__id;
+  const control = usePreloadedQuery(frameworkControlNodeQuery, queryRef).node;
+  const organizationId = useOrganizationId();
+  const confirm = useConfirm();
+  const navigate = useNavigate();
+  // eslint-disable-next-line relay/generated-typescript-types
+  const [detachMeasure, isDetachingMeasure] = useMutation(
+    detachMeasureMutation,
+  );
+  // eslint-disable-next-line relay/generated-typescript-types
+  const [attachMeasure, isAttachingMeasure] = useMutation(
+    attachMeasureMutation,
+  );
+  // eslint-disable-next-line relay/generated-typescript-types
+  const [detachDocument, isDetachingDocument] = useMutation(
+    detachDocumentMutation,
+  );
+  // eslint-disable-next-line relay/generated-typescript-types
+  const [attachDocument, isAttachingDocument] = useMutation(
+    attachDocumentMutation,
+  );
+  // eslint-disable-next-line relay/generated-typescript-types
+  const [detachAudit, isDetachingAudit] = useMutation(detachAuditMutation);
+  // eslint-disable-next-line relay/generated-typescript-types
+  const [attachAudit, isAttachingAudit] = useMutation(attachAuditMutation);
+  // eslint-disable-next-line relay/generated-typescript-types
+  const [deleteControl] = useMutation(deleteControlMutation);
+
+  // eslint-disable-next-line relay/generated-typescript-types
+  const [attachObligation, isAttachingObligation] = useMutation(
+    attachObligationMutation,
+  );
+  // eslint-disable-next-line relay/generated-typescript-types
+  const [detachObligation, isDetachingObligation] = useMutation(
+    detachObligationMutation,
+  );
+
+  const canLinkMeasure = control.canCreateMeasureMapping;
+  const canUnlinkMeasure = control.canDeleteMeasureMapping;
+  const measuresReadOnly = !canLinkMeasure && !canUnlinkMeasure;
+
+  const canLinkDocument = control.canCreateDocumentMapping;
+  const canUnlinkDocument = control.canDeleteDocumentMapping;
+  const documentsReadOnly = !canLinkDocument && !canUnlinkDocument;
+
+  const canLinkAudit = control.canCreateAuditMapping;
+  const canUnlinkAudit = control.canDeleteAuditMapping;
+  const auditsReadOnly = !canLinkAudit && !canUnlinkAudit;
+
+  const canLinkObligation = control.canCreateObligationMapping;
+  const canUnlinkObligation = control.canDeleteObligationMapping;
+  const obligationsReadOnly = !canLinkObligation && !canUnlinkObligation;
+
+  const withErrorHandling
+    = <T extends MutationParameters>(
+      mutationFn: (config: UseMutationConfig<T>) => void,
+      errorMessage: string,
+    ) =>
+      (options: UseMutationConfig<T>) => {
+        mutationFn({
+          ...options,
+          onCompleted: (response, error) => {
+            if (error) {
+              toast({
+                title: __("Error"),
+                description: formatError(
+                  errorMessage,
+                  error as GraphQLError,
+                ),
+                variant: "error",
+              });
+            }
+            options.onCompleted?.(response, error);
+          },
+          onError: (error) => {
+            toast({
+              title: __("Error"),
+              description: formatError(
+                errorMessage,
+                error as GraphQLError,
+              ),
+              variant: "error",
+            });
+            options.onError?.(error);
+          },
+        });
+      };
+
+  const onDelete = () => {
+    confirm(
+      () => {
+        return promisifyMutation(deleteControl)({
+          variables: {
+            input: {
+              controlId: control.id,
+            },
+            connections: [connectionId],
+          },
+          onCompleted: () => {
+            void navigate(
+              `/organizations/${organizationId}/frameworks/${framework.id}`,
+            );
+          },
+        });
+      },
+      {
+        message: __("Are you sure you want to delete this control?"),
+      },
+    );
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between">
+        <div className="flex items-center gap-3">
+          <div className="text-xl font-medium px-[6px] py-[2px] border border-border-low rounded-lg w-max bg-active mb-3">
+            {control.sectionTitle}
+          </div>
+        </div>
+        <div className="flex gap-2">
+          {control.canUpdate && (
+            <FrameworkControlDialog
+              frameworkId={framework.id}
+              connectionId={connectionId}
+              control={control}
+            >
+              <Button icon={IconPencil} variant="secondary">
+                {__("Edit control")}
+              </Button>
+            </FrameworkControlDialog>
+          )}
+          {control.canDelete && (
+            <ActionDropdown variant="secondary">
+              <DropdownItem
+                icon={IconTrashCan}
+                variant="danger"
+                onClick={onDelete}
+              >
+                {__("Delete")}
+              </DropdownItem>
+            </ActionDropdown>
+          )}
+        </div>
+      </div>
+
+      <div>
+        <div className="text-base mb-1">{control.name}</div>
+        {control.description && (
+          <div className="text-sm text-txt-secondary mb-4 whitespace-pre-wrap">
+            {control.description}
+          </div>
+        )}
+        <Card padded className="mb-6 mt-6">
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-txt-secondary">{__("Best Practice")}</span>
+              <Badge variant={control.bestPractice ? "success" : "neutral"} size="sm">
+                {control.bestPractice ? __("Yes") : __("No")}
+              </Badge>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-txt-secondary">{__("Maturity level")}</span>
+              <Badge variant="neutral" size="sm">
+                {getControlMaturityLevelLabel(__, control.maturityLevel ?? "NONE")}
+              </Badge>
+            </div>
+            {control.maturityLevel === "NONE" && control.notImplementedJustification && (
+              <div>
+                <span className="text-xs text-txt-secondary">{__("Justification for non-implementation")}</span>
+                <div className="text-sm mt-0.5 whitespace-pre-wrap">{control.notImplementedJustification}</div>
+              </div>
+            )}
+          </div>
+        </Card>
+        <div className="mb-4">
+          <LinkedMeasuresCard
+            variant="card"
+            measures={
+              control.measures?.edges.map(edge => edge.node)
+              ?? []
+            }
+            params={{ controlId: control.id }}
+            connectionId={control.measures?.__id ?? ""}
+            onAttach={withErrorHandling(
+              attachMeasure,
+              __("Failed to link measure"),
+            )}
+            onDetach={withErrorHandling(
+              detachMeasure,
+              __("Failed to unlink measure"),
+            )}
+            disabled={isAttachingMeasure || isDetachingMeasure}
+            readOnly={measuresReadOnly}
+          />
+        </div>
+        <div className="mb-4">
+          <LinkedDocumentsCard
+            variant="card"
+            documents={
+              control.documents?.edges.map(edge => edge.node)
+              ?? []
+            }
+            params={{ controlId: control.id }}
+            connectionId={control.documents?.__id ?? ""}
+            onAttach={withErrorHandling(
+              attachDocument,
+              __("Failed to link document"),
+            )}
+            onDetach={withErrorHandling(
+              detachDocument,
+              __("Failed to unlink document"),
+            )}
+            disabled={isAttachingDocument || isDetachingDocument}
+            readOnly={documentsReadOnly}
+          />
+        </div>
+        <div className="mb-4">
+          <LinkedAuditsCard
+            variant="card"
+            audits={
+              control.audits?.edges.map(edge => edge.node) ?? []
+            }
+            params={{ controlId: control.id }}
+            connectionId={control.audits?.__id ?? ""}
+            onAttach={withErrorHandling(
+              attachAudit,
+              __("Failed to link audit"),
+            )}
+            onDetach={withErrorHandling(
+              detachAudit,
+              __("Failed to unlink audit"),
+            )}
+            disabled={isAttachingAudit || isDetachingAudit}
+            readOnly={auditsReadOnly}
+          />
+        </div>
+        <div className="mb-4">
+          <LinkedObligationsCard
+            variant="card"
+            obligations={
+              control.obligations?.edges.map(
+                edge => edge.node,
+              ) ?? []
+            }
+            params={{ controlId: control.id }}
+            connectionId={control.obligations?.__id ?? ""}
+            onAttach={withErrorHandling(
+              attachObligation,
+              __("Failed to link obligation"),
+            )}
+            onDetach={withErrorHandling(
+              detachObligation,
+              __("Failed to unlink obligation"),
+            )}
+            disabled={
+              isAttachingObligation || isDetachingObligation
+            }
+            readOnly={obligationsReadOnly}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}

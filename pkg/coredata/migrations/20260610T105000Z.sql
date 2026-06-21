@@ -1,0 +1,37 @@
+-- +goose Up
+CREATE TABLE icpms_document_files (
+    tenant_id text NOT NULL,
+    id text NOT NULL,
+    organization_id text NOT NULL,
+    document_id text NOT NULL,
+    document_version_id text NOT NULL,
+    file_id text NOT NULL,
+    original_file_name text NOT NULL,
+    stored_file_name text NOT NULL,
+    file_type text NOT NULL,
+    file_extension text NOT NULL,
+    mime_type text NOT NULL,
+    file_size bigint NOT NULL,
+    storage_path text NOT NULL,
+    upload_status text NOT NULL,
+    is_active boolean NOT NULL DEFAULT false,
+    text_extractable boolean NOT NULL DEFAULT false,
+    scan_warning boolean NOT NULL DEFAULT false,
+    checksum text,
+    notes text,
+    uploaded_by text NOT NULL,
+    uploaded_at timestamp with time zone NOT NULL,
+    deleted_at timestamp with time zone,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    CONSTRAINT icpms_document_files_pkey PRIMARY KEY (tenant_id, id),
+    CONSTRAINT icpms_document_files_organization_id_fkey FOREIGN KEY (organization_id) REFERENCES organizations(id) ON DELETE CASCADE,
+    CONSTRAINT icpms_document_files_document_id_fkey FOREIGN KEY (document_id) REFERENCES icpms_documents(id) ON DELETE CASCADE,
+    CONSTRAINT icpms_document_files_document_version_id_fkey FOREIGN KEY (document_version_id) REFERENCES icpms_document_versions(id) ON DELETE CASCADE,
+    CONSTRAINT icpms_document_files_file_id_fkey FOREIGN KEY (file_id) REFERENCES files(id) ON DELETE RESTRICT
+);
+
+CREATE INDEX idx_icpms_document_files_document_version_id ON icpms_document_files(tenant_id, document_version_id);
+CREATE INDEX idx_icpms_document_files_document_id ON icpms_document_files(tenant_id, document_id);
+CREATE INDEX idx_icpms_document_files_file_id ON icpms_document_files(tenant_id, file_id);
+

@@ -1,0 +1,204 @@
+probod:
+  api:
+    addr: :8080
+    cors:
+      allowed-origins:
+        - http://localhost
+        - http://localhost:80
+        - http://192.168.110.128
+        - http://192.168.110.128:80
+    extra-header-fields: {}
+    proxy-protocol:
+      trusted-proxies: null
+
+  auth:
+    cookie:
+      domain: 192.168.110.128
+      duration: 24
+      name: SSID
+      secret: vatm-icpms-dev-secret-thay-doi-sau-khi-deploy-thuc-32b
+      secure: false
+    disable-signup: false
+    google:
+      client-id: ""
+      client-secret: ""
+      enabled: false
+    microsoft:
+      client-id: ""
+      client-secret: ""
+      enabled: false
+    invitation-confirmation-token-validity: 3600
+    magic-link-token-validity: 900
+    oauth2-server:
+      access-token-duration: 3600
+      authorization-code-duration: 600
+      device-code-duration: 600
+      refresh-token-duration: 2592000
+      signing-keys:
+        - active: true
+          kid: default
+          private-key: |
+            -----BEGIN PRIVATE KEY-----
+            MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDZUglS8tbJSLh/
+            bupoB7eqQoUccs1VDpzuxlFvVIIhfesN5qROa2pAV71w5i2qkm8eOZNJTJKzhRD3
+            yOCZvIcE+UCrFlgLQ1Wkgz6f9jDi18G0mK4HDngy6OOMq7jbnTWBiFeRdB2FS7Oo
+            ENGHOg2boC0PvGgETL2tRxt7y88b+JtTFGK+6Lj3sZSduAjqNjEZfBHfPM1JobPk
+            RLNGAx5Qed5I5FWJs/JAfu5Gb7AoQUS8A0MOouaPQy8AK9uKpbnyMiZFLwSnqmI9
+            aBN5sK3UjrRgL/1R8zUsKHxMwPaENgmDiHZ1zTUn1oy49QQcLvcC4Psc8pjxX0Rp
+            FmyPO/bFAgMBAAECggEAAi5Re2+5c33gPOzBiHeI9dOPrDhQuQMZ1K5qOc1/NgcI
+            xic9TElfek06UJKjlnvvhorTk6w9J3UOtW98JYuftUKR56wK1Se0IwY4KV9nBsr2
+            6pePqfCqVYrcLovr1OeWfMbMzizJCqhQVL/A3Cd05IEIHFZqzgQ98RCIhS0HicNn
+            svBndrS4gQfiyW+YA9fFMmsGtmvOqU3cA4oTMNsnJ0b+ABL26VdbKQtb8SsWaqYL
+            ac33LbiLzOxbGABWnJZC2+lAEOA0E1m2exLUP9ZgTAPsgzZAy03Hy5OS7dbab73n
+            hiYqWcr0rTf+SQt31kuHtkyoZ6VCpFxZTXERzAu4LwKBgQD7AsVfjBSRlY1GLx21
+            NMOgg9kuUaDAPLJ1lepgZLbU9DIee2DnA/ma/WBt8sMy22ZSVJL8zBD7JMVu3LDW
+            769LwpqPTWD4o4EOUPKkhgWB9fiaeavsIGzfFOQhyx3M2o/dbfmAjWttsPpxFbin
+            mykuReD6IhEDzw6AMBt4yuivOwKBgQDdo9ZZNzG43APqRfllt1JSE+8gzOQ41cWW
+            lcgnd+BFJRueYW+99op23i7QxWWToNQSfzCuEwjmhgbzBz+dmpV+Mbq1KZmY0hJF
+            4Kk7UDgFsFZLb6glmyxOeoizev0B9m3m72rg58Gy2EIWBJAN0KJK9wH8vGwntjp6
+            RYZIiU+R/wKBgQDo5AtIuWmkIgPv6GtB43DWjz6EUUw60JYrryrEwO057FBMI+Em
+            tnNysEA2AxXFK/dlz/6I+rWOrvFYCP8yjTQxsJ9C8mJUjy+Anu5iY87cY+GDQfyX
+            mwYofPOlvxUpKmhs5EqoUY4pOhlDrwmiyL2Op1sz+UOcKxKjMP9sNadqXQKBgQDW
+            j8jtzTThVHylyt/IzFNxCcMw6aj2LFx/jriZHL+LsISwKntWVtlsgWKo0K+o3sTu
+            sxqZKewv3gfUNWwsUn3uEI5C2ubKvnLaGsc5mErjlvWzSYBqB3I49v5nYeSUhc+X
+            BKde2nz1ec1gK0KZXSP/lmfiFzZMq2io/a0lg2f4WQKBgQDIudmTJ4HkoksslXwL
+            6wPBNAtMxrNoNdtHra5/hzM1yKkdT2+a/6xftOzoLTBGyRLzi9Bu8Umhck542AMp
+            s4DI2Gj5JmO8E+nWgCncw87kZS9pH2Viz1L5IJ4B6VhFvNRcsHOCgRdXb4wmTN9N
+            0vEIXhXLVlnXdk8YVlgVa37GtQ==
+            -----END PRIVATE KEY-----
+    password:
+      iterations: 1000000
+      pepper: vatm-icpms-dev-pepper-thay-doi-sau-khi-deploy-thuc-32b
+    password-reset-token-validity: 3600
+    saml:
+      certificate: ""
+      cleanup-interval-seconds: 0
+      domain-verification-interval-seconds: 60
+      domain-verification-resolver-addr: 8.8.8.8:53
+      private-key: ""
+      session-duration: 604800
+
+  aws:
+    access-key-id: "minioadmin"
+    bucket: "icpms-files"
+    endpoint: "http://minio:9000"
+    region: "us-east-1"
+    secret-access-key: "minioadmin123"
+    use-path-style: true
+
+  base-url: http://192.168.110.128
+
+  branding: true
+  chrome-dp-addr: ""
+  common-pattern-enrichment-worker:
+    interval: 60
+    max-concurrency: 1
+    stale-after: 600
+    agent-max-turns: 5
+    agent-timeout: 30
+
+  connectors: null
+
+  custom-domains:
+    acme:
+      account-key: ""
+      directory: ""
+      email: "admin@vatm.vn"
+      key-type: EC256
+      root-ca: ""
+    caa-issuer-domain: ""
+    cname-target: ""
+    provision-interval: 3600
+    renewal-interval: 86400
+    resolver-addr: 8.8.8.8:53
+
+  encryption-key: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+
+  esign:
+    tsa-url: ""
+
+  evidence-describer:
+    interval: 30
+    max-concurrency: 2
+    stale-after: 300
+
+  llm:
+    defaults:
+      max-tokens: 4096
+      model-name: "gpt-4o-mini"
+      provider: "openai"
+      temperature: 0.1
+    providers:
+      openai:
+        type: openai
+        api-key: "sk-fake-test-key-for-startup-only"
+
+  notifications:
+    mailer:
+      mailer-interval: 60
+      sender-email: no-reply@vatm.vn
+      sender-name: VATM ICPMS
+      smtp:
+        addr: ""
+        hello-name: ""
+        password: ""
+        tls-required: false
+        user: ""
+    slack:
+      sender-interval: 60
+      signing-secret: ""
+    webhook:
+      cache-ttl: 86400
+      sender-interval: 5
+
+  pg:
+    addr: db:5432
+    ca-cert-bundle: ""
+    database: probod
+    debug: false
+    health-check-period-seconds: 60
+    max-conn-idle-time-seconds: 1800
+    max-conn-lifetime-jitter-seconds: 300
+    max-conn-lifetime-seconds: 3600
+    min-pool-size: 5
+    password: icpms2026secure
+    pool-size: 20
+    username: probod
+
+  scim-bridge:
+    poll-interval: 30
+    sync-interval: 900
+
+  third-party-vetting-worker:
+    interval: 30
+    max-concurrency: 1
+    stale-after: 1500
+
+  tracker-mapping-worker:
+    interval: 30
+    max-concurrency: 1
+    stale-after: 600
+    agent-max-turns: 5
+    agent-timeout: 30
+    disambiguation-agent-timeout: 30
+
+  icpms-ocr-service:
+    url: "http://icpms-ocr:8765"
+    timeout-seconds: 300
+    enabled: true
+
+  trust-center:
+    http-addr: :8090
+    https-addr: ""
+    proxy-protocol:
+      trusted-proxies: null
+
+unit:
+  metrics:
+    addr: ""
+  tracing:
+    addr: ""
+    batch-timeout: 5
+    export-timeout: 30
+    max-batch-size: 512
+    max-queue-size: 2048

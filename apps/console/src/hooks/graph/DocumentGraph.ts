@@ -1,0 +1,112 @@
+// Copyright (c) 2025-2026 VATM ICPMS <sms@vatm.vn>.
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+// REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+// AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+// INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+// LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+// OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+
+import { useTranslate } from "@probo/i18n";
+import { graphql } from "relay-runtime";
+
+import type { DocumentGraphBulkExportDocumentsMutation } from "#/__generated__/core/DocumentGraphBulkExportDocumentsMutation.graphql";
+import type { DocumentGraphDeleteMutation } from "#/__generated__/core/DocumentGraphDeleteMutation.graphql";
+import type { DocumentGraphSendSigningNotificationsMutation } from "#/__generated__/core/DocumentGraphSendSigningNotificationsMutation.graphql";
+
+import { useMutationWithToasts } from "../useMutationWithToasts";
+
+export const DocumentsConnectionKey = "DocumentsListQuery_documents";
+
+const deleteDocumentMutation = graphql`
+  mutation DocumentGraphDeleteMutation(
+    $input: DeleteDocumentInput!
+    $connections: [ID!]!
+  ) {
+    deleteDocument(input: $input) {
+      deletedDocumentId @deleteEdge(connections: $connections)
+    }
+  }
+`;
+
+export function useDeleteDocumentMutation() {
+  const { __ } = useTranslate();
+
+  return useMutationWithToasts<DocumentGraphDeleteMutation>(
+    deleteDocumentMutation,
+    {
+      successMessage: __("Document deleted successfully."),
+      errorMessage: __("Failed to delete document"),
+    },
+  );
+}
+
+const bulkDeleteDocumentsMutation = graphql`
+  mutation DocumentGraphBulkDeleteDocumentsMutation(
+    $input: BulkDeleteDocumentsInput!
+  ) {
+    bulkDeleteDocuments(input: $input) {
+      deletedDocumentIds
+    }
+  }
+`;
+
+export function useBulkDeleteDocumentsMutation() {
+  const { __ } = useTranslate();
+
+  return useMutationWithToasts(bulkDeleteDocumentsMutation, {
+    successMessage: __("Documents deleted successfully."),
+    errorMessage: __("Failed to delete documents"),
+  });
+}
+
+const sendSigningNotificationsMutation = graphql`
+  mutation DocumentGraphSendSigningNotificationsMutation(
+    $input: SendSigningNotificationsInput!
+  ) {
+    sendSigningNotifications(input: $input) {
+      success
+    }
+  }
+`;
+
+export function useSendSigningNotificationsMutation() {
+  const { __ } = useTranslate();
+
+  return useMutationWithToasts<DocumentGraphSendSigningNotificationsMutation>(
+    sendSigningNotificationsMutation,
+    {
+      successMessage: __("Signing notifications sent successfully."),
+      errorMessage: __("Failed to send signing notifications"),
+    },
+  );
+}
+
+const bulkExportDocumentsMutation = graphql`
+  mutation DocumentGraphBulkExportDocumentsMutation(
+    $input: BulkExportDocumentsInput!
+  ) {
+    bulkExportDocuments(input: $input) {
+      exportJobId
+    }
+  }
+`;
+
+export function useBulkExportDocumentsMutation() {
+  const { __ } = useTranslate();
+
+  return useMutationWithToasts<DocumentGraphBulkExportDocumentsMutation>(
+    bulkExportDocumentsMutation,
+    {
+      successMessage: __(
+        "Document export started successfully. You will receive an email when the export is ready.",
+      ),
+      errorMessage: __("Failed to start document export"),
+    },
+  );
+}

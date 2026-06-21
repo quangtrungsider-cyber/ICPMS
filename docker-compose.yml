@@ -1,0 +1,115 @@
+version: "3.9"
+
+# VATM ICPMS AIS — Production deployment
+# Chạy: docker compose up -d
+# Dừng: docker compose down
+
+services:
+  # --- PostgreSQL database ----------------------------------------
+  db:
+    image: postgres:16-alpine
+    container_name: icpms-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: probod
+      POSTGRES_PASSWORD: icpms2026secure
+      POSTGRES_DB: probod
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./deploy/db-init:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U probod -d probod"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  # --- MinIO (S3-compatible object storage) ------------------------
+  minio:
+    image: minio/minio:latest
+    container_name: icpms-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin123
+    volumes:
+      - minio-data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  # --- Tạo bucket tự động khi MinIO khởi động lần đầu --------------
+  minio-init:
+    image: minio/mc:latest
+    container_name: icpms-minio-init
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set local http://minio:9000 minioadmin minioadmin123 &&
+      mc mb -p local/icpms-files &&
+      echo 'Bucket icpms-files ready'
+      "
+    restart: "no"
+
+  # --- OCR microservice (VATM DocAI Pro: PP-StructureV3 + VietOCR) -
+  icpms-ocr:
+    build:
+      context: ./ocr-service
+      dockerfile: Dockerfile.ocr
+    container_name: icpms-ocr
+    restart: unless-stopped
+    volumes:
+      # Model PP-StructureV3 đã tải sẵn (~1.9GB) từ máy build .exe trước đây —
+      # mount đúng vị trí cạnh vatm_pdf_to_word_app.py (/app) để code tự nhận
+      # diện qua _find_bundled_dir("paddlex_cache"), không cần tải lại từ mạng.
+      - ./ocr-service/paddlex_cache:/app/paddlex_cache
+    ports:
+      - "8765:8765"
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8765/healthz')"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  # --- Application server (backend + embedded frontend) -----------
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: icpms-app
+    image: vatm-icpms:latest
+    restart: unless-stopped
+    ports:
+      - "80:8080"
+    volumes:
+      - ./cfg/docker.yaml:/etc/probod/config.yaml:ro
+    depends_on:
+      db:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+      minio-init:
+        condition: service_completed_successfully
+      icpms-ocr:
+        condition: service_started
+    environment:
+      TZ: Asia/Ho_Chi_Minh
+
+volumes:
+  pgdata:
+    name: icpms-pgdata
+  minio-data:
+    name: icpms-minio-data

@@ -1,0 +1,162 @@
+# Copyright (c) 2026 VATM ICPMS <sms@vatm.vn>.
+
+enum IcpmsDocumentVersionStatus {
+  DRAFT
+  CURRENT
+  EFFECTIVE
+  SUPERSEDED
+  EXPIRED
+  ARCHIVED
+  DELETED
+}
+
+enum IcpmsDocumentVersionRawFileStatus {
+  NOT_UPLOADED
+  UPLOADED
+  PROCESSING
+  FAILED
+}
+
+enum IcpmsDocumentVersionOrderField {
+  CREATED_AT
+  UPDATED_AT
+  EFFECTIVE_DATE
+  VERSION_CODE
+}
+
+input IcpmsDocumentVersionFilter {
+  documentId: ID
+  versionCode: String
+  statuses: [IcpmsDocumentVersionStatus!]
+  isCurrent: Boolean
+  rawFileStatus: IcpmsDocumentVersionRawFileStatus
+}
+
+type IcpmsDocumentVersion implements Node {
+  id: ID!
+
+  organization: Organization!
+  document: IcpmsDocument!
+
+  versionCode: String!
+  versionName: String!
+  edition: String
+  amendment: String
+  versionNumber: String
+
+  publicationDate: Datetime
+  effectiveDate: Datetime
+  expiryDate: Datetime
+  supersedesVersionId: ID
+  supersededByVersionId: ID
+  supersededDate: Datetime
+
+  status: IcpmsDocumentVersionStatus!
+  isCurrent: Boolean!
+  changeSummary: String
+  notes: String
+  rawFileStatus: IcpmsDocumentVersionRawFileStatus!
+
+  createdBy: ID!
+  updatedBy: ID!
+  createdAt: Datetime!
+  updatedAt: Datetime!
+
+  files(
+    first: Int
+    after: CursorKey
+    last: Int
+    before: CursorKey
+    filter: IcpmsDocumentFileFilter
+    orderBy: IcpmsDocumentFileOrderField = CREATED_AT
+  ): IcpmsDocumentFileConnection!
+
+  latestIngestionJob: IcpmsIngestionJob
+}
+
+type IcpmsDocumentVersionEdge {
+  cursor: CursorKey!
+  node: IcpmsDocumentVersion!
+}
+
+type IcpmsDocumentVersionConnection {
+  edges: [IcpmsDocumentVersionEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+input CreateIcpmsDocumentVersionInput {
+  documentId: ID!
+  versionCode: String!
+  versionName: String!
+  edition: String
+  amendment: String
+  versionNumber: String
+  publicationDate: Datetime
+  effectiveDate: Datetime
+  expiryDate: Datetime
+  supersedesVersionId: ID
+  status: IcpmsDocumentVersionStatus!
+  isCurrent: Boolean!
+  changeSummary: String
+  notes: String
+}
+
+input UpdateIcpmsDocumentVersionInput {
+  id: ID!
+  versionCode: String
+  versionName: String
+  edition: String
+  amendment: String
+  versionNumber: String
+  publicationDate: Datetime
+  effectiveDate: Datetime
+  expiryDate: Datetime
+  supersedesVersionId: ID
+  status: IcpmsDocumentVersionStatus
+  isCurrent: Boolean
+  changeSummary: String
+  notes: String
+}
+
+input SetIcpmsDocumentVersionCurrentInput {
+  id: ID!
+}
+
+type CreateIcpmsDocumentVersionPayload {
+  version: IcpmsDocumentVersion!
+}
+
+type UpdateIcpmsDocumentVersionPayload {
+  version: IcpmsDocumentVersion!
+}
+
+type DeleteIcpmsDocumentVersionPayload {
+  id: ID!
+}
+
+type SetIcpmsDocumentVersionCurrentPayload {
+  version: IcpmsDocumentVersion!
+}
+
+extend type Mutation {
+  createIcpmsDocumentVersion(
+    input: CreateIcpmsDocumentVersionInput!
+  ): CreateIcpmsDocumentVersionPayload!
+
+  updateIcpmsDocumentVersion(
+    input: UpdateIcpmsDocumentVersionInput!
+  ): UpdateIcpmsDocumentVersionPayload!
+
+  deleteIcpmsDocumentVersion(
+    input: DeleteIcpmsDocumentVersionInput!
+  ): DeleteIcpmsDocumentVersionPayload!
+
+  setIcpmsDocumentVersionCurrent(
+    input: SetIcpmsDocumentVersionCurrentInput!
+  ): SetIcpmsDocumentVersionCurrentPayload!
+}
+
+input DeleteIcpmsDocumentVersionInput {
+  id: ID!
+}

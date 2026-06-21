@@ -1,0 +1,204 @@
+# Copyright (c) 2025-2026 VATM ICPMS <sms@vatm.vn>.
+#
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+# REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+# AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+# INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+# LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+# OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+# PERFORMANCE OF THIS SOFTWARE.
+
+enum IcpmsDocumentType {
+    ICAO_ANNEX
+    ICAO_DOC
+    ICAO_CIRCULAR
+    ICAO_APAC
+    CANSO_GUIDANCE
+    ISO_STANDARD
+    EASA_EU
+    EUROCONTROL
+    EUROCAE_RTCA
+    VATM_INTERNAL
+    DECREE
+    CIRCULAR_VN
+    DECISION
+    INTERNAL_REGULATION
+    PROCEDURE
+    GUIDANCE
+    FORM
+    TECHNICAL_DOCUMENT
+    SAFETY_DOCUMENT
+    COMPLIANCE_DOCUMENT
+    OTHER
+}
+
+enum IcpmsDocumentGroup {
+    ICAO
+    ICAO_APAC
+    CANSO
+    ISO
+    EASA_EU
+    EUROCONTROL
+    EUROCAE_RTCA
+    VIETNAM_LEGAL
+    VATM
+    OTHER
+}
+
+enum IcpmsDocumentStatus {
+    DRAFT
+    ACTIVE
+    UNDER_REVIEW
+    SUPERSEDED
+    ARCHIVED
+    DELETED
+}
+
+enum IcpmsDocumentPriority {
+    HIGH
+    MEDIUM
+    LOW
+}
+
+enum IcpmsDocumentApplicability {
+    YES
+    NO
+    REVIEW
+}
+
+enum IcpmsDocumentClassification {
+    PUBLIC
+    INTERNAL
+    RESTRICTED
+}
+
+type IcpmsDocument implements Node {
+    id: ID!
+    organization: Organization!
+    code: String!
+    # Mã nghiệp vụ rút gọn, chuẩn hóa. Regex: ^[A-Z0-9]+(-[A-Z0-9]+)*$ (ví dụ: ND125, ANX11, QC-VATM)
+    documentCode: String
+    title: String!
+    documentType: IcpmsDocumentType!
+    documentGroup: IcpmsDocumentGroup
+    sourceOrganization: String
+    issuer: String
+    mainDomain: String
+    pageCount: Int
+    issuedDate: Datetime
+    effectiveDate: Datetime
+    language: String
+    classification: IcpmsDocumentClassification
+    applicableToVatm: IcpmsDocumentApplicability
+    priority: IcpmsDocumentPriority
+    status: IcpmsDocumentStatus!
+    description: String
+    notes: String
+    owningUnitId: ID
+    createdBy: ID!
+    updatedBy: ID!
+    createdAt: Datetime!
+    updatedAt: Datetime!
+    deletedAt: Datetime
+    
+    versions(
+        first: Int
+        after: CursorKey
+        filter: IcpmsDocumentVersionFilter
+        orderBy: IcpmsDocumentVersionOrderField = CREATED_AT
+    ): IcpmsDocumentVersionConnection!
+
+    permission(action: String!): Boolean!
+}
+
+type IcpmsDocumentEdge {
+    cursor: CursorKey!
+    node: IcpmsDocument!
+}
+
+type IcpmsDocumentConnection @goModel(model: "go.probo.inc/probo/pkg/server/api/console/v1/types.IcpmsDocumentConnection") {
+    edges: [IcpmsDocumentEdge!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+input IcpmsDocumentFilter {
+    query: String
+    types: [IcpmsDocumentType!]
+    groups: [IcpmsDocumentGroup!]
+    statuses: [IcpmsDocumentStatus!]
+    priorities: [IcpmsDocumentPriority!]
+    applicabilities: [IcpmsDocumentApplicability!]
+}
+
+enum IcpmsDocumentOrderField {
+    CREATED_AT
+    UPDATED_AT
+    CODE
+    TITLE
+}
+
+input IcpmsDocumentOrderBy {
+    direction: OrderDirection!
+    field: IcpmsDocumentOrderField!
+}
+
+input CreateIcpmsDocumentInput {
+    organizationId: ID!
+    code: String!
+    documentCode: String
+    title: String!
+    documentType: IcpmsDocumentType!
+    documentGroup: IcpmsDocumentGroup
+    sourceOrganization: String
+    issuer: String
+    mainDomain: String
+    pageCount: Int
+    issuedDate: Datetime
+    effectiveDate: Datetime
+    language: String
+    classification: IcpmsDocumentClassification
+    applicableToVatm: IcpmsDocumentApplicability
+    priority: IcpmsDocumentPriority
+    status: IcpmsDocumentStatus!
+    description: String
+    notes: String
+    owningUnitId: ID
+}
+
+input UpdateIcpmsDocumentInput {
+    code: String
+    documentCode: String
+    title: String
+    documentType: IcpmsDocumentType
+    documentGroup: IcpmsDocumentGroup
+    sourceOrganization: String
+    issuer: String
+    mainDomain: String
+    pageCount: Int
+    issuedDate: Datetime
+    effectiveDate: Datetime
+    language: String
+    classification: IcpmsDocumentClassification
+    applicableToVatm: IcpmsDocumentApplicability
+    priority: IcpmsDocumentPriority
+    status: IcpmsDocumentStatus
+    description: String
+    notes: String
+    owningUnitId: ID
+}
+
+
+extend type Query {
+    icpmsDocument(id: ID!): IcpmsDocument! @goField(forceResolver: true)
+}
+
+extend type Mutation {
+    createIcpmsDocument(input: CreateIcpmsDocumentInput!): IcpmsDocument!
+    updateIcpmsDocument(id: ID!, input: UpdateIcpmsDocumentInput!): IcpmsDocument!
+    deleteIcpmsDocument(id: ID!): Boolean!
+}

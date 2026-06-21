@@ -1,0 +1,184 @@
+enum ConnectorProvider
+    @goModel(model: "go.probo.inc/probo/pkg/coredata.ConnectorProvider") {
+    SLACK @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderSlack")
+    GOOGLE_WORKSPACE
+        @goEnum(
+            value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderGoogleWorkspace"
+        )
+    LINEAR @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderLinear")
+    ONE_PASSWORD
+        @goEnum(
+            value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderOnePassword"
+        )
+    HUBSPOT
+        @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderHubSpot")
+    DOCUSIGN
+        @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderDocuSign")
+    GRAFANA
+        @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderGrafana")
+    NOTION @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderNotion")
+    BREX @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderBrex")
+    TALLY @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderTally")
+    CLOUDFLARE
+        @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderCloudflare")
+    OPENAI @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderOpenAI")
+    POSTHOG @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderPostHog")
+    SENTRY @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderSentry")
+    SIGNOZ
+        @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderSigNoz")
+    SUPABASE
+        @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderSupabase")
+    BETTER_STACK
+        @goEnum(
+            value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderBetterStack"
+        )
+    GITHUB @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderGitHub")
+    INTERCOM
+        @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderIntercom")
+    RESEND @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderResend")
+    SENDGRID
+        @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderSendGrid")
+    MICROSOFT_365
+        @goEnum(
+            value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderMicrosoft365"
+        )
+    GITLAB @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderGitLab")
+    BITBUCKET
+        @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderBitbucket")
+    HEROKU @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderHeroku")
+    PAGERDUTY
+        @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderPagerDuty")
+    ASANA @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderAsana")
+    NETLIFY
+        @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderNetlify")
+    CLICKUP
+        @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderClickUp")
+    CLERK @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderClerk")
+    VERCEL @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderVercel")
+    MONDAY @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderMonday")
+    METABASE
+        @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderMetabase")
+    TAILSCALE
+        @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderTailscale")
+    ANTHROPIC
+        @goEnum(
+            value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderAnthropic"
+        )
+    CURSOR @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderCursor")
+    DATADOG @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderDatadog")
+    OKTA @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderOkta")
+    ZENDESK @goEnum(value: "go.probo.inc/probo/pkg/coredata.ConnectorProviderZendesk")
+}
+
+type ConnectorProviderInfo {
+    provider: ConnectorProvider!
+    displayName: String!
+    oauthConfigured: Boolean!
+    apiKeySupported: Boolean!
+    clientCredentialsSupported: Boolean!
+    oauth2Scopes: [String!]!
+    extraSettings: [ConnectorProviderSettingInfo!]!
+}
+
+type ConnectorProviderSettingInfo {
+    key: String!
+    label: String!
+    required: Boolean!
+}
+
+input ConnectorFilter {
+    providers: [ConnectorProvider!]
+}
+
+type Connector {
+    id: ID!
+    provider: ConnectorProvider!
+    oauth2Scopes: [String!]! @goField(forceResolver: true)
+    createdAt: Datetime!
+}
+
+type SlackConnection implements Node {
+    id: ID!
+    channel: String
+    channelId: String
+    createdAt: Datetime!
+    updatedAt: Datetime!
+
+    permission(action: String!): Boolean! @goField(forceResolver: true)
+}
+
+type SlackConnectionConnection {
+    edges: [SlackConnectionEdge!]!
+    pageInfo: PageInfo!
+}
+
+type SlackConnectionEdge {
+    cursor: CursorKey!
+    node: SlackConnection!
+}
+
+extend type Mutation {
+    createAPIKeyConnector(
+        input: CreateAPIKeyConnectorInput!
+    ): CreateAPIKeyConnectorPayload!
+    createClientCredentialsConnector(
+        input: CreateClientCredentialsConnectorInput!
+    ): CreateClientCredentialsConnectorPayload!
+    deleteConnector(input: DeleteConnectorInput!): DeleteConnectorPayload!
+    deleteSlackConnection(
+        input: DeleteSlackConnectionInput!
+    ): DeleteSlackConnectionPayload!
+}
+
+input CreateAPIKeyConnectorInput {
+    organizationId: ID!
+    provider: ConnectorProvider!
+    apiKey: String!
+    tallyOrganizationId: String
+    sentryOrganizationSlug: String
+    supabaseOrganizationSlug: String
+    githubOrganization: String
+    grafanaBaseUrl: String
+    signozBaseUrl: String
+    onePasswordScimBridgeUrl: String
+    metabaseInstanceUrl: String
+    posthogRegion: String
+    posthogInstanceUrl: String
+    oktaDomain: String
+    betterStackTeamName: String
+}
+
+type CreateAPIKeyConnectorPayload {
+    connector: Connector!
+}
+
+input CreateClientCredentialsConnectorInput {
+    organizationId: ID!
+    provider: ConnectorProvider!
+    clientId: String!
+    clientSecret: String!
+    tokenUrl: String!
+    scope: String
+    onePasswordAccountId: String
+    onePasswordRegion: String
+}
+
+type CreateClientCredentialsConnectorPayload {
+    connector: Connector
+}
+
+input DeleteConnectorInput {
+    connectorId: ID!
+}
+
+type DeleteConnectorPayload {
+    deletedConnectorId: ID!
+}
+
+input DeleteSlackConnectionInput {
+    slackConnectionId: ID!
+}
+
+type DeleteSlackConnectionPayload {
+    deletedSlackConnectionId: ID!
+}

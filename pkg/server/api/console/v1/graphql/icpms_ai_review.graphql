@@ -1,0 +1,172 @@
+# Copyright (c) 2026 VATM ICPMS <sms@vatm.vn>.
+
+enum IcpmsAiReviewJobStatus {
+  QUEUED
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+  PARTIAL
+}
+
+enum IcpmsAiReviewScope {
+  ALL
+  NEEDS_REVIEW
+  SELECTED
+}
+
+enum IcpmsAiProvider {
+  RULE_BASED
+  OPENAI
+  ANTHROPIC
+  GEMINI
+}
+
+enum IcpmsAiReviewSuggestionStatus {
+  AI_SUGGESTED
+  NEEDS_HUMAN_REVIEW
+  ACCEPTED
+  REJECTED
+  EDITED
+  ARCHIVED
+  DELETED
+}
+
+type IcpmsAiReviewJob implements Node @goModel(model: "go.probo.inc/probo/pkg/coredata.IcpmsAiReviewJob") {
+  id: ID!
+  organization: Organization! @goField(forceResolver: true)
+  document: IcpmsDocument! @goField(forceResolver: true)
+  documentVersion: IcpmsDocumentVersion! @goField(forceResolver: true)
+  jobCode: String!
+  reviewScope: IcpmsAiReviewScope!
+  status: IcpmsAiReviewJobStatus!
+  progressPercent: Int!
+  totalRequirements: Int!
+  processedRequirements: Int!
+  totalSuggestions: Int!
+  totalAccepted: Int!
+  totalRejected: Int!
+  aiProvider: IcpmsAiProvider!
+  aiModel: String
+  errorMessage: String
+  warningMessage: String
+  startedAt: Datetime
+  finishedAt: Datetime
+  createdAt: Datetime!
+  updatedAt: Datetime!
+
+  suggestions(
+    first: Int
+    after: CursorKey
+    filter: IcpmsAiReviewSuggestionFilter
+  ): IcpmsAiReviewSuggestionConnection! @goField(forceResolver: true)
+}
+
+type IcpmsAiReviewJobEdge {
+  cursor: CursorKey!
+  node: IcpmsAiReviewJob!
+}
+
+type IcpmsAiReviewJobConnection {
+  edges: [IcpmsAiReviewJobEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+input IcpmsAiReviewSuggestionFilter {
+  status: IcpmsAiReviewSuggestionStatus
+  requirementId: ID
+}
+
+type IcpmsAiReviewSuggestion implements Node @goModel(model: "go.probo.inc/probo/pkg/coredata.IcpmsAiReviewSuggestion") {
+  id: ID!
+  aiReviewJobId: ID!
+  requirement: IcpmsRequirement! @goField(forceResolver: true)
+  documentId: ID!
+  documentVersionId: ID!
+
+  suggestedImplementationMethod: String
+  suggestedResponsibleUnit: String
+  suggestedResponsibleRole: String
+  suggestedEvidence: String
+  suggestedCurrentStatus: String
+  suggestedActionPlan: String
+  suggestedChecklistQuestion: String
+  suggestedRiskIfNotComplied: String
+  suggestedPlainLanguageText: String
+  suggestedRequirementType: String
+  suggestedApplicabilityStatus: String
+  suggestedPriority: String
+  suggestedComplianceDomain: String
+
+  aiConfidence: Float!
+  status: IcpmsAiReviewSuggestionStatus!
+  acceptedBy: ID
+  acceptedAt: Datetime
+  rejectedBy: ID
+  rejectedAt: Datetime
+  rejectionReason: String
+  createdAt: Datetime!
+  updatedAt: Datetime!
+}
+
+type IcpmsAiReviewSuggestionEdge {
+  cursor: CursorKey!
+  node: IcpmsAiReviewSuggestion!
+}
+
+type IcpmsAiReviewSuggestionConnection {
+  edges: [IcpmsAiReviewSuggestionEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+input CreateIcpmsAiReviewJobInput {
+  organizationId: ID!
+  documentId: ID!
+  documentVersionId: ID!
+  reviewScope: IcpmsAiReviewScope!
+  aiProvider: IcpmsAiProvider!
+  aiModel: String
+}
+
+type CreateIcpmsAiReviewJobPayload {
+  job: IcpmsAiReviewJob!
+}
+
+input AcceptIcpmsAiReviewSuggestionInput {
+  id: ID!
+}
+
+type AcceptIcpmsAiReviewSuggestionPayload {
+  suggestion: IcpmsAiReviewSuggestion!
+}
+
+input RejectIcpmsAiReviewSuggestionInput {
+  id: ID!
+  rejectionReason: String
+}
+
+type RejectIcpmsAiReviewSuggestionPayload {
+  suggestion: IcpmsAiReviewSuggestion!
+}
+
+extend type Mutation {
+  createIcpmsAiReviewJob(
+    input: CreateIcpmsAiReviewJobInput!
+  ): CreateIcpmsAiReviewJobPayload!
+
+  acceptIcpmsAiReviewSuggestion(
+    input: AcceptIcpmsAiReviewSuggestionInput!
+  ): AcceptIcpmsAiReviewSuggestionPayload!
+
+  rejectIcpmsAiReviewSuggestion(
+    input: RejectIcpmsAiReviewSuggestionInput!
+  ): RejectIcpmsAiReviewSuggestionPayload!
+}
+
+extend type Query {
+  icpmsAiReviewJobs(organizationId: ID!): IcpmsAiReviewJobConnection! @goField(forceResolver: true)
+  icpmsAiReviewJob(id: ID!): IcpmsAiReviewJob @goField(forceResolver: true)
+  icpmsAiReviewSuggestions(jobId: ID!, filter: IcpmsAiReviewSuggestionFilter): IcpmsAiReviewSuggestionConnection! @goField(forceResolver: true)
+}

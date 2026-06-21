@@ -1,0 +1,131 @@
+# Copyright (c) 2026 VATM ICPMS <sms@vatm.vn>.
+
+enum IcpmsIngestionExtractionMode {
+  AUTO
+  PDF_TEXT
+  OCR
+  DOCX_TEXT
+  TXT_TEXT
+  DOC_LEGACY
+}
+
+enum IcpmsIngestionJobType {
+  TEXT_EXTRACTION
+  RE_EXTRACTION
+  VALIDATION_ONLY
+}
+
+enum IcpmsIngestionJobStatus {
+  QUEUED
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+  PARTIAL
+}
+
+enum IcpmsExtractedTextBlockType {
+  PAGE
+  PARAGRAPH
+  TABLE
+  HEADING
+  FOOTNOTE
+  UNKNOWN
+}
+
+type IcpmsIngestionJob implements Node @goModel(model: "go.probo.inc/probo/pkg/coredata.IcpmsIngestionJob") {
+  id: ID!
+  document: IcpmsDocument! @goField(forceResolver: true)
+  documentVersion: IcpmsDocumentVersion! @goField(forceResolver: true)
+  documentFile: IcpmsDocumentFile! @goField(forceResolver: true)
+  jobCode: String!
+  jobType: IcpmsIngestionJobType!
+  extractionMode: IcpmsIngestionExtractionMode!
+  status: IcpmsIngestionJobStatus!
+  progressPercent: Int!
+  totalBlocks: Int!
+  totalPages: Int!
+  totalChars: Int!
+  languageDetected: String
+  startedAt: Datetime
+  finishedAt: Datetime
+  errorMessage: String
+  warningMessage: String
+  createdAt: Datetime!
+  updatedAt: Datetime!
+}
+
+type IcpmsIngestionJobConnection {
+  edges: [IcpmsIngestionJobEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type IcpmsIngestionJobEdge {
+  cursor: CursorKey!
+  node: IcpmsIngestionJob!
+}
+
+type IcpmsExtractedTextBlock implements Node @goModel(model: "go.probo.inc/probo/pkg/coredata.IcpmsExtractedTextBlock") {
+  id: ID!
+  blockIndex: Int!
+  pageNumber: Int
+  blockType: IcpmsExtractedTextBlockType!
+  rawText: String!
+  normalizedText: String!
+  languageDetected: String
+  charCount: Int!
+  wordCount: Int!
+  sectionHint: String
+  createdAt: Datetime!
+  updatedAt: Datetime!
+}
+
+type IcpmsExtractedTextBlockConnection {
+  edges: [IcpmsExtractedTextBlockEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type IcpmsExtractedTextBlockEdge {
+  cursor: CursorKey!
+  node: IcpmsExtractedTextBlock!
+}
+
+input CreateIcpmsIngestionJobInput {
+  documentId: ID!
+  documentVersionId: ID!
+  documentFileId: ID!
+  extractionMode: IcpmsIngestionExtractionMode!
+  jobType: IcpmsIngestionJobType
+}
+
+type CreateIcpmsIngestionJobPayload {
+  job: IcpmsIngestionJob
+}
+
+input DeleteIcpmsIngestionJobInput {
+  id: ID!
+}
+
+type DeleteIcpmsIngestionJobPayload {
+  deletedId: ID
+}
+
+extend type Mutation {
+  createIcpmsIngestionJob(
+    input: CreateIcpmsIngestionJobInput!
+  ): CreateIcpmsIngestionJobPayload!
+
+  deleteIcpmsIngestionJob(
+    input: DeleteIcpmsIngestionJobInput!
+  ): DeleteIcpmsIngestionJobPayload!
+}
+
+extend type Query {
+  ingestionJobs(organizationId: ID!): IcpmsIngestionJobConnection! @goField(forceResolver: true)
+  ingestionJob(id: ID!): IcpmsIngestionJob @goField(forceResolver: true)
+  ingestionJobTextBlocks(jobId: ID!): IcpmsExtractedTextBlockConnection! @goField(forceResolver: true)
+  latestIngestionJobForFile(documentFileId: ID!): IcpmsIngestionJob @goField(forceResolver: true)
+  latestIngestionJobForVersion(documentVersionId: ID!): IcpmsIngestionJob @goField(forceResolver: true)
+}

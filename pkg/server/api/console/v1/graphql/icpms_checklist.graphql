@@ -1,0 +1,251 @@
+# Copyright (c) 2026 VATM ICPMS <sms@vatm.vn>.
+# Phase 11 — Checklist chính thức
+
+enum IcpmsChecklistStatus {
+  DRAFT
+  NEEDS_REVIEW
+  ACTIVE
+  INACTIVE
+  ARCHIVED
+  DELETED
+}
+
+enum IcpmsChecklistApprovalStatus {
+  PENDING_REVIEW
+  APPROVED
+  REJECTED
+  NEEDS_REVISION
+}
+
+enum IcpmsChecklistCreatedFrom {
+  AI_REVIEW
+  MANUAL
+  IMPORT
+  SYSTEM
+}
+
+type IcpmsChecklist implements Node @goModel(model: "go.probo.inc/probo/pkg/coredata.IcpmsChecklist") {
+  id: ID!
+  organization: Organization! @goField(forceResolver: true)
+  document: IcpmsDocument! @goField(forceResolver: true)
+  documentVersion: IcpmsDocumentVersion! @goField(forceResolver: true)
+  requirement: IcpmsRequirement @goField(forceResolver: true)
+
+  checklistCode: String!
+  checklistQuestion: String!
+  requirementText: String
+  sourceReference: String
+  sourceText: String
+
+  implementationMethod: String
+  responsibleUnit: String
+  responsibleRole: String
+  requiredEvidence: String
+  currentStatusText: String
+  actionPlan: String
+  riskIfNotComplied: String
+
+  priority: String!
+  complianceDomain: String
+  frequency: String
+  dueDays: Int
+
+  status: IcpmsChecklistStatus!
+  approvalStatus: IcpmsChecklistApprovalStatus!
+  createdFrom: IcpmsChecklistCreatedFrom!
+
+  createdById: ID
+  approvedById: ID
+  approvedAt: Datetime
+  rejectedById: ID
+  rejectedAt: Datetime
+  rejectionReason: String
+
+  createdAt: Datetime!
+  updatedAt: Datetime!
+}
+
+type IcpmsChecklistEdge {
+  cursor: CursorKey!
+  node: IcpmsChecklist!
+}
+
+type IcpmsChecklistConnection {
+  edges: [IcpmsChecklistEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+input IcpmsChecklistFilter {
+  documentId: ID
+  documentVersionId: ID
+  requirementId: ID
+  status: IcpmsChecklistStatus
+  approvalStatus: IcpmsChecklistApprovalStatus
+  complianceDomain: String
+  responsibleUnit: String
+  priority: String
+  keyword: String
+}
+
+input CreateIcpmsChecklistInput {
+  organizationId: ID!
+  documentId: ID!
+  documentVersionId: ID!
+  requirementId: ID
+  checklistQuestion: String!
+  sourceReference: String
+  implementationMethod: String
+  responsibleUnit: String
+  responsibleRole: String
+  requiredEvidence: String
+  currentStatusText: String
+  actionPlan: String
+  riskIfNotComplied: String
+  priority: String
+  complianceDomain: String
+  frequency: String
+  dueDays: Int
+}
+
+type CreateIcpmsChecklistPayload {
+  checklist: IcpmsChecklist!
+}
+
+input CreateIcpmsChecklistFromAiSuggestionInput {
+  aiReviewSuggestionId: ID!
+}
+
+type CreateIcpmsChecklistFromAiSuggestionPayload {
+  checklist: IcpmsChecklist!
+  wasExisting: Boolean!
+}
+
+input CreateIcpmsChecklistsFromAiSuggestionsInput {
+  aiReviewSuggestionIds: [ID!]!
+}
+
+type CreateIcpmsChecklistsFromAiSuggestionsPayload {
+  checklists: [IcpmsChecklist!]!
+  createdCount: Int!
+  existingCount: Int!
+}
+
+input UpdateIcpmsChecklistInput {
+  id: ID!
+  checklistQuestion: String
+  implementationMethod: String
+  responsibleUnit: String
+  responsibleRole: String
+  requiredEvidence: String
+  currentStatusText: String
+  actionPlan: String
+  riskIfNotComplied: String
+  priority: String
+  complianceDomain: String
+  frequency: String
+  dueDays: Int
+  sourceReference: String
+}
+
+type UpdateIcpmsChecklistPayload {
+  checklist: IcpmsChecklist!
+}
+
+input ApproveIcpmsChecklistInput {
+  id: ID!
+}
+
+type ApproveIcpmsChecklistPayload {
+  checklist: IcpmsChecklist!
+}
+
+input RejectIcpmsChecklistInput {
+  id: ID!
+  rejectionReason: String!
+}
+
+type RejectIcpmsChecklistPayload {
+  checklist: IcpmsChecklist!
+}
+
+input RequestIcpmsChecklistRevisionInput {
+  id: ID!
+  reason: String!
+}
+
+type RequestIcpmsChecklistRevisionPayload {
+  checklist: IcpmsChecklist!
+}
+
+input ArchiveIcpmsChecklistInput {
+  id: ID!
+}
+
+type ArchiveIcpmsChecklistPayload {
+  checklist: IcpmsChecklist!
+}
+
+input DeleteIcpmsChecklistInput {
+  id: ID!
+}
+
+type DeleteIcpmsChecklistPayload {
+  deletedChecklistId: ID!
+}
+
+extend type Query {
+  icpmsChecklists(
+    organizationId: ID!
+    filter: IcpmsChecklistFilter
+  ): IcpmsChecklistConnection! @goField(forceResolver: true)
+
+  icpmsChecklist(id: ID!): IcpmsChecklist @goField(forceResolver: true)
+
+  icpmsChecklistsByRequirement(
+    requirementId: ID!
+  ): IcpmsChecklistConnection! @goField(forceResolver: true)
+
+  icpmsChecklistsByDocument(
+    documentId: ID!
+    documentVersionId: ID
+  ): IcpmsChecklistConnection! @goField(forceResolver: true)
+}
+
+extend type Mutation {
+  createIcpmsChecklist(
+    input: CreateIcpmsChecklistInput!
+  ): CreateIcpmsChecklistPayload!
+
+  createIcpmsChecklistFromAiSuggestion(
+    input: CreateIcpmsChecklistFromAiSuggestionInput!
+  ): CreateIcpmsChecklistFromAiSuggestionPayload!
+
+  createIcpmsChecklistsFromAiSuggestions(
+    input: CreateIcpmsChecklistsFromAiSuggestionsInput!
+  ): CreateIcpmsChecklistsFromAiSuggestionsPayload!
+
+  updateIcpmsChecklist(
+    input: UpdateIcpmsChecklistInput!
+  ): UpdateIcpmsChecklistPayload!
+
+  approveIcpmsChecklist(
+    input: ApproveIcpmsChecklistInput!
+  ): ApproveIcpmsChecklistPayload!
+
+  rejectIcpmsChecklist(
+    input: RejectIcpmsChecklistInput!
+  ): RejectIcpmsChecklistPayload!
+
+  requestIcpmsChecklistRevision(
+    input: RequestIcpmsChecklistRevisionInput!
+  ): RequestIcpmsChecklistRevisionPayload!
+
+  archiveIcpmsChecklist(
+    input: ArchiveIcpmsChecklistInput!
+  ): ArchiveIcpmsChecklistPayload!
+
+  deleteIcpmsChecklist(
+    input: DeleteIcpmsChecklistInput!
+  ): DeleteIcpmsChecklistPayload!
+}

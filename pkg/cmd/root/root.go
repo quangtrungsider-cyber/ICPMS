@@ -1,0 +1,132 @@
+// Copyright (c) 2026 VATM ICPMS <sms@vatm.vn>.
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+// REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+// AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+// INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+// LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+// OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+
+package root
+
+import (
+	"github.com/spf13/cobra"
+	accessreview "go.probo.inc/probo/pkg/cmd/access-review"
+	cmdapi "go.probo.inc/probo/pkg/cmd/api"
+	"go.probo.inc/probo/pkg/cmd/asset"
+	"go.probo.inc/probo/pkg/cmd/audit"
+	"go.probo.inc/probo/pkg/cmd/auditlog"
+	"go.probo.inc/probo/pkg/cmd/auth"
+	"go.probo.inc/probo/pkg/cmd/browse"
+	"go.probo.inc/probo/pkg/cmd/cmdutil"
+	"go.probo.inc/probo/pkg/cmd/completion"
+	cmdconfig "go.probo.inc/probo/pkg/cmd/config"
+	consentrecord "go.probo.inc/probo/pkg/cmd/consent-record"
+	cmdcontext "go.probo.inc/probo/pkg/cmd/context"
+	"go.probo.inc/probo/pkg/cmd/control"
+	cookiebanner "go.probo.inc/probo/pkg/cmd/cookie-banner"
+	cookiecategory "go.probo.inc/probo/pkg/cmd/cookie-category"
+	"go.probo.inc/probo/pkg/cmd/datum"
+	"go.probo.inc/probo/pkg/cmd/document"
+	"go.probo.inc/probo/pkg/cmd/dpia"
+	"go.probo.inc/probo/pkg/cmd/evidence"
+	"go.probo.inc/probo/pkg/cmd/finding"
+	"go.probo.inc/probo/pkg/cmd/framework"
+	"go.probo.inc/probo/pkg/cmd/measure"
+	"go.probo.inc/probo/pkg/cmd/obligation"
+	"go.probo.inc/probo/pkg/cmd/org"
+	processingactivity "go.probo.inc/probo/pkg/cmd/processing-activity"
+	rightsrequest "go.probo.inc/probo/pkg/cmd/rights-request"
+	"go.probo.inc/probo/pkg/cmd/risk"
+	riskassessment "go.probo.inc/probo/pkg/cmd/risk-assessment"
+	"go.probo.inc/probo/pkg/cmd/scim"
+	"go.probo.inc/probo/pkg/cmd/soa"
+	"go.probo.inc/probo/pkg/cmd/task"
+	"go.probo.inc/probo/pkg/cmd/thirdpartymgmt"
+	"go.probo.inc/probo/pkg/cmd/tia"
+	trackerpattern "go.probo.inc/probo/pkg/cmd/tracker-pattern"
+	trackerresource "go.probo.inc/probo/pkg/cmd/tracker-resource"
+	trustcenter "go.probo.inc/probo/pkg/cmd/trust-center"
+	"go.probo.inc/probo/pkg/cmd/user"
+	"go.probo.inc/probo/pkg/cmd/version"
+	"go.probo.inc/probo/pkg/cmd/webhook"
+)
+
+func NewCmdRoot(f *cmdutil.Factory) *cobra.Command {
+	cmd := &cobra.Command{
+		Use:           "prb <command> [flags]",
+		Short:         "Probo CLI",
+		Long:          "prb is a command-line tool for interacting with the Probo platform.",
+		SilenceUsage:  true,
+		SilenceErrors: true,
+		PersistentPreRun: func(cmd *cobra.Command, args []string) {
+			if noInteractive, _ := cmd.Flags().GetBool("no-interactive"); noInteractive {
+				f.IOStreams.ForceNonInteractive = true
+			}
+
+			if noColor, _ := cmd.Flags().GetBool("no-color"); noColor {
+				f.IOStreams.ForceNoColor = true
+			}
+
+			f.IOStreams.ApplyColorProfile()
+		},
+	}
+
+	cmd.PersistentFlags().Bool(
+		"no-interactive",
+		false,
+		"Disable interactive prompts (also set via PROBO_NO_INTERACTIVE=1, CI=true, or TERM=dumb)",
+	)
+
+	cmd.PersistentFlags().Bool(
+		"no-color",
+		false,
+		"Disable ANSI color output (also set via NO_COLOR or TERM=dumb)",
+	)
+
+	cmd.AddCommand(accessreview.NewCmdAccessReview(f))
+	cmd.AddCommand(cmdapi.NewCmdAPI(f))
+	cmd.AddCommand(asset.NewCmdAsset(f))
+	cmd.AddCommand(audit.NewCmdAudit(f))
+	cmd.AddCommand(auditlog.NewCmdAuditLog(f))
+	cmd.AddCommand(auth.NewCmdAuth(f))
+	cmd.AddCommand(browse.NewCmdBrowse(f))
+	cmd.AddCommand(completion.NewCmdCompletion(f))
+	cmd.AddCommand(cmdconfig.NewCmdConfig(f))
+	cmd.AddCommand(consentrecord.NewCmdConsentRecord(f))
+	cmd.AddCommand(cmdcontext.NewCmdContext(f))
+	cmd.AddCommand(control.NewCmdControl(f))
+	cmd.AddCommand(cookiebanner.NewCmdCookieBanner(f))
+	cmd.AddCommand(cookiecategory.NewCmdCookieCategory(f))
+	cmd.AddCommand(trackerpattern.NewCmdTrackerPattern(f))
+	cmd.AddCommand(trackerresource.NewCmdTrackerResource(f))
+	cmd.AddCommand(datum.NewCmdDatum(f))
+	cmd.AddCommand(document.NewCmdDocument(f))
+	cmd.AddCommand(dpia.NewCmdDPIA(f))
+	cmd.AddCommand(evidence.NewCmdEvidence(f))
+	cmd.AddCommand(finding.NewCmdFinding(f))
+	cmd.AddCommand(framework.NewCmdFramework(f))
+	cmd.AddCommand(measure.NewCmdMeasure(f))
+	cmd.AddCommand(obligation.NewCmdObligation(f))
+	cmd.AddCommand(org.NewCmdOrg(f))
+	cmd.AddCommand(processingactivity.NewCmdProcessingActivity(f))
+	cmd.AddCommand(rightsrequest.NewCmdRightsRequest(f))
+	cmd.AddCommand(risk.NewCmdRisk(f))
+	cmd.AddCommand(riskassessment.NewCmdRiskAssessment(f))
+	cmd.AddCommand(scim.NewCmdScim(f))
+	cmd.AddCommand(soa.NewCmdSoa(f))
+	cmd.AddCommand(task.NewCmdTask(f))
+	cmd.AddCommand(tia.NewCmdTIA(f))
+	cmd.AddCommand(trustcenter.NewCmdTrustCenter(f))
+	cmd.AddCommand(user.NewCmdUser(f))
+	cmd.AddCommand(thirdpartymgmt.NewCmdThirdParty(f))
+	cmd.AddCommand(version.NewCmdVersion(f))
+	cmd.AddCommand(webhook.NewCmdWebhook(f))
+
+	return cmd
+}

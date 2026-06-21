@@ -1,0 +1,257 @@
+// Copyright (c) 2025-2026 VATM ICPMS <sms@vatm.vn>.
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+// REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+// AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+// INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+// LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+// OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+
+import type {
+	IExecuteFunctions,
+	IHookFunctions,
+	IDataObject,
+	JsonObject,
+	IHttpRequestOptions,
+} from 'n8n-workflow';
+import { NodeApiError } from 'n8n-workflow';
+
+import { version } from '../../package.json';
+
+type ApiRequestFn = (
+	this: IExecuteFunctions | IHookFunctions,
+	query: string,
+	variables?: IDataObject,
+) => Promise<IDataObject>;
+
+async function proboGraphqlRequest(
+	this: IExecuteFunctions | IHookFunctions,
+	apiPath: string,
+	query: string,
+	variables: IDataObject = {},
+): Promise<IDataObject> {
+	const credentials = await this.getCredentials('proboApi');
+
+	const options: IHttpRequestOptions = {
+		method: 'POST',
+		baseURL: `${credentials.server}`,
+		url: apiPath,
+		headers: {
+			'Content-Type': 'application/json',
+			'User-Agent': `probo-n8n-node/${version}`,
+		},
+		body: {
+			query,
+			variables,
+		},
+		json: true,
+	};
+
+	try {
+		const response = await this.helpers.httpRequestWithAuthentication.call(
+			this,
+			'proboApi',
+			options,
+		);
+
+		if (response.errors && Array.isArray(response.errors) && response.errors.length > 0) {
+			const errorMessages = response.errors.map((err: IDataObject) =>
+				err.message || JSON.stringify(err)
+			).join('; ');
+			throw new NodeApiError(this.getNode(), {
+				message: `GraphQL errors: ${errorMessages}`,
+				httpCode: '200',
+			} as JsonObject);
+		}
+
+		return response;
+	} catch (error) {
+		throw new NodeApiError(this.getNode(), error as JsonObject);
+	}
+}
+
+export async function proboApiRequest(
+	this: IExecuteFunctions | IHookFunctions,
+	query: string,
+	variables: IDataObject = {},
+): Promise<IDataObject> {
+	return proboGraphqlRequest.call(this, '/api/console/v1/graphql', query, variables);
+}
+
+export async function proboConnectApiRequest(
+	this: IExecuteFunctions | IHookFunctions,
+	query: string,
+	variables: IDataObject = {},
+): Promise<IDataObject> {
+	return proboGraphqlRequest.call(this, '/api/connect/v1/graphql', query, variables);
+}
+
+async function proboGraphqlRequestAllItems(
+	this: IExecuteFunctions,
+	requestFn: ApiRequestFn,
+	query: string,
+	variables: IDataObject,
+	getConnection: (response: IDataObject) => IDataObject | undefined,
+	returnAll: boolean = true,
+	limit: number = 0,
+): Promise<IDataObject[]> {
+	const items: IDataObject[] = [];
+	let hasNextPage = true;
+	let cursor: string | null = null;
+	const pageSize = 100;
+
+	while (hasNextPage) {
+		const currentLimit = returnAll ? pageSize : Math.min(pageSize, limit - items.length);
+
+		if (currentLimit <= 0) {
+			break;
+		}
+
+		const requestVariables: IDataObject = {
+			...variables,
+			first: currentLimit,
+		};
+		if (cursor) {
+			requestVariables.after = cursor;
+		}
+
+		const responseData = await requestFn.call(this, query, requestVariables);
+		const connection = getConnection(responseData);
+
+		if (connection?.edges) {
+			const edges = connection.edges as Array<{ node: IDataObject }>;
+			items.push(...edges.map((edge) => edge.node));
+		}
+
+		if (connection?.pageInfo) {
+			const pageInfo = connection.pageInfo as IDataObject;
+			hasNextPage = pageInfo.hasNextPage as boolean;
+			cursor = pageInfo.endCursor as string | null;
+		} else {
+			hasNextPage = false;
+		}
+
+		if (!returnAll && items.length >= limit) {
+			hasNextPage = false;
+		}
+	}
+
+	return items;
+}
+
+export async function proboApiRequestAllItems(
+	this: IExecuteFunctions,
+	query: string,
+	variables: IDataObject,
+	getConnection: (response: IDataObject) => IDataObject | undefined,
+	returnAll: boolean = true,
+	limit: number = 0,
+): Promise<IDataObject[]> {
+	return proboGraphqlRequestAllItems.call(
+		this,
+		proboApiRequest,
+		query,
+		variables,
+		getConnection,
+		returnAll,
+		limit,
+	);
+}
+
+export async function proboConnectApiRequestAllItems(
+	this: IExecuteFunctions,
+	query: string,
+	variables: IDataObject,
+	getConnection: (response: IDataObject) => IDataObject | undefined,
+	returnAll: boolean = true,
+	limit: number = 0,
+): Promise<IDataObject[]> {
+	return proboGraphqlRequestAllItems.call(
+		this,
+		proboConnectApiRequest,
+		query,
+		variables,
+		getConnection,
+		returnAll,
+		limit,
+	);
+}
+
+export async function proboApiMultipartRequest(
+	this: IExecuteFunctions,
+	query: string,
+	variables: IDataObject,
+	fileVariablePath: string,
+	fileBuffer: Buffer,
+	fileName: string,
+	mimeType: string = 'application/octet-stream',
+): Promise<IDataObject> {
+	const credentials = await this.getCredentials('proboApi');
+
+	const boundary = `----n8nFormBoundary${Date.now().toString(16)}`;
+
+	const safeFileName = fileName
+		.replace(/[\r\n]/g, '')
+		.replace(/\\/g, '\\\\')
+		.replace(/"/g, '\\"');
+	const safeMimeType = mimeType.replace(/[\r\n]/g, '');
+
+	const operations = JSON.stringify({ query, variables });
+	const map = JSON.stringify({ '0': [fileVariablePath] });
+
+	const parts: Buffer[] = [];
+
+	parts.push(Buffer.from(
+		`--${boundary}\r\nContent-Disposition: form-data; name="operations"\r\n\r\n${operations}\r\n`,
+	));
+
+	parts.push(Buffer.from(
+		`--${boundary}\r\nContent-Disposition: form-data; name="map"\r\n\r\n${map}\r\n`,
+	));
+
+	parts.push(Buffer.from(
+		`--${boundary}\r\nContent-Disposition: form-data; name="0"; filename="${safeFileName}"\r\nContent-Type: ${safeMimeType}\r\n\r\n`,
+	));
+	parts.push(fileBuffer);
+	parts.push(Buffer.from(`\r\n--${boundary}--\r\n`));
+
+	const body = Buffer.concat(parts);
+
+	const options: IHttpRequestOptions = {
+		method: 'POST',
+		baseURL: `${credentials.server}`,
+		url: '/api/console/v1/graphql',
+		headers: {
+			'Content-Type': `multipart/form-data; boundary=${boundary}`,
+			'User-Agent': `probo-n8n-node/${version}`,
+		},
+		body,
+	};
+
+	try {
+		const response = await this.helpers.httpRequestWithAuthentication.call(
+			this,
+			'proboApi',
+			options,
+		);
+
+		if (response.errors && Array.isArray(response.errors) && response.errors.length > 0) {
+			const errorMessages = response.errors.map((err: IDataObject) =>
+				err.message || JSON.stringify(err)
+			).join('; ');
+			throw new NodeApiError(this.getNode(), {
+				message: `GraphQL errors: ${errorMessages}`,
+				httpCode: '200',
+			} as JsonObject);
+		}
+
+		return response;
+	} catch (error) {
+		throw new NodeApiError(this.getNode(), error as JsonObject);
+	}
+}
