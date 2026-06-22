@@ -184,7 +184,7 @@ probod:
 
   icpms-ocr-service:
     url: "http://icpms-ocr:8765"
-    timeout-seconds: 300
+    timeout-seconds: 900
     enabled: true
 
   trust-center:
