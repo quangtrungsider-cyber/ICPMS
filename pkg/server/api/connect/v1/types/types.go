@@ -207,6 +207,7 @@ type CreateUserInput struct {
 	AdditionalEmailAddresses []mail.Addr                   `json:"additionalEmailAddresses,omitempty"`
 	Kind                     *string                       `json:"kind,omitempty"`
 	Position                 *string                       `json:"position,omitempty"`
+	Department               *string                       `json:"department,omitempty"`
 	ContractStartDate        graphql.Omittable[*time.Time] `json:"contractStartDate,omitempty"`
 	ContractEndDate          graphql.Omittable[*time.Time] `json:"contractEndDate,omitempty"`
 }
@@ -399,6 +400,7 @@ type Profile struct {
 	AdditionalEmailAddresses []mail.Addr           `json:"additionalEmailAddresses"`
 	Kind                     *string               `json:"kind,omitempty"`
 	Position                 *string               `json:"position,omitempty"`
+	Department               *string               `json:"department,omitempty"`
 	ContractStartDate        *time.Time            `json:"contractStartDate,omitempty"`
 	ContractEndDate          *time.Time            `json:"contractEndDate,omitempty"`
 	CreatedAt                time.Time             `json:"createdAt"`
@@ -681,6 +683,7 @@ type UpdateUserInput struct {
 	AdditionalEmailAddresses []mail.Addr                   `json:"additionalEmailAddresses,omitempty"`
 	Kind                     *string                       `json:"kind,omitempty"`
 	Position                 *string                       `json:"position,omitempty"`
+	Department               *string                       `json:"department,omitempty"`
 	ContractStartDate        graphql.Omittable[*time.Time] `json:"contractStartDate,omitempty"`
 	ContractEndDate          graphql.Omittable[*time.Time] `json:"contractEndDate,omitempty"`
 }

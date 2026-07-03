@@ -30,6 +30,7 @@ const JobDetailQueryNode = graphql`
           languageDetected
           errorMessage
           warningMessage
+          aiModelUsed
           startedAt
           finishedAt
           createdAt
@@ -145,6 +146,14 @@ const retryIngestionJobMutation = graphql`
   }
 `;
 
+const generateDownloadUrlMutation = graphql`
+  mutation IcpmsIngestionJobDetailPageGenerateDownloadUrlMutation($input: GenerateIcpmsDocumentFileDownloadUrlInput!) {
+    generateIcpmsDocumentFileDownloadUrl(input: $input) {
+      downloadUrl
+    }
+  }
+`;
+
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
@@ -165,6 +174,7 @@ interface IngestionJob {
   languageDetected: string | null;
   errorMessage: string | null;
   warningMessage: string | null;
+  aiModelUsed: string | null;
   startedAt: string | null;
   finishedAt: string | null;
   createdAt: string;
@@ -302,6 +312,15 @@ function langLabel(lang: string | null): string {
   return lang;
 }
 
+function aiModelLabel(model: string | null): string {
+  if (model === null || model === undefined) return "—";
+  if (model === "RULE_BASED") return "Nội bộ (Rule-based)";
+  if (model === "gemini-2.5-flash") return "Gemini 2.5 Flash";
+  if (model === "gemini-2.5-pro") return "Gemini 2.5 Pro";
+  if (model === "gemini-2.0-flash") return "Gemini 2.0 Flash";
+  return model;
+}
+
 const SECTION_TYPE_LABELS: Record<string, string> = {
   PART: "Part", CHAPTER: "Chương", SECTION: "Section", SUBSECTION: "Subsection",
   PARAGRAPH: "Paragraph", SUBPARAGRAPH: "Subparagraph", ARTICLE: "Điều",
@@ -339,6 +358,7 @@ function mapJobNode(node: any): IngestionJob {
     languageDetected: node.languageDetected ?? null,
     errorMessage: node.errorMessage ?? null,
     warningMessage: node.warningMessage ?? null,
+    aiModelUsed: node.aiModelUsed ?? null,
     startedAt: node.startedAt ?? null,
     finishedAt: node.finishedAt ?? null,
     createdAt: node.createdAt,
@@ -346,6 +366,86 @@ function mapJobNode(node: any): IngestionJob {
     documentVersion: { id: node.documentVersion.id, versionCode: node.documentVersion.versionCode },
     documentFile: { id: node.documentFile.id, originalFileName: node.documentFile.originalFileName },
   };
+}
+
+// ---------------------------------------------------------------------------
+// TextBlocksView — hiển thị text blocks với toggle raw OCR / văn bản đã làm sạch
+// ---------------------------------------------------------------------------
+
+function TextBlocksView({
+  blocks,
+  total,
+  aiModelUsed,
+}: {
+  blocks: TextBlock[];
+  total: number;
+  aiModelUsed: string | null;
+}) {
+  const [showRaw, setShowRaw] = useState(false);
+  const isAiCleaned = aiModelUsed && aiModelUsed !== "RULE_BASED";
+
+  return (
+    <>
+      <div className="flex items-center justify-between mb-3">
+        <p className="text-xs text-txt-secondary">
+          Hiển thị <strong>{blocks.length}</strong>
+          {total > blocks.length ? ` / ${total.toLocaleString("vi-VN")}` : ""} block
+        </p>
+        <div className="flex items-center gap-2">
+          {isAiCleaned && (
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-700">
+              ✦ Làm sạch bởi {aiModelLabel(aiModelUsed)}
+            </span>
+          )}
+          <div className="flex rounded-lg border border-border-mid overflow-hidden text-xs">
+            <button
+              className={`px-3 py-1.5 transition-colors ${!showRaw ? "bg-primary text-white font-medium" : "bg-white text-txt-secondary hover:bg-gray-50"}`}
+              onClick={() => setShowRaw(false)}
+            >
+              Văn bản đã làm sạch
+            </button>
+            <button
+              className={`px-3 py-1.5 border-l border-border-mid transition-colors ${showRaw ? "bg-primary text-white font-medium" : "bg-white text-txt-secondary hover:bg-gray-50"}`}
+              onClick={() => setShowRaw(true)}
+            >
+              Văn bản gốc OCR
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="rounded-xl border border-border-mid overflow-hidden">
+        <table className="w-full text-sm border-collapse">
+          <thead className="bg-gray-50">
+            <tr className="border-b border-border-mid">
+              <th className="py-2.5 px-4 text-left text-xs font-medium text-txt-secondary w-12">#</th>
+              <th className="py-2.5 px-4 text-left text-xs font-medium text-txt-secondary w-16">Trang</th>
+              <th className="py-2.5 px-4 text-left text-xs font-medium text-txt-secondary w-28">Loại</th>
+              <th className="py-2.5 px-4 text-left text-xs font-medium text-txt-secondary">
+                {showRaw ? "Văn bản gốc OCR" : "Văn bản đã làm sạch"}
+              </th>
+              <th className="py-2.5 px-4 text-right text-xs font-medium text-txt-secondary w-20">Ký tự</th>
+            </tr>
+          </thead>
+          <tbody>
+            {blocks.map((b) => (
+              <tr key={b.id} className="border-b border-border-light last:border-0 hover:bg-gray-50">
+                <td className="py-2.5 px-4 text-txt-secondary text-xs">{b.blockIndex + 1}</td>
+                <td className="py-2.5 px-4 text-txt-secondary text-xs">{b.pageNumber ?? "—"}</td>
+                <td className="py-2.5 px-4"><Badge variant="neutral">{b.blockType}</Badge></td>
+                <td className="py-2.5 px-4 text-txt-primary text-xs leading-relaxed whitespace-pre-wrap">
+                  {showRaw ? b.rawText : b.normalizedText}
+                  {!showRaw && isAiCleaned && b.rawText !== b.normalizedText && (
+                    <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded text-xs bg-purple-50 text-purple-600 font-normal">✦ đã sửa</span>
+                  )}
+                </td>
+                <td className="py-2.5 px-4 text-txt-secondary text-xs text-right">{b.charCount}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -417,32 +517,48 @@ function SectionTreeItem({
 
 function SectionDetailPanel({ node, onClose }: { node: SectionTreeNode; onClose: () => void }) {
   const typeLabel = SECTION_TYPE_LABELS[node.sectionType] ?? node.sectionType;
-  const fullText = node.contentText ? `${node.fullHeading}\n\n${node.contentText}` : node.fullHeading;
   return (
-    <div className="mt-3 border border-border-mid rounded-lg p-4 bg-gray-50 text-xs space-y-2">
-      <div className="flex items-center justify-between">
-        <span className="font-semibold text-txt-primary text-sm">[{typeLabel}] {node.sectionNumber ?? ""}</span>
-        <button className="text-txt-secondary hover:text-txt-primary" onClick={onClose}>
+    <div className="flex flex-col h-full border border-border-mid rounded-lg bg-gray-50 text-xs overflow-hidden">
+      {/* Header */}
+      <div className="flex items-start justify-between px-3 py-2 border-b border-border-low bg-white shrink-0">
+        <div>
+          <span className="font-semibold text-txt-primary text-sm">
+            [{typeLabel}]{node.sectionNumber ? ` ${node.sectionNumber}` : ""}
+          </span>
+          <div className="flex gap-3 mt-0.5 flex-wrap">
+            {node.confidenceScore > 0 && (
+              <span className="text-txt-tertiary">Confidence: {node.confidenceScore}%</span>
+            )}
+            <span className="text-txt-tertiary">Depth: {node.depthLevel}</span>
+          </div>
+        </div>
+        <button className="text-txt-secondary hover:text-txt-primary p-0.5 rounded shrink-0" onClick={onClose}>
           <IconCrossLargeX size={14} />
         </button>
       </div>
-      <div className="flex gap-3 flex-wrap">
-        <span className="text-txt-secondary">Confidence: {node.confidenceScore}%</span>
-        <span className="text-txt-secondary">Depth: {node.depthLevel}</span>
-      </div>
-      {node.path && (
-        <p className="text-txt-secondary italic truncate" title={node.path}>{node.path}</p>
-      )}
-      {node.warnings && (
-        <div className="bg-amber-50 border border-amber-200 rounded p-2 text-amber-700">
-          <strong>Cảnh báo:</strong> {node.warnings}
+
+      {/* Body — scrollable */}
+      <div className="flex-1 overflow-y-auto p-3 space-y-2">
+        {node.path && (
+          <p className="text-txt-tertiary italic text-[11px]" title={node.path}>{node.path}</p>
+        )}
+        {node.warnings && (
+          <div className="bg-amber-50 border border-amber-200 rounded p-2 text-amber-700">
+            <strong>Cảnh báo:</strong> {node.warnings}
+          </div>
+        )}
+        <div>
+          <p className="font-semibold text-txt-primary mb-1 text-[11px] uppercase tracking-wide">
+            {node.fullHeading}
+          </p>
+          {node.contentText ? (
+            <pre className="whitespace-pre-wrap font-sans text-txt-secondary leading-relaxed text-xs">
+              {node.contentText}
+            </pre>
+          ) : (
+            <p className="text-txt-tertiary italic text-xs">Không có nội dung văn bản.</p>
+          )}
         </div>
-      )}
-      <div>
-        <p className="font-medium text-txt-primary mb-1">Nội dung đầy đủ:</p>
-        <pre className="whitespace-pre-wrap font-sans text-txt-secondary leading-relaxed max-h-80 overflow-y-auto bg-white border border-border-light rounded p-2">
-          {fullText}
-        </pre>
       </div>
     </div>
   );
@@ -533,21 +649,30 @@ function ParseJobSection({
               ) : sectionTree.length === 0 ? (
                 <p className="text-sm text-txt-secondary italic">{__("Không tìm thấy mục nào.")}</p>
               ) : (
-                <div className="border border-border-light rounded overflow-hidden">
-                  {sectionTree.map((node) => (
-                    <SectionTreeItem
-                      key={node.id}
-                      node={node}
-                      depth={0}
-                      onSelect={onSelectNode}
-                      selectedId={selectedNode?.id}
-                    />
-                  ))}
-                </div>
-              )}
+                <div className="flex gap-3 items-start" style={{ minHeight: "400px" }}>
+                  {/* Tree — 2/3 width when panel open, full width otherwise */}
+                  <div
+                    className="border border-border-light rounded overflow-hidden overflow-y-auto"
+                    style={{ flex: selectedNode ? "0 0 66.666%" : "1 1 100%", maxHeight: "600px" }}
+                  >
+                    {sectionTree.map((node) => (
+                      <SectionTreeItem
+                        key={node.id}
+                        node={node}
+                        depth={0}
+                        onSelect={onSelectNode}
+                        selectedId={selectedNode?.id}
+                      />
+                    ))}
+                  </div>
 
-              {selectedNode && (
-                <SectionDetailPanel node={selectedNode} onClose={() => onSelectNode(null as any)} />
+                  {/* Detail panel — 1/3 width, fixed height */}
+                  {selectedNode && (
+                    <div style={{ flex: "0 0 33.333%", height: "600px" }}>
+                      <SectionDetailPanel node={selectedNode} onClose={() => onSelectNode(null as any)} />
+                    </div>
+                  )}
+                </div>
               )}
             </>
           )}
@@ -612,7 +737,53 @@ export function IcpmsIngestionJobDetailPage() {
   }, [job?.status, job?.startedAt]);
 
   // --- Tabs ---
-  const [activeTab, setActiveTab] = useState<"overview" | "text" | "markdown" | "log" | "errors" | "structure">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "file" | "text" | "markdown" | "log" | "errors" | "structure">("overview");
+
+  // --- File gốc tab ---
+  const [fileBlobUrl, setFileBlobUrl] = useState<string | null>(null);   // for iframe (blob URL bypasses Content-Disposition: attachment)
+  const [fileDownloadUrl, setFileDownloadUrl] = useState<string | null>(null); // presigned URL for direct download link
+  const [fileUrlLoading, setFileUrlLoading] = useState(false);
+  const [generateDownloadUrl] = useMutation(generateDownloadUrlMutation);
+  const fileBlobUrlRef = useRef<string | null>(null); // for cleanup
+
+  // Revoke blob URL and reset when job changes
+  useEffect(() => {
+    if (fileBlobUrlRef.current) {
+      URL.revokeObjectURL(fileBlobUrlRef.current);
+      fileBlobUrlRef.current = null;
+    }
+    setFileBlobUrl(null);
+    setFileDownloadUrl(null);
+  }, [job?.id]);
+
+  useEffect(() => {
+    if (activeTab !== "file" || !job?.documentFile?.id) return;
+    if (fileBlobUrl || fileUrlLoading) return; // already loaded or loading
+    setFileUrlLoading(true);
+    generateDownloadUrl({
+      variables: { input: { id: job.documentFile.id } },
+      onCompleted: (data: any) => {
+        const presignedUrl: string | null = data?.generateIcpmsDocumentFileDownloadUrl?.downloadUrl ?? null;
+        if (!presignedUrl) { setFileUrlLoading(false); return; }
+        setFileDownloadUrl(presignedUrl);
+        // Fetch as blob to bypass Content-Disposition: attachment header so PDF renders inline
+        fetch(presignedUrl)
+          .then((r) => r.blob())
+          .then((blob) => {
+            const blobUrl = URL.createObjectURL(blob);
+            fileBlobUrlRef.current = blobUrl;
+            setFileBlobUrl(blobUrl);
+            setFileUrlLoading(false);
+          })
+          .catch(() => {
+            // Fallback: use presigned URL directly (may download instead of display)
+            setFileBlobUrl(presignedUrl);
+            setFileUrlLoading(false);
+          });
+      },
+      onError: () => setFileUrlLoading(false),
+    });
+  }, [activeTab, job?.documentFile?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const lang = job?.languageDetected?.toLowerCase() ?? "";
   const isEnglish = lang.includes("english") || lang === "en" || lang.includes("icao");
@@ -835,6 +1006,7 @@ export function IcpmsIngestionJobDetailPage() {
 
   const tabs = [
     { key: "overview", label: "Tổng quan" },
+    { key: "file", label: "File gốc" },
     { key: "text", label: "Text trích xuất" },
     { key: "markdown", label: "Văn bản / OCR" },
     { key: "log", label: "Log" },
@@ -901,6 +1073,11 @@ export function IcpmsIngestionJobDetailPage() {
             {job.languageDetected && (
               <span className="text-xs text-txt-secondary">{langLabel(job.languageDetected)}</span>
             )}
+            {job.aiModelUsed && job.aiModelUsed !== "RULE_BASED" && (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-700">
+                ✦ {aiModelLabel(job.aiModelUsed)}
+              </span>
+            )}
           </>
         )}
         {job.status === "FAILED" && (
@@ -953,6 +1130,14 @@ export function IcpmsIngestionJobDetailPage() {
                 { label: "Số trang", value: <span className="text-sm">{job.status === "COMPLETED" ? formatNumber(job.totalPages) : "—"}</span> },
                 { label: "Số ký tự", value: <span className="text-sm">{job.status === "COMPLETED" ? formatNumber(job.totalChars) : "—"}</span> },
                 { label: "Ngôn ngữ", value: <span className="text-sm">{langLabel(job.languageDetected)}</span> },
+                { label: "Model làm sạch AI", value: (
+                  <span className="text-sm flex items-center gap-2">
+                    {aiModelLabel(job.aiModelUsed)}
+                    {job.aiModelUsed && job.aiModelUsed !== "RULE_BASED" && (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-700">AI</span>
+                    )}
+                  </span>
+                )},
                 { label: "Bắt đầu", value: <span className="text-sm">{formatDate(job.startedAt)}</span> },
                 { label: "Kết thúc", value: <span className="text-sm">{formatDate(job.finishedAt)}</span> },
                 { label: "Tạo lúc", value: <span className="text-sm">{formatDate(job.createdAt)}</span> },
@@ -963,6 +1148,43 @@ export function IcpmsIngestionJobDetailPage() {
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {/* File gốc */}
+        {activeTab === "file" && (
+          <div className="flex flex-col" style={{ height: "calc(100vh - 220px)", minHeight: "600px" }}>
+            {fileUrlLoading ? (
+              <div className="flex items-center justify-center py-20 text-sm text-txt-secondary">
+                {__("Đang tải file...")}
+              </div>
+            ) : !fileBlobUrl ? (
+              <div className="flex items-center justify-center py-20 text-sm text-txt-secondary">
+                {__("Không thể tải file gốc.")}
+              </div>
+            ) : (
+              <div className="flex flex-col h-full gap-2">
+                <div className="flex items-center justify-between shrink-0">
+                  <span className="text-xs text-txt-secondary font-mono truncate max-w-sm">
+                    {job.documentFile.originalFileName}
+                  </span>
+                  {fileDownloadUrl && (
+                    <a
+                      href={fileDownloadUrl}
+                      download={job.documentFile.originalFileName}
+                      className="text-xs font-medium text-primary hover:underline shrink-0 ml-4"
+                    >
+                      {__("Tải xuống")} ↓
+                    </a>
+                  )}
+                </div>
+                <iframe
+                  src={fileBlobUrl}
+                  title={job.documentFile.originalFileName}
+                  className="flex-1 w-full rounded-lg border border-border-mid"
+                />
+              </div>
+            )}
           </div>
         )}
 
@@ -980,36 +1202,7 @@ export function IcpmsIngestionJobDetailPage() {
             ) : textBlocks.length === 0 ? (
               <p className="text-sm text-txt-secondary italic text-center py-16">{__("Không có text block nào.")}</p>
             ) : (
-              <>
-                <p className="text-xs text-txt-secondary mb-3">
-                  {__("Hiển thị")} <strong>{textBlocks.length}</strong>
-                  {textBlocksTotal > textBlocks.length ? ` / ${formatNumber(textBlocksTotal)}` : ""} block
-                </p>
-                <div className="rounded-xl border border-border-mid overflow-hidden">
-                  <table className="w-full text-sm border-collapse">
-                    <thead className="bg-gray-50">
-                      <tr className="border-b border-border-mid">
-                        <th className="py-2.5 px-4 text-left text-xs font-medium text-txt-secondary w-12">#</th>
-                        <th className="py-2.5 px-4 text-left text-xs font-medium text-txt-secondary w-16">{__("Trang")}</th>
-                        <th className="py-2.5 px-4 text-left text-xs font-medium text-txt-secondary w-28">{__("Loại")}</th>
-                        <th className="py-2.5 px-4 text-left text-xs font-medium text-txt-secondary">{__("Nội dung")}</th>
-                        <th className="py-2.5 px-4 text-right text-xs font-medium text-txt-secondary w-20">{__("Ký tự")}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {textBlocks.map((b) => (
-                        <tr key={b.id} className="border-b border-border-light last:border-0 hover:bg-gray-50">
-                          <td className="py-2.5 px-4 text-txt-secondary text-xs">{b.blockIndex + 1}</td>
-                          <td className="py-2.5 px-4 text-txt-secondary text-xs">{b.pageNumber ?? "—"}</td>
-                          <td className="py-2.5 px-4"><Badge variant="neutral">{b.blockType}</Badge></td>
-                          <td className="py-2.5 px-4 text-txt-primary text-xs leading-relaxed whitespace-pre-wrap">{b.normalizedText}</td>
-                          <td className="py-2.5 px-4 text-txt-secondary text-xs text-right">{b.charCount}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </>
+              <TextBlocksView blocks={textBlocks} total={textBlocksTotal} aiModelUsed={job.aiModelUsed} />
             )}
           </div>
         )}

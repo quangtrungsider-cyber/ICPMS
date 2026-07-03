@@ -62,7 +62,36 @@ func (s *IcpmsIngestionJobService) ProcessJob(
 	}
 
 	job.ProgressPercent = 30
+	// Pre-determine which AI model will be used and persist immediately so the UI shows the right model
+	// while the job is still running (not just after completion).
+	plannedModel := "RULE_BASED"
+	if aiCfgEarly, _ := s.svc.IcpmsAiConfigs.Get(ctx, scope, icpmsFile.OrganizationID, "GEMINI"); aiCfgEarly != nil &&
+		aiCfgEarly.IsEnabled && aiCfgEarly.APIKey != nil &&
+		aiCfgEarly.DefaultModel != nil && *aiCfgEarly.DefaultModel != "RULE_BASED" && *aiCfgEarly.DefaultModel != "" {
+		plannedModel = *aiCfgEarly.DefaultModel
+	}
+	job.AIModelUsed = &plannedModel
 	_ = s.Update(ctx, scope, job)
+
+	// Simulate progress up to 65% while extracting (which can take a while, especially for OCR)
+	doneExtraction := make(chan struct{})
+	go func() {
+		ticker := time.NewTicker(2 * time.Second)
+		defer ticker.Stop()
+		currentProgress := 30
+		for {
+			select {
+			case <-ticker.C:
+				if currentProgress < 65 {
+					currentProgress += 1
+					job.ProgressPercent = currentProgress
+					_ = s.Update(ctx, scope, job)
+				}
+			case <-doneExtraction:
+				return
+			}
+		}
+	}()
 
 	// Extract text blocks based on file extension.
 	ext := strings.ToLower(icpmsFile.FileExtension)
@@ -82,11 +111,13 @@ func (s *IcpmsIngestionJobService) ProcessJob(
 		}
 		rawBlocks, err = extractPDF(ctx, data, ocrCfg, forceOCR)
 		if err != nil {
+			close(doneExtraction)
 			return markFailed(fmt.Errorf("PDF extraction failed: %w", err))
 		}
 	case ".docx":
 		rawBlocks, err = extractDOCX(data)
 		if err != nil {
+			close(doneExtraction)
 			return markFailed(fmt.Errorf("DOCX extraction failed: %w", err))
 		}
 	case ".txt":
@@ -97,7 +128,26 @@ func (s *IcpmsIngestionJobService) ProcessJob(
 		warnMsg := "DOC format: basic text extraction used; results may include artifacts"
 		job.WarningMessage = &warnMsg
 	default:
+		close(doneExtraction)
 		return markFailed(fmt.Errorf("unsupported file extension: %s", ext))
+	}
+
+	close(doneExtraction)
+
+	// Phase 2: Gemini AI cleanup — only if the org has configured a non-rule-based model.
+	if len(rawBlocks) > 0 && plannedModel != "RULE_BASED" {
+		aiCfg, _ := s.svc.IcpmsAiConfigs.Get(ctx, scope, icpmsFile.OrganizationID, "GEMINI")
+		if aiCfg != nil && aiCfg.IsEnabled && aiCfg.APIKey != nil &&
+			aiCfg.DefaultModel != nil && *aiCfg.DefaultModel != "RULE_BASED" && *aiCfg.DefaultModel != "" {
+			cleaner := NewGeminiCleaner(GeminiCleanerConfig{
+				Enabled: true,
+				APIKey:  *aiCfg.APIKey,
+				Model:   *aiCfg.DefaultModel,
+			})
+			job.ProgressPercent = 68
+			_ = s.Update(ctx, scope, job)
+			rawBlocks = cleaner.CleanBlocks(ctx, rawBlocks)
+		}
 	}
 
 	job.ProgressPercent = 70

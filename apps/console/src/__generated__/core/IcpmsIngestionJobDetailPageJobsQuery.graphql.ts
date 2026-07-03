@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5fcf4a07c649f12bd287f86342f01aa7>>
+ * @generated SignedSource<<7da971295dff957e35799363af8b85fe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type IcpmsIngestionJobDetailPageJobsQuery$data = {
   readonly ingestionJobs: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly aiModelUsed: string | null | undefined;
         readonly createdAt: string;
         readonly document: {
           readonly code: string;
@@ -184,6 +185,13 @@ v2 = [
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "aiModelUsed",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "startedAt",
                 "storageKey": null
               },
@@ -293,16 +301,16 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "434b8a1252ce9190f82dfbb3d9a0fdf0",
+    "cacheID": "f696921e3ef07a278cfd89dd428c41d8",
     "id": null,
     "metadata": {},
     "name": "IcpmsIngestionJobDetailPageJobsQuery",
     "operationKind": "query",
-    "text": "query IcpmsIngestionJobDetailPageJobsQuery(\n  $organizationId: ID!\n) {\n  ingestionJobs(organizationId: $organizationId) {\n    edges {\n      node {\n        id\n        jobCode\n        jobType\n        extractionMode\n        status\n        progressPercent\n        totalBlocks\n        totalPages\n        totalChars\n        languageDetected\n        errorMessage\n        warningMessage\n        startedAt\n        finishedAt\n        createdAt\n        document {\n          id\n          code\n          title\n        }\n        documentVersion {\n          id\n          versionCode\n        }\n        documentFile {\n          id\n          originalFileName\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query IcpmsIngestionJobDetailPageJobsQuery(\n  $organizationId: ID!\n) {\n  ingestionJobs(organizationId: $organizationId) {\n    edges {\n      node {\n        id\n        jobCode\n        jobType\n        extractionMode\n        status\n        progressPercent\n        totalBlocks\n        totalPages\n        totalChars\n        languageDetected\n        errorMessage\n        warningMessage\n        aiModelUsed\n        startedAt\n        finishedAt\n        createdAt\n        document {\n          id\n          code\n          title\n        }\n        documentVersion {\n          id\n          versionCode\n        }\n        documentFile {\n          id\n          originalFileName\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "8851dcb69d13f1604ee6d03cd0d01845";
+(node as any).hash = "bef8e29c557a67953c48b7f06ced3ddb";
 
 export default node;

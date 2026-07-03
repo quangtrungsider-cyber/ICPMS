@@ -62,7 +62,7 @@ export function useToast() {
 export function Toasts() {
   const { toasts, remove } = useToasts();
   return (
-    <div className="fixed z-100 bottom-4 right-4 space-y-2 w-85">
+    <div className="fixed z-100 bottom-[52px] right-4 space-y-2 w-85">
       {toasts.map(toast => (
         <div key={toast.id}>
           <Toast {...toast} onClose={() => remove(toast.id)} />

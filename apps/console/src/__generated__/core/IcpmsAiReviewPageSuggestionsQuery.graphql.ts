@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ced8ca76bb69bf9d35261be6f1e11208>>
+ * @generated SignedSource<<edc4db69badd7c5af616144d67f50dad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,6 +35,8 @@ export type IcpmsAiReviewPageSuggestionsQuery$data = {
           readonly requirementCode: string;
           readonly requirementType: IcpmsRequirementType;
           readonly reviewStatus: IcpmsRequirementReviewStatus;
+          readonly sourceReference: string | null | undefined;
+          readonly sourceSectionId: string | null | undefined;
           readonly title: string;
         };
         readonly status: IcpmsAiReviewSuggestionStatus;
@@ -289,6 +291,20 @@ v2 = [
                     "kind": "ScalarField",
                     "name": "priority",
                     "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "sourceSectionId",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "sourceReference",
+                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -321,16 +337,16 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "efcabb888272289f56abd9d1953d1bb2",
+    "cacheID": "90a1bfc142298c56152b0f12ffb97092",
     "id": null,
     "metadata": {},
     "name": "IcpmsAiReviewPageSuggestionsQuery",
     "operationKind": "query",
-    "text": "query IcpmsAiReviewPageSuggestionsQuery(\n  $jobId: ID!\n) {\n  icpmsAiReviewSuggestions(jobId: $jobId) {\n    edges {\n      node {\n        id\n        aiReviewJobId\n        status\n        aiConfidence\n        suggestedImplementationMethod\n        suggestedResponsibleUnit\n        suggestedResponsibleRole\n        suggestedEvidence\n        suggestedCurrentStatus\n        suggestedActionPlan\n        suggestedChecklistQuestion\n        suggestedRiskIfNotComplied\n        suggestedRequirementType\n        suggestedApplicabilityStatus\n        suggestedPriority\n        suggestedComplianceDomain\n        acceptedAt\n        rejectedAt\n        rejectionReason\n        requirement {\n          id\n          requirementCode\n          title\n          description\n          requirementType\n          reviewStatus\n          applicabilityStatus\n          priority\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query IcpmsAiReviewPageSuggestionsQuery(\n  $jobId: ID!\n) {\n  icpmsAiReviewSuggestions(jobId: $jobId) {\n    edges {\n      node {\n        id\n        aiReviewJobId\n        status\n        aiConfidence\n        suggestedImplementationMethod\n        suggestedResponsibleUnit\n        suggestedResponsibleRole\n        suggestedEvidence\n        suggestedCurrentStatus\n        suggestedActionPlan\n        suggestedChecklistQuestion\n        suggestedRiskIfNotComplied\n        suggestedRequirementType\n        suggestedApplicabilityStatus\n        suggestedPriority\n        suggestedComplianceDomain\n        acceptedAt\n        rejectedAt\n        rejectionReason\n        requirement {\n          id\n          requirementCode\n          title\n          description\n          requirementType\n          reviewStatus\n          applicabilityStatus\n          priority\n          sourceSectionId\n          sourceReference\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b0a9a0d9cdf17a008c3bc53a7b74aa92";
+(node as any).hash = "1d698b23b8815a96ecdbaed348c5ba8c";
 
 export default node;

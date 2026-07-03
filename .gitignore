@@ -8,4 +8,25 @@ build/
 .vscode/
 .idea/
 *.tsbuildinfo
+
+# OCR model weights and caches (large binary files)
 ocr-service/paddlex_cache/
+ocr-service/torch_cache/
+ICPMS_OCR/onnx/
+ICPMS_OCR/vietocr/weight/
+ICPMS_OCR/module/__pycache__/
+ICPMS_OCR/__pycache__/
+ICPMS_OCR/utils/__pycache__/
+ICPMS_OCR/vietocr/**/__pycache__/
+
+# Compiled Go binaries
+probod.exe
+probod-linux
+probod-server.exe
+*.exe
+*.pth
+*.onnx
+
+# Misc
+dummy.pdf
+ocr-service/torch_cache/

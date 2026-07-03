@@ -18,7 +18,7 @@ probod:
       name: SSID
       secret: this-is-a-secure-secret-for-cookie-signing-at-least-32-bytes
       secure: false
-    disable-signup: false
+    disable-signup: true
     google:
       client-id: ""
       client-secret: ""
@@ -124,12 +124,12 @@ probod:
         -----END RSA PRIVATE KEY-----
       session-duration: 604800
   aws:
-    access-key-id: probod
-    bucket: probod
-    endpoint: http://127.0.0.1:8333
+    access-key-id: minioadmin
+    bucket: icpms-files
+    endpoint: http://127.0.0.1:9002
     region: us-east-1
-    secret-access-key: thisisnotasecret
-    use-path-style: false
+    secret-access-key: minioadmin123
+    use-path-style: true
   base-url: http://localhost:8080
   branding: true
   chrome-dp-addr: localhost:9222
@@ -279,7 +279,6 @@ probod:
     url: "http://localhost:8765"
     timeout-seconds: 600
     enabled: true
-
   trust-center:
     http-addr: :80
     https-addr: :443

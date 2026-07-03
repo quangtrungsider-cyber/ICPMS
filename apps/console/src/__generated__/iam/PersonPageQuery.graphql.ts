@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<df2c2cfa9217d0404960aeb3b0845bc0>>
+ * @generated SignedSource<<ea1b250372ca55d30745939df578b365>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -211,6 +211,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "department",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "additionalEmailAddresses",
                 "storageKey": null
               },
@@ -251,12 +258,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "647e396afe0b1bb14dbaa93dda36eaa3",
+    "cacheID": "a5bce13bc055f9f05e603aa51210d37c",
     "id": null,
     "metadata": {},
     "name": "PersonPageQuery",
     "operationKind": "query",
-    "text": "query PersonPageQuery(\n  $personId: ID!\n) {\n  person: node(id: $personId) {\n    __typename\n    ... on Profile {\n      id\n      fullName\n      emailAddress\n      source\n      state\n      canDelete: permission(action: \"iam:membership-profile:delete\")\n      ...PersonFormFragment\n    }\n    id\n  }\n}\n\nfragment PersonFormFragment on Profile {\n  id\n  fullName\n  emailAddress\n  source\n  membership {\n    role\n    id\n  }\n  kind\n  position\n  additionalEmailAddresses\n  contractStartDate\n  contractEndDate\n  canUpdate: permission(action: \"iam:membership-profile:update\")\n}\n"
+    "text": "query PersonPageQuery(\n  $personId: ID!\n) {\n  person: node(id: $personId) {\n    __typename\n    ... on Profile {\n      id\n      fullName\n      emailAddress\n      source\n      state\n      canDelete: permission(action: \"iam:membership-profile:delete\")\n      ...PersonFormFragment\n    }\n    id\n  }\n}\n\nfragment PersonFormFragment on Profile {\n  id\n  fullName\n  emailAddress\n  source\n  membership {\n    role\n    id\n  }\n  kind\n  position\n  department\n  additionalEmailAddresses\n  contractStartDate\n  contractEndDate\n  canUpdate: permission(action: \"iam:membership-profile:update\")\n}\n"
   }
 };
 })();

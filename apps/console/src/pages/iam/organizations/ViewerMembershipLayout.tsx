@@ -20,6 +20,7 @@ import { Outlet } from "react-router";
 import type { ViewerMembershipLayoutQuery } from "#/__generated__/iam/ViewerMembershipLayoutQuery.graphql";
 import { CoreRelayProvider } from "#/providers/CoreRelayProvider";
 import { CurrentUser } from "#/providers/CurrentUser";
+import { UiSettingsBar } from "#/components/UiSettingsBar";
 
 import { MembershipsDropdown } from "./_components/MembershipsDropdown";
 import { Sidebar } from "./_components/Sidebar";
@@ -66,28 +67,33 @@ export function ViewerMembershipLayout(props: {
   }
 
   return (
-    <Layout
-      headerLeading={(
-        <MembershipsDropdown organizationFKey={organization} />
-      )}
-      headerTrailing={(
-        <Suspense fallback={<Skeleton className="w-32 h-8" />}>
-          <ViewerMembershipDropdown fKey={organization} />
-        </Suspense>
-      )}
-      sidebar={!hideSidebar && <Sidebar fKey={organization} />}
-    >
-      <CoreRelayProvider>
-        <CurrentUser
-          value={{
-            email: viewer.email,
-            fullName: organization.viewer.fullName,
-            role: organization.viewer.membership.role,
-          }}
+    <>
+      <UiSettingsBar />
+      <div style={{ paddingBottom: 40 }}>
+        <Layout
+          headerLeading={(
+            <MembershipsDropdown organizationFKey={organization} />
+          )}
+          headerTrailing={(
+            <Suspense fallback={<Skeleton className="w-32 h-8" />}>
+              <ViewerMembershipDropdown fKey={organization} />
+            </Suspense>
+          )}
+          sidebar={!hideSidebar && <Sidebar fKey={organization} role={organization.viewer.membership.role} />}
         >
-          <Outlet context={organization.viewer.membership.role} />
-        </CurrentUser>
-      </CoreRelayProvider>
-    </Layout>
+          <CoreRelayProvider>
+            <CurrentUser
+              value={{
+                email: viewer.email,
+                fullName: organization.viewer.fullName,
+                role: organization.viewer.membership.role,
+              }}
+            >
+              <Outlet context={organization.viewer.membership.role} />
+            </CurrentUser>
+          </CoreRelayProvider>
+        </Layout>
+      </div>
+    </>
   );
 }

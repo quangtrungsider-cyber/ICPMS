@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4dd6dcfde0f1afbc5a3245929bd8fcd9>>
+ * @generated SignedSource<<a542e76dce55a7dfbcdde2e2d59783ab>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type CreateUserInput = {
   additionalEmailAddresses?: ReadonlyArray<string> | null | undefined;
   contractEndDate?: string | null | undefined;
   contractStartDate?: string | null | undefined;
+  department?: string | null | undefined;
   emailAddress: string;
   fullName: string;
   kind?: string | null | undefined;
@@ -199,6 +200,13 @@ return {
                     "args": null,
                     "kind": "ScalarField",
                     "name": "emailAddress",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "department",
                     "storageKey": null
                   },
                   {
@@ -398,12 +406,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "738254d707f8ed725c30ee87baa585fb",
+    "cacheID": "14b532621b61a726a078974268c6f3ea",
     "id": null,
     "metadata": {},
     "name": "PersonForm_createMutation",
     "operationKind": "mutation",
-    "text": "mutation PersonForm_createMutation(\n  $input: CreateUserInput!\n) {\n  createUser(input: $input) {\n    profileEdge {\n      node {\n        ...PeopleListItemFragment\n        id\n      }\n    }\n  }\n}\n\nfragment PeopleListItemFragment on Profile {\n  id\n  source\n  state\n  fullName\n  emailAddress\n  membership {\n    id\n    role\n    canUpdate: permission(action: \"iam:membership:update\")\n  }\n  lastInvitation: pendingInvitations(first: 1, orderBy: {field: CREATED_AT, direction: DESC}) {\n    edges {\n      node {\n        id\n        createdAt\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  createdAt\n  canUpdate: permission(action: \"iam:membership-profile:update\")\n  canInvite: permission(action: \"iam:invitation:create\")\n  canDelete: permission(action: \"iam:membership-profile:delete\")\n}\n"
+    "text": "mutation PersonForm_createMutation(\n  $input: CreateUserInput!\n) {\n  createUser(input: $input) {\n    profileEdge {\n      node {\n        ...PeopleListItemFragment\n        id\n      }\n    }\n  }\n}\n\nfragment PeopleListItemFragment on Profile {\n  id\n  source\n  state\n  fullName\n  emailAddress\n  department\n  membership {\n    id\n    role\n    canUpdate: permission(action: \"iam:membership:update\")\n  }\n  lastInvitation: pendingInvitations(first: 1, orderBy: {field: CREATED_AT, direction: DESC}) {\n    edges {\n      node {\n        id\n        createdAt\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  createdAt\n  canUpdate: permission(action: \"iam:membership-profile:update\")\n  canInvite: permission(action: \"iam:invitation:create\")\n  canDelete: permission(action: \"iam:membership-profile:delete\")\n}\n"
   }
 };
 })();

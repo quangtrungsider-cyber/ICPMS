@@ -1,9 +1,28 @@
 {
+  "model": "fable",
   "permissions": {
     "allow": [
       "Skill(run)",
       "Skill(run:*)",
-      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('scripts',{}\\), indent=2\\)\\)\")"
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('scripts',{}\\), indent=2\\)\\)\")",
+      "Bash(go generate *)",
+      "Bash(npx relay-compiler *)",
+      "Bash(go build *)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "$ok = $false; try { docker info 2>&1 | Out-Null; $ok = ($LASTEXITCODE -eq 0) } catch {}; if (-not $ok) { Start-Process 'C:\\Program Files\\Docker\\Docker\\Docker Desktop.exe'; Write-Output '{\"systemMessage\":\"Docker Desktop chưa chạy — đã tự động khởi động. Vui lòng chờ khoảng 30 giây trước khi dùng.\"}' }",
+            "timeout": 10,
+            "statusMessage": "Kiểm tra Docker..."
+          }
+        ]
+      }
     ]
   }
 }

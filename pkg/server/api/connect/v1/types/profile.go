@@ -75,6 +75,7 @@ func NewProfile(profile *coredata.MembershipProfile) *Profile {
 		AdditionalEmailAddresses: profile.AdditionalEmailAddresses,
 		Kind:                     profile.Kind,
 		Position:                 profile.Position,
+		Department:               profile.Department,
 		ContractStartDate:        profile.ContractStartDate,
 		ContractEndDate:          profile.ContractEndDate,
 		CreatedAt:                profile.CreatedAt,

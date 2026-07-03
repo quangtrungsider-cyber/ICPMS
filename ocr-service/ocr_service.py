@@ -1,71 +1,52 @@
-"""
-icpms-ocr-service — microservice OCR cho VATM ICPMS.
+import os
+import sys
+import tempfile
+import asyncio
+import json
+from concurrent.futures import ProcessPoolExecutor, BrokenExecutor
 
-Bọc lại logic PP-StructureV3 + VietOCR có sẵn trong vatm_pdf_to_word_app.py
-(KHÔNG sửa file gốc, chỉ import và tái sử dụng các hàm xử lý ảnh/OCR), bỏ phần
-dựng Word/AI-restructure/GUI vì backend Go chỉ cần TEXT THUẦN theo từng trang.
-
-API:
-    POST /ocr/upload
-    multipart/form-data, field "file" = nội dung PDF
-
-Trả về (đúng format mà pkg/probo/icpms_text_extractor.go::callOCRService mong đợi):
-    {
-      "pages": [
-        {"page_number": 1, "text": "...", "char_count": 123},
-        ...
-      ],
-      "total_pages": N,
-      "total_chars": M
-    }
-"""
+# Must be set before paddle loads
+os.environ['OMP_NUM_THREADS'] = '1'
+os.environ['MKL_NUM_THREADS'] = '1'
 
 import logging
-import os
-import tempfile
-
-import cv2
 from fastapi import FastAPI, File, HTTPException, UploadFile
-from fastapi.responses import JSONResponse
-from pdf2image import convert_from_path
-from pydantic import BaseModel
+from fastapi.responses import StreamingResponse
 
-# VietOCR (thư viện cũ) gọi Image.ANTIALIAS khi resize ảnh trước khi nhận diện.
-# Pillow >=10 đã xoá hẳn hằng số này (đổi tên thành Image.LANCZOS từ Pillow 9).
-# Patch tương thích ở đây, TRƯỚC khi vatm_pdf_to_word_app.py kịp import vietocr
-# (import vietocr chỉ xảy ra lazy trong get_vietocr(), nhưng patch sớm ở đây
-# vẫn áp dụng đúng lúc vì toàn bộ module này load 1 lần khi service khởi động).
-from PIL import Image
-if not hasattr(Image, "ANTIALIAS"):
-    Image.ANTIALIAS = Image.LANCZOS
-
-# Import nguyên file gốc làm "thư viện" — vatm_pdf_to_word_app.py chỉ tạo cửa sổ
-# Tkinter trong khối `if __name__ == "__main__":`, nên import bình thường ở đây
-# (chạy như module) là AN TOÀN, không tự mở GUI.
-import vatm_pdf_to_word_app as docai
-
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    stream=sys.stdout,
+    force=True,
+)
 log = logging.getLogger("icpms-ocr")
 
-app = FastAPI(title="ICPMS OCR Service", version="1.0.0")
+
+# ---------------------------------------------------------------------------
+# Executor — recreated automatically when subprocess is killed (OOM, crash)
+# ---------------------------------------------------------------------------
+
+_executor: ProcessPoolExecutor | None = None
 
 
-class OCRPage(BaseModel):
-    page_number: int
-    text: str
-    char_count: int
+def _get_executor() -> ProcessPoolExecutor:
+    global _executor
+    if _executor is None or _executor._broken:
+        if _executor is not None:
+            log.warning("ProcessPoolExecutor broken — recreating.")
+            try:
+                _executor.shutdown(wait=False, cancel_futures=True)
+            except Exception:
+                pass
+        _executor = ProcessPoolExecutor(max_workers=1)
+    return _executor
 
 
-class OCRResponse(BaseModel):
-    pages: list[OCRPage]
-    total_pages: int
-    total_chars: int
+# ---------------------------------------------------------------------------
+# OCR helpers — defined at module level so subprocess can pickle them
+# ---------------------------------------------------------------------------
 
-
-def _table_rows_to_text(rows):
-    """Chuyển bảng (list[list[str]]) thành text thuần, mỗi dòng 1 hàng, các ô
-    nối bằng tab — đủ để các bước xử lý sau (NLP/so khớp checklist) tách lại
-    nếu cần, mà vẫn đọc được như văn bản thường."""
+def _table_rows_to_text(rows) -> str:
     lines = []
     for row in rows:
         line = "\t".join(cell.strip() for cell in row if cell is not None)
@@ -75,64 +56,150 @@ def _table_rows_to_text(rows):
 
 
 def _extract_page_text(img_bgr, engine, vietocr_predictor, page_no: int) -> str:
-    """Chạy PP-StructureV3 (layout) + VietOCR (nhận diện chữ) cho 1 trang đã
-    render thành ảnh, trả về text thuần theo đúng thứ tự đọc trên trang.
-    Logic giống process_pdf() trong vatm_pdf_to_word_app.py, bỏ phần ghi Word."""
-    img_bgr = docai.suppress_light_watermark(img_bgr)
-    parts: list[str] = []
+    """
+    Dùng PP-StructureV3 để phát hiện vị trí các dòng text, sau đó VietOCR
+    nhận dạng từng dòng. Tránh dùng latin_PP-OCRv5_mobile_rec (không hỗ trợ
+    tiếng Việt có dấu đầy đủ).
+    """
+    import cv2 as _cv2
+    from PIL import Image
+    import vatm_pdf_to_word_app as docai
 
-    def _noop_log(msg):
-        log.info("  (trang %s) %s", page_no, msg)
+    img_bgr = docai.suppress_light_watermark(img_bgr)
 
     results = engine.predict(img_bgr)
+    all_texts: list[str] = []
+
     for res in results:
-        blocks = res["parsing_res_list"]
         ocr_res = res["overall_ocr_res"]
-        line_boxes = (
-            [list(b) for b in ocr_res["rec_boxes"]] if len(ocr_res["rec_boxes"]) else []
-        )
-        table_res_list = res.get("table_res_list", [])
-        table_index = 0
-        used_mask = [False] * len(line_boxes)
+        rec_boxes = ocr_res.get("rec_boxes", [])
 
-        for block in blocks:
-            label = block.label
-            block_box = block.bbox
+        log.info("Page %d: detected %d text boxes.", page_no, len(rec_boxes))
 
-            if label in docai.TABLE_LABELS:
-                table_result = docai.build_table_rows(
-                    img_bgr, table_res_list, table_index, line_boxes,
-                    vietocr_predictor, _noop_log, used_mask=used_mask, block_box=block_box,
-                )
-                table_index += 1
-                if table_result:
-                    rows_data, _font_size, _ratios = table_result
-                    table_text = _table_rows_to_text(rows_data)
-                    if table_text:
-                        parts.append(table_text)
+        if len(rec_boxes) == 0:
+            continue
+
+        # Sort boxes in reading order: top-to-bottom, then left-to-right.
+        # rec_boxes contains [x1, y1, x2, y2] or polygon coords.
+        def _box_top_left(b):
+            pts = list(b)
+            if len(pts) == 4 and not isinstance(pts[0], (list, tuple)):
+                # [x1, y1, x2, y2] flat
+                return (pts[1], pts[0])
+            # polygon [[x,y], [x,y], ...] → top-left
+            ys = [p[1] for p in pts]
+            xs = [p[0] for p in pts]
+            return (min(ys), min(xs))
+
+        sorted_boxes = sorted(rec_boxes, key=_box_top_left)
+
+        h, w = img_bgr.shape[:2]
+        for box in sorted_boxes:
+            pts = list(box)
+            if len(pts) == 4 and not isinstance(pts[0], (list, tuple)):
+                x1, y1, x2, y2 = int(pts[0]), int(pts[1]), int(pts[2]), int(pts[3])
+            else:
+                xs = [int(p[0]) for p in pts]
+                ys = [int(p[1]) for p in pts]
+                x1, y1, x2, y2 = min(xs), min(ys), max(xs), max(ys)
+
+            # Add small padding around the crop to improve VietOCR accuracy
+            pad = 4
+            x1, y1 = max(0, x1 - pad), max(0, y1 - pad)
+            x2, y2 = min(w, x2 + pad), min(h, y2 + pad)
+
+            if x2 <= x1 or y2 <= y1:
                 continue
 
-            content, _font_size = docai.recognize_block_text(
-                img_bgr, block_box, line_boxes, vietocr_predictor, used_mask=used_mask,
+            crop = img_bgr[y1:y2, x1:x2]
+            pil_crop = Image.fromarray(_cv2.cvtColor(crop, _cv2.COLOR_BGR2RGB))
+
+            try:
+                result = vietocr_predictor.predict(pil_crop)
+                # VietOCR trả về string hoặc (text, prob) tuỳ version/config
+                text = result[0] if isinstance(result, (tuple, list)) else result
+                if text and str(text).strip():
+                    all_texts.append(str(text).strip())
+            except Exception as exc:
+                log.warning("Page %d VietOCR failed on box: %s", page_no, exc)
+
+    return "\n".join(all_texts)
+
+
+def process_pdf_sync(pdf_path: str) -> dict:
+    """Chạy trong worker process riêng — load models + OCR từng trang."""
+    import cv2
+    from pdf2image import convert_from_path, pdfinfo_from_path
+    from PIL import Image
+    if not hasattr(Image, "ANTIALIAS"):
+        Image.ANTIALIAS = Image.LANCZOS
+
+    import vatm_pdf_to_word_app as docai
+
+    log.info("Worker: loading models...")
+    vietocr_predictor = docai.get_vietocr()
+    engine = docai.get_engine()
+    log.info("Worker: models loaded.")
+
+    # Detect page count first
+    try:
+        info = pdfinfo_from_path(pdf_path, poppler_path=docai.POPPLER_PATH)
+        total_pages = info["Pages"]
+    except Exception as e:
+        raise RuntimeError(f"Không đọc được thông tin PDF: {e}") from e
+
+    log.info("Worker: PDF has %d pages.", total_pages)
+
+    pages_out = []
+    total_chars = 0
+
+    # Process one page at a time to limit peak RAM usage.
+    # DPI 200: good balance between quality and memory (each page ~15 MB vs 60 MB at 300).
+    for page_no in range(1, total_pages + 1):
+        try:
+            pil_pages = convert_from_path(
+                pdf_path,
+                dpi=200,
+                first_page=page_no,
+                last_page=page_no,
+                poppler_path=docai.POPPLER_PATH,
             )
-            if not content:
-                continue
-            if label in docai.DROP_LABELS:
-                continue
-            if docai.looks_like_ocr_garbage(content):
-                continue
-            parts.append(content)
+        except Exception as e:
+            log.warning("Worker: page %d conversion failed: %s — skipping.", page_no, e)
+            continue
 
-        orphan_indices = [i for i, used in enumerate(used_mask) if not used]
-        if orphan_indices:
-            for text, _font_size in docai.group_orphan_lines(
-                img_bgr, orphan_indices, line_boxes, vietocr_predictor,
-            ):
-                if docai.looks_like_ocr_garbage(text):
-                    continue
-                parts.append(text)
+        if not pil_pages:
+            continue
 
-    return "\n\n".join(parts)
+        img_path = f"{pdf_path}_p{page_no}.jpg"
+        pil_pages[0].save(img_path, "JPEG")
+        try:
+            img_bgr = cv2.imread(img_path)
+            if img_bgr is None:
+                log.warning("Worker: page %d could not be read as image — skipping.", page_no)
+                continue
+            text = _extract_page_text(img_bgr, engine, vietocr_predictor, page_no)
+        finally:
+            if os.path.exists(img_path):
+                os.remove(img_path)
+
+        char_count = len(text)
+        total_chars += char_count
+        pages_out.append({"page_number": page_no, "text": text, "char_count": char_count})
+        log.info("Worker: page %d/%d done (%d chars).", page_no, total_pages, char_count)
+
+    return {
+        "pages": pages_out,
+        "total_pages": len(pages_out),
+        "total_chars": total_chars,
+    }
+
+
+# ---------------------------------------------------------------------------
+# FastAPI app
+# ---------------------------------------------------------------------------
+
+app = FastAPI(title="VATM ICPMS OCR Microservice")
 
 
 @app.get("/healthz")
@@ -140,7 +207,7 @@ def healthz():
     return {"status": "ok"}
 
 
-@app.post("/ocr/upload", response_model=OCRResponse)
+@app.post("/ocr/upload")
 async def ocr_upload(file: UploadFile = File(...)):
     if not file.filename or not file.filename.lower().endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Chỉ hỗ trợ file PDF")
@@ -149,54 +216,51 @@ async def ocr_upload(file: UploadFile = File(...)):
     if not data:
         raise HTTPException(status_code=400, detail="File rỗng")
 
-    with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
-        tmp.write(data)
-        tmp_path = tmp.name
+    tmp = tempfile.NamedTemporaryFile(suffix=".pdf", delete=False)
+    tmp.write(data)
+    tmp.close()
+    tmp_path = tmp.name
 
-    try:
-        log.info("Đang tải model VietOCR / PP-StructureV3 (nếu chưa tải)...")
-        vietocr_predictor = docai.get_vietocr()
-        engine = docai.get_engine()
+    log.info("Received PDF: %d bytes → %s", len(data), tmp_path)
+
+    async def generate_response():
+        loop = asyncio.get_running_loop()
+        executor = _get_executor()
 
         try:
-            pil_pages = convert_from_path(tmp_path, dpi=300, poppler_path=docai.POPPLER_PATH)
-        except Exception as e:
-            raise HTTPException(
-                status_code=500,
-                detail=f"Không đọc được PDF (thiếu poppler-utils hoặc file lỗi): {e}",
-            )
+            future = loop.run_in_executor(executor, process_pdf_sync, tmp_path)
+        except BrokenExecutor:
+            # Pool was broken between check and use — recreate once and retry
+            executor = _get_executor()
+            future = loop.run_in_executor(executor, process_pdf_sync, tmp_path)
 
-        pages_out: list[OCRPage] = []
-        total_chars = 0
-
-        for idx, pil_img in enumerate(pil_pages, start=1):
-            img_path = f"{tmp_path}_p{idx}.jpg"
-            pil_img.save(img_path, "JPEG")
+        # Heartbeat: send whitespace every 5 s so the TCP connection stays alive.
+        # Go's json.NewDecoder skips leading whitespace, so this is transparent.
+        while not future.done():
+            yield b" "
             try:
-                img_bgr = cv2.imread(img_path)
-                if img_bgr is None:
-                    continue
-                text = _extract_page_text(img_bgr, engine, vietocr_predictor, idx)
-            finally:
-                if os.path.exists(img_path):
-                    os.remove(img_path)
+                await asyncio.wait_for(asyncio.shield(future), timeout=5.0)
+            except asyncio.TimeoutError:
+                pass
+            except Exception:
+                break
 
-            char_count = len(text)
-            total_chars += char_count
-            pages_out.append(OCRPage(page_number=idx, text=text, char_count=char_count))
-            log.info("Trang %d/%d xong (%d ký tự).", idx, len(pil_pages), char_count)
+        try:
+            result = future.result()
+            log.info(
+                "OCR complete: %d pages, %d chars.", result["total_pages"], result["total_chars"]
+            )
+            yield json.dumps(result).encode("utf-8")
+        except BrokenExecutor:
+            log.error("OCR worker process was killed (OOM?). Will recreate pool on next request.")
+            _get_executor()  # force recreation for next request
+            # Can't raise HTTPException after headers sent — yield sentinel that Go detects
+            yield json.dumps({"ocr_error": "OCR worker bị kill (OOM). Thử lại."}).encode("utf-8")
+        except Exception as exc:
+            log.exception("OCR worker failed: %s", exc)
+            yield json.dumps({"ocr_error": str(exc)}).encode("utf-8")
+        finally:
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
 
-        return OCRResponse(
-            pages=pages_out,
-            total_pages=len(pages_out),
-            total_chars=total_chars,
-        )
-    finally:
-        if os.path.exists(tmp_path):
-            os.remove(tmp_path)
-
-
-@app.exception_handler(Exception)
-async def unhandled_exception_handler(request, exc):
-    log.exception("Lỗi không bắt được khi xử lý request")
-    return JSONResponse(status_code=500, content={"detail": str(exc)})
+    return StreamingResponse(generate_response(), media_type="application/json")

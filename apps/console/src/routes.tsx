@@ -42,12 +42,15 @@ import { dataRoutes } from "./routes/dataRoutes";
 import { documentsRoutes } from "./routes/documentsRoutes";
 import { findingRoutes } from "./routes/findingRoutes";
 import { frameworkRoutes } from "./routes/frameworkRoutes";
+import { icpmsDashboardRoutes } from "./routes/icpmsDashboardRoutes";
 import { icpmsDocumentsRoutes } from "./routes/icpmsDocumentsRoutes";
 import { icpmsIngestionRoutes } from "./routes/icpmsIngestionRoutes";
 import { icpmsRequirementsRoutes } from "./routes/icpmsRequirementsRoutes";
 import { icpmsAiReviewRoutes } from "./routes/icpmsAiReviewRoutes";
 import { icpmsChecklistRoutes } from "./routes/icpmsChecklistRoutes";
 import { icpmsAssignmentRoutes } from "./routes/icpmsAssignmentRoutes";
+import { icpmsEvidenceRoutes } from "./routes/icpmsEvidenceRoutes";
+import { icpmsAdminRoutes } from "./routes/icpmsAdminRoutes";
 import { measureRoutes } from "./routes/measureRoutes";
 import { obligationRoutes } from "./routes/obligationRoutes";
 import { processingActivityRoutes } from "./routes/processingActivityRoutes";
@@ -239,7 +242,7 @@ const routes = [
                 case Role.AUDITOR:
                   return <Navigate to="measures" />;
                 default:
-                  return <Navigate to="icpms-documents" />;
+                  return <Navigate to="icpms-overview" />;
               }
             },
           },
@@ -299,12 +302,15 @@ const routes = [
           ...riskAssessmentRoutes,
           ...measureRoutes,
           ...documentsRoutes,
+          ...icpmsDashboardRoutes,
           ...icpmsDocumentsRoutes,
           ...icpmsIngestionRoutes,
           ...icpmsRequirementsRoutes,
           ...icpmsAiReviewRoutes,
           ...icpmsChecklistRoutes,
           ...icpmsAssignmentRoutes,
+          ...icpmsEvidenceRoutes,
+          ...icpmsAdminRoutes,
           ...thirdPartyRoutes,
           ...frameworkRoutes,
           ...taskRoutes,

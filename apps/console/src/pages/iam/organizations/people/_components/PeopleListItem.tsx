@@ -45,6 +45,7 @@ const fragment = graphql`
     state
     fullName
     emailAddress
+    department
     membership @required(action: THROW) {
       id
       role
@@ -257,6 +258,9 @@ export function PeopleListItem(props: {
       )}
       >
         <span className="font-semibold">{profile.fullName}</span>
+        {profile.department && (
+          <p className="text-xs text-txt-tertiary mt-0.5">{profile.department}</p>
+        )}
       </Td>
       <Td>
         <Badge variant={profile.state === "INACTIVE" ? "neutral" : "success"}>{profile.state}</Badge>

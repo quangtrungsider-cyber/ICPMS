@@ -24,6 +24,8 @@ import { DeleteOrganizationDialog } from "#/components/organizations/DeleteOrgan
 import { useMutationWithToasts } from "#/hooks/useMutationWithToasts";
 
 import { OrganizationForm } from "./_components/OrganizationForm";
+import { OrganizationAiConfig } from "#/components/organizations/OrganizationAiConfig";
+import { CoreRelayProvider } from "#/providers/CoreRelayProvider";
 
 export const generalSettingsPageQuery = graphql`
   query GeneralSettingsPageQuery($organizationId: ID!) {
@@ -91,6 +93,10 @@ export function GeneralSettingsPage(props: {
   return (
     <div className="space-y-6">
       <OrganizationForm fKey={organization} />
+
+      <CoreRelayProvider>
+        <OrganizationAiConfig />
+      </CoreRelayProvider>
 
       {organization.canDelete && (
         <div className="space-y-4 mt-12">

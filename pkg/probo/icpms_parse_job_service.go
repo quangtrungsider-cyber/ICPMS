@@ -53,7 +53,7 @@ func (s *IcpmsParseJobService) CreateAndRunVietnamese(
 	}
 
 	// Run parser synchronously
-	runErr := s.runVietnameseParser(ctx, scope, parseJob, ingestionJobID)
+	runErr := s.runVietnameseParser(ctx, scope, parseJob, ingestionJob)
 	if runErr != nil {
 		errMsg := runErr.Error()
 		parseJob.Status = coredata.IcpmsParseJobStatusFailed
@@ -64,30 +64,102 @@ func (s *IcpmsParseJobService) CreateAndRunVietnamese(
 		return parseJob, nil
 	}
 
+	// Auto-trigger requirement generation + AI applicability review in background.
+	go s.svc.RunFullPipelineForParseJob(
+		context.Background(), scope, parseJob.ID, parseJob.OrganizationID, createdBy,
+	)
+
 	return parseJob, nil
+}
+
+// applyGeminiCleaningToBlocks applies Gemini OCR cleanup to text blocks that were stored
+// without AI cleaning (RULE_BASED ingestion). Updates raw_text and normalized_text in the DB
+// so that future parse runs and the Text Extraction view also use cleaned data.
+// Returns the model name used, or empty string if Gemini is not available.
+func (s *IcpmsParseJobService) applyGeminiCleaningToBlocks(
+	ctx context.Context,
+	scope coredata.Scoper,
+	blocks []*coredata.IcpmsExtractedTextBlock,
+	organizationID gid.GID,
+) string {
+	aiCfg, _ := s.svc.IcpmsAiConfigs.Get(ctx, scope, organizationID, "GEMINI")
+	if aiCfg == nil || !aiCfg.IsEnabled || aiCfg.APIKey == nil ||
+		aiCfg.DefaultModel == nil || *aiCfg.DefaultModel == "RULE_BASED" || *aiCfg.DefaultModel == "" {
+		return ""
+	}
+
+	textBlocks := make([]textBlock, len(blocks))
+	for i, b := range blocks {
+		textBlocks[i] = textBlock{
+			rawText:   b.RawText,
+			normText:  b.NormalizedText,
+			blockType: b.BlockType,
+		}
+	}
+
+	cleaner := NewGeminiCleaner(GeminiCleanerConfig{
+		Enabled: true,
+		APIKey:  *aiCfg.APIKey,
+		Model:   *aiCfg.DefaultModel,
+	})
+	cleanedBlocks := cleaner.CleanBlocks(ctx, textBlocks)
+
+	for i, cb := range cleanedBlocks {
+		if cb.rawText == blocks[i].RawText {
+			continue
+		}
+		blocks[i].RawText = cb.rawText
+		blocks[i].NormalizedText = cb.normText
+		bid := blocks[i].ID
+		raw := cb.rawText
+		norm := cb.normText
+		_ = s.svc.pg.WithConn(ctx, func(ctx context.Context, conn pg.Querier) error {
+			args := pgx.StrictNamedArgs{"raw_text": raw, "norm": norm, "id": bid}
+			for k, v := range scope.SQLArguments() {
+				args[k] = v
+			}
+			_, err := conn.Exec(ctx,
+				`UPDATE icpms_extracted_text_blocks SET raw_text = @raw_text, normalized_text = @norm, updated_at = NOW() WHERE id = @id AND `+scope.SQLFragment(),
+				args,
+			)
+			return err
+		})
+	}
+
+	return *aiCfg.DefaultModel
 }
 
 func (s *IcpmsParseJobService) runVietnameseParser(
 	ctx context.Context,
 	scope coredata.Scoper,
 	parseJob *coredata.IcpmsDocumentParseJob,
-	ingestionJobID gid.GID,
+	ingestionJob *coredata.IcpmsIngestionJob,
 ) error {
 	// Load PARAGRAPH blocks only — excludes duplicate PAGE blocks that old
 	// extractions may have created alongside PARAGRAPH blocks for the same page.
-	blocks, err := s.loadParagraphTextBlocks(ctx, scope, ingestionJobID)
+	blocks, err := s.loadParagraphTextBlocks(ctx, scope, ingestionJob.ID)
 	if err != nil {
 		return fmt.Errorf("cannot load text blocks: %w", err)
 	}
 
 	if len(blocks) == 0 {
-		return fmt.Errorf("no text blocks found for ingestion job %s", ingestionJobID)
+		return fmt.Errorf("no text blocks found for ingestion job %s", ingestionJob.ID)
+	}
+
+	// If the ingestion ran without AI cleaning (RULE_BASED), apply Gemini now if configured.
+	// Cleaned text is stored back to DB so future parse runs and the Text view also benefit.
+	needsCleaning := ingestionJob.AIModelUsed == nil || *ingestionJob.AIModelUsed == "RULE_BASED"
+	if needsCleaning {
+		if model := s.applyGeminiCleaningToBlocks(ctx, scope, blocks, ingestionJob.OrganizationID); model != "" {
+			ingestionJob.AIModelUsed = &model
+			_ = s.svc.IcpmsIngestionJobs.Update(ctx, scope, ingestionJob)
+		}
 	}
 
 	// Rebuild line-by-line text from the raw (un-collapsed) block content.
 	// NormalizedText collapses all internal newlines to spaces, so the Vietnamese
 	// section-header regexes (which anchor on "^") would never match mid-block.
-	// RawText still contains the original PDF line breaks.
+	// RawText still contains the (possibly Gemini-cleaned) PDF line breaks.
 	var allLines []string
 	for _, b := range blocks {
 		for _, line := range strings.Split(b.RawText, "\n") {
@@ -337,7 +409,7 @@ func (s *IcpmsParseJobService) CreateAndRunIcaoEnglish(
 		return nil, fmt.Errorf("cannot create parse job: %w", err)
 	}
 
-	runErr := s.runIcaoParser(ctx, scope, parseJob, ingestionJobID)
+	runErr := s.runIcaoParser(ctx, scope, parseJob, ingestionJob)
 	if runErr != nil {
 		errMsg := runErr.Error()
 		parseJob.Status = coredata.IcpmsParseJobStatusFailed
@@ -348,6 +420,11 @@ func (s *IcpmsParseJobService) CreateAndRunIcaoEnglish(
 		return parseJob, nil
 	}
 
+	// Auto-trigger requirement generation + AI applicability review in background.
+	go s.svc.RunFullPipelineForParseJob(
+		context.Background(), scope, parseJob.ID, parseJob.OrganizationID, createdBy,
+	)
+
 	return parseJob, nil
 }
 
@@ -355,15 +432,24 @@ func (s *IcpmsParseJobService) runIcaoParser(
 	ctx context.Context,
 	scope coredata.Scoper,
 	parseJob *coredata.IcpmsDocumentParseJob,
-	ingestionJobID gid.GID,
+	ingestionJob *coredata.IcpmsIngestionJob,
 ) error {
-	blocks, err := s.loadNonPageTextBlocks(ctx, scope, ingestionJobID)
+	blocks, err := s.loadNonPageTextBlocks(ctx, scope, ingestionJob.ID)
 	if err != nil {
 		return fmt.Errorf("cannot load text blocks: %w", err)
 	}
 
 	if len(blocks) == 0 {
-		return fmt.Errorf("no text blocks found for ingestion job %s", ingestionJobID)
+		return fmt.Errorf("no text blocks found for ingestion job %s", ingestionJob.ID)
+	}
+
+	// If the ingestion ran without AI cleaning (RULE_BASED), apply Gemini now if configured.
+	needsCleaning := ingestionJob.AIModelUsed == nil || *ingestionJob.AIModelUsed == "RULE_BASED"
+	if needsCleaning {
+		if model := s.applyGeminiCleaningToBlocks(ctx, scope, blocks, ingestionJob.OrganizationID); model != "" {
+			ingestionJob.AIModelUsed = &model
+			_ = s.svc.IcpmsIngestionJobs.Update(ctx, scope, ingestionJob)
+		}
 	}
 
 	// Process RawText line-by-line (same approach as Vietnamese parser) so that
@@ -670,6 +756,100 @@ func (s *IcpmsParseJobService) GetLatestForIngestionJob(
 	}
 
 	return &job, nil
+}
+
+// GetSectionByID loads a single parsed section by its ID.
+func (s *IcpmsParseJobService) GetSectionByID(
+	ctx context.Context,
+	scope coredata.Scoper,
+	sectionID gid.GID,
+) (*coredata.IcpmsParsedDocumentSection, error) {
+	var sec coredata.IcpmsParsedDocumentSection
+
+	err := s.svc.pg.WithConn(ctx, func(ctx context.Context, conn pg.Querier) error {
+		query := `SELECT * FROM icpms_parsed_document_sections WHERE id = @id AND ` + scope.SQLFragment() + ` AND deleted_at IS NULL`
+		args := pgx.StrictNamedArgs{"id": sectionID}
+		for k, v := range scope.SQLArguments() {
+			args[k] = v
+		}
+		rows, err := conn.Query(ctx, query, args)
+		if err != nil {
+			return err
+		}
+		sec, err = pgx.CollectExactlyOneRow(rows, pgx.RowToStructByName[coredata.IcpmsParsedDocumentSection])
+		return err
+	})
+
+	if err != nil {
+		return nil, err
+	}
+	return &sec, nil
+}
+
+// GetArticleSectionForSection walks up the parent chain to find the ARTICLE-level ancestor
+// (depthLevel ≤ 4). If the section itself is already at or above that level, it is returned as-is.
+func (s *IcpmsParseJobService) GetArticleSectionForSection(
+	ctx context.Context,
+	scope coredata.Scoper,
+	sectionID gid.GID,
+) (*coredata.IcpmsParsedDocumentSection, error) {
+	sec, err := s.GetSectionByID(ctx, scope, sectionID)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := 0; i < 8 && sec.DepthLevel > 4 && sec.ParentID != nil; i++ {
+		parent, err := s.GetSectionByID(ctx, scope, *sec.ParentID)
+		if err != nil {
+			break
+		}
+		sec = parent
+	}
+
+	return sec, nil
+}
+
+// GetArticleWithDescendants walks up to the article-level ancestor, then returns it along
+// with all its descendant sections (khoản, điểm, etc.) using a recursive CTE, ordered by sort_order.
+func (s *IcpmsParseJobService) GetArticleWithDescendants(
+	ctx context.Context,
+	scope coredata.Scoper,
+	sectionID gid.GID,
+) (*coredata.IcpmsParsedDocumentSection, []*coredata.IcpmsParsedDocumentSection, error) {
+	article, err := s.GetArticleSectionForSection(ctx, scope, sectionID)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var descendants []*coredata.IcpmsParsedDocumentSection
+	dbErr := s.svc.pg.WithConn(ctx, func(ctx context.Context, conn pg.Querier) error {
+		query := `
+		WITH RECURSIVE desc_tree AS (
+			SELECT * FROM icpms_parsed_document_sections
+			WHERE parent_id = @article_id AND ` + scope.SQLFragment() + ` AND deleted_at IS NULL
+			UNION ALL
+			SELECT s.* FROM icpms_parsed_document_sections s
+			JOIN desc_tree d ON s.parent_id = d.id
+			WHERE s.deleted_at IS NULL AND s.tenant_id = @tenant_id
+		)
+		SELECT * FROM desc_tree ORDER BY sort_order ASC`
+
+		args := pgx.StrictNamedArgs{"article_id": article.ID, "tenant_id": article.TenantID}
+		for k, v := range scope.SQLArguments() {
+			args[k] = v
+		}
+		rows, err := conn.Query(ctx, query, args)
+		if err != nil {
+			return err
+		}
+		descendants, err = pgx.CollectRows(rows, pgx.RowToAddrOfStructByName[coredata.IcpmsParsedDocumentSection])
+		return err
+	})
+	if dbErr != nil {
+		// Return article even if children query fails
+		return article, nil, nil //nolint:nilerr
+	}
+	return article, descendants, nil
 }
 
 // ListSectionsForJob returns all parsed sections for a parse job, ordered by sort_order.

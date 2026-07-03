@@ -218,23 +218,27 @@ func (s *IcpmsAiReviewService) createSuggestion(
 	})
 }
 
-// ListSuggestionsForJob returns all non-deleted suggestions for a given job.
+// ListSuggestionsForJob returns all non-deleted suggestions for a given job,
+// ordered by document section position (requirement_code ascending).
 func (s *IcpmsAiReviewService) ListSuggestionsForJob(
 	ctx context.Context,
 	scope coredata.Scoper,
 	jobID gid.GID,
 	statusFilter *coredata.IcpmsAiReviewSuggestionStatus,
 ) ([]*coredata.IcpmsAiReviewSuggestion, error) {
-	query := `SELECT * FROM icpms_ai_review_suggestions WHERE tenant_id = @tenant_id AND ai_review_job_id = @job_id AND deleted_at IS NULL`
+	query := `
+		SELECT s.* FROM icpms_ai_review_suggestions s
+		LEFT JOIN icpms_requirements r ON r.id = s.requirement_id
+		WHERE s.tenant_id = @tenant_id AND s.ai_review_job_id = @job_id AND s.deleted_at IS NULL`
 	args := pgx.NamedArgs{
 		"tenant_id": scope.GetTenantID(),
 		"job_id":    jobID,
 	}
 	if statusFilter != nil {
-		query += ` AND status = @status`
+		query += ` AND s.status = @status`
 		args["status"] = *statusFilter
 	}
-	query += ` ORDER BY created_at ASC`
+	query += ` ORDER BY (regexp_replace(r.requirement_code, '[^0-9]', '', 'g'))::bigint ASC NULLS LAST`
 
 	var sugs []*coredata.IcpmsAiReviewSuggestion
 	err := s.svc.pg.WithConn(ctx, func(ctx context.Context, conn pg.Querier) error {
@@ -364,6 +368,76 @@ func (s *IcpmsAiReviewService) RejectSuggestion(
 	return sug, err
 }
 
+// CancelJob marks an AI review job as CANCELLED. The running goroutine will stop on next iteration.
+func (s *IcpmsAiReviewService) CancelJob(
+	ctx context.Context,
+	scope coredata.Scoper,
+	jobID gid.GID,
+) (*coredata.IcpmsAiReviewJob, error) {
+	job, err := s.Get(ctx, scope, jobID)
+	if err != nil {
+		return nil, fmt.Errorf("cannot find job: %w", err)
+	}
+	if job.Status != coredata.IcpmsAiReviewJobStatusRunning &&
+		job.Status != coredata.IcpmsAiReviewJobStatusQueued {
+		return nil, fmt.Errorf("job không đang chạy (status: %s)", job.Status)
+	}
+	now := time.Now()
+	job.Status = coredata.IcpmsAiReviewJobStatusCancelled
+	job.FinishedAt = &now
+	if err := s.updateJob(ctx, job); err != nil {
+		return nil, fmt.Errorf("cannot cancel job: %w", err)
+	}
+	return job, nil
+}
+
+// DeleteSuggestion soft-deletes a single AI review suggestion.
+func (s *IcpmsAiReviewService) DeleteSuggestion(
+	ctx context.Context,
+	scope coredata.Scoper,
+	suggestionID gid.GID,
+) error {
+	return s.svc.pg.WithConn(ctx, func(ctx context.Context, conn pg.Querier) error {
+		_, err := conn.Exec(ctx, `
+			UPDATE icpms_ai_review_suggestions
+			   SET deleted_at = NOW(), updated_at = NOW()
+			 WHERE id = @id AND tenant_id = @tenant_id AND deleted_at IS NULL
+		`, pgx.StrictNamedArgs{
+			"id":        suggestionID,
+			"tenant_id": scope.GetTenantID(),
+		})
+		return err
+	})
+}
+
+// DeleteJob soft-deletes an AI review job regardless of its current status.
+func (s *IcpmsAiReviewService) DeleteJob(
+	ctx context.Context,
+	scope coredata.Scoper,
+	jobID gid.GID,
+) error {
+	return s.svc.pg.WithConn(ctx, func(ctx context.Context, conn pg.Querier) error {
+		_, err := conn.Exec(ctx, `
+			UPDATE icpms_ai_review_jobs
+			   SET deleted_at = NOW(), updated_at = NOW()
+			 WHERE id = @id AND tenant_id = @tenant_id AND deleted_at IS NULL
+		`, pgx.StrictNamedArgs{
+			"id":        jobID,
+			"tenant_id": scope.GetTenantID(),
+		})
+		return err
+	})
+}
+
+// isCancelled checks the DB to see if the job has been cancelled externally.
+func (s *IcpmsAiReviewService) isCancelled(ctx context.Context, job *coredata.IcpmsAiReviewJob) bool {
+	fresh, err := s.Get(ctx, coredata.NewScope(job.TenantID), job.ID)
+	if err != nil {
+		return false
+	}
+	return fresh.Status == coredata.IcpmsAiReviewJobStatusCancelled
+}
+
 // RunJob processes the review job synchronously. Call in a goroutine.
 func (s *IcpmsAiReviewService) RunJob(
 	ctx context.Context,
@@ -417,6 +491,15 @@ func (s *IcpmsAiReviewService) RunJob(
 
 	created := 0
 	for i, req := range filtered {
+		// Check every 5 requirements if the job was cancelled from the UI.
+		if i%5 == 0 && s.isCancelled(ctx, job) {
+			job.Status = coredata.IcpmsAiReviewJobStatusCancelled
+			finishedAt := time.Now()
+			job.FinishedAt = &finishedAt
+			_ = s.updateJob(ctx, job)
+			return nil
+		}
+
 		lang := "en"
 		if req.KeywordMatches != nil {
 			lang = "vi"
@@ -434,6 +517,16 @@ func (s *IcpmsAiReviewService) RunJob(
 
 		output, err := provider.Review(input)
 		if err != nil {
+			var quotaErr *ErrGeminiQuotaExceeded
+			if errors.As(err, &quotaErr) {
+				errMsg := "Gemini API đã hết quota hoặc vượt ngân sách. Vui lòng kiểm tra tài khoản Google AI Studio và thử lại sau."
+				job.ErrorMessage = &errMsg
+				job.Status = coredata.IcpmsAiReviewJobStatusFailed
+				finishedAt := time.Now()
+				job.FinishedAt = &finishedAt
+				_ = s.updateJob(ctx, job)
+				return nil
+			}
 			continue
 		}
 

@@ -1,0 +1,1361 @@
+--- Trang 1/77 ---
+
+CHÍNH PHỦ
+CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+Độc lập - Tự do - Hạnh phúc
+Số: 222/2026/NĐ-CP
+Hà Nội, ngày 22 tháng 6 năm 2026
+NGHỊ ĐỊNH
+Về hoạt động bay
+Căn cứ Luật Tổ chức Chính phủ số 63/2025/QH15; Căn cứ Luật Tổ chức chính quyền địa phương số 72/2025/QH15; Căn cứ Luật Hàng không dân dụng Việt Nam số 130/2025/QH15; Theo đề nghị của Bộ trưởng Bộ Xây dựng; Chính phủ ban hành Nghị định về hoạt động bay WLVN
+10
+Chương I
+QUY ĐỊNH CHUNG
+Điều 1. Phạm vi điều chinh
+Nghị định này quy định chi tiết Luật Hàng không dân dụng Việt Nam về hoạt động bay bao gồm: quy định chi tiết các Điều 39, 40, 41, 42, 43, 45, 46, 47, 48; khoản 3 Điều 61; điểm c, điểm k khoản 1 Điều 99, khoản 3 Điều 103 Luật Hàng không dân dụng Việt Nam.
+nat
+tluc
+Điều 2. Đối tượng áp dụng
+O
+Nghị định này áp dụng đối với cơ quan, tổ chức, cá nhận Việt Nam và nước ngoài có liên quan đến hoạt động bay trong lãnh thổ Việt Nam và trong vùng thông báo bay do Việt Nam quản lý.
+Điều 3. Giải thích từ ngữ
+Trong Nghị định này, các từ ngữ dưới đây được hiểu như sau: 1. AIP là tài liệu tin tức hàng không, bao gồm những tin tức ổn định lâu dài, cần thiết cho hoạt động bay.
+2. AIRAC là hệ thống kiểm soát và điều chỉnh tin tức hàng không nhằm thông báo trước về những thay đổi quan trọng ảnh hưởng trực tiếp đến hoạt động bay, căn cứ vào những ngày có hiệu lực chung do ICAO quy định
+
+--- Trang 2/77 ---
+
+2
+3. Bay chặn là hành động của tàu bay Quân đội nhân dân Việt Nam tiếp cận tàu bay vi phạm ở vị trí phù hợp và phát đi các ký, tín hiệu nhằm ngăn chặn không cho tàu bay vi phạm vùng trời Việt Nam 4. Bay kèm là hành động của tàu bay Quân đội nhân dân Việt Nam thực hiện bay ở vị trí phù hợp với tàu bay vi phạm để dẫn dắt, hướng dẫn bay cho đến khi kết thúc vi phạm
+5. Bay ép tàu bay vi phạm hạ cánh là hành động của tàu bay Quân đội nhân dân Việt Nam bay ở vị trí phù hợp với tàu bay vi phạm để phát đi các ký; tín hiệu và buộc tàu bay vi phạm hạ cánh tại cảng hàng không, sân bay.
+6. Bề mặt chướng ngại vật là bề mặt giới hạn độ cao tối đa của các vật thể bảo đảm an toàn cho tàu bay thực hiện các giai đoạn cất cánh, bay lên, bay theo các đường bay, vòng lượn, hạ thấp độ cao, hạ cánh; bảo đảm hoạt động bình thường cho các đài, trạm vô tuyến điện hàng không 7. Cảnh báo chướng ngại vật hàng không là việc sơn, kẻ dấu hiệu và lắp đèn cảnh báo nguy hiểm hoặc đặt dấu hiệu, căm cờ trên chướng ngại vật để tổ lái trong khi bay có thể nhìn thấy cảnh báo từ cự ly an toàn ở mọi hướng s
+8. Chuyến bay nhiệm vụ của lực lượng vũ trang là chuyến bay không thực ILVN
+hiện theo giáo trình huấn luyện chiến đấu hoặc giáo trình huấn luyện - đào tạo; là chuyến bay do cấp có thầm quyền giao hoặc theo kế hoạch được cấp có thẩm quyền phê duyệt, bao gồm: bay diễn tập, chuyến cơ, chuyến sân, tìm kiếm cứu nạn, cứu thương, tuần tiểu, quan sát, trình sát, chụp ảnh, duyệt binh, diễu binh, biểu diễn, bay thử, bay kiểm tra máy bay và bay làm nhiệm vụ đặc biệt.
+c
+9. Cơ sở ATS là cơ sở được thiết lập để cung cấp dịch vụ không lưu theo quy định
+10. Điều kiện khí tượng bay bằng mắt (Visual Meteorological Conditions VMC) là các điều kiện khí tượng được biểu thị bằng tâm nhìn, khoảng cách tới mây và trần mây, bằng hoặc tốt hơn các tiêu chuẩn tối thiếu được quy định 11. Đường hàng không có điều kiện là đường hàng không được lập kế hoạch và sử dụng với một số điều kiện khai thác cụ thể 12. Đường hàng không nội địa là đường hàng không năm hoàn toàn trong vùng trời Việt Nam
+13. Đường hàng không quốc tế là đường hàng không năm trong mạng lưới đường hàng không quốc tế, có ít nhất một điểm năm ngoài vùng thông báo bay của Việt Nam và một điểm năm trong vùng trời Việt Nam hoặc trong phần vùng thông báo bay trên biển quốc tế do Việt Nam quản lý.
+
+--- Trang 3/77 ---
+
+3
+14. Kế hoạch bay không lưu là kế hoạch bay do người lái tàu bay, người khai thác tàu bay hoặc người đại diện được ủy quyên nộp cho cơ sở cung cấp dịch vụ không lưu.
+15. Kế hoạch sử dụng vùng trời là bản thông báo được ban hành hàng ngày về các quyết định phân bổ vùng trời ở cấp độ tiền chiến thuật 16. Kế hoạch sử dụng vùng trời cập nhật là bản cập nhật được ban hành khi cần thiết để thông báo các thay đổi so với Kế hoạch sử dụng vùng trời đã công bố trước đó.
+17. Khu vực cấm bay tạm thời là khu vực cầm bay mà trong đó mọi hoạt động bay tạm thời không được thực hiện, trừ trường hợp được cơ quan có thẩm quyền cấp phép.
+18. Khu vực kiểm soát là một vùng trời có kiểm soát, kéo dài từ một giới hạn xác định phía trên mặt đất hoặc trở lên 19. Khu vực hạn chế bay tạm thời là khu vực hạn chế bay mà trong WLVN
+đó mọi hoạt động bay tạm thời chỉ được thực hiện khi được cơ quan có thẩm quyền cấp phép.
+20. Khu vực nguy hiểm tạm thời là khu vực nguy hiểm mà trong đó hoạt động bay có thể bị nguy hiểm trong khoảng thời gian xác định; hoạt động bay chỉ được thực hiện khi được cơ quan có thẩm quyền cho phép.
+21. Mực bay (Flight Level - FL) là một bề mặt áp suất khí quyền không đổi, liên quan đến mốc áp suất 1013.2 hectopascal (hPa) và được tách biệt với các bề mặt khác bằng các khoảng áp suất quy định.
+22. NOTAM là thông báo được phát hành bằng phương tiện viễn thông liên quan đên việc thiết lập, tình trạng hoặc sự thay đối của phương tiện dẫn đường, dịch vụ, phương thức hoặc mối nguy hiểm mang tính quan trọng mà tổ lái và những người có liên quan đền hoạt động bay cần phải nhận biết kịp thời 23. Quy tắc bay bằng mắt (Visual Flight Rules - VFR) là tập hợp các quy định áp dụng cho tàu bay hoạt động trong điều kiện khí tượng bay bằng mắt (VMC), Trong quy tắc bay này, tố lái điều khiến tàu bay dựa trên việc duy trì tham chiếu bằng mắt với bề mặt địa hình, tự định vị và tự chịu trách nhiệm quan sát để phòng tránh va chạm với tàu bay khác cũng như chướng ngại vật 24. Quy tắc bay bằng thiết bị (Instrument Flight Rules - IFR) là tập hợp các quy định áp dụng cho chuyến bay trong đó tàu bay được điều khiển và dẫn đường chủ yếu dựa vào các thiết bị trên tàu bay.
+
+--- Trang 4/77 ---
+
+4
+25. Tĩnh không sân bay là phạm vi không gian xung quanh sân bay mà trên nó không được có chướng ngại vật ảnh hưởng đến an toàn cất, hạ cánh của tàu bay. Tĩnh không sân bay có các bề mặt chướng ngại vật phù hợp với cấp sân bay.
+26. Tĩnh không các đài, trạm vô tuyến điện hàng không là phạm vi không gian (bề mặt chướng ngại vật) được xác định phủ hợp với vị trí đặt và tính năng các trang thiết bị, nhăm bảo đảm không có chướng ngại vật gây mất an toàn và ảnh hưởng đến việc thu, phát sóng vô tuyến của các đài, trạm vô tuyên điện hàng không
+27, Sử dụng vùng trời linh hoạt là quá trình tổ chức, điều phối, phối hợp giữa các cơ quan của lực lượng vũ trang, cơ quan quản lý nhà nước về hàng không dân dụng và cơ sở cung cấp dịch vụ bảo đảm hoạt động bay trong việc phân bố, điều chỉnh, quản lý và sử dụng vùng trời trên cơ sở bảo đảm yêu cầu quốc phòng, an ninh, an toàn hoạt động bay và hiệu quả khai thác.
+Điều 4.Nguyên tắc giải quyết thủ tục hành chính WLVN
+1. Việc tiếp nhận hồ sơ thủ tục hành chính được thực hiện theo quy định của Chính phủ về cơ chế một cửa, một cửa liên thông tại Bộ phận Một cửa và Cổng Dịch vụ công quốc gia.
+2. Cơ quan giải quyết thủ tục hành chính có trách nhiệm số hóa, lưu giữ kết quả giải quyết thủ tục hành chính theo quy định của pháp luật để tái sử dụng thông tin, dữ liệu trong giải quyết các hồ sơ giải quyết thủ tục hành chính tiếp theo, trừ trường hợp có văn bản khác thay đồi nội dung hoặc thay thế văn bản đã được số hóa, lưu giữ
+O
+3. Đơn đề nghị theo Mẫu quy định tại Phụ lục ban hành kèm theo Nghị định này hoặc văn bản đề nghị được gửi đến cơ quan giải quyết thủ tục hành chính là bản chính, bản sao hoặc bản điện tử o
+4. Đối với các thủ tục hành chính có yêu cầu nộp phí, trong vòng 01 ngày làm việc kể từ ngày nhận đủ hồ sơ theo quy định, cơ quan giải quyết thủ tục hành chính gửi thông báo thu phí đến người nộp hồ sơ, việc nộp phí được thực hiện trong thời hạn 03 ngày làm việc kể từ ngày cơ quan giải quyết thủ tục hành chính gửi thông báo thu phí; quá thời hạn này, các tổ chức, cá nhân không hoàn thành nghĩa vụ tài chính theo quy định, cơ quan giải quyết thủ tục hành chính từ chối giải quyết thủ tục hành chính, thông báo cho tổ chức, cá nhân và nêu rõ lý do. Thời gian thực hiện việc nộp phí của tổ chức, cá nhân không tính vào thời gian giải quyết thủ tục hành chính.
+5. Đối với các thủ tục hành chính, sau khi cơ quan giải quyết thủ tục hành chính thực hiện thầm định mà có yêu cầu phải sửa đổi, bố sung hồ sơ, cơ quan giải quyết thủ tục hành chính có văn bản đề nghị sửa đôi, bố sung, nêu rõ lý do;
+
+--- Trang 5/77 ---
+
+5
+nội dung cần bố sung, Sau 15 ngày làm việc kế từ ngày nhận được thông báo của cơ quan giải quyết thủ tục hành chính mà tổ chức, cá nhân không hoàn thiện, bổ sung hồ sơ thì cơ quan giải quyết thủ tục hành chính kết thúc giải quyết thủ tục hành chính, Thời gian tổ chức, cá nhân bổ sung hồ sơ không tính vào thời gian giải quyết thủ tục hành chính 6. Kết quả giải quyết thủ tục hành chính được trả bằng bản điện tử, trừ trường hợp công dân, tổ chức có nhu cầu nhận bản giấy, Hồ sơ và kết quả giải quyết thủ tục hành chính bằng bản điện tử có giá trị pháp lý như bản giây.
+13,7.Quy định của Điều này không áp dụng đối với việc cấp, sửa đổi, hủy bỏ phép bay thuộc thấm quyền của Cục Lãnh sự theo khoản 1 Điều 14 Nghị định này O
+Chương II
+TỔ CHỨC, KHAI THÁC VÀ SỬ DỤNG VÙNG TRỜI
+Điều 5, Thiết lập, điều chỉnh, hủy bỏ khu vực cấm bay, khu vực hạn chế bay, khu vực nguy hiểm
+WLVN
+1. Bộ Quốc phòng chủ trì phối hợp Bộ Xây dựng, Bộ Công an trình Thủ tướng Chính phủ quyết định thiết lập, điều chỉnh, hủy bỏ khu vực cầm bay.
+2. Bộ Quốc phòng quyết định thiết lập, điều chỉnh, hủy bỏ khu vực hạn chế bay, khu vực nguy hiểm sau khi có ý kiến của Bộ Xây dựng, Bộ Công an 3. Trong trường hợp cần thiết để bảo đảm quốc phòng, an ninh, an toàn hoạt động bay, Bộ Quốc phòng quyết định thiết lập khu vực cấm bay tạm thời khu vực hạn chế bay tạm thời, khu vực nguy hiểm tạm thời và thông báo ngay cho Bộ Xây dựng, Bộ Công an và cơ quan, đơn vị liên quan đề tổ chức thực hiện và công.bố thông tin.
+c
+4. Cục Tác chiến có trách nhiệm:
+ợng
+a) Cung cấp thông tin của các khu vực quy định tại khoản 1, khoản 2 Điều này cho Cục Hàng không Việt Nam, doanh nghiệp cung cấp dịch vụ không lưu và tin tức hàng không
+O
+b) Thông báo trước 07 ngày đối với thông tin hoạt động của các khu vực quy định tại khoản 2 và trước 24 giờ đối với thông tin của các khu vực quy định tại khoản 3 Điều này cho Cục Hàng không Việt Nam, doanh nghiệp cung cấp dịch vụ không lưu và tin tức hàng không
+5. Cục Hàng không Việt Nam công bố tin tức hàng không về khu vực cấm bay, khu vực hạn chế bay, khu vực nguy hiểm trong AIP Việt Nam theo chu kỳ A RAIRAC; trường hợp tạm thời hoặc thay đồi ngăn hạn dưới 06 tháng thì công bố bằng NOTAM
+
+--- Trang 6/77 ---
+
+6
+Điều 6. Hoạt động của tàu bay hàng không dân dụng trong khu vực cấm bay, khu vực hạn chế bay
+1. Tàu bay dân dụng hoạt động trong khu vực cấm bay, khu vực hạn chế bay phải tuân thủ huấn lệnh của cơ sở cung cấp dịch vụ không lưu và tuân thủ các yêu cầu của cơ quan có thẩm quyền quản lý vùng trời.
+2. Tàu bay dân dụng vi phạm khu vực cấm bay, khu vực hạn chế bay bị L
+Ở xử lý theo quy định của pháp luật; trường hợp cần thiết có thể bị áp dụng biện pháp cưỡng chế buộc hạ cánh theo quy định tại Mục 6 Chương V của Nghị định này.
+3. Hoạt động bay dân dụng trong khu vực hạn chế bay chỉ được thực hiện khi đáp ứng điều kiện cụ thể áp dụng đối với khu vực đó.
+4. Hoạt động của tàu bay dân dụng, điều kiện hoạt động cụ thể trong khu vực cấm bay, khu vực hạn chế bay theo quy định của Bộ trưởng Bộ Quốc phòng WLVN
+Điều 7. Vùng trời sân bay dùng chung
+1. Vùng trời sân bay dùng chung được thiết lập cho một hoặc nhiều sân bay dùng chung nhằm bảo đảm an toàn cho hoạt động cất cánh, hạ cánh, bay chờ, bay huấn luyện, bay nhiệm vụ của lực lượng vũ trang và các hoạt động bay khác có liên quan.
+2. Giới hạn vùng trời sân bay dùng chung và nguyên tắc hoạt động trong vùng trời đó được quy định trong quy chế bay, phương thức bay và phương thức hoạt động trong khu vực sân bay dùng chung hat 3. Bộ Xây dựng chủ trì thiết lập, quản lý, tổ chức khai thác vùng trời sân bay dùng chung thuộc phạm vi quản lý của Bộ Xây dựng sau khi có ý kiến thống nhất của Bộ Quốc phòng, Bộ Công an.
+4. Bộ Quốc phòng chủ trì thiết lập, quản lý, tổ chức kùag trời sân bay dùng chung thuộc phạm vi quản lý của Bộ Quốc phòng sau khi có ý kiến của Bộ Xây dựng, Bộ Công an
+gtr
+5. Bộ Công an chủ trì thiết lập, quản lý, tổ chức khai thác vùng trời sân bay dùng chung thuộc phạm vi quản lý của Bộ Công an sau khi có ý kiên của Bộ Xây dựng, Bộ Quốc phòng
+Điều 8. Vùng trời hàng kân dụng
+1. Vùng trời hàng không dân dụng được phân loại theo tiêu chuẩn của ICAO thành các loại A,B, C, V, V. G.
+
+--- Trang 7/77 ---
+
+7
+2. Đặc tính khai thác của từng loại vùng trời thực hiện theo quy định của Bộ trưởng Bộ Xây dựng, phù hợp với tiêu chuẩn và khuyến cáo thực hành của ICAO.
+3. Việc áp dụng từng loại vùng trời, giới hạn vùng trời và chế độ cung cấp dịch vụ không lưu do Cục Hàng không Việt Nam công bố trong AIP Việt Nam Điều 9. Khu vực trách nhiệm cung cấp dịch vụ không lưu 1. Cục Hàng không Việt Nam xác định giới hạn ngang, giới hạn cao của khu vực trách nhiệm cung cấp dịch vụ không lưu và loại vùng trời liên quan sau khi có ý kiến của Quân chủng Phòng - Không quân.
+2. Khu vực trách nhiệm cung cấp dịch vụ không lưu quy định tại khoản 1 Điều này được công bố trong AIP Việt Nam 3. Cục Hàng không Việt Nam phân công khu vực trách nhiệm cho cơ sở ATS phù hợp với tổ chức vùng trời, năng lực cung cấp dịch vụ và yêu cầu bảo đảm an toàn hoạt động bay
+WLVN
+Điều 10. Đường hàng không
+1. Đường hàng không được thiết lập trên cơ sở: a) Nhu cầu giao lưu hàng không quốc tế và nội địa; b) Yêu cầu tổ chức hoạt động bay dân dụng; c) Khả năng cung cấp dịch vụ bảo đảm hoạt đản bảy an ninh an toàn hàng không;
+C
+d) Yêu cầu quản lý, bảo vệ vùng trời, bảo đảm quốc phòng và an ninh quốc gia;
+đ) Phù hợp với chiến lược, quy hoạch, kế hoạch phát triển hàng không dân dụng và Chương trình quốc gia về bảo đảm hoạt động bay; I
+e) Yêu cầu tổ chức luồng không lưu, nâng cao an toàn, điều hòa và hiệu quả khai thác.
+an
+2. Bộ Quốc phòng chủ trì thiết lập, điều chinh, hủy bỏ đường hàng không sau khi có ý kiến của Bộ Xây dựng, trình Thủ tướng Chính phủ quyết định Cụ thể như sau:
+a) Bộ Xây dựng gửi 01 bộ hồ sơ đến Bộ Quốc phòng qua các hình thức trực tiếp hoặc dịch vụ bưu chính hoặc gửi trực tuyến bao gồm: văn bản đề nghị thiết lập, điều chỉnh, hủy bỏ đường hàng không theo Mẫu tại Phụ lục IX ban hành kèm theo Nghị định này; dự thảo thiết lập, điều chỉnh, hủy bỏ, quản lý, khai thác, sử dụng đường hàng không; các tài liệu khác (nếu có);
+
+--- Trang 8/77 ---
+
+8
+bl b) Trong thời gian 07 ngày làm việc kể từ ngày nhận đủ hồ sơ, Bộ Quốc phòng thẩm định, đánh giá tác động, ảnh hưởng về mặt quân sự, quốc phòng có liên quan, tổng hợp, trình Thủ tướng Chính phủ quyết định để thiết lập, điều chỉnh, hủy bỏ đường hàng không
+c) Trong thời hạn 15 ngày làm việc, Thủ tướng Chính phủ xem xét quyết định việc thiết lập, điều chỉnh, hủy bỏ đường hàng không 3. Đối với đường hàng không quốc tế, Cục Hàng không Việt Nam có trách nhiệm đề xuất với ICAO việc sửa đổi, bổ sung mạng đường hàng không theo quy định
+4 Cục Hàng không Việt Nam công bố đường hàng không và thông tin trong AIP Việt Nam
+5. Việc ký hiệu đường hàng không thực hiện theo quy định của Bộ trưởng Bộ Xây dựng phù hợp với tiêu chuẩn và khuyên cáo thực hành của ICAO Điều 11. Khai thác, sử dụng vùng trời
+WLVN
+1. Việc phối hợp sử dụng vùng trời giữa hoạt động bay dân dụng và lực lượng vũ trang được thực hiện theo nguyên tắc sử dụng vùng trời linh hoạt 2.Bộ Xây dựng chủ trì, phối hợp với Bộ Quốc phòng và Bộ Công an xây dựng quy chế, quy trình phối hợp và cờ chế lập, công bố kế hoạch sử dụng vùng trời, kế hoạch sử dụng vùng trời cập nhật đề thực hiện sử dụng vùng trời linh hoạt 3. Trung tâm Quản lý điều hành bay quốc gia và Trung tâm quản lý luông không lưu có trách nhiệm phối hợp, trao đồi thống tin kịp thời trong trường hợp hoạt động của khu vực cầm bay, khu vực hạn chế bay, khu vực nguy hiểm hoặc khu vực tương ứng tạm thời kết thúc sớm, thu hẹp phạm vi hoặc không thực hiện 4. Cấu trúc vùng trời linh hoạt bao gồm đường hàng không, đường hàng không có điều kiện, đường bay quân sự, khu vực cấm bay, khu vực hạn chế bay, khu vực nguy hiểm và các khu vực tương ứng tạm thời.
+Chương III
+HOẠT ĐỘNG BAY TẠI SÂN BAY
+Điều 12.Nguyên tắc hoạt động bạy tại sân bay 1. Hoạt động bay tại sân bay phải tuân thủ huấn lệnh của cơ sở ATS, quy chế bay, phương thức bay, phương thức hoạt động và quy trình khai thác tại sân bay được công bố.
+2. Tổ chức, cá nhân tham gia hoạt động bay tại sân bay có trách nhiệm phôi hợp bảo đảm an toàn, an ninh, năng lực khai thác và xử lý kịp thời tình huống bất thường, khần nguy.
+
+--- Trang 9/77 ---
+
+9
+Điều 13. Quy chế bay, phương thức bay và phương thức hoạt động trong khu vực sân bay dùng chung
+1. Việc ban hành quy chế bay, phương thức bay và phương thức hoạt động trong khu vực sân bay dùng chung phải bảo đảm phù hợp với thấm quyền quản lý trực tiếp sân bay, yêu cầu quốc phòng, an ninh và an toàn hoạt động bay 2. Đối với sân bay dùng chung thuộc phạm vi quản lý của Bộ Xây dựng Cục Hàng không Việt Nam công bố phương thức bay và phương thức hoạt động trong khu vực sân bay sau khi có ý kiến của Quân chủng Phòng không - Không quân và cơ quan có liên quan.
+3. Đối với sân bay dùng chung thuộc phạm vi quản lý của Bộ Quốc phòng Quân chủng Phòng không - Không quân ban hành quy chế bay trong khu vực sân bay sau khi có ý kiến của Cục Hàng không Việt Nam 4. Đối với sấn bay dùng chung thuộc phạm vi quản lý của Bộ Công an, cơ quan có thẩm quyền thuộc Bộ Công an ban hành quy chế bay trong khu vực sân bay sau khi có ý kiến của Quân chủng Phòng không - Không quân và Cục Hàng không Việt Nam
+z
+NLVN
+5. Cục Hàng không Việt Nam công bố trong AIP Việt Nam các phương thức bay, phương thức hoạt động và dữ liệu khai thác liên quan đến hoạt động bay dân dụng tại sân bay dùng chung theo quy định về tin tức hàng không 6. Việc tổ chức hoạt động bay trong khu vực sân bay dùng chung phải tuân thủ quy chế bay, phương thức bay, phương thức hoạt động đã được ban hành và cơ chế phối hợp giữa hàng không dân dụng và lực lượng vũ trang Chương IV
+D
+CẤP PHÉP BAY
+Mục 1
+QUY ĐỊNH CHUNG
+In
+Điều 14. Thẩm quyền cấp, sửa đổi, hủy bỏ phép bay ga
+1. Cục Lãnh sự thuộc Bộ Ngoại giao cấp, sửa đổi, hủy bỏ phép bay cho: a) Chuyển bay chuyên cơ của nước ngoài chở người đứng đâu Nhà nước cơ quan lập pháp, Chính phủ các nước thực hiện cấu nhà nước; thăm chính thức, thăm làm việc, thăm cá nhân tại Việt Nam; b) Chuyến bay chở khách mời của Đảng, Nhà nước, chuyến bay thực hiện nhiệm vụ đối ngoại;
+chuyến bay làm nhiệm vụ hộ tống, tiền trạm hoặc chuyến bay liên quan đến chuyến bay chuyên cơ tại điểm a và điểm b khoản 1 Điều này
+
+--- Trang 10/77 ---
+
+10
+2. Cục Tác chiến thuộc Bộ Tổng tham mưu của Bộ Quốc phòng cấp, sửa nha đổi, hủy bỏ phép bay cho:
+a) Chuyến bay của tàu bay quân sự thực hiện hoạt động bay dân dụng tại Việt Nam;
+b) Chuyến bay của tàu bay quân sự tham gia tìm kiêm, cứu nạn trong vùng thông báo bay của Việt Nam hoặc trong khu vực do Việt Nam đảm nhiệm; c) Chuyến bay của tàu bay dân dụng vận chuyển vũ khí, dụng cụ chiến tranh theo quy định tại khoản 3 Điều 61 của Luật Hàng không dân dụng Việt Nam sau khi được Bộ trưởng Bộ Quốc phòng cho phép vận chuyển bằng đường hàng không đi, đến hoặc bay qua lãnh thổ Việt Nam d) Chuyến bay hoạt động bay dân dụng ngoài đường hàng không; đ) Chuyển bay thực hiện hoạt động bay dân dụng quy định tại khoản 3 Điều 5 và Điều 6 Nghị định này.
+3. Cơ quan có thẩm quyền thuộc Bộ Công an cấp, sửa đổi, hủy bỏ phép s
+bay cho chuyển bay được thực hiện bởi tàu bay của Bộ Công an phục vụ mục đích công vụ, thực hiện nhiệm vụ bảo đảm an ninh, trật tự theo quy định. Bộ NLVN
+trưởng Bộ Cộng an quy định chi tiết trình tự thủ tục cấp, sửa đổi, hủy bỏ phép bay thuộc thầm quyến
+S
+4. Cục Hàng không Việt Nam thuộc Bộ Xây dựng cấp, sửa đổi, hủy bỏ phép bay cho:
+Ioa
+a) Chuyến bay thực hiện hoạt động bay dân dụng tại Việt Nam, bao gồm chuyển bay của tàu bay dân dụng tham gia tìm kiêm, cứu nạn và không thuộc phạm vi quy định tại các khoản 1, 2 và 3 Điều này; SUBSURES
+b) Chuyến bay chuyên cơ của Việt Nam do các hãng hàng không của Việt Nam thực hiện;
+c) Chuyến bay chuyên cơ của nước ngoài không thuộc phạm vi quy định tại khoản 1 Điều này
+ML
+1
+5. Tổng công ty Quản lý bay Việt Nam thực hiện cấp, sửa đổi, hủy bó phép bay đối với chuyến bay thực hiện hoạt động bay dân dụng tại Việt Nam quỳ định tại khoản 4 Điều này trong trường hợp đề nghị cấp phép bay được gửi vào ngày nghỉ, ngày lễ hoặc ngoài giờ hành chính và chuyến bay dự kiến thực hiện the trước 09 giờ 00 phút của ngày làm việc kê tiếp, cụ thế như sau a) Chuyến bay chuyên chở thợ máy, động cơ, trang bị, thiết bị phục vụ, sửa chữa tàu bay hỏng hóc; chuyến bay vận chuyển hành kýá hàng hóa, bưu gửi của tàu bay bị hỏng hóc hoặc chuyển sân để có tàu bay phục vụ mục đích này; chuyển bay khai thác trở lại sau khi khắc phục sự cố kỹ thuật;
+
+--- Trang 11/77 ---
+
+11
+b) Chuyến bay tìm kiếm, cứu nạn, cấp cứu, y tế, cứu hộ của tàu bay đăng ký quốc tịch nước ngoài;
+các chuyến bay nội địa chuyển sân, chuyến bay kỹ thuật; d) Chuyển bay của tàu bay dân dụng Việt Nam phục vụ mục đích công vụ; đ) Chuyến bay vì mục đích nhân đạo;
+e) Sửa đổi các nội dung sau đây của phép bay: thay đổi tàu bay vì lý do phi thương mại, thay đổi tàu bay vì lý do thương mại đổi với chuyến bay nội địa địa , thay đổi sân bay cất, hạ cánh, sau khi chuyển hướng bắt buộc do thời tiết kỹ thuật, nhân đạo, an toàn; thay đổi số hiệu chuyến bay do bị chậm giờ sang ngày kế tiếp; thay đổi sân bay đi, đến ngoài lãnh thổ Việt Nam đối với các chuyến bay qua vùng trời Việt Nam
+6. Tổng công ty Quản lý bay Việt Nam thực hiện trình tự thủ tục cấp, sửa đổi, hủy bỏ phép bày quy định tại khoản 5 Điều này theo quy định tại Điều 17 của Nghị định này..6
+WLVN
+7. Trường hợp cấp thiết để bảo đảm an toàn bay, kiểm soát viên không lưu đang trực tiếp điều hành chuyển bay có quyền cấp hiệu lệnh thay đổi so với kế hoạch bay không lưu cho tàu bay đang bay. Cơ sở trực tiếp điều hành chuyến bay có trách nhiệm thông báo ngay cho Trung tâm Quản lý điều hành bay khu vực có liên quan về việc cấp hiệu lệnh cho chuyến bay đó.
+8. Tổng công ty Quản lý bay Việt Nam có trách nhiệm tiếp nhận, xem xét thông báo phản hồi Kế hoạch bay không lưu quy định tại khoản 7 Điều 17 và Kế hoạch thực hiện chuyến bay quy định tại Điều 24 Nghị định này. Thông báo phản hồi này thay cho phép bay.
+Điều 15. Trách nhiệm của các cơ quan, đơn vị ợng
+1. Trách nhiệm của cơ quan cấp phép bay:
+a) Xem xét, thông báo phép bay hoặc trả lời không đồng ý cấp phép cho người nộp đề nghị trong thời hạn quy định tại Nghị định này; ba b) Xem xét các yếu tố về lý do gửi chậm, tính chất, sự cần thiết của chuyến bay và các vấn đề liên quan khác để quyết định cấp, sửa đổi hoặc từ chối cập phép bay trong trường hợp đề nghị cấp, sửa đổi phép bay được nộp không đúng thời hạn;
+c) Công bố địa chi tiếp nhận hồ sơ đề nghị cấp phép bay gồm các thông tin sau: địa chỉ tiếp nhận hồ sơ, phương thức tiếp nhận (trực tiếp, trực tuyến); thời gian làm việc, Thông báo đến Cục Hàng không Việt Nam để cập nhật AIP theo quy định
+
+--- Trang 12/77 ---
+
+12
+2. Trách nhiệm của người đề nghị cấp phép bay, người khai thác tàu bay: a) Người khai thác tàu bay, người vận chuyển, cơ quan đại diện nước ngoài tại Việt Nam, cơ quan đại diện Việt Nam ở nước ngoài (trường hợp tiếp nhận đề nghị cấp phép bay từ cơ quan có thẩm quyền của nước ngoài) hoặc người được ủy quyền (gọi chung là người đề nghị cấp phép bay) gửi hồ sơ đề nghị cấp, sửa đồi phép bay theo quy định tại khoản 3 Điều 4 của Nghị định này; b) Người đề nghị cấp phép bay phải thông báo cho cơ quan cấp phép bay trước thời hạn dự kiến thực hiện chuyến bay trong trường hợp hủy chuyển bay đã được cấp phép;
+c) Người khai thác tàu bay có trách nhiệm cung cấp đầy đủ, chính xác và kịp thời các thông tin cần thiết nhằm bảo đảm an toàn bay và phục vụ công tác cung cấp dịch vụ bảo đảm hoạt động bay; đồng thời có nghĩa vụ thanh toán đây đủ, đúng thời hạn các khoản giá, phí, lệ phí theo quy định, Trường hợp người khai thác tàu bay ủy quyên cho bên thứ ba thực hiện nghĩa vụ thanh toán, bên được ủy quyền có trách nhiệm thực hiện đầy đủ nghĩa vụ tài chính theo quy WLVN
+định của pháp luật và thỏa thuận ủy quyền; việc ủy quyền thanh toán không làm thay đổi, hạn chế hoặc loại trừ trách nhiệm cuối cùng của người khai thác tàu bay đối với nghĩa vụ thanh toán.
+Mục 2
+CẤP, SỬA ĐỔI PHÉP BAY THẤM QUYỀN
+CỦA CỤC HÀNG KHÔNG VIỆT NAM
+Điều 16. Yêu cầu đối với việc cấp, sửa đổi phép bay đối với chuyến bay cất, hạ cánh tại Việt Nam
+1
+1. Chuyển bay vận tải hàng không thường mại thường lệ đáp ứng các yêu cầu sau:
+O
+a) Có giờ đi, đến cảng hàng không Việt Nam được Cục Hàng không Việt Nam xác nhận;
+Z
+b) Có quyền vận chuyển hàng không được Cục Hàng không Việt Nam cấp đối với các chuyển bay quốc tế;
+các) Người khai thác tàu bay Việt Nam có Giây chứng nhận người khai thác tàu bay (AOC) được Cục Hàng không Việt Nam cấp; di Người khai thác tàu bay nước ngoài có Giây chứng nhận người khai thác tàu bay (AOC) do Nhà chức trách quốc gia người khai thác tàu bay cấp được Cục Hàng không Việt Nam công nhận hoặc đánh giá bảo đảm an toàn Phàng không theo tiêu chuân ICAO.
+
+--- Trang 13/77 ---
+
+13
+2. Chuyến bay thực hiện vận tải hàng không thương mại không thường lệ phải đáp ứng các yêu cầu sau:
+a) Đối với chuyến bay bằng tàu bay có cấu hình trên 30 chỗ: Có giờ đi, đến cảng hàng không Việt Nam được Cục Hàng không Việt Nam xác nhận
+Không gây ảnh hưởng đến hoạt động vận chuyển thường lệ; Người khai thác tàu bay Việt Nam có Giây chứng nhận người khai thác tàu bay (AOC) được Cục Hàng không Việt Nam cấp; Người khai thác tàu bay nước ngoài có Giấy chứng nhận người khai thác tàu bay (AOC) do Nhà chức trách quốc gia người khai thác tàu bay cấp được Cục Hàng không Việt Nam công nhận hoặc đánh giá bảo đảm an toàn hàng không theo tiêu chuẩn ICAO.
+b) Đối với chuyển bay bằng tàu bay có cấu hình không lớn hơn 30 chỗ: WLVN
+Có xác nhận bảo đảm phục vụ của cảng hàng không Việt Nam dự kiến khai thác;
+Người khai thác tàu bay Việt Nam có Giấy chứng nhận người khai thác tàu bay (AOC) được Cục Hàng không Việt Nam cấp Người khai thác tàu bay nước ngoài có Giấy chứng nhận người khai thác tàu bay (AOC) hoặc tài liệu tương đương do Nhà chức trách quốc gia người khai thác tàu bay cấp được Cục Hàng không Việt Nam công nhận hoặc đánh giá bảo đảm an toàn hàng không theo tiêu chuân ICAO.
+3. Các chuyến bay thực hiện vận tải hàng không chuyên dùng đáp ứng các yêu cầu sau:
+a) Có xác nhận bảo đảm phục vụ của cảng hàng không Việt Nam dự kiến khai thác;
+GL
+bb bg là b) Người khai thác tàu bay nước ngoài có Giây chứng nhận người khai thác tàu bay (AOC) hoặc tài liệu tương đương do Nhà chức trách quốc gia người khai thác tàu bay cấp được Cục Hàng không Việt Nam công nhận hoặc đánh ngoài giá bảo đảm an toàn hàng không theo tiêu chuân ICAO; người khai thác tàu bay Việt Nam có Giây chứng nhận người khai thác tàu bay (AOC) hoặc tài liệu tương đương do Cục Hàng không Việt Nam cấp hoặc đánh giá bảo đảm an toàn hàng không theo tiêu chuẩn ICAO;
+các Tiu bay có Giấy chứng nhận đủ điều kiện bay hoặc tài liệu tương đương
+
+--- Trang 14/77 ---
+
+14
+4. Các chuyến bay thực hiện hàng không chung đáp ứng các yêu cầu sau Và a a la 1 a l a là 1 2 có xác nhận bảo đảm phục vụ của cảng hàng không Việt Nam dự kiên khai thác;
+b) Tàu bay có Giấy chứng nhận đủ điều kiện bay hoặc tài liệu tương đương 5. Các chuyến bay vì mục đích bảo dưỡng, chuynn luyện tổ bay của hãng hàng không, kiểm tra kỹ thuật sau bảo dưỡng, giới thiệu tàu bay, bay kiểm chứng và các chuyển bay khác phải đáp ứng các yêu cầu sau: a ta la là ch điển bảo đảm phục vụ của cảng hàng không dự kiến khai thác đối với chuyến bay quốc tế đến cảng hàng không Việt Nam; b) Tàu bay có Giấy chứng nhận đủ điều kiện bay hoặc tài liệu tương đương Điều 17. Hồ sơ, trình tự thủ tục cấp, sửa đổi, hủy bỏ phép bay N.NNƯỜI ĐỀ NGHỊ CẤP PHép bay gửi hồ sơ đề nghị cấp phép bay a) Đối với chuyến bay tại khoản 1 Điều 16 của Nghị định này: WLVN
+Trường hợp chuyến bay được thực hiện bởi người khai thác tàu bay đã có AOC hoặc Giấy chứng nhận người khai thác tàu bay nước ngoài (FAOC) bao gồm Quy định vận hành (Operation specifications) do Cục Hàng không Việt Nam cấp, hồ sơ gồm: đề nghị theo Mẫu số 7A tại Phụ lục VII ban hành kèm theo Nghị định này;
+Trường hợp chuyển bay được thực hiện bởi người khai thác tàu bay không có AOC hoặc FAOC do Cục Hàng không Việt Nam cấp, hồ sơ gồm: đề nghị theo Mẫu số 7A tại Phụ lục VII ban hành kèm theo Nghị định này; bản sao không chứng thực Giây chứng nhận người khai thác tàu bay (AOC) bao gôm Quy định vận hành (Operation specifications) do Nhà chức trách quốc gia người khai thác tàu bay nước ngoài cấp;
+S
+b) Đối với chuyến bay tại khoản 2 Điều 16 của Nghị định nắy, được thực hiện bởi người khai thác tàu bay đã có AOC hoặc FAOC bao gồm Quy định vàn vận hành (Operation specifications) do Cục Hàng không Việt Nam cấp, hồ sơn gồm: đề nghị theo Mẫu số 7B tại Phụ lục VII ban hành kèm theo Nghị định này; các là c) Đối với chuyển bay tại khoản 2 Điều 16 của Nghị định này, được thực hiện bởi người khai thác tàu bay không có AOC hoặc FAOC do Cục Hàng không Việt Nam cấp, hồ sơ gồm:
+Đề nghị theo Mẫu số 7B tại Phụ lục VII ban hành kèm theo Nghị định này; Bản sao không chứng thực Giấy chứng nhận người khai thác tàu bay (AOC) bao gồm Quy định vận hành (Opecafications) hoặc tài liệu
+
+--- Trang 15/77 ---
+
+15
+tương đương do Nhà chức trách quốc gia người khai thác tàu bay nước ngoài cấp da d) Đối với chuyến bay tại khoản 3 Điều 16 của Nghị định này, hồ sơ gồm người Đề nghị theo Mẫu số 7B tại Phụ lục VII ban hành kèm theo Nghị định này; Bản sao không chứng thực Giấy chứng nhận người khai thác tàu bay (AOC) bao gôm Quy định vận hành (Opecafioations) hoặc tài liệu tương đương do Nhà chức trách quốc gia người khai thác tàu bay nước ngoài cấp In
+đ) Đối với chuyến bay tại khoản 4 Điều 16 của Nghị định này, hồ sơ gồm Đề nghị theo Mẫu số 7B tại Phụ lục VII ban hành kèm theo Nghị định này; Bản sao không chứng thực Giấy chứng nhận đủ điều kiện bay của tàu bay hoặc tài liệu tương đương
+The le là e) Đối với chuyển bay tại khoản 5 Điều 16 của Nghị định này, hồ sơ gồm Đề nghị theo Mẫu số 7B tại Phụ lục VII ban hành kèm theo Nghị định này; WLVN
+Bản sao không chứng thực Giấy chứng nhận đủ điều kiện bay của tàu bay hoặc tài liệu tương đương
+g) Đối với chuyến bay thường lệ bay qua lãnh thổ của Việt Nam, hồ sơ gồm: đề nghị theo Mẫu số 7D tại Phụ lục VII ban hành kèm theo Nghị định này; h) Đối với chuyến bay không thường lệ bay qua lãnh thổ của Việt Nam hồ sơ gồm: đề nghị theo Mẫu số 7Đ tại Phụ lục VII ban hành kèm theo Nghị định này.
+2.Người đề nghị cấp phép bay gửi hồ sơ đề nghị sửa đổi, hủy bỏ phép bay đã cấp gồm:
+O
+a) Đề nghị sửa đổi, hủy bỏ theo Mẫu số 7C tại Phụ lục VII ban hành kèm theo Nghị định này;
+b) Trường hợp sửa đổi có nội dung liên quan đến việc thay đổi, bố sung tàu bay khai thác, người đề nghị gửi bố sung một trong các tài liệu sau: bản sao không chứng thực Giấy chứng nhận người khai thác tàu bay (AOC) bao gồm Quy định vận hành (Operation specifications) do Nhà chức trách quốc gia của người khai thác tàu bay nước ngoài cấp; trường hợp người khai thác tàu bay không có Giấy chứng nhận người khai thác tàu bay (AOC), nộp bản sao không chứng thực Giấy chứng nhận đủ điều kiện bay của tàu bay hoặc tài liệu tương đương;
+các) Trường hợp hủy bỏ phép bay, không áp dụng quy định tại điểm b
+
+--- Trang 16/77 ---
+
+16
+khoản này.
+3. Thời hạn nộp đề nghị cấp, sửa đồi, hủy bi, đến và bay qua lãnh thổ Việt Nam:
+a) Chậm nhất 07 ngày làm việc trước ngày dự kiến thực hiện chuyến bay đối với các chuyến bay nêu tại khoản 1 Điều 16 của Nghị định này; b) Chậm nhất 03 ngày làm việc trước ngày dự kiến thực hiện chuyên bay đối với chuyến bay nêu tại điểm a khoản 2 Điều 16 của Nghị định này; the chậm nhất 02 ngày làm việc trước ngày dự kiến thực hiện chuyến bay đối với chuyến bay nêu tại khoản 3, 4,5 Điều 16 của Nghị định này; d) Không áp dụng thời hạn đối với chuyến bay tại điểm b khoản 2 Điều 16 của Nghị định này;
+đ) Không áp dụng thời hạn đối với các chuyến bay trong tình huống cấp thiết, các tình huống bất thường khác và các chuyến bay quy định tại khoản 5 Điều 14 của Nghị định này
+WLVN
+4 Cục Hàng không Việt Nam có trách nhiệm xem xét, cấp, sửa đổi, hủy bỏ phép bay hoặc thông báo từ chối cấp phép và nêu rõ lý do cho người nộp đế nghị trong thời hạn sau đây:
+C
+a) 05 ngày làm việc, kể từ ngày nhận đề nghị đối với các trường hợp quy định tại điểm a khoản 3 Điều này;
+b) 02 ngày làm việc, kể từ ngày nhận đề nghị đối với các trường hợp quy định tại điểm b khoản 3 Điều này;
+c) 01 ngày làm việc, kể từ ngày nhận đề nghị đối với các trường hợp quy định tại điểm c và d khoản 3 Điều này;
+d) Giải quyết ngay cho người nộp đề nghị đối với trường hợp quy định tại điểm đ khoản 3 Điều này;
+IUT
+đ) Không áp dụng thời hạn đối với các chuyến bay quy định tại khoản 6 của Điều này.
+gt
+5. Phép bay theo Mẫu số 8A, 8B, 8C, 8D, 8Đ tại Phụ lục VIII của Nghị định này.
+6. Các trường hợp đặc biệt:
+a) Chuyến bay quốc tế đi, đến cảng hàng không nội địa chưa có quy trình phục vụ chuyến bay quốc tế theo tài liệu khai thác công trình nhà ga hành khách Và Được Cục Hàng không Việt Nam phê duyệt, Bộ Xây dựng chỉ đạo Cục Hàng Thiến không Việt Nam cấp phép bay trên cơ sở lây ý kiên Bộ Công an, Bộ Y tê và Bộ
+
+--- Trang 17/77 ---
+
+17
+Tài chính
+b) Chuyến bay quốc tế đi, đến cảng hàng không nội địa có quy trình phục vụ chuyến bay quốc tế theo tài liệu khai thác công trình nhà ga hành khách được Cục Hàng không Việt Nam phê duyệt, Cục Hàng không Việt Nam xem xét cấp phép bay;
+c) Chuyến bay quốc tế đi, đến cảng hàng không nội địa đối với chuyến ca bay quốc tế có nhiều chặng bay, phục vụ nhu cầu, mục đích riêng của tổ chức, cá nhân đã làm thủ tục xuất nhập cảnh, hải quan, kiểm dịch y tế tại cảng hàng không quốc tế Việt Nam đến đầu tiên hoặc đi cuối cùng từ cảng hàng không quốc tế Việt Nam, Cục Hàng không Việt Nam cấp phép bay sau khi kiểm tra khả năng tiếp thu của cảng hàng không nội địa dự kiến đi, đến; d) Các chuyến bay khi tàu bay gặp sự cố kỹ thuật hoặc chưa có Giấy chứng nhận đủ điều kiện bay hoặc Giấy chứng nhận đủ điều kiện bay mất hiệu lực tạm thời:
+6
+WLVN
+Trường hợp tàu bay của người khai thác Việt Nam, Cục Hàng không Việt Nam xem xét cấp phép bay đặc biệt (Special Flight Permit hoặc Ferry Flight Permit) theo quy định của bộ quy chế an toàn tàu bay hoặc xem xét cấp phép bay sau khi đánh giá hồ sơ khắc phục sự cố kỹ thuật, đánh giá tình trạng đủ điều kiện bay của tàu bay;
+L
+NA
+Trường hợp tàu bay của người khai thác nước ngoài, Cục Hàng không Việt Nam chỉ cấp phép bay sau khi kiểm tra đánh giá hồ sơ khắc phục sự cố kỹ thuật hoặc chuyến bay có phép bay đặc biệt của nhà chức trách quốc gia đăng ký tàu bay;
+đ) Chuyến bay sử dụng tàu bay dân dụng thao diễn, luyện tập trên khu vực đông dân quy định tại khoản 7 Điều 39 Luật Hàng không dần dụng Việt Nam phải được Cục Hàng không Việt Nam cho phép; Ill
+e) Chuyến bay đi, đến, bay trong và bay qua vùng trời Việt Nam vận chuyển vật liệu phóng xạ, Bộ Xây dựng chỉ đạo cấp phép bay trên cơ sở lấy ý Kiến Bộ Công an, Bộ Quốc phòng và Bộ Khoa học và Công nghệ 7. Tổng công ty Quản lý bay Việt Nam thông báo phản hồi Kế hoạch bay không lưu thay cho phép bay đôi với các chuyên bay vận tải hàng không chuyên dùng và hàng không chung khai thác bằng tàu bay đăng ký quốc tịch Việt Nam thực hiện trong đường hàng không
+8.Quy định tại Điều này không áp dụng đối với các chuyến bay chuyên cơ của Việt Nam. Thông báo triên khai kê hoạch bơ Việt Nam của
+
+--- Trang 18/77 ---
+
+18
+Cục Hàng không Việt Nam thay cho phép bay Mục 3
+CẤP, SỬA ĐỔI PHÉP BAY THUỘC THẮM QUYỀN CỦA CỤC LÃNH SỰ Điều 18. Đề nghị cấp, sửa đổi phép bay 1. Người đề nghị cấp phép bay nộp đề nghị đến Cục Lãnh sự gồm các thông tin sau:
+17 a lên, địa chỉ bưu điện, thư điện tử của người khai thác tàu bay hoặc người vận chuyển;
+b) Lịch bay: số hiệu chuyển bay, ngày khai thác; cảng hàng không dự kiến đi, đến; thời gian dự kiến đi, đến (giờ quốc tế UTC); c) Mục đích của chuyến bay;
+d) Loại tàu bay, số đăng ký tàu bay, quốc tịch tàu bay; WLVN
+đ) Thông tin bồ sung (nếu có)
+2.Người đề nghị sửa đổi phép bay nộp đề nghị đến Cục Lãnh sự nội dung sửa đổi.
+FU
+3. Thời hạn nộp đề nghị cấp, sửa đổi phép bay làm việc trước ngày dự kiến thực hiện phép bay
+4. Thời hạn giải quyết đề nghị cấp, sửa đồi phép bay: 02 ngày làm việc, kể từ ngày nhận đề nghị
+S
+5. Nội dung phép bay cấp:
+lu
+a) Tên, địa chỉ bưu điện, thư điện tử của người khai thác tàu bay hoặc người vận chuyển;
+b) Lịch bay: số hiệu chuyến bay, ngày khai thác; cảng hàng khống dự kiến đi, đến; thời gian dự kiến đi, đến (giờ quốc tế UTC); an
+ngtrum
+c) Mục đích của chuyến bay;
+Lu
+d) Loại tàu bay, số đăng ký tàu bay, quốc tịch tàu bay; đ) Hiệu lực phép bay;
+e) Thông tin bổ sung (nếu có)
+6. Nội dung phép bay sửa đổi gồm các thông tin sau: a) Tên, địa chỉ bưu điện, thư điện tử của người khai thác tàu bay hoặc
+
+--- Trang 19/77 ---
+
+19
+người vận chuyển;
+b) Chi tiết nội dung sửa đổi
+Mục 4
+CẤP, SỬA ĐỔI PHÉP BAY THUM QUYỀN
+CỦA CỤC TÁC CHIẾN
+Điều 19. Hồ sơ, trình tự, thủ tục cấp, sửa đổi phép bay 13,1. Người đề nghị cấp phép bay nộp hồ sơ đề nghị theo Mẫu số 7E tại Phụ lục VII ban hành kèm theo Nghị định này.
+2. Người đề nghị cấp phép bay nộp hồ sơ đề nghị sửa đổi nội dung phép bay đã cấp theo Mẫu số 7C tại Phụ lục VII ban hành kèm theo Nghị định này.
+3. Thời hạn nộp đề nghị cấp, sửa đổi phép bay làm việc trước ngày dự kiến thực hiện chuyến bay; đối với chuyến bay tại điểm c khoản 2 Điều 14 Nghị định này, thời gian nộp chậm nhất 07 ngày làm việc trước ngày z
+dự kiến thực hiện chuyến bay
+NLVN
+4. Thời hạn giải quyết đề nghị cấp, sửa đồi phép bay: cơ quan cấp phép bay có trách nhiệm xem xét, thông báo phép bay hoặc trả lời không đồng ý cấp phép cho người nộp đề nghị trong thời hạn 02 ngày làm việc, kể từ ngày nhận đề nghị
+L
+5. Phép bay: theo Mẫu số 8E tại Phụ lục VIII ban hành kèm theo Nghị định này.
+In
+6. Phép bay sửa đổi: theo Mẫu số 8C tại Phụ lục VIII ban hành kèm theo Nghị định này.
+Ur
+c
+Mục 5
+TRIỂN KHAI PHÉP BAY
+UU
+LUL
+Điều 20.Hiệu lực phép bay
+C
+1. Giờ đi và đến dự kiến của từng chuyến bay được xác định theo nội dung phép bay đã cấp.
+2. Phép bay cho chuyến bay đi, đến cảng hàng không, sân bay Việt Nam có giá trị hiệu lực từ 12 giờ trước giờ dự kiến đi ghi trong phép bay, đên 24 giờ sau giờ dự kiến đến ghi trong phép bay.
+3. Phép bay cho chuyến bay qua lãnh thổ Việt Nam có giá trị hiệu lực từ 03 giờ trước giờ dự kiến đi ghi trong phép bay cho đến 72 giờ sau giờ dự kiến
+
+--- Trang 20/77 ---
+
+20
+đi ghi trong phép bay.
+4. Giá trị hiệu lực của phép bay bao gồm cả phép bay cho chuyến bay từ sân bay dự bị đi sân bay đến hoặc sân bay khởi hành trong phép bay.
+Điều 21. Từ chối cấp phép bay
+Cơ quan cấp phép bay từ chối cấp phép bay vì lý do sau đây: 1.A ninh, quốc phòng
+2.An toàn, an ninh của chuyến bay.
+3. Trật tự và lợi ích công cộng
+4.Bảo vệ lợi ích của Nhà nước
+5. Theo quy định của các điều ước quốc tế mà nước Cộng hòa xã hội chủ nghĩa Việt Nam là thành viên.
+6. Người đề nghị cấp phép bay: cung cấp thông tin không trung thực; thực WLVN
+hiện chuyến bay không đúng theo nội dung phép bay; không thanh toán đầy đủ các loại giá, giá dịch vụ điều hành bay đi, đên, giá dịch vụ điều hành bay qua vùng thông báo bay do Việt Nam, quản lý và các loại phí, lệ phí khác theo quy định hoặc có những hành vi lừa dối khác
+an
+Điều 22.Hủy bỏ phép bay
+Y
+1. Cơ quan cấp phép bay hủy bỏ phép bay
+a) Vì lý do quy định tại Điều 21;
+C
+b) Theo đề nghị của người đề nghị cấp phép bay 2. Người đề nghị cấp phép bay phải thông báo cho cơ quan cấp phép bay trước thời hạn dự kiến thực hiện chuyển bay trong trường hợp hủy chuyên bay đã được cấp phép.
+Juy
+Điều 23. Gửi phép bay
+Iar
+1. Các cơ quan cấp phép bay có trách nhiệm gửi phép bay đã cấp, sửa đồi hoặc hủy bỏ sau khi ban hành cho người đề nghị cấp phép bay.
+O
+2. Cục Tác chiến, Cục Lãnh sự, cơ quan cấp phép bay của Bộ Công an có trách nhiệm gửi phép bay đã cấp, sửa đôi hoặc hủy bỏ sau khi ban hành cho Trung tâm Quản lý điều hành bay quốc gia, Cục Hàng không Việt Nam và Trung tâm Quản lý luồng không lưu.
+3. Cục Hàng không Việt Nam có trách nhiệm gửi phép, sửa đổi theng hoặc hủy bỏ sau khi ban hành cho Trung tâm Quản lý luông không lưu và các tri
+
+--- Trang 21/77 ---
+
+21
+Cảng vụ hàng không
+4. Cảng vụ hàng không có trách nhiệm gửi thông tin phép bay đối với chuyến bay quốc tế tại cảng hàng không thuộc khu vực phụ trách đến các cơ quan quản lý nhà nước liên quan về hải quan, xuất nhập cảnh, kiểm dịch y tế quốc tế sau khi nhận được phép bay.
+Điều 24. Cung cấp thông tin và phản hồi kế hoạch thực hiện chuyến bay đối với chuyến bay bay qua, bay trong phần vùng thông báo bay trên biển quốc tế do Việt Nam quản lý
+1, Đối với chuyến bay bay qua, bay trong phần vùng thông báo bay trên biển quốc tế do Việt Nam quản lý mà không bay vào lãnh thổ Việt Nam, người khai thác tàu bay có trách nhiệm gửi kế hoạch thực hiện chuyển bay cho Tổng công ty Quản lý bay Việt Nam theo Mẫu số 7G tại Phụ lục VII ban hành kèm theo Nghị định này, Kế hoạch thực hiện chuyến bay sau khi phản hồi được sử dụng thay cho phép bay
+2. Yêu cầu về thời gian cung cấp kế hoạch thực hiện chuyến bay: WLVN
+a) 07 ngày trước ngày dự kiến thực hiện chuyến bay đối với chuyến bay thường lệ;
+b) 24 giờ trước giờ dự kiến thực hiện chuyến bay đối với chuyến bay không thường lệ.
+S
+Chương VY
+QUY TẮC BAY
+F
+Mục 1
+ÁP DỤNG QUY TẮC BAY
+Điều 25. Phạm vi áp dụng
+1. Quy tắc bay quy định tại Chương này áp dụng đối với hoạt động của tàu bay dân dụng trong vùng trời Việt Nam và trong vùng thông báo bay do Việt Nam quản lý và đối với các hoạt động có liên quan trong khu vực di chuyển tại sân bay.
+O
+2. Khi tàu bay đang bay hoặc đang hoạt động trong khu vực di chuyển tại sân bay, tổ lái phải tuân thc bay tổng quát.
+3. Ngoài quy định tại khoản 2 Điều này, tổ lái phải thực hiện chuyến bay theo một trong hai quy tắc sau đây:
+a) Quy tắc bay bằng mắt (VFR);
+
+--- Trang 22/77 ---
+
+22
+b) Quy tắc bay bằng thiết bị (IFR).
+4. Trong điều kiện khí tượng bay bằng mắt, tổ lái có thể lựa chọn thực hiện chuyến bay theo VFR hoặc IFR, trừ trường hợp cơ sở ATS yêu câu thực hiện theo IFR vì lý do an toàn, điều hành luồng không lưu hoặc yêu cầu khai thác của vùng trời.
+5. Trong điều kiện khí tượng không bảo đảm bay theo VFR, chuyển bay phải thực hiện theo IFR
+Điều 26. Tuân thủ quy tắc bay
+In
+1 Tổ lái, người khai thác tàu bay và các tổ chức, cá nhân có liên quan đến hoạt động bay phải tuân thủ quy tắc bay quy định tại Chương này.
+2. Việc thực hiện quy tắc bay phải phù hợp với loại vùng trời, loại hình dịch vụ không lưu được cung cấp, phương thức bay được công bố và huấn lệnh của cơ sở ATS có liên quan.
+WLVN
+Điều 27. Trách nhiệm của người chỉ huy tàu bay 1. Người chỉ huy tàu bay phải bảo đảm mọi hoạt động của tàu bay phù hợp với quy tắc bay quy định tại chương này, Trong tình huông khấn ngụy, để bảo đảm an toàn, người chỉ huy tàu bay có thế thực hiện khác với quy tắc bay quy định tại Chương này, nhưng phải thông báo ngay cho cơ sở ATS và phải chịu trách nhiệm về quyết định của mình.
+toa
+2. Trước khi bay, người chỉ huy tàu bay phải nắm đầy đủ các số liệu liên quan đến chuyển bay. Đối với chuyển bay IFR, trước khi bay người chỉ huy tàu bay phải nghiên cứu tin tức khí tượng hiện tại, các bản tin dự báo, yêu cầu về nhiên liệu và chuẩn bị phương án dự bị khi chuyến bay không thể thực hiện được theo kế hoạch bay.
+o
+Mục 2
+QUY TẮC BAY TỔNG QUÁT
+Điều 28. Bảo vệ người, tài sản và độ cao tối thiểu 1. Tổ lái không được điều khiển tàu bay gây nguy hiểm cho tính mạng sức khỏe hoặc tài sản của người khác.
+2, Trừ trường hợp cần thiết để cất cánh, hạ cánh hoặc trường hợp được cơ quan có thẩm quyền cho phép, tàu bay không được bay: a) Trên khu vực đông dân cư, nơi tập trung đông người hoặc công trình quan trọng ở độ cao thấp hơn 300 m (1 000 ft) trên chướng ngại vật cao nhất
+
+--- Trang 23/77 ---
+
+23
+trong phạm vi bán kính 600 m tính từ vị trí ước tính của tàu bay; bb Ngoài khu vực quy định tại điểm a khoản này, ở độ cao thấp hơn 150m (500 ft) so với mặt đất hoặc mặt nước.
+3, Khi bay trên khu vực đông dân cư, trừ trường hợp bay ở độ cao cho phép, tố lái phải bảo đảm tàu bay có thể hạ cánh trong tình huống khẩn cấp mà không gây nguy hiểm cho người hoặc tài sản trên mặt đất.
+4. Mực bay đường dài của toàn bộ hoặc một phần chuyến bay được biểu thị bằng độ cao hoặc mực bay phù hợp với quy định phân cách áp dụng 5, Tàu bay chỉ được kéo tàu bay khác hoặc vật thể khác khi đáp ứng điều kiện theo quy định và tuân thủ huấn lệnh, chỉ dẫn của cơ sở ATS liên quan 6. Trừ trường hợp khẩn nguy, việc nhảy dù, thả dù chi được thực hiện khi đáp ứng điều kiện theo quy định và tuân thủ huấn lệnh, chỉ dẫn của cơ sở ATS liên quan.
+O
+7. Tàu bay chỉ được bay nhào lộn khi đáp ứng điều kiện theo quy định của WLVN
+cơ quan có thẩm quyền và tuân thủ huấn lệnh, chỉ dẫn của cơ sở ATS liên quan 8. Tàu bay chỉ được bay tốp khi có thỏa thuận trước giữa những người chi huy tàu bay tham gia tôp bay và đáp ứng điều kiện do cơ quan có thấm quyền quy định
+Er
+9. Việc khai thác các phương tiện báy không người lái, phương tiện bay siêu nhẹ trong khu vực lân cận sân bay hoặc trong vùng trời có hoạt động bay the trong dân dụng phải tuân thủ quy định về thiết lập khu vực câm bay, hạn chế bay đến bảo đảm an toàn cho tàu bay dân dụng
+10. Tàu bay không được bay vào khu vực cấm bay đã được công bố, trừ chuyến bay thực hiện mục đích công vụ hoặc chuyến bay được cơ quan có thầm quyền cho phép, hoạt động trong khu vực hạn chế bay phải tuận thủ quy định của cơ quan có thẩm quyền và đáp ứng các yêu cầu tại Điều 6 Nghị định này Điều 29. Tránh va chạm giữa các tàu bay
+I
+Tổ lái không được điều khiển tàu bay hoạt động gần tàu bay khác đến mức có nguy cơ va chạm
+a
+Điều 30. Quyền ưu tiên trong khi bay và khi hoạt động tại khu vực di chuyến của sân bay
+1, Tàu bay có quyền ưu tiên phải giữ hướng bay và tốc độ bay, trừ khi việc thay đôi là bắt buộc để tránh va chạm.
+2. Tàu bay nhường đường phải tránh đi qua phía trên, phía dưới hoặc cắt
+
+--- Trang 24/77 ---
+
+24
+ngang trước đầu tàu bay được quyền ưu tiên, trừ trường hợp việc đó được thực hiện ở khoảng cách an toàn và không gây nguy cơ va chạm.
+3. Quyền ưu tiên giữa các tàu bay đang bay được xác định theo thứ tự sau đây: khí cầu; tàu lượn; tàu bay đang kéo tàu bay khác hoặc vật thế khác, tàu bay điều khiển bằng động cơ.
+4. Khi hai tàu bay cùng loại đang hội tụ ở cùng độ cao, tàu bay nào thây có tàu bay kia ở phía bên phải mình thì phải nhường đường Is
+6, 5. Khi hai tàu bay đối đầu hoặc gần đối đầu có nguy cơ va chạm, mỗi tàu bay phải đổi hướng sang bên phải.
+6. Tàu bay đang thực hiện vượt tàu bay khác phải tránh sang bên phải tàu bay bị vượt và tiếp tục giữ khoảng cách an toàn cho đến khi vượt hăn và không còn khả năng gây ảnh hưởng đến tàu bay bị vượt.
+7 Tàu bay đang hạ cánh hoặc ở giai đoạn tiếp cận chót để hạ cánh có quyền ưu tiên hơn các tàu bay khác đang bay hoặc đang hoạt động tại khu vực WLVN
+di chuyển của sân bay.
+8. Khi hai hoặc nhiều tàu bay nặng hơn không khí cùng tiếp cận để hạ cánh, tàu bay ở độ cao cao hơn phải nhường đường cho tàu bay ở độ cao thấp hơn; tàu bay ở độ cao thấp hơn không được lợi dụng quyền ưu tiên này để cắt qua trước đầu tàu bay khác đang ở giai đoạn tiếp cận chót hoặc vượt tàu bay đó 9. Tàu bay đang di chuyển trong khu vực di chuyển tại sân bay phải dừng tại vị trí dừng chờ đường cất hạ cánh khi có yêu cậu của cơ sở ATS hoặc khi đèn dừng chờ đang bật
+10. Tàu bay, phương tiện và người hoạt động trong khu vực di chuyển tại sân bay phải tuân thủ chỉ dẫn của cơ quan có thẩm quyền vậ của cơ sở ATS có liên quan.
+luu
+Điều 31. Sử dụng đèn tàu bay
+Iqu
+1. Từ khi mặt trời lặn đến khi mặt trời mọc hoặc trong các điều kiện được quy định, tàu bay phải bật đền theo chế độ khai thác phù hợp đề tránh va chạm và bảo đảm nhận biết
+C
+2. Đèn trên tàu bay không được sử dụng theo cách có thể gây hiểu nhầm đối với các đèn hàng không khác hoặc làm giảm hiệu quả của các tín hiệu, đèn dẫn đường hàng không
+Điều 32. Chuyến bay bằng thiết bị định
+
+--- Trang 25/77 ---
+
+25
+Tàu bay chỉ được thực hiện chuyến bay bằng thiết bị giả định khi có trang bị cần lái kép hoạt động đầy đủ và bảo đảm điều kiện giám sát, quan sát của giáo viên huấn luyện hoặc người quan sát đủ trình độ theo quy định Điều 33. Hoạt động trên sân bay và trong khu vực lân cận sân bay Khi tàu bay hoạt động trên sân bay hoặc trong khu vực lân cận sân bay, tổ lái phải:
+nic
+1. Quan sát hoạt động khác để tránh va chạm In
+I
+2, Bay phù hợp với quỹ đạo bay của các tàu bay khác hoặc tránh quỹ đạo bay của các tàu bay đó.
+3. Tuân thủ phương thức bay được quy định cho sân bay khi tiếp cận, hạ cánh hoặc cất cánh, trừ khi cơ sở ATS có chỉ dẫn khác.
+4. Thực hiện vông lượn trái khi tiếp cận để hạ cánh và sau khi cất cánh, trừ trường hợp phương thức bay được công bố hoặc cơ sở ATS quy định khác WLVN
+5. Hạ cánh hoặc cất cánh ngược gió, trừ khi cơ sở ATS đánh giá hướng khác thích hợp hơn để bảo đảm an toàn
+Điều 34. Hoạt động của tàu bay trên mặt nước 1. Trường hợp tàu bay với tàu bay khác hoặc tàu bay với tàu thủy tiến gần nhau trên mặt nước và có nguy cơ va chạm, tổ lái phải căn cứ điều kiện thực tế và giới hạn hoạt động của từng loại phương tiện để thực hiện các biện pháp phòng ngừa
+Sa
+2. Trong khoảng thời gian từ lúc mặt trời lặn đến lúc mặt trời mọc hoặc trong khoảng thời gian khác do cơ quan có thẩm quyền quy định, tàu bay hoạt động trên mặt nước phải hiển thị đèn tín hiệu theo Quy tắc quốc tế về phòng ngừa va chạm trên biển hoặc hiển thị đèn có đặc điểm và vị trí tương tự gần nhất có thể.
+OD
+uan
+Điều 35. Tín hiệu
+ggr
+1. Tổ lái phải nhận biết, hiểu và tuân thủ các tín hiệu hàng không được áp dụng
+2. Khi quan sát thấy hoặc nhận được bất kỳ tín hiệu nào, tổ lái phải tuân theo chỉ dẫn tương ứng với tín hiệu đó theo quy định 3. Việc sử dụng tín hiệu phải đúng tình huống, đúng mục đích và không được sử dụng tín hiệu khác có thể gây nhấm lẫn với tín hiệu quy định
+
+--- Trang 26/77 ---
+
+26
+4. Nhân viên đánh tín hiệu chịu trách nhiệm hướng dẫn tàu bay bằng các tín hiệu chuẩn, rõ ràng và chính xác; phải mặc áo phản quang có dấu hiệu nhận diện đặc trưng và sử dụng dụng cụ tác nghiệp thích hợp ban ngày, ban đêm hoặc trong tầm nhìn hạn chế.
+Điều 36. Kế hoạch bay không lưu
+1. Tổ lái hoặc người được ủy quyền của người khai thác tàu bay phải nộp kế hoạch bay không lưu liên quan đến chuyến bay hoặc một phần của chuyên bay dự định tới cơ sở ATS liên quan và chịu trách nhiệm về tính chính xác của thông tin trong kế hoạch bay không lưu
+2. Kế hoạch bay không lưu phải được nộp trước khi thực hiện các chuyến bay sau đây
+a) Chuyến bay có yêu cầu được cung cấp dịch vụ không lưu; b) Chuyển bay IFR bay trong vùng trời tư vấn không lưu; WLVN
+c) Chuyến bay vào, trong hoặc dọc theo vùng trời hoặc đường hàng không do Cục Hàng không Việt Nam công bố;
+d) Chuyến bay nhằm hiệp đồng với các đơn vị liên quan thuộc Bộ Quốc phòng hoặc với cơ sở ATS của quốc gia kế cận; đ) Chuyến bay bay qua biên giới quốc gia; e) Chuyển bay VFR ban đêm rời khu vực lân cận sân bay.
+3. Trường hợp có thay đổi quan trọng so với nội dung kế hoạch bay không lưu đã nộp, tổ lái hoặc người nộp kế hoạch bay phải thông báo ngay cho cơ sở ATS liên quan để sửa đổi kế hoạch bay không lưu.
+4. Trừ trường hợp chuyến bay kết thúc tại sân bay có kiểm soát và việc hạ các cánh đã được cơ sở ATS biết rõ, tô lái phải thực hiện thủ tục kết thúc kê hoạch bay không lưu theo quy định
+5. Nội dung của kế hoạch bay không lưu theo quy định của Bộ trưởng Bộ Xây dựng, phù hợp với quy định của ICAO.
+U
+Điều 37. Thực hiện huấn lệnh kiểm soát không lưu c
+11 Chuyên bay có kiêm soát chỉ được thực hiện theo huân lệnh kiêm soát không lưu của cơ sở ATS có thâm quyền
+2 Trường hợp tổ lái không thể tuân thủ huân lệnh đã được cấp, phải thông báo ngay cho cơ sở ATS để được xử lý thích hợp.
+
+--- Trang 27/77 ---
+
+27
+Điều 38.Báo cáo vị trí
+Tổ lái phải thực hiện báo cáo vị trí theo yêu cầu của cơ sở ATS hoặc theo quy định áp dụng đối với loại chuyển bay, loại vùng trời và phương thức bay đang thực hiện.
+Điều 39. Kết thúc kiểm soát
+Khi chuyến bay không còn thuộc phạm vi kiểm soát không lưu, cơ sở ATS phải thông báo cho tổ lái biết việc kết thúc kiểm soát, trừ trường hợp việc này đã được xác định trước theo phương thức khai thác.
+Điều 40. Liên lạc
+1. Tổ lái phải duy trì liên lạc vô tuyến hai chiều với cơ sở ATS trong các vùng trời, khu vực hoặc giai đoạn bay mà việc liên lạc là bắt buộc.
+2. Trường hợp mất liên lạc, tổ lái phải thực hiện theo quy định, phương thức được công bố và các quy tắc áp dụng đối với từng loại chuyển bay.
+WLVN
+Điều 41. Can thiệp bất hợp pháp
+1. Khi bị can thiệp bất hợp pháp, tổ lái phải áp dụng mọi biện pháp thích hợp để thông báo cho cơ sở ATS liên quan biết về sự việc, tình hình trên tàu bay và những thay đổi bắt buộc so với kế hoạch bay không lưu để cơ sở ATS dành ưu tiên cho tàu bay và hạn chế đến mức thấp nhất nguy cơ va chạm với tàu bay khác.
+in
+2 Trường hợp tàu bay được trang bị máy phát đáp (Transponder), tổ lái phải đặt mã SSR 7500
+3. Tổ lái phải thực hiện hạ cánh sớm nhất có thể tại sân bay thích hợp gần nhất hoặc sân bay do cơ quan có thẩm quyền chỉ định, trừ khi tình huống trên tàu bay không cho phép.
+Mục 3
+QUY TẮC BAY BẰNG MẮT
+Điều 42. Chuyến bay VFR
+1. Chuyến bay VFR chỉ được thực hiện khi tầm nhìn ngang và khoảng cách từ tàu bay đến mây theo quy định của Bộ trưởng Bộ Xây dựng 2.Quy định tại khoản 1 Điều này không áp dụng cho chuyến bay VFR đặc biệt. Chuyến bay VFR đặc biệt phải đáp ứng các điều kiện quy định tại Điều 44
+
+--- Trang 28/77 ---
+
+28
+Nghị định này.
+Điều 43. Thời gian hoạt động của chuyến bay VFR 1. Chuyển bay VFR được thực hiện trong khoảng thời gian từ lúc mặt trời mọc đến lúc mặt trời lặn.
+2. Trong khoảng thời gian khác, chuyển bay VFR chỉ được thực hiện khi được Cục Hàng không Việt Nam cho phép hoặc được Cục Hàng không Việt Nam công bố đối với khu vực, sân bay, loại hình khai thác tương ứng và phải đáp ứng đồng thời các điều kiện sau đây: a) Đã nộp kế hoạch bay không lưu trong trường hợp pháp luật quy định phải nộp;
+b) Duy trì liên lạc hai chiều liên tục với cơ sở ATS liên quan khi hoạt động trong khu vực phải thiết lập liên lạc;
+c) Tuân thủ điều kiện khí tượng tối thiều áp dụng cho chuyến bay VFR WLVN
+ban đêm;
+xo
+d) Tuân thủ độ cao tối thiểu quy định tại Điều 28 Nghị định này.
+Điều 44. Hoạt động bay VFR đặc biệt tại khu vực kiểm soát sân bay 1. Khi trần mây thấp hơn 450 m (1 500 ft) hoặc tầm nhỏn mặt đất nhỏ hơn 5 km, chuyến bay VFR chỉ được cất cánh, hạ cánh tại sân bay năm trong khu vực kiểm soát, bay vào khu vực hoạt động bay tại sân bay hoặc thực hiện vòng lượn tại sân bay khi được cơ sở ATS liên quan cho phép theo chế độ bay VFR đặc biệt.
+2. Chuyến bay VFR đặc biệt chỉ được thực hiện khi tổ lái bảo đảm tàu bay bay ngoài mây, nhìn thây mặt đất hoặc mặt nước và tuân thủ các giới hạn, điều kiện khai thác do cơ sở ATS áp dụng để bảo đảm an toàn y
+3. Hoạt động bay VFR đặc biệt ban đêm chỉ được thực hiện khi được Cục Hàng không Việt Nam cho phép hoặc được Cục Hàng không Việt Nam công bố đối với khu vực, sân bay, loại hình khai thác tương ứng rung
+Điều 45. Các trường hợp không được phép hoạt động bay VFR 1. Trừ trường hợp được Cục Hàng không Việt Nam cho phép, tổ lái thực hiện chuyên bay VFR không được hoạt động cao hơn mực bay FL195, ở tốc độ cận âm hoặc siêu âm hoặc cách bờ biển trên 180 km trong vùng trời có kiếm soát 2. Không cấp phép cho hoạt động bay VFR trên mực bay FL290 tại khu vực áp dụng mức phân cách cao tối thiểu 300m (1 000 ft) đối với các hoạt động
+
+--- Trang 29/77 ---
+
+29
+bay trên mực bay FL290
+Điều 46. Áp dụng độ cao tối thiểu đối với chuyến bay VFR Tổ lái thực hiện chuyến bay VFR phải tuân thủ độ cao tối thiểu quy định tại khoản 2 Điều 28 Nghị định này.
+Mục 4
+QUY TẮC BAY THIẾT BỊ
+Điều 47. Chuyến bay IFR
+Chuyến bay IFR phải được thực hiện theo các quy định của Mục này, phù hợp với loại vùng trời, phương thức bay được công bố và dịch vụ không lưu được cung cấp
+Điều 48. Chuyến bay có kiểm soát theo IFR Chuyến bay có kiểm soát theo IFR là chuyến bay trong vùng trời có kiểm soát và phải tuân thủ huấn lệnh kiểm soát không lưu, chế độ liên lạc và báo cáo theo quy định
+WLVN
+So
+Điều 49. Đổi từ bay VFR sang bay ifr
+1. Tổ lái đang thực hiện chuyến bay VFR khi có nhu cầu chuyển sang thực hiện theo IFR phải thông báo cho cơ sở ATS liên quan; trường hợp cần thiết phải nộp kế hoạch bay không lưu bố sung và chỉ được chuyển sang IFR sau khi được cơ sở ATS chấp thuận đối với chuyển bay có kiểm soát.
+2. Sau khi chuyển sang IFR, tổ lái phải tuân thủ đầy đủ các quy định áp dụng đối với chuyến bay IFR
+at
+Điều 50. Phạm vi áp dụng IFR
+clue
+c
+1. Chuyến bay IFR phải được thực hiện phù hợp với quy định đối với chuyến bay có kiểm soát hoặc không kiếm soát tương ứng với loại vùng trời và phạm vi cung cấp dịch vụ không lưu.
+2. Tổ lái thực hiện chuyến bay IFR trong vùng trời có kiểm soát phải tuân thủ huấn lệnh kiểm soát không lưu, chế độ liên lạc và báo cáo vị trí theo quy định 3. Tổ lái thực hiện chuyến bay IFR ngoài vùng trời có kiểm soát phải tuân thủ độ cao tối thiểu quy định tại Điều 51 Nghị định này và các quy định liên quan tại Chương này
+Điều 51. Độ cao tối thiểu của chuyến bay IFR 1. Trừ trường hợp cần thiết để cất cánh, hạ cánh hoặc trường hợp được cơ quan có thấm quyền cho phép, chuyển bay IFR không được hoạt động thấp hơn độ cao tối thiểu do Cục Hàng không Việt Nam công bố
+
+--- Trang 30/77 ---
+
+30
+2. Trường hợp chưa công bố độ cao tối thiểu theo khoản 1 Điều này chuyến bay IFR không được hoạt động thấp hơn: a) 600 m (2 000 ft) trên chướng ngại vật cao nhất trong phạm vi 8 km tính từ vị trí ước tính của tàu bay tại khu vực địa hình núi hoặc khu vực có địa hình cao; b) 300m (1 000 ft) trên chướng ngại vật cao nhất trong phạm vi 8 km tính từ vị trí ước tính của tàu bay tại các khu vực khác.
+Điều 52. Liên lạc và báo cáo đối với chuyến bay IFR 1. Tổ lái thực hiện chuyến bay IFR phải duy trì liên lạc với cơ sở ATS liên quan theo quy định đối với loại vùng trời đang hoạt động.
+2. Tổ lái thực hiện chuyến bay IFR có kiểm soát phải tuân theo chế độ báo cáo vị trí quy định tại Điều 38 Nghị định này 3. Trường hợp thực hiện IFR ngoài vùng trời có kiểm soát theo công bố của Cục Hàng không Việt Nam, tổ lái phải nộp kế hoạch bay không lưu và thiết lập liên lạc với cơ sở ATS có liên quan
+1
+Điều 53. Đổi từ bay IFR sang bay VFR
+NLVN
+1. Tổ lái đang thực hiện chuyến bay IFR khi có nhu cầu chuyển sang thực hiện theo VFR phải thông báo rõ cho cơ sở dịch vụ không lưu liên quan về việc PHỦY THỰC HIỆN IFR
+A
+2. Đối với chuyến bay có kiểm soát, việc chuyển từ IFR sang VFR chi có hiệu lực sau khi cơ sở dịch vụ không lưu đã xác nhận tiếp nhận thông báo của tổ lái.
+3. Tổ lái không được hủy thực hiện IFR chỉ vi đang tạm thời ở trong điều kiện khí tượng bay bằng mắt, nếu không bảo đảm có thể tiếp tục thực hiện an toàn theo VFR
+S
+4. Sau khi chuyển sang VFR, tổ lái phải tuân thủ đầy đủ các quy định áp dụng đối với chuyển bay VFR và thực hiện sửa đồi kế hoạch bay, nêu cần Điều 54. Hoạt động bay IFR ngoài vùng trời có kiểm soát ggr
+1. Tổ lái thực hiện hoạt động bay IFR ngoài vùng trời có kiểm soát nhưng bay trong, bay vào hoặc dọc theo các khu vực, đường hàng không do Cục Hàng thiện không Việt Nam công bô hoặc thực hiện chuyên bay bay qua biên giới quốc gia phải nộp kế hoạch bay, canh nghe liên tục trên tần số vô tuyến thích hợp và thiết lập liên lạc hai chiều với cơ sở dịch vụ không lưu liên quan khi cân thiết 2. Tổ lái thực hiện hoạt động bay IFR ngoài vùng trời có kiểm soát đã Các được Cục Hàng không Việt Nam cho phép phải thiết lập liên lạc với cơ sở dịch
+
+--- Trang 31/77 ---
+
+31
+vụ không lưu liên quan và tuân theo chế độ báo cáo vị trí quy định tại Điều 38 Nghị định này
+3. Chuyến bay IFR ngoài vùng trời có kiểm soát phải tuân thủ độ cao tối thiểu quy định tại Điều 51 Nghị định này.
+Mục 5
+KHU VỰC VÀ HOẠT ĐỘNG XẢ NHIÊN LIỆU,
+THÁ VẬT THẾ TỪ TRÊN KHÔNG
+Điều 55. Hoạt động xả nhiên liệu, thả vật thể từ trên không 1. Không được xả nhiên liệu, thả vật thể từ tàu bay đang bay, trừ trường hợp quy định tại khoản 2 Điều này hoặc trường hợp được cơ quan có thẩm quyên cho phép theo quy định của pháp luật chuyên ngành 2. Trong trường hợp khấn cấp vì lý do an toàn chuyển bay, người chỉ huy tàu bay được quyết định việc xả nhiên liệu hoặc thả vật thể ở mức cần thiết thấp nhất để bảo đảm an toàn và phải thông báo ngay cho cơ sở ATS gần nhất WLVN
+33 Cơ Sở ATS khi nhận được thông báo theo khoản 2 Điều này có trách nhiệm ưu tiên điều hành bay, hiệp đồng với các cơ quan, đơn vị liên quan và phát thông báo cần thiết để hạn chế nguy cơ đối với tàu bay khác, người, tài sản và công trình ở mặt đất, mặt nước và môi trường 4. Việc xả nhiên liệu, thả vật thế quy định tại khoản 2 Điều này phải được thực hiện tại các khu vực đã được công bố, trường hợp không thể thực hiện tại khu vực đã công bố, người chỉ huy tàu bay quyết định và thực hiện theo huân lệnh, chỉ dẫn của cơ sở ATS liên quan (nếu có), trong điều kiện cho phép, ưu tiên thực hiện tại khu vực đô gông bố.
+Điều 56. Khu vực xả nhiên liệu, thả vật thể từ tàu bay dân dụng 1. Khu vực xả nhiên liệu, thả vật thế từ tàu bay dân dụng được thiết lập cho thu cho từng cảng hàng không có hoạt động bay dân dụng hoặc cho các khu vực, vùng trời cần thiết khác, có giới hạn ngang và giới hạn cao được xác định, công bố theo quy định
+gtr
+2. Việc thiết lập khu vực quy định tại khoản 1 Điều này phải bảo đảm an toàn hoạt động bay, an toàn cho người, tài sản, công trình ở mặt đất, đồng thời đáp ứng yêu câu về an ninh, quốc phòng và bảo vệ môi trường 3. Cục Hàng không Việt Nam chủ trì, phối hợp với Cục Tác chiến, cơ quan liên quan của Bộ Nông nghiệp và Môi trường, Ủy ban nhân dân cấp tỉnh, người khai thác cảng hàng không và doanh nghiệp cung cấp dịch vụ không lưu có liên quan xác định nhu cầu, tổ chức lập hồ sơ thiết lập, đủau chỉnh, hủy bỏ khu vực
+
+--- Trang 32/77 ---
+
+32
+xả nhiên liệu, thả hành lý, hàng hóa hoặc vật thể khác từ tàu bay dân dụng, trình Bộ Xây dựng quyết định
+4. Cục Hàng không Việt Nam công bố khu vực xả nhiên liệu, thả vật thể trong AIP Việt Nam; trường hợp thay đồi tạm thời thì thông báo bằng NOTAM Điều 57. Điều kiện thực hiện xả nhiên liệu, thả hành lý, hàng hóa hoặc vật thể khác từ tàu bay
+1. Việc xả nhiên liệu, thả vật thể khác từ tàu bay chỉ được thực hiện trong khu vực đã được công bố theo Điều 56 Nghị định này, trừ trường hợp khẩn cấp quy định tại khoản 2 Điều 55 Nghị định này.
+2. Trước khi thực hiện việc xả nhiên liệu, thả vật thể trong trường hợp không khẩn cấp, tổ lái phải được cơ sở kiểm soát không lưu liên quan cho phép và phải tuân thủ đầy đủ huấn lệnh, chỉ dẫn được cấp.
+3. Việc thực hiện xả nhiên liệu, thả vật thể phải bảo đảm không gây nguy hiểm cho tàu bay khác, người, tài sản, công trình ở mặt đất và không gây ảnh WLVN
+hưởng bất lợi đối với môi trường
+4. Cơ sở ATS có trách nhiệm tổ chức điều hành, hiệp đồng và thông báo cần thiết cho các cơ quan, đơn vị liên quan khi có hoạt động quy định tại Điều này
+Mục 6 t
+CƯỜNG CHẾ TÀU BAY VI PHẠM
+Điều 58. Tàu bay vi phạm bị bay chặn, bay kèm 1. Tàu bay bị bay chặn khi có hành động vi phạm vùng trời Việt Nam 2. Tàu bay bị bay kèm khi có hành động vi phạm phép bay.
+Điều 59. Tuân thủ bay chặn, bay kèm, bay ép tàu bay 1. Trong trường hợp tàu bay bị bay chặn trong lãnh thổ Việt Nam, người chi huy tàu bay bị chặn phải tuân thủ các quy định về bay chặn, bay kèm, bay ép tàu bay quy định tại Mục này.
+2. Người lái tàu bay Việt Nam không được thực hiện chuyến bay quốc tế nêu trong buông lái không có tài liệu, phương thức và tín hiệu liên quan đên việc bay chặn tàu bay.
+3. Khi tàu bay bị tàu bay quân sự hoặc tàu bay nhà nước bay chặn, người chỉ huy tàu bay phải tuân thủ các quy định về bay chặn của quốc gia có vùng trời bị bay qua hoặc tiêu chuân quốc tế có liên quan.
+
+--- Trang 33/77 ---
+
+33
+Điều 60. Tàu bay bị bay ép hạ cánh tại các cảng hàng không, sân bay Tàu bay bị bay ép hạ cánh tại các cảng hàng không, sân bay nếu thuộc một trong các trường hợp sau:
+1. Tàu bay đang bay trong vùng trời Việt Nam bị can thiệp bất hợp pháp 2. Tàu bay vi phạm vùng trời Việt Nam đã bị bay chặn, bay kèm nhưng không chấp hành hành động của tàu bay Quân đội nhân dân Việt Nam đang 00 thực hiện nhiệm vụ bay chặn, bay kèm.
+1
+Điều 61. Nguyên tắc thực hiện bay kèm, bay ép tàu bay vi phạm
+1. Việc thực hiện bay chặn, bay kèm, bay ép tàu bay vi phạm phải bảo đảm đúng thấm quyên, đúng đối tượng, đúng trình tự, tuân thủ pháp luật Việt Nam và điều ước quốc tế mà nước Cộng hòa xã hội chủ nghĩa Việt Nam là thành viên; ưu tiên bảo đảm an toàn cao nhất cho người, tàu bay, công trình, mục tiêu trên mặt đất.
+WLVN
+2. Việc thực hiện báy chặn, bay kèm, bay ép tàu bay vi phạm phải ưu tiên sử dụng liên lạc vô tuyến, tín hiệu, ký hiệu, thông báo, hướng dẫn để buộc tàu bay vi phạm châm dứt hành vĩ vị phạm, thay đổi hướng bay hoặc hạ cánh tại cảng hàng không, sân bay được chỉ định
+3. Chỉ thực hiện bay ép hạ cánh khi đã áp dụng bay chặn, bay kèm mà tàu bay vi phạm không chấp hành hoặc thuộc trường hợp quy định tại Điều 60 của Nghị định này.
+4.Quá trình bay chặn, bay kèm, bay ép phải có sự hiệp đồng chặt chẽ giữa lực lượng của Bộ Quốc phòng với cơ sở ATS hàng không dân dụng và cơ quan, đơn vị liên quan.
+Điều 62. Thể thức bay chặn, bay kèm tàu bay vị phạm vùng trời Việt Nam
+Tàu bay bay chặn, bay kèm tiếp cận tàu bay vi phạm vùng trời Việt Nam thực hiện theo phương thức sau:
+al
+1. Tàu bay bay chặn, bay kèm ưu tiên tiếp cận tàu bay vi phạm từ phía sau bên trái, Trong trường hợp đặc biệt do yếu tố khí tượng, địa hình hoặc đề phủ hợp với điều kiện cơ động, quan sát, tàu bay bay chặn có thể tiếp cận từ phía bên phải, sau đó thiết lập tốc độ và khoảng cách phù hợp bảo đảm an toàn, phát ra các ký, tín hiệu và hành động; đồng thời bảo đảm cho người lái tàu bay của tàu bay vi phạm có thể tiếp nhận các ký, tín hiệu và hành động từ tàu bay bay chặn, bay kèm
+2. Sau khi tàu bay vi phạm nhận được thông tin cần thiết và chấm dứt vi
+
+--- Trang 34/77 ---
+
+34
+phạm, tàu bay bay chặn, bay kèm thoi khỏ kực Điều 63. Thể thức bay ép tàu bay vi phạm vùng trời Việt Nam hạ cánh tại cảng hàng không, sân bay
+1. Tàu bay bay ép tiếp cận tàu bay vi phạm vùng trời Việt Nam thực hiện theo phương thức sau:
+a) Tàu bay bay ép tiếp cận tàu bay vi phạm từ phía sau bên trái, Trong trường hợp đặc biệt do yếu tố khí tượng, địa hình hoặc để phù hợp với điều kiện cơ động, quan sát, tàu bay bay chặn có thể tiếp cận từ phía bên phải; sau đó thiết lập tốc độ và khoảng cách phù hợp bảo đảm an toàn, phát ra các ký, tín hiệu và hành động; đông thời bảo đảm cho người lái tàu bay của tàu bay vi phạm có thể tiếp nhận các ký, tín hiệu và hành động yêu cầu hạ cánh tại cảng hàng không, sận bay được chỉ định;
+ba ba ba bay vi phạm hạ cánh an toàn tại cảng hàng không, sân bay được chỉ định, tàu bay bay ép thoát ly khỏi khu vực hoặc hạ cánh theo mệnh lệnh của chỉ huy bay quân sự.
+s
+NLVN
+2. Cảng hàng không, sân bay được chỉ định cho tàu bay vi phạm phải phù hợp về điều kiện kỹ thuật bảo đảm cho loại tàu bay vi phạm hạ cánh; địa hình khu vực sân bay phù hợp cho bay vòng, tiếp cận khu vực sân bay để hạ cánh; tàu bay vi phạm có đủ nhiên liệu để đến sân bay được chỉ định hạ cánh. Ưu tiên chỉ định hạ cánh tại sân bay có hoạt động hàng không dân dụng Điều 64, Tín hiệu, hành động trong quá trình bay chặn, bay kèm bay ép
+1. Tàu bay thực hiện bay chặn, bay kèm, bay ép phải sử dụng đúng tín 19 then hiệu, ký hiệu, phương thức hành động theo quy định tại Phụ lục VI ban hành kèm theo Nghị định này.
+2. Người chỉ huy tàu bay vi phạm khi nhận biết tín hiệu bay chặn, bay kim kim kim kim hiện thiện hiện hiện hàn hiện hàn hành điện hành điện hành điện hành điện hành điện hành điện hành điện hành điện quy định và tuân theo hướng dẫn của tàu bay thực hiên nhiệm vụ.
+M
+3. Trường hợp tàu bay vi phạm không thể thực hiện ngay yêu cầu vì lý do an toàn bay, người chỉ huy tàu bay phải phát tín hiệu thích hợp và thực hiện biện pháp an toàn cần thiết để sớm chấp hành hướng dẫn Điều 65. Xử lý sau khi tàu bay vi phạm hạ cánh 19 11 Sau khi tàu bay vi phạm hạ cánh tại cảng hàng không, sân bay được chi Hiện định, các lực lượng chức năng của Bộ Quốc phòng, Bộ Công an, Cáng vụ hàng
+
+--- Trang 35/77 ---
+
+35
+không và cơ quan, đơn vị liên quan có trách nhiệm phối hợp tổ chức tiếp nhận kiểm soát, bảo đảm an ninh, an toàn đối với tàu bay, hành khách, tổ bay, hàng hóa, hành lý và người có liên quan.
+2. Việc kiểm tra, xác minh, xử lý đối với tàu bay vi phạm, tổ lái, hành khách, hàng hóa, hành lý và các đối tượng liên quan được thực hiện theo quy định của pháp luật có liên quan.
+Điều 66. Xử lý tàu bay vi phạm vùng trời không chấp hành hiệu lệnh O
+của tàu bay bay chặn, bay kèm, bay ép hạ cánh IN
+Khi tàu bay vị phạm không chấp hành hiệu lệnh của tàu bay bay chặn, bay kèm, bay ép hạ cánh tại cảng hàng không, sân bay được chỉ định, có nguy cơ gây mất an toàn đến mục tiêu quan trọng hoặc ảnh hưởng đến quốc phòng, an ninh, việc xử lý thực hiện theo quy định của Bộ Quốc phòng về xử lý tình huông tác chiến phòng không và phù hợp với quy định của ICAO.
+Điều 67. Lực lượng thực hiện bay chặn, bay kèm, bay ép tàu bay vi WLVN
+phạm hạ cánh tại cảng hàng không, sân bay 1. Lực lượng thực hiện bay chặn, bay kèm, bay ép tàu bay vi phạm hạ cánh tại cảng hàng không, sân bay là tàu bay, lực lượng đang làm nhiệm vụ trực ban chiến đấu của các đơn vị thuộc Bộ Quộc phòng, có sự phối hợp điều hành của lực lượng quản lý hoạt động bay hàng không dân dụng 2. Căn cứ tình huống cụ thể, cấp có thẩm quyền quyết định sử dụng lực lượng đang làm nhiệm vụ trực ban chiến đầu ở khu vực phù hợp để thực hiện nhiệm vụ.
+ST
+In
+Điều 68. Thẩm quyền ra lệnh bay chặn, bay kèm, bay ép tàu bay vi phạm hạ cánh tại cảng hàng không, sân bay 1. Bộ trưởng Bộ Quốc phòng ra lệnh thực hiện bay cèặ, bay kèm, bay ép tàu bay vi phạm vùng trời Việt Nam hạ cánh tại cảng hàng không, sân bay 2. Đối với tàu bay chuyên cơ vi phạm vùng trời Việt Nam, Bộ trưởng Bộ Quốc phòng báo cáo trực tiếp Thủ tướng Chính phủ quyết định việc bay chặn, bay kèm, bay ép hạ cánh
+Điều 69.Quy trình xử lý tàu bay vi phạm vùng trời Việt Nam 1. Cơ quan quản lý vùng trời, quản lý điều hành bay thuộc Quân chủng Phòng không - Không quân khi phát hiện hoặc tiếp nhận thông tin tàu bay vi phạm vùng trời Việt Nam có trách nhiệm:
+
+--- Trang 36/77 ---
+
+36
+a) Kịp thời báo cáo người chỉ huy cấp mình, sở chỉ huy cấp trên và thông báo cho các đơn vị quản lý bay hàng không dân dụng và các cơ quan, đơn vị hiệp đồng liên quan;
+b) Khi có lệnh của Bộ trưởng Bộ Quốc phòng, lực lượng Không quân thực hiện bay chặn, bay kèm, bay ép tàu bay vi phạm vùng trời Việt Nam hạ cánh tại cảng hàng không, sân bay theo quy định tại Điều 63 và Điều 64 Nghị định này; c) Trường hợp tiếp nhận thông tin tàu bay vi phạm vùng trời Việt Nam từ Quân chủng Hải quân, các Quân khu hoặc các cơ sở ATS hàng không dân dụng phải tiên hành xác minh thông tin trước khi triển khai các bước xử lý theo quy định tại điểm a, b khoản này.
+2. Cơ sở ATS hàng không dân dụng tại cảng hàng không, sân bay có tàu bay vi phạm hạ cánh
+Trường hợp triển khai bay chặn, bay kèm, bay ép đối với tàu bay vi phạm vùng trời Việt Nam hạ cánh tại sân bay chỉ định, cơ sở ATS hàng không dân s
+dụng thực hiện nhiệm vụ sau:
+NLVN
+a) Hiệp đồng, phối hợp với đơn vị quân đội liên quan trong quá trình thực hiện bay chặn, bay kèm, bay ép tàu bay vi phạm hạ cánh tại cảng hàng không sân bay;
+In
+b) Thiết lập liên lạc với đơn vị chỉ huy bay chặn, bay kèm, bay ép, tiếp tục duy trì liên lạc hai chiều với tàu bay bay chặn, bay kèm, bay ép và cung cấp cho tàu bay này những thông tin đã biết liên quan đến tàu bay vi phạm; c) Thông báo cho cơ sở ATS kế cận nếu tàu bay vi phạm bay vào khu vực trách nhiệm của cơ sở ATS này;
+d) Sau khi tàu bay vi phạm hạ cánh an toàn tại cảng hàng không, sân bay chỉ định, cơ sở ATS hướng dẫn tàu bay vi phạm lăn vào vị trí đỗ Điều 70. Lực lượng xử lý tàu bay vi phạm vùng trời, bị bay ép hạ cánh 1. Lực lượng xử lý tàu bay vi phạm vùng trời, bị bay ép hạ cánh bao gồm lực lượng thuộc Bộ Quốc phòng
+2. Lực lượng phối hợp, hiệp đồng xử lý bao gồm lực lượng thuộc Bộ Xây dựng, Bộ Công an và các bộ, ngành có liên quan.
+3. Lực lượng thuộc Ban Chỉ đạo phòng, chống khủng bố tỉnh, thành phố trực thuộc trung ương nơi có cảng hàng không, sân bay tham gia xử lý theo chức năng, nhiệm vụ được giao
+Điều 71. Phối hợp giữa các lực lượng tham gia xử lý tàu bay vi phạm
+
+--- Trang 37/77 ---
+
+37
+vùng trời bị bay chặn, bay kèm, bay ép hạ cánh tại cảng hàng không sân bay
+1. Việc phối hợp giữa các lực lượng tham gia xử lý tàu bay vi phạm vùng trời bị bay chặn, bay kèm, bay ép hạ cánh tại cảng hàng không, sân bay được thực hiện theo các nguyên tắc: tuân thủ pháp luật Việt Nam và điều ước quốc tế, phù hợp với chính sách đối ngoại, chủ động, tích cực; đúng chức năng nhiệm vụ, quyền hạn; bảo đảm trao đổi thông tin kịp thời, hiệu quả 2. Nội dung phối hợp bao gồm hiệp đồng trong quá trình phát hiện, xác minh, theo dõi, thông báo, tổ chức bay chặn, bay kèm, bay ép và hiệp đồng xử lý tàu bay vi phạm sau khi hạ cánh như sau: a) Phối hợp chỉ huy, điều hành xử lý tàu bay vi phạm vùng trời bị bay chặn, bay kèm, bay ép hạ cánh do Quân chủng Phòng không - Không quân chủ trì, hiệp đồng với cơ quan, đơn vị hàng không dân dụng trong điều hành tàu bay bay chặn, bay kèm, bay ép tàu bay vi phạm vùng trời Việt Nam b) Việc phối hợp xử lý tàu bay vi phạm sau khi hạ cánh tại cảng hàng WLVN
+không, sân bay như sau:
+Ban Chỉ đạo phòng, chống khủng bố tỉnh, thành phố trực thuộc trung ương có cảng hàng không, sân bay chủ trì, chỉ đạo các lực lượng liên quan phối hợp triển khai xử lý tàu bay vi phạm hạ cánh theo phương án, kế hoạch đã được cấp có thầm quyền phê chuân;
+An
+Cục Hàng không Việt Nam chủ trì, hiệp đồng phối hợp với lực lượng quân đội, công an, chính quyền địa phương và các cờ quan quản lý nhà nước, các doanh nghiệp hoạt động tại cảng hàng không tham gia xử lý tàu bay vi phạm hạ cánh tại cảng hàng không, sân bay;
+1
+Đơn vị không quân đóng quân tại sân bay quân sự được chỉ định bay chặn; bay kèm, bay ép tàu bay vị phạm hạ cánh phối hợp, hiệp đồng chặt chẽ với lực lượng công an, chính quyền địa phương và các cơ quan, đơn vị chức năng có liên quan xử lý khi tàu bay vi phạm hạ cánh.
+l
+Chương VI
+QUẢN LÝ CHƯỚNG NGẠI VẬT HÀNG KHÔNG
+Điều 72. Các quy định chung về quy hoạch xây dựng, quản lý bề mặt chướng ngại vật và tĩnh không
+1. Quy hoạch xây dựng sân bay của lực lượng vũ trang, sân bay dùng chung và các đài, trạm vô tuyên điện hàng không phải phù hợp với chiến lược bảo vệ Tổ quốc, quy định của pháp luật về hàng không dân dụng, pháp luật về
+
+--- Trang 38/77 ---
+
+38
+quy hoạch và các quy định của Nghị định này, đồng thời đáp ứng yêu cầu phát triển kinh tế - xã hội của đất nước.
+2. Việc xây dựng sân bay của lực lượng vũ trang, sân bay dùng chung công trình nhân tạo và các đài, trạm vô tuyên điện hàng không phải tuân thủ quy định của pháp luật về hàng không dân dụng, đất đai, bảo vệ công trình quốc phòng, khu quân sự và các quy định về độ cao chướng ngại vật hàng không tại Nghị định này.
+Điều 73, Quy định về đồ án quy hoạch chung hoặc đồ án quy hoạch chi tiết
+man
+1. Bộ, ngành và Ủy ban nhân dân cấp tỉnh trước khi phê duyệt đồ án quy hoạch chung hoặc đồ án quy hoạch chi tiết để xây dựng khu đô thị, khu nhà ở cao tầng, khu hạ tầng kỹ thuật công nghiệp, khu kặnh tế, khu công nghệ cao phải có văn bản lấy ý kiến của Bộ Tổng Tham mưu Quân đội nhân dân Việt Nam để thống nhất ban hành bề mặt độ cao công trình và chấp thuận độ cao công trình.
+K
+s
+2. Văn bản lấy ý kiến gửi về Cục Tác chiến để kiểm tra thẩm định, báo I
+NLVN
+cáo Bộ Tổng Tham mưu Quân đân dân Việt Nam 3. Việc lấy ý kiến được thực hiện theo trình tự, thủ tục quy định tại Điều 86 của Nghị định này.
+YA
+Điều 74. Các bề mặt chướng ngại vật hàng không và cảnh báo chướng ngại vật hàng không
+Ca
+1. Các sân bay dùng chung phải xác định các bề mặt chướng ngại vật theo cấu hình các đường cất hạ cánh và nhóm máy bay thiết kế được quy định chi tiết tại Mục 2 Phụ lục Ia ban hành kèm theo Nghị định này 2. Các sân bay của lực lượng vũ trang phải xác định bề mặt chướng ngại vật theo quy định tại Phụ lục Ib ban hành kèm theo Nghị định này.
+3. Kích thước các bề mặt chướng ngại vật đối với sân bay dùng chung theo tiêu chuẩn, khuyến cáo thực hành của ICAO và được quy định chi tiết tại Mục 4 Phụ lục Ia ban hành kèm theo Nghị định này.
+O
+4. Kích thước các bề mặt chướng ngại vật đối với sân bay của lực lượng vũ trang được quy định chi tiết tại Mục 1 Phụ lục Ib ban hành kèm theo Nghị định này.
+5. Khoảng cách tối thiểu nhăm bảo đảm an toàn kỹ thuật của các đài, trạm vô tuyến điện hàng không tại Việt Nam với chướng ngại vật được quy định tại
+
+--- Trang 39/77 ---
+
+39
+Phụ lục IV ban hành kèm theo Nghị định này.
+6. Mỗi sân bay dùng chung, mỗi sân bay của lực lượng vũ trang chỉ được xác lập một hệ thống bề mặt chướng ngại vật hàng không để thống nhất trong quản lý, công bố và áp dụng
+7. Những chướng ngại vật phải được cảnh báo hàng không được xác định theo Phụ lục III ban hành kèm theo Nghị định này.
+Điều 75. Thiết lập dải bay
+1, Tất cả đường cất hạ cánh và các đoạn dừng có liên quan phải được thiết lập dải bay
+2. Kích thước dải bay của sân bay dùng chung thực hiện theo Mục 3 Phụ lục Ia ban hành kèm theo Nghị định này. Kích thước dài bay của sân bay của lực lượng vũ trang thực hiện theo Mục 1 Phụ lục Ib ban hành kèm theo Nghị định này.
+L
+YS
+WLVN
+3. Cục Hàng không Việt Nam công bố kích thước dài bay đối với các sân bay có hoạt động bay hàng không dân dụng
+Điều 76. Thiết lập khu vực an toàn cuối đường cất hạ cánh 1. Khu vực an toàn cuối đường cất hạ cánh phải được thiết lập tại phần kết thúc dải bay đối với đường cất hạ cánh cấp 3, cấp 4 và đường cất hạ cánh có thiết bị cấp I hoặc cấp II.
+2. Kích thước khu vực an toàn cuối đường cất hạ cánh được thực hiện theo Mục 3 Phụ lục Ia ban hành kèm theo Nghị định này 3. Cục Hàng không Việt Nam công bố kích thước khu vực an toàn cuối đường cất hạ cánh đối với các sân bay có hoạt động bay hàng không dân dụng Điều 77. Các loại bề mặt chướng ngại vật hàng không của sân bay dùng chung
+1. Các bề mặt không có chướng ngại vật (OFS) bao gồm: bề mặt tiếp cận; các bề mặt chuyển tiếp; bề mặt tiếp cận trong, các bê mặt chuyển tiếp trong; bê mặt hủy bỏ hạ cánh
+2. Các bề mặt đánh giá chướng ngại vật (OES) bao gồm: bề mặt ngang; bề mặt tiếp cận thắng bằng thiết bị; bề mặt tiếp cận chính xác; bề mặt khởi hành bằng thiết bị; bề mặt lấy độ can .
+3. Chi tiết các loại bề mặt chướng ngại vật hàng không của sân bay dùng chung, sân bay của lực lượng vũ trang được quy định tại Phụ lục Ia, Ib ban hành kèm theo Nghị định này.
+
+--- Trang 40/77 ---
+
+40
+Điều 78. Yêu cầu thiết lập các bề mặt chướng ngại vật hàng không 1. Việc thiết lập các bề mặt chướng ngại vật hàng không phải bảo đảm phù hợp với cấp sân bay, loại đường cất hạ cánh, phương thức tiếp cận, cất cánh và đặc điểm khai thác của sân bay.
+2. Việc xác định các bề mặt chướng ngại vật hàng không phải bảo đảm thống nhất với quy hoạch, thiết kế, khai thác sân bay và yêu câu bảo đảm an toàn hoạt động bay
+3. Cơ quan, đơn vị quản lý sân bay, đài, trạm vô tuyến điện hàng không và cơ quan liên quan có trách nhiệm phôi hợp trong việc xác định, rà soát, cập nhật các bề mặt chướng ngại vật hàng không 4. Các bề mặt không có chướng ngại vật (OFS) được xác định dựa trên mục đích sử dụng của đường cất hạ cánh và phải được áp dụng khi đường cất hạ cánh đó được sử dụng
+5. Các bề mặt đánh giá chướng ngại vật (OES) được xác định dựa trên mục đích sử dụng và/hoặc loại hình khai thác dự kiên trên đường cất hạ cánh WLVN
+Khi các bề mặt đánh giá chướng ngại vật khác nhau chồng lấn lên nhau, thì phải xem xét từng bề mặt riêng biệt vì mỗi bề mặt có chức năng cụ thể khác nhau 6. Các bề mặt không có chướng ngại vật hàng không (OFS) sau đây phải được thiết lập đối với một đường cất hạ cánh không có thiết bị hoặc một đường cất hạ cánh có phương thức tiếp cận đơn:
+toar
+a) Bề mặt tiếp cận;
+b) Các bề mặt chuyển tiếp;
+c) Bề mặt tiếp cận trong;
+d) Các bề mặt chuyển tiếp trong.
+7. Các bề mặt không có chướng ngại vật hàng không (OFS) sau đây phải được thiết lập đối với đường cất hạ cánh có phương thức tiếp cận chính xác: a) Bề mặt tiếp cận;
+19
+ngtrung
+b) Các bề mặt chuyển tiếp;
+c) Bề mặt tiếp cận trong;
+d) Các bề mặt chuyển tiếp trong;
+đ) Bề mặt hủy bỏ hạ cánh
+8. Các bề mặt đánh giá chướng ngại vật sau đây phải được thiết lập:
+
+--- Trang 41/77 ---
+
+41
+a) Trường hợp tiếp cận vòng lượn và/hoặc vòng lượn sân bay thì phải thiết lập bề mặt ngang hoặc một bề mặt đánh giá chướng ngại vật cụ thể; b) Trường hợp tiếp cận thắng bằng thiết bị không bao gồm tiếp cận chính xác và bề mặt ngang không được thiết lập thì phải thiết lập bề mặt tiếp cận thắng bằng thiết bị hoặc một bề mặt đánh giá chướng ngại vật cụ thế; c) Trường hợp tiếp cận chính xác thì phải thiết lập bề mặt tiếp cận chính xác hoặc một bề mặt đánh giá chướng ngại vật cụ thể; d) Trường hợp khởi hành bằng thiết bị thì phải thiết lập bề mặt khởi hành bằng thiết bị hoặc một bề mặt đánh giá chướng ngại vật cụ thể; đ) Trường hợp hoạt động cất cánh thì phải thiết lậy độ cao cất cánh hoặc một bề mặt đánh giá chướng ngại vật cụ thể; e) Trong các trường hợp khác phải thiết lập các bề mặt đánh giá chướng ngại vật cụ thể.
+O
+Điều 79. Hạn chế chướng ngại vật
+WLVN
+1. Không được phép bố trị vật thể cố định trên bất kỳ phần nào thuộc dải bay của đường cất hạ cánh tiếp cận chính xác, ngoại trừ các thiết bị bắt buộc phải đặt trên dải bay để phục vụ cho mục đích dẫn đường bằng mắt hoặc an toàn hàng không và đáp ứng yêu cầu về tính dễ gãy theo quy định của ICAO L
+2. Đối với các bề mặt không có chướng ngại vật: a) Không được phép bố trí các vật thể cố định vượt lên trên bề mặt tiếp cận trong, các bề mặt chuyển tiếp trong, bề mặt hủy bỏ hạ cánh và bề mặt phức hợp nối giữa các cạnh dưới của các bề mặt chuyển tiếp trong, Đối với các thiết bị hỗ trợ bằng mắt bảo đảm hoạt động bay hoặc các vật thể cần thiết cho mục đích an toàn tàu bay buộc phải vượt lên phía trên các bề mặt nêu trên, thì các thiết bị, vật thể này phải có khả năng dễ gãy và được lắp đặt thấp nhất có thể, phải được đánh giá và chấp thuận về mức cao.
+b) Vật thể di động không được phép vượt lên trên bề mặt tiếp cận trong bề mặt chuyển tiếp trong, bề mặt hủy bỏ hạ cánh hoặc bề mặt phức hợp nối giữa các cạnh dưới của bề mặt chuyển tiếp trong trong thời gian đường cất hạ cánh đang được sử dụng để hạ cánh.
+các) Không được phép bố trí vật thể mới hoặc tăng kích thước vật thế hiện có vượt lên trên bề mặt tiếp cận, bề mặt chuyển tiếp và bề mặt phức hợp nối giữa các cạnh dưới của bề mặt chuyển tiếp. Tuy nhiên, trong trường hợp các thiết bị và công trình bảo đảm hoạt động bay hoặc an toàn tàu bay cần thiết phải vượt lên trên các bề mặt này, thì các công trình thiết bị này phải có khả
+
+--- Trang 42/77 ---
+
+42
+năng dễ gãy và được lắp đặt thấp nhất có thể, phải được đánh giá và chấp thuận về mức cao
+d) Các chướng ngại vật hiện có vượt lên trên bề mặt tiếp cận, bề mặt chuyển tiếp hoặc bề mặt phức hợp nổi giữa các cạnh dưới của bề mặt chuyển tiếp cần được xem xét việc di dời sớm nhất có thể.
+đ) Địa hình hoặc chướng ngại vật hiện hữu xâm phạm bề mặt tiếp cận, ba bề mặt chuyển tiếp hoặc bề mặt phức hợp nối giữa các cạnh dưới của bề mặt chuyển tiếp mà không thế được dỡ bỏ thì chỉ được phép tôn tại sau khi được Cục Hàng không Việt Nam đánh giá thông qua nghiên cứu hàng không và kết quả nghiên cứu xác định rằng các chướng ngại vật đó không ảnh hưởng đến an toàn và hoạt động khai thác bình thường của tàu bay.
+3. Đối với các bề mặt đánh giá chướng ngại vật, các chướng ngại vật xâm phạm bề mặt đánh giá chướng ngại vật chỉ được phép tồn tại sau khi được Cục Hàng không Việt Nam đánh giá thông qua nghiên cứu hàng không và kết quả nghiên cứu xác định rằng các chướng ngại vật đó không ảnh hường đến an toàn và hoạt động khai thác bình thường của tàu bay.
+ILVN
+4. Các vật thể có chiều cao từ 100 mét trở lên so với mặt đất hoặc mặt nước nằm ngoài giới hạn của các bề mặt chướng ngại vật hàng không phải được thu thập dữ liệu và đánh giá ảnh hưởng đến an toàn bay, Trường hợp kết quả nghiên cứu hàng không xác định vật thể ảnh hưởng đến an toàn và hoạt động khai thác của tàu bay, vật thế đó phải được xem xét công bô và áp dụng các biện pháp cảnh báo chướng ngại vật theo quy định.
+Gy
+Điều 80. Quản lý tĩnh không sân bay và khu vực lân cận đài, trạm vô tuyến điện hàng không
+1. Việc quản lý tĩnh không sân bay và khu vực lân cận đải, trạm vô tuyến điện hàng không phải bảo đảm không xuất hiện chướng ngại vật hoặc nguồn gây ảnh hưởng làm suy giảm mức độ an toàn hoạt động bay và hoạt động bình thường của thiết bị hàng không
+2. Tổ chức, cá nhân xây dựng, cải tạo, lắp đặt công trình, vật thể hoặc tổ chức hoạt động có khả năng ảnh hưởng đến tĩnh không sân bay, bề mặt chướng ngại vật hàng không hoặc hoạt động của đài, trạm vô tuyên điện hàng không phải tuân thủ quy định của Nghị định này và pháp luật có liên quan Điều 81. Kiểm tra, giám sát công trình liên quan lý độ cao 1 Công trình, vật thể thuộc đối tượng phải chấp thuận độ cao chỉ được xây dưng, lắp đặt sau khi có văn bản chấp thuận có thẩm quyền
+
+--- Trang 43/77 ---
+
+43
+theo quy định của Nghị định này
+2. Trong quá trình thi công, xây dựng, lắp đặt, chủ sở hữu công trình phải thực hiện đúng nội dung về vị trí, chiều cao tối đa, yêu cầu cảnh báo hàng không và các điều kiện khác ghi trong văn bản chấp thuận 3. Ủy ban nhân dân cấp tỉnh được giao phối hợp kiểm tra, giám sát có trách nhiệm kiểm tra việc tuân thủ nội dung văn bản chấp thuận; trường hợp 10 phát hiện vi phạm phải kịp thời kiến nghị đình chỉ, điều chỉnh hoặc xử lý theo quy định của pháp luật.
+Điều 82. Vật thể phải được đánh giá và chấp thuận về độ cao Vật thể phải được đánh giá và chấp thuận về độ cao trước khi xây dựng lắp đặt bao gồm:
+1. Vật thể năm trong phạm vi bề mặt chướng ngại vật hàng không, khu vực, dự án quy hoạch độ thị, không gian đã được các bộ, ngành, địa phương nguy thông nhất với cơ quan chức năng thuộc Bộ Tông Tham mưu Quân đội nhân z
+dân Việt Nam về độ cao, mức cao theo quy định NLVN
+2. Các vật thể nằm ngoài khu vực nêu tại khoản 1 Điều này và năm trong khu vực 2a và cao hơn mức cao đường cất hạ cánh gân nhất từ 3 mét trở lên Khu vực 2a được quy định tại Phụ lục II ban hành kèm theo Nghị định này.
+3. Các vật thể nằm ngoài khu vực nêu tại khoản 1 Điều này và có chiều cao từ 100 mét trở lên so với mặt đất hoặc mặt nước 4. Hệ thống cột treo đèn chiếu sáng ở khu vực tỉnh không đầu các sân bay; tuyến đường dây tải điện cao thế, cáp treo, các trạm thú, phát sóng vô tuyến và các công trình điện gió; công trình năm trong phạm vi ảnh hưởng và tiếp giáp với các khu vực bố trí các đài, trạm vô tuyên điện hàng không, Chỉ tiết quy định tại Phụ lục IV ban hành kèm theo Nghị định này.
+O
+Điều 83. Quy định về việc cung cấp thông tin về các công trình Thông tin về các công trình sau đây phải được cơ quan có thẩm quyền quản lý, cấp phép xây dựng của địa phương, chủ đầu tư, chủ sở hữu công trình Các thông báo cho Cục Hàng không Việt Nam và Tông công ty Quản lý bay Việt Nam:
+1. Các công trình mới đã hoàn công khi:
+a la la la la la cao cách mặt đất hoặc mặt nước từ 100 mét trở lên; ba bị Xâm phạm bế mặt thu thập dữ liệu chướng ngại vật hàng không 2b và
+
+--- Trang 44/77 ---
+
+44
+có chiều cao so với mặt đất hoặc mặt nước từ 3 mét trở lên; c) Xâm phạm bề mặt thu thập dữ liệu chướng ngại vật hàng không 2c và có chiều cao so với mặt đất hoặc mặt nước từ 15 mét trở lên 2. Các công trình sau sửa đổi tăng chiều cao khi: a) Chiều cao so với mặt đất hoặc mặt nước từ 100 mét trở lên; b) Xâm phạm bề mặt thu thập dữ liệu chướng ngại vật hàng không 2b và có chiều cao so với mặt đất hoặc mặt nước từ 3 mét trở lên; c) Xâm phạm bề mặt thu thập dữ liệu chướng ngại vật hàng không 2c và có chiều cao so với mặt đất hoặc mặt nước từ 15 mét trở lên 3. Các công trình đã giảm chiều cao nếu: a) Trước sửa đồi có chiều cao so với mặt đất hoặc mặt nước từ 100 mét trở lên;
+0
+WLVN
+b) Trước sửa đổi đang xâm phạm bề mặt thu thập dữ liệu chướng ngại vật hàng không 2b và có điểm cao nhất cao hơn mặt đất hoặc mặt nước từ 3 mét trở lên;
+c) Trước sửa đổi đạng xâm phạm bề mặt thu thập dữ liệu chướng ngại vật hàng không 2c và có điểm cao nhất cao hơn mặt đất hoặc mặt nước từ 15 mét trở lên.
+toa
+4. Các công trình đã dỡ bỏ mà trước đó: c
+a) Có điểm cao nhất cao hơn mặt đất hoặc mặt nước từ 100 mét trở lên; b) Đang xâm phạm bề mặt thu thập dữ liệu chướng ngại vật hàng không 2b và có điểm cao nhất cao hơn mặt đất hoặc mặt nước từ 3 mét trở lên; c) Đang xâm phạm bề mặt thu thập dữ liệu chướng ngại vật hàng không 2c và có điểm cao nhất cao hơn mặt đất hoặc mặt nước từ 15 mét trở lên ial
+5. Các công trình đã di dời nếu:
+gt
+a la a la ) Có điểm cao nhất cao hơn mặt đất hoặc mặt nước từ 100 mét trở lên, b) Trước hoặc sau di dời xâm phạm bề mặt thu thập dữ liệu chướng ngại vật hàng không 2b và có điểm cao nhất cao hơn mặt đất hoặc mặt nước từ 3 mét trở lên;
+c) Trước hoặc sau di dời xâm phạm bề mặt thu thập dữ liệu chướng ngại vật hàng không 2c và có điểm cao nhất cao hơn mặt đất hoặc mặt nước từ 15 mét trở lên.
+
+--- Trang 45/77 ---
+
+45
+6. Khu vực 2a, 2b, 2c được quy định tại Phụ lục II ban hành kèm theo Nghị định này
+Điều 84. Quy định về việc cung cấp thông tin về các công trình trong phạm vi sân bay
+Người khai thác cảng hàng không phải thông báo cho Cục Hàng không Việt Nam và Tổng công ty Quản lý bay Việt Nam thông tin về các công trình xâm phạm bề mặt thu thập chướng ngại vật 2a, 2b và 2c trong phạm vi ranh giới cảng hàng không, sân bay.
+Điều 85, Quy định về trị số thông tin của các công trình và địa chi nhận thông tin liên quan
+1. Các công trình được quy định tại Điều 83 và Điều 84 của Nghị định này phải bao gồm các thuộc tính và yêu cầu về trị số được quy định tại Mục 3 Phụ lục II ban hành kèm theo Nghị định này
+2. Các thông tin về các công trình được gửi theo địa chỉ dưới đây: WLVN
+a) Cục Hàng không Việt Nam: địa chỉ 119 Nguyễn Sơn, phường Bồ Đề, thành phố Hà Nội;
+b) Tổng công ty Quản lý bay Việt Nam: địa chỉ 37 Hoàng Minh Đạo phường Bồ Đề, thành phố Hà Nội.
+Y
+3. Cục Hàng không Việt Nam có trách nhiệm tổ chức cập nhật các dữ liệu quy định tại Điều 83 và Điều 84 của Nghị định này vào cơ sở dữ liệu chướng ngại vật hàng không nhăm bảo đảm an toàn cho các hoạt động bay hàng không dân dụng
+C
+4. Mỗi đường cất hạ cánh của sân bay dùng chung phải được thiết lập các bề mặt thu thập dữ liệu chướng ngại vật hàng không của các khu vực 2a, 2b và 2c được quy định tại Phụ lục II ban hành kèm theo Nghị định này Điều 86. Trình tự, thủ tục chấp thuận độ cao công trình 1.Hồ sơ đề nghị chấp thuận độ cao công trình: AT
+a la a la a la ) Văn bản đề nghị chấp thuận độ cao công trình thực hiện theo Mẫu quy định tại Phụ lục V ban hành kèm theo Nghị định này; b) Bản sao hoặc bản điện tử bản đồ hoặc sơ đồ không gian, vị trí khu vực xây dựng công trình có đánh dấu vị trí xây dựng công trình; c) Bản sao hoặc bản điện tử một trong những giấy tờ chứng minh về quyền sở hữu, quản lý, sử dụng công trình, nhà ở theo quy định của pháp luật
+
+--- Trang 46/77 ---
+
+46
+2. Tiếp nhận hồ sơ đề nghị chấp thuận độ cao công trình của tổ chức, cá nhân, chủ đầu tư:
+a) Cơ quan tiếp nhận: Cục Tác chiến - Bộ Tổng Tham mưu Quân đội nhân dân Việt Nam
+b) Địa chỉ tiếp nhận hồ sơ qua bưu chính: số 7 đường Nguyễn Tri Phương phường Ba Đình, thành phố Hà Nội; số điện thoại liên hệ: 069.531.368 O
+c) Địa chỉ tiếp nhận hồ sơ trực tuyến: dichvucong.mod.gov.vn c
+Cl
+3. Chủ đầu tư, chủ sở hữu công trình lập 01 bộ hồ sơ theo quy định tại Khoản 1 Điều này, gửi đến Cục Tác chiến, Bộ Tổng Tham mưu Quân đội nhân dân Việt Nam. Kể từ ngày nhận đủ hồ sơ hợp lệ, Cục Tác chiến, Bộ Tổng Tham mưu có trách nhiệm kiếm tra, thẩm định và có văn bản chấp thuận hoặc không chấp thuận gửi trực tuyến đến tổ chức, cá nhân đề nghị chấp thuận độ cao công trình; trường hợp tổ chức, cá nhân đề nghị nhận kết quả qua thư điện tử thì gửi qua thư điện tử cho tổ chức, cá nhân.
+WLVN
+4. Thời gian giải quyết chấp thuận độ cao công trình như sau: a) 10 ngày làm việc, đối với các dự án xây dựng nhà ở, khu đô thị, khu nhà ở cao tầng, khu hạ tầng kỹ thuật công nghiệp, hệ thống cột treo đèn chiếu sáng ở khu vực tĩnh không đầu các sân bay và các công trình quy định tại Điều 82 của Nghị định này;
+toàn
+b) 15 ngày làm việc đối với các dự án xây dựng khu kinh tế, khu đặc thù, khu công nghệ cao
+c) 20 ngày làm việc đối với các dự án cáp treo, đường dây tải điện cao thế có chiều dài dưới 100 km, hệ thống các trạm thu, phát sóng vô tuyến số lượng từ 10 đến 50 trạm;
+U
+d) 30 ngày đối với các dự án đường dây tải điện cao thế có chiều dài trên 100 km, hệ thống các trạm thu, phát sóng vô tuyến số lượng trên 50 trạm; đ) Kết quả giải quyết thủ tục chấp thuận độ cao công trình đồng thời được sao gửi đến cơ quan cấp phép xây dựng địa phương, Cục Hàng không Việt Nam, Tổng công ty Quản lý bay Việt Nam, Cảng vụ hàng không khu vực và các cơ quan, đơn vị liên quan.
+5. Trường hợp hồ sơ không hợp lệ, trong thời hạn 07 ngày làm việc, kể từ ngày nhận hồ sơ, Cục Tác chiến, Bộ Tổng Tham mưu có văn bản điện tử yêu cầu tổ chức, cá nhân đề nghị chấp thuận độ cao công trình bố sung, hoàn chỉnh
+
+--- Trang 47/77 ---
+
+47
+hồ sơ theo quy định
+6. Trường hợp không chấp thuận về độ cao công trình, trong thời hạn 07 ngày làm việc, Cục Tác chiến, Bộ Tổng Tham mưu có văn bản điện tử trả lời, nêu rõ lý do.
+7. Trường hợp công trình có khả năng vượt quá giới hạn bề mặt chướng ngại vật hàng không đã được công bố hoặc có nguy cơ ảnh hưởng đến các thiết Ch, bị bảo đảm hoạt động bay, Cục Tác chiên có văn bản lây ý kiến của Cục Hàng không Việt Nam và các cơ quan, đơn vị có liên quan, Cục Hàng không Việt Nam chủ trì, phối hợp với các cơ quan, đơn vị có liên quan đánh giá ảnh hưởng của độ cao công trình và thông báo bằng văn bản cho Cục Tác chiến trong thời hạn sau đây:
+a) 08 ngày làm việc, đối với các dự án xây dựng nhà ở, khu đô thị, khu nhà ở cao tầng, khu hạ tầng kỹ thuật công nghiệp, hệ thống cột treo đèn chiếu sáng ở khu vực tĩnh không đầu các sân bay và các công trình quy định tại Điều 82 của Nghị định này
+WLVN
+b) 12 ngày làm việc đôi với các dự án xây dựng khu kặnh tế, khu đặc thù khu công nghệ cao;
+c) 15 ngày làm việc đối với các dự án cáp treo, đường dây tải điện cao thế có chiều dài dưới 100 km, hệ thống các trạm thu, phát sóng vô tuyến số lượng từ 10 đến 50 trạm;
+toar
+d) 25 ngày làm việc đối với các dự án đường dây tải điện cao thế có chiều dài trên 100 km, hệ thống các trạm thu, phát sóng vô tuyến số lượng trên 50 trạm; đ) Kể từ ngày nhận được văn bản đóng góp ý kiến, Cục Tác chiến, Bộ Tổng Tham mưu có văn bản chấp thuận hoặc không chấp thuận độ cao công trình theo quy định tại khoản 3 Điều này.
+Ill
+8. Văn bản chấp thuận độ cao công trình có những nội dung cơ bản sau: cl
+a) Tên, tính chất, quy mô công trình;
+gtr
+b) Chủ đầu tư, chủ sở hữu công trình;
+c) Vị trí công trình: địa chỉ hành chính, tọa độ địa lý theo hệ tọa độ VN 2000 và hệ tọa độ WGS-84 (theo định dạng độ, phút, giây); d) Chiều cao tối đa của công trình được phép xây dựng so với cốt đất tự nhiên khu vực xây dựng và mức cao tối đa của công trình so với mực nước biển trung bình;
+
+--- Trang 48/77 ---
+
+48
+d) Cơ quan phối hợp kiểm tra, giám sát khi xây dựng công trình; e) Hướng dẫn cảnh báo hàng không;
+g) Thời hạn có hiệu lực của văn bản chấp thuận chiều cao của công trình; h) Các điểm lưu ý khác (nếu có);
+i) Mẫu văn bản chấp thuận được quy định tại Phụ lục Va ban hành kèm theo Nghị định này.
+In
+Chương VII
+PHƯƠNG THỨC BAY, SƠ ĐỒ, BẢN ĐỒ HÀNG KHÔNG YELL
+Mục 1
+PHƯƠNG THỨC BAY, SƠ ĐỒ, BẢN ĐỒ HÀNG KHÔNG Điều 87. Quy định chung
+1. Phương thức bày, sơ đồ, bản đồ hàng không phải được thiết kế, xây WLVN
+dựng, cập nhật, kiểm tra, bay đánh giá, tần suất bay đánh giá lại, phê chuấn và công bô phù hợp với tiêu chuân, khuyên cáo thực hành của ICAO và quy định của Bộ trưởng Bộ Xây dựng.
+2. Việc thiết kế phương thức bay và sơ đồ, bản đồ hàng không phải bảo đảm an toàn, hiệu quả và khả thi trong khai thác; sử dụng dữ liệu hàng không đạt yêu cầu chất lượng, phù hợp với định hướng, kế hoạch và yêu cầu quản lý hoạt động bay, khai thác bay.
+Điều 88. Đơn vị đo lường trong sơ đồ, bản đồ hàng không 1. Khoảng cách thể hiện trong sơ đồ, bản đồ hàng không phải căn cứ vào khoảng cách trắc địa thực tế.
+O
+2. Đơn vị đo lường sử dụng trong sơ đồ, bản đồ hàng không và tài liệu kèm theo phải thống nhất, phù hợp với quy định về đơn vị đo sử dụng trong hàng không tại Mục 7 Chương VIII của Nghị định này và theo quy định của Bộ igtrung
+trưởng Bộ Xây dựng
+Điều 89. Trách nhiệm quản lý và cung cấp dịch vụ 1. Cục Hàng không Việt Nam phê chuẩn sơ đô, bản đồ hàng không trước khi công bố tin tức hàng không
+2. Doanh nghiệp bảo đảm hoạt động bay là đơn vị chủ trì thực hiện khảo sát, thiết kế phương thức bay và sản xuất sơ đồ, bản đồ hàng không theo trách nhiệm được giao.
+
+--- Trang 49/77 ---
+
+49
+3. Cục Tác chiến thuộc Bộ Tổng Tham mưu, Bộ Quốc phòng cung cấp nền bản đồ địa hình quân sự, dữ liệu biên giới quốc gia để làm cơ sở xây dựng bản đồ hàng không dân dụng khi có yêu cầu.
+Điều 90. Hệ thống tham chiếu sử dụng trong sơ đồ, bản đồ hàng không 1.Hệ quy chiếu ngang sử dụng Hệ tọa độ trắc địa toàn cầu (WGS-84) 2. Hệ quy chiếu dọc sử dụng mực nước biển trung bình và mô hình trọng trường trái đất (EGM-96)
+IN
+3. Hệ thời gian sử dụng lịch Gregorian và giờ phối hợp quốc tế (UTC) O
+Mục 2
+TRÁCH NHIỆM CUNG CẤP DỮ LIỆU ĐẦU VÀO
+Điều 91. Cung cấp dữ liệu hàng không
+1. Các tổ chức, cơ quan, đơn vị là người khởi tạo dữ liệu có trách nhiệm cung cấp dữ liệu hàng không, dữ liệu địa hình, chướng ngại vật và dữ liệu liên quan đền hoạt động bay cho cơ sở sơ đô, bản đô hàng không, cơ sở dữ liệu hàng ILVN
+không bảo đảm độ chính xác, tính toàn vẹn, tính kịp thời và đây đủ của dữ liệu 2. Việc cung cấp dữ liệu đầu vào phục vụ thiết kế phương thức bay, lập sơ đồ, bản đồ hàng không và duy trì, cập nhật bộ dữ liệu số khác gồm dữ liệu địa hình, chướng ngại vật điện tử, dữ liệu AIP, dữ liệu lập bản đồ sân bay, dữ liệu phương thức bay bằng thiết bị theo quy định của Bộ trưởng Bộ Xây dựng Điều 92. Trách nhiệm của Ủy ban nhân dân cấp tỉnh 1. Chỉ đạo các cơ quan chuyên môn trực thuộc thực hiện cung cấp dữ liệu về chướng ngại vật hàng không phù hợp với quy định tại Điều 83 của Nghị định này.
+ng
+22 Chi đạo các cơ quan chuyên môn trực thuộc thực hiện tra cứu dữ liệu các bề mặt chướng ngại vật đề yêu cầu chủ sở hữu công trình thực hiện thủ tục xin cấp phép khi công trình có khả năng vượt quá giới hạn bê mặt chướng ngại vật hàng không
+3. Chỉ đạo các cơ quan chuyên môn trực thuộc thực hiện tra cứu dũ liệu các bề mặt thu thập dữ liệu chướng ngại vật để xác định công trình cần cung cấp thông tin theo Điều 85 của Nghị định này.
+Điều 93, Trách nhiệm của Bộ Quốc phòng và đơn vị quân sự Bộ Quốc phòng và đơn vị quân sự có trách nhiệm cung cấp chính xác tọa độ WGS 84, giới hạn ngang và giới hạn cao của các khu vực cấm, khu vực hạn chế, khu vực nguy hiểm để thể hiện trên sơ đồ, bản đồ hàng không
+
+--- Trang 50/77 ---
+
+50
+Điều 94. Cơ sở dữ liệu Địa hình và Chướng ngại vật điện tử (etod) 1. Lộ trình chuyển đổi từ sơ đồ chướng ngại vật sân bay sang sơ đồ địa hình và chướng ngại vật sân bay phiên bản điện tử do Cục Hàng không Việt Nam quy định phù hợp với yêu cầu của ICAO.
+2. Hàng không dân dụng và quân sự thiết lập và cập nhật cơ sở dữ liệu địa hình và chướng ngại vật số dùng chung nhằm bảo đảm tính nhất quán trong khai thác, đồng thời phải bảo đảm yêu cầu về bảo vệ bí mật nhà nước, an ninh mạng, an toàn thông tin, phân quyền truy cập và sử dụng dữ liệu đúng mục đích theo quy định của pháp luật.
+Mục 3
+S
+HỆ THÔNG SƠ ĐÔ, BÁN ĐÔ HÀNG KHÔNG
+o
+Điều 95. Hệ thống sơ đồ, bản đồ hàng không 1. Hệ thống sơ đồ, bản đồ hàng không bao gồm các nhóm: sơ đồ dùng cho mục đích lập kế hoạch; sơ đồ sử dụng trong hoạt động di chuyển mặt đất của WLVN
+tàu bay tại sân bay, sơ đồ sử dụng trong chuyển bay từ cất cánh đến hạ cánh chi của tàu bay; bản đồ phục vụ mục đích dần đường, đánh dâu và lập kế hoạch bay bằng mắt; các loại sơ đồ, bản đồ khác phục vụ hoạt động khai thác bay và quản lý hoạt động bay theo quy định của ICAO 2. Nội dung chi tiết từng nhóm sơ đồ, bản đồ hàng kiông thực hiện theo quy định của Bộ trưởng Bộ Xây dựng
+toar
+Mục 4
+cs
+CÔNG BỐ, CẬP NHẬT VÀ CHU KỲ THỰC HIỆN
+Điều 96. Tiêu chuẩn ký hiệu, màu sắc và trình bày sơ đồ, bản đồ hàng không
+1. Sơ đồ, bản đồ hàng không phải tuân thủ bộ ký hiệu và bảng màu theo Phụ ước 4 của ICAO để bảo đảm người khai thác có thể hiểu và sử dụng thống nhất
+gt
+2. Các giá trị cuối cùng được công bố trên sơ đồ, bản đồ hàng không phải được làm tròn theo tiêu chuẩn của ICAO; trong tính toán trung gian phải sử dụng độ phân giải cao nhất hiện có để bảo đảm độ chính xác.
+Điều 97. Công bố sơ đồ, bản đồ hàng không theo chu kỳ AIRAC Các cơ quan, đơn vị phải gửi thông tin thay đổi liên quan đến phương thức bay, sơ đồ, bản đô hàng không cân công bố theo chu kỳ AIRAC cho doanh
+
+--- Trang 51/77 ---
+
+51
+nghiệp bảo đảm hoạt động bay trước ngày hiệu lực tối thiểu 56 ngày hoặc tối thiều 84 ngày đối với những thay đổi lớn theo quy định của Bộ trưởng Bộ Xây dựng Điều 98. Sơ đồ, bản đồ hàng điện tử
+Sơ đồ, bản đồ hàng không điện tử hiển thị trên thiết bị trong buồng lái có giá trị sử dụng thay thế sơ đồ, bản đồ giấy khi hệ thống hiển thị và cơ sở dữ liệu đáp ứng đầy đủ các tiêu chuẩn kỹ thuật, điều kiện khai thác theo quy định của Bộ trưởng Bộ Xây dựng và tiêu chuẩn, khuyến cáo thực hành của ICAO.
+Ur
+Chương VIII
+BẢO ĐẢM HOẠT ĐỘNG BAY
+D
+c
+Mục l
+DOANH NGHIỆP BẢO ĐẢM HOẠT ĐỘNG BAY
+Điều 99. Doanh nghiệp bảo đảm hoạt động bay 1. Doanh nghiệp bảo đảm hoạt động bay có trách nhiệm cung cấp dịch vụ bảo đảm hoạt động bay tại các sân bay, vùng trời thuộc phạm vi trách nhiệm WLVN
+trong lãnh thô của Việt Nam và vùng thông báo bay do Việt Nam quản lý 2. Doanh nghiệp cảng hàng không có trách nhiệm cung cấp dịch vụ dẫn đường hoạt động bay, thực hiện công tác tìm kiểm cứu nạn, khân nguy tại các Sun san bay thuộc khu vực trách nhiệm do mình quản lý.
+3. Doanh nghiệp quy định tại khoản 1 và khoản 2 Điều này được cấp phép để khai thác cơ sở, công trình và hệ thống trang thiết bị kỹ thuật để thực hiện cung cấp dịch vụ bảo đảm hoạt động bay.
+4. Doanh nghiệp bảo đảm hoạt động bay có trách nhiệm thiết lập và duy trì các điều kiện bảo đảm khai thác và cung cấp dịch vụ bảo đảm hoạt động bay bao gồm:
+a) Tổ chức bộ máy và phân định rõ chức năng, nhiệm vụ phù hợp với hoạt động cung cấp dịch vụ;
+b) Cơ sở, công trình bảo đảm hoạt động bay, hệ thống trang thiết bị kỹ thuật được cấp phép, phê chuẩn theo quy định của Bộ trưởng Bộ Xây dựng trước khi đưa vào khai thác, sử dụng;
+F
+choc ch ch ch nghiên viên chính chính chu nghiên pháp thuyên phủ chu nghiên một chuyên một thuyên phủ thiệp thiệp thiệp thiệp thi d) Hệ thống quản lý an toàn, an ninh, kiểm soát chất lượng; đ) Hệ thống tài liệu khai thác được Cục Hàng không Việt Nam phê chuẩn trước khi đưa vào khai thác.
+5. Doanh nghiệp quy định tại khoản 1 và khoản 2 Điều này có trách nhiệm và thu nuun thủ trình tự, thủ tục thầm định và cấp phép, phê chuân cơ sở, công trình
+
+--- Trang 52/77 ---
+
+52
+tài liệu khai thác và hệ thống trang thiết bị kỹ thuật bảo đảm hoạt động bay theo quy định của Bộ trưởng Bộ Xây dựng
+Điều 100. Doanh nghiệp cung cấp dịch vụ quản lý không lưu và tin tức hàng không
+1. Doanh nghiệp cung cấp dịch vụ quản lý không lưu có trách nhiệm thiết lập và vận hành hệ thông quản lý mệt mỏi, quản lý rủi ro mệt mỏi đối với kiểm soát viên không lưu theo quy định của Bộ trưởng Bộ Xây dựng, duy trì liên lạc và phối hợp chặt chẽ với các cơ sở cung cấp dịch vụ không lưu của các quốc gia lân cận để bảo đảm an toàn, điều hòa, liên tục và hiệu quả cho hoạt động của tàu bay.
+2.Bộ trưởng Bộ Xây dựng quyết định hoặc trình cấp có thẩm quyền quyết định việc thành lập, giao nhiệm vụ cho doanh nghiệp cung cấp dịch vụ quản lý không lưu và tín tức hàng không phù hợp với chiến lược, quy hoạch, kế hoạch và chính sách phát triển ngành hàng dân dụng Điều 101. Trách nhiệm của doanh nghiệp bảo đảm hoạt động bay WLVN
+1. Cung cấp các dịch vụ bảo đảm hoạt động bay an toàn, liên tục, điều hòa và hiệu quả cho hoạt động của tàu bay phù hợp với loại vùng trời hàng không dân dụng; tuân thủ quy định về quản lý, sử dụng, bảo vệ vùng trời, bảo đảm quốc phòng, an ninh quốc gia và an toàn thông tin; tuân thủ các quy định về hoạt động bay, quy tắc bay
+2. Phối hợp chặt chẽ với các đơn vị quản lý vùng trời, quản lý bay thuộc Bộ Quốc phòng đề bảo đảm an toàn cho hoạt động bay dân dụng tuân thủ nguyên tắc sử dụng vùng trời linh hoạt.
+Ox
+3, Tuân thủ quy định về quản lý, khai thác, sử dụng, bảo vệ vùng trời, bảo đảm quốc phòng, an ninh quốc gia, an toàn thông tin mạng và an ninh mạng 4, Tham gia, phối hợp với cơ quan, đơn vị có liên quan trong việc xử lý các tình huống khấn nguy, can thiệp bất hợp pháp vào hoạt động hàng không dân dụng và tác chiến phòng không
+5. Áp dụng các biện pháp bảo đảm thanh toán theo quy định của pháp luật bao gồm yêu cầu bảo đảm thanh toán hoặc khi cần thiết yêu cầu thanh toán trước và từ chối cung cấp dịch vụ ATS đối với các chuyên bay dự kiến (trước giờ khởi hành), Việc áp dụng biện pháp từ chối cung cấp dịch vụ không áp dụng đối với tàu bay đang bay và không được làm ảnh hưởng đến việc cung cấp dịch vụ không lưu vì mục đích bảo đảm an toàn bay, phải ưu tiên bảo đảm cung cập dịch vụ trong các trường hợp khấn nguy, tìm kiêm cứu nạn, nhân đạo hoặc trường hợp cần thiết để bảo đảm an toàn bay theo quy định
+
+--- Trang 53/77 ---
+
+53
+6. Báo cáo, kiến nghị, phối hợp cơ quan nhà nước có thẩm quyền áp dụng biện pháp cưỡng chế thu hồi nợ theo quy định pháp luật (nếu có) 7. Các quyền và nghĩa vụ khác theo quy định của pháp luật về doanh nghiệp Mục 2
+DỊCH VỤ QUẢN LÝ KHÔNG LƯU
+Điều 102. Dịch vụ Quản lý không lưu
+1. Dịch vụ quản lý không lưu là hoạt động tổ chức, điều hành và điều phối hoạt động bay nhằm bảo đảm an toàn, điều hòa, hiệu quả và sử dụng tối ưu vùng trời
+2. Dịch vụ quản lý không lưu bao gồm:
+a) Dịch vụ không lưu;
+b) Dịch vụ quản lý luồng không lưu;
+WLVN
+C) Khai thác và sử dụng vùng trời.
+3. Việc tổ chức và cung cấp dịch vụ quản lý không lưu phải phù hợp với phân loại vùng trời, khu vực trách nhiệm cung cấp dịch vụ; nhu cầu hoạt động bay dân dụng, quân sự và các hoạt động bay khác phù hợp với tiêu chuẩn; khuyến cáo thực hành của ICAO và theo quy định của Bộ trưởng Bộ Xây dựng Điều 103. Dịch vụ không lưu
+19
+1. Dịch vụ không lưu bao gồm:
+S
+a) Dịch vụ điều hành bay;
+b) Dịch vụ thông báo bay;
+c) Dịch vụ tư vấn không lưu;
+d) Dịch vụ báo động
+2. Việc cung cấp dịch vụ không lưu phải phù hợp với loại vùng trời, khu vực trách nhiệm cung cấp dịch vụ và yêu cầu điều hành hoạt động bay theo quy định của Bộ trưởng Bộ Xây dựng
+3. Doanh nghiệp cung cấp dịch vụ không lưu có trách nhiệm phối hợp với các đơn vị có liên quan đề quản lý, điêu hành hoạt động bay dân dụng và các hoạt động bay khác khi được ủy quyền
+Điều 104. Dịch vụ quản lý luồng lưu
+1. Dịch vụ quản lý luồng không lưu được tổ chức nhăm góp phần bảo đảm
+
+--- Trang 54/77 ---
+
+54
+an toàn, điều hòa và hiệu quả hoạt động bay thông qua việc cân băng giữa nhu cầu khai thác với năng lực của hệ thông bảo đảm hoạt động bay và cảng hàng không 2. Dịch vụ quản lý luồng không lưu được triển khai ở cấp chiến lược, tiền chiến thuật, chiến thuật và sau khai thác phù hợp với tiêu chuẩn của ICAO, thỏa thuận khu vực và điều kiện khai thác thực tế theo quy định của Bộ trưởng Bộ Xây dựng
+Điều 105. Khai thác và sử dụng vùng trời trong quản lý không lưu 1. Việc khai thác và sử dụng vùng trời trong quản lý không lưu phải phù hợp với tổ chức vùng trời, kế hoạch sử dụng vùng trời và nguyên tắc sử dụng vùng trời linh hoạt
+2. Cơ quan, đơn vị cung cấp dịch vụ quản lý không lưu có trách nhiệm phối hợp với cờ quan quân sự, công an và các cơ quan có liên quan trong việc tổ chức khai thác và sử dụng vùng trời bảo đảm an toàn, hiệu quả 3. Doanh nghiệp cung cấp dịch vụ bảo đảm hoạt động bay có trách nhiệm giám sát, áp dụng và triên khai các biện pháp quản lý luông không lưu phù hợp F
+theo quy định của cơ quan có thẩm quyền, trên nguyên tắc tôi ưu hóa luồng NLVN
+Taters
+n
+ngày hoạt động bay chung, bảo đảm luông không lưu thông suốt và tránh tắc nghĩn vùng trời, sân bay
+4 1.4 Các hãng hàng không, cảng hàng không có trách nhiệm phôi hợp chia sẻ dữ liệu khai thác hoạt động bay, phối hợp triển khai và tuân thủ các biện pháp quản lý luồng không lưu
+toa
+Điều 106. Phối hợp triển khai thực hiện quản lý luồng không lưu quốc tế
+1. Công tác phối hợp triển khai quản lý luồng không lưu quốc tế phải tuân thi thủ quy định của pháp luật, thỏa thuận khu vực và thỏa thuận với các quốc gia có liên quan về quản lý luồng kưông lưu
+2 Cục Hàng không Việt Nam chủ trì tổ chức phối hợp triển khai thực hiện quản lý luông không lưu trong khu vực châu Á - Thái Bình Dương nhằm bảo đảm luồng không lưu an toàn, thông suốt.
+cl
+ngtr
+Mục 3
+DỊCH VỤ THÔNG TIN, DẪN ĐƯỜNG, GIÁM SÁT HOẠT ĐỘNG BAY Điều 107. Dịch vụ thông tin, dẫn đường, giám sát hoạt động bay Dịch vụ thông tin, dẫn đường, giám sát hoạt động bay (CNS) bao gồm 1.Dịch vụ thông tin liên lạc hoạt động bay 2.Dịch vụ dẫn đường hoạt động bay.
+
+--- Trang 55/77 ---
+
+55
+3. Dịch vụ giám sát hoạt động bay
+Điều 108. Nguyên tắc cung cấp dịch vụ thông tin, dẫn đường, giám sát hoạt động bay
+1. Việc cung cấp dịch vụ thông tin, dẫn đường, giám sát hoạt động bay phải phù hợp với tiêu chuấn, khuyên cáo thực hành và hướng dẫn của ICAO.
+2. Cơ sở, hệ thống trang thiết bị kỹ thuật thông tin, dẫn đường, giám sát Và, hoạt động bay trước khi đưa vào khai thác phải được cấp phép theo quy định ti, 3. Dịch vụ thông tin, dẫn đường, giám sát hoạt động bay và trình tự, thủ tục cấp phép cơ sở, hệ thông trang thiết bị kỹ thuật thông tin, dần đường, giám sát hoạt động bay; công tác kiểm tra, hiệu chuẩn mặt đất, bay kiểm tra, hiệu chu nhi chuần và tân suất kiêm tra, hiệu chuân định kỳ theo quy định của Bộ trưởng Bộ Xây dựng
+LIST
+CA
+Mục 4
+DỊCH VỤ KHÍ TƯỢNG HÀNG KHÔNG
+WLVN
+Điều 109. Nguyên tắc cung cấp dịch vụ Khí tượng hàng không 1. Việc cung cấp dịch vụ khí tượng hàng không phải phủ hợp với tiêu chuẩn, khuyến cáo thực hành và hướng dẫn của ICAO.
+2. Thông tin khí tượng hàng không phải được cung cấp cho người khai thác tàu bay, thành viên tổ lái, các cơ sở cung cấp dịch vụ bảo đảm hoạt động bay, các cơ sở tìm kiêm, cứu nạn hàng không, người khai thác cảng hàng không và các đối tượng khác có liên quan đền hoạt động hoặc sự phát triển của hoạt động hàng không
+3. Cơ quan, đơn vị liên quan của Bộ Nông nghiệp và Môi trường cung cấp dữ liệu khí tượng thủy văn cho Cục Hàng không Việt Nam theo quy định của pháp luật để phục vụ điều hành bay.
+4. Cơ sở, hệ thống trang thiết bị kỹ thuật khí tượng hàng khống trước khi đưa vào khai thác phải được cấp phép tue quy định 5. Dịch vụ khí tượng hàng không và trình tự, thủ tục cấp phép cơ sở, hệ thống trang thiết bị kỹ thuật khí tượng hàng không theo quy định của Bộ trường Bộ Xây dựng
+Điều 110. Các sản phẩm, dịch vụ Khí tượng hàng không 1. Sản phẩm, dịch vụ khí tượng hàng không cơ bản bao gồm: quan trắc báo cáo khí tượng hàng không; dự báo khí tượng hàng không; cảnh báo, tư vấn khí tượng hàng không; thông tin khí hậu hàng không
+
+--- Trang 56/77 ---
+
+56
+2. Ngoài các sản phẩm, dịch vụ quy định tại khoản 1 Điều này, doanh nghiệp cung cấp dịch vụ khí tượng hàng không đấp các sản phẩm, dịch vụ khí tượng hàng không khác theo yêu cầu của người khai thác hoặc người sử dụng dịch vụ, phù hợp với quy định của pháp luật và tiêu chuẩn, khuyến cáo thực hành của ICAO.
+Mục 5
+no
+DỊCH VỤ TIN TỨC HÀNG KHÔNG
+Điều 111. Nguyên tắc quản lý, cung cấp dữ liệu hàng không, tin tức hàng không
+1. Dữ liệu hàng không và tin tức hàng không phải được quản lý thống nhất bảo đảm phục vụ an toàn, điều hòa, hiệu quả hoạt động bay và đáp ứng yêu cầu quản lý nhà nước về hàng không dân dụng.
+2. Dữ liệu hàng không và tin tức hàng không phải bảo đảm các yêu cầu về chính xác, đầy đủ, kịp thời, nhất quán, hợp lệ, có thể kiểm chứng và phù hợp WLVN
+với mục đích sử dụng
+3. Việc khởi tạo, thu thập, xử lý, cập nhật, lưu trữ, trao đổi, công bố, cung cấp và sử dụng dữ liệu hàng không, tin tức hàng không phải được thực hiện theo quy trình thông nhất, xác định rỗ trách nhiệm của từng cơ quan, tố chức, cá nhân trong từng công đoạn của dây chuyển dữ liệu.
+4. Dữ liệu hàng không và tin tức hàng không chỉ được đưa vào khai thác, sử dụng hoặc công bố khi đã được kiểm tra, xác nhận, phê chuẩn theo thẩm quyền, trình tự, thủ tục quy định
+Ox
+5. Dữ liệu hàng không và tin tức hàng không phải được cập nhật kịp thời thi khi có thay đổi; trường hợp phát hiện sai sót, mâu thuấn hoặc có nguy cơ ảnh hưởng đến an toàn hoạt động bay thì phải được thông báo, hiệu chỉnh, thay thế hoặc đình chỉ sử dụng ngay.
+Z
+6. Việc trao đổi và chia sẻ dữ liệu hàng không, tin tức hàng không giữa các cơ quan, đơn vị, tổ chức có liên quan phải bảo đảm thông suốt, đông bộ đúng thời hạn, đúng thẩm quyền và phạm vi sử dụng C
+7. Cơ quan, tổ chức, cá nhân tham gia vào dây chuyên dữ liêu hàng không bao gồm khởi tạo, cung cấp, xử lý, kiểm tra, công bố, khai thác và sử dụng, có trách nhiệm
+a) Bảo đảm chất lượng dữ liệu, tin tức hàng không thuộc phạm vi quản lý;
+
+--- Trang 57/77 ---
+
+57
+b) Chịu trách nhiệm về tính chính xác, đầy đủ, kịp thời của dữ liệu do mình khởi tạo, cung cấp hoặc xác nhận;
+c) Thực hiện các biện pháp kiểm soát nhằm phòng ngừa mất mát, sai lệch hoặc truy cập trái phép.
+8. Việc quản lý dữ liệu, tin tức hàng không phải bảo đảm các yêu cầu về an ninh, an toàn thông tin, bảo mật, lưu trữ và khả năng truy xuất nguồn gốc phù hợp với tính chất của từng loại dữ liệu, tin tức.
+1179, Dữ liệu và tin tức hàng không phải được chuẩn hóa về nội dung, cấu trúc, định dạng và phương thức trao đồi để bảo đảm khả năng tích hợp, kết nối trong hệ thống hàng không dân dụng
+10. Khuyến khích áp dụng phương thức điện tử, hệ thống số và các giải pháp kỹ thuật hiện đại trong quản lý dữ liệu nhằm bảo đảm tính tương thích và nổn định của hệ thống
+WLVN
+11. Việc quản lý, cùng cấp và sử dụng dữ liệu hàng không, tin tức hàng không thực hiện theo quy định của Bộ trưởng Bộ Xây dựng 12. Cục Hàng không Việt Nàm chịu trách nhiệm giám sát việc cung cấp dịch vụ tin tức hàng không và dữ liệu hàng không Điều 112. Sản phẩm tin tức hàng không
+1. Sản phẩm tin tức hàng không là dữ liệu hàng không và tin tức hàng không được cung cấp dưới dạng các bộ dữ liệu số hoặc được trình bày theo định dạng chuẩn trên bản giấy hoặc bản điện tử bao gồm: a) Tập thông báo tin tức hàng không (AIP), bao gồm các Tập tu chính AIP và các Tập bổ sung AIP;
+b) Thông tri hàng không (AIC)
+l
+Jungering
+c) Sơ đồ, bản đồ hàng không;
+d) NOTAM; và
+đ) Các bộ dữ liệu số về hàng không.
+2. Cơ sở cung cấp dịch vụ tin tức hàng không cung cấp các bộ dữ liệu số về hàng không theo quy định của Bộ trưởng Bộ Xây dựng phù hợp với tiêu chuẩn, khuyến cáo thực hành của ICAO.
+
+--- Trang 58/77 ---
+
+58
+3. Mô hình trao đổi dữ liệu hàng không và tin tức hàng không phải có khả năng tương thích toàn cầu và được sử dụng để cung cấp các bộ dữ liệu Điều 113. Công bố và phát hành tức
+1. Việc công bố các tin tức có tầm quan trọng đối với hoạt động bay phải tuân thủ nghiêm ngặt hệ thống kiểm soát và điều chỉnh tin tức hàng không (AIRAC) theo lịch công bố ngày hiệu lực chung đã được ICAO ấn định 2,2. Tin tức được phát hành theo hệ thống AIRAC phải được cung cấp tới người nhận ít nhất 28 ngày trước ngày hiệu lực, Trong các trường hợp thay đổi lớn, tin tức phải được cung cấp tới người nhận ít nhất 56 ngày trước ngày phiệu lực.
+Điều 114. Trách nhiệm của Người khởi tạo dữ liệu và thỏa thuận chính thức
+20
+1. Các tổ chức, cơ quan, đơn vị là Người khởi tạo dữ liệu có trách nhiệm WLVN
+bảo đảm chất lượng dữ liệu cung cấp cho cơ sở cung cấp dịch vụ AIS, đặc biệt tuân thủ các mốc thời gian của hệ thống AIRAC 2. Mối quan hệ và trách nhiệm giữa Người khởi tạo dữ liệu và cơ sở cung cáp dịch vụ AIS phải được thiết lập thông qua các thỏa thuận chính thức 3. Cục Hàng không Việt Nam chủ trì xác định, công bố danh mục Người khởi tạo dữ liệu và hướng dẫn việc cung cấp dữ liệu hàng không đáp ứng tiêu chuẩn chất lượng theo quy định của Tổ chức hàng không dân dụng quốc tế Điều 115. Hệ thống quản lý chất lượng
+Ox
+Hệ thống quản lý chất lượng trong lĩnh vực tin tức hạng không, dữ liệu hàng không phải được thiết lập, áp dụng, duy trì nhằm bảo đảm tính chính xác, đầy đủ, kịp thời, truy xuất được nguồn gốc và toàn vẹn của dữ liệu, tin tức hàng không, đáp ứng tiêu chuẩn, khuyến cáo thực hành của ICAO, theo quy định của Bộ trưởng Bộ Xây dựng
+agtrung
+Mục 6
+CHƯƠNG TRÌNH QUỐC GIA VỀ BÁO ĐÁM HOẠT ĐỘNG BAY Điều 116. Nguyên tắc và mục tiêu của Chương trình quốc gia về bảo đảm hoạt động bay
+1. Việc xây dựng và triển khai Chương trình quốc gia về bảo đảm hoạt động bay phải tuân thủ các nguyên tắc sau:
+
+--- Trang 59/77 ---
+
+59
+a) Phù hợp với chiến lược phát triển kinh tế - xã hội, bảo đảm quốc phòng an ninh quốc gia và các Quy hoạch liên quan đến hạ tầng hàng không; b) Bảo đảm tính khả thi, hiệu quả, bền vững; tối ưu hóa việc sử dụng vùng trời và nguồn lực quốc gia;
+c) Tăng cường cơ chế phối hợp, hiệp đồng chặt chế giữa quản lý bay dân dụng và quản lý bay quân sự;
+O
+d) Ấp dụng phương pháp tiếp cận dựa trên tính năng khai thác phù hợp với Chương trình quốc gia về bảo đảm hoạt động bay và các chuẩn mực quốc tế liên quan; xác định rõ các chỉ tiêu hiệu suất chính để đo lường và đánh giá hiệu quả thực hiện
+2.Mục tiêu của Chương trình quốc gia về bảo đảm hoạt động bay bao gồm: a) Bảo đảm an toàn, điều hòa và hiệu quả cho mọi hoạt động bay trong vùng trời trách nhiệm của Việt Nam, phù hợp với Chương trình an toàn hàng WLVN
+không quốc gia;
+YO
+Ya
+b) Nâng cao nặng lực, hiệu quả và tính kệnh tế của hệ thống bảo đảm hoạt động bay, giảm thiểu chậm trễ và tác động tiêu cực đến môi trường; c) Hiện đại hóa công nghệ và phương thức khai thác theo lộ trình nâng cấp hệ thống hàng không theo khối của ICAO, phù hợp với điều kiện của Việt Nam; thúc đẩy ứng dụng công nghệ tiên tiến, chuyển đổi số và đồi mới sáng tạo;
+C
+d) Tăng cường hội nhập quốc tế, bảo đảm sự hải hòa và khả năng tương tác với hệ thông bảo đảm hoạt động bay khu vực và toàn cầu; đ) Bảo đảm khả năng tích hợp an toàn và hiệu quả các phương tiện bay mới Điều 117. Nội dung Chương trình quốc gia về bảo đảm hoạt động bay Chương trình quốc gia về bảo đảm hoạt động bay bao gồm các nội dung chủ yếu sau đây:
+rung
+1. Mục tiêu, chỉ tiêu hiệu suất chính của Chương trình 2. Kế hoạch, lộ trình triển kừag giai đoạn 3.Danh mục nhiệm vụ, chương trình, dự án ưu tiên 4. Nguồn lực thực hiện
+
+--- Trang 60/77 ---
+
+60
+5. Cơ chế giám sát, đánh giá hiệu quả và cập nhật Chương trình 6. Trách nhiệm của các bộ, ngành, địa phương, cơ quan, đơn vị, tổ chức và doanh nghiệp có liên quan
+Điều 118. Xây dựng và tổ chức thực hiện Chương trình quốc gia về bảo đảm hoạt động bay
+1. Cục Hàng không Việt Nam có trách nhiệm chủ trì xây dựng, hướng dẫn, theo dõi, kiểm tra và giám sát việc thực hiện Chương trình quốc gia về bảo đảm hoạt động bay; định kỳ hoặc khi cần thiết, chủ trì rà soát, đánh giá và đề xuất cập nhật Chương trình, báo cáo Bộ Xây dựng trình Thủ tướng Chính phủ quyết định sau khi có ý kiến của các bộ, ngành liên quan 2.Bộ Xây dựng chủ trì, phối hợp với các cơ quan liên quan tổ chức thực hiện Chương trình quốc gia về bảo đảm hoạt động bay sau khi được ban hành 3. Bộ Quốc phòng, Bộ Công an, các bộ, ngành, địa pơương và cơ quan, tổ WLVN
+chức, doanh nghiệp liên quận trong phạm vi nhiệm vụ, quyền hạn của mình có trách nhiệm:
+IN
+a) Phối hợp với Bộ Xây dựng trong quá trình xây dựng, cập nhật và tổ chức thực hiện Chương trình;
+In
+b) Căn cứ nội dung Chương trình để xây dựng lộ trình quản lý, bảo đảm nguồn lực triển khai thực hiện; cung cấp và phát triển hệ thống dịch vụ bảo đảm hoạt động bay bảo đảm tuân thủ các quy định của pháp luật; c) Phối hợp kịp thời, hiệu quả trong công tác quản lý hoạt động bay nhằm bảo đảm an toàn, an ninh hàng không.
+Điều 119. Nguồn kinh phí bảo đảm thực thi nhiệm vụ của doanh nghiệp được giao cung cấp dịch vụ quản lý không lưu 1. Doanh nghiệp được giao cung cấp dịch vụ quản lý không lưu được giữ lại 45% phí bay qua vùng trời Việt Nam thu được để hỗ trợ nâng cao chất lượng nguồn nhân lực, hợp tác quốc tế, đầu tư phát triển, hiện đại hoá hệ thống bảo đầm hoạt động bay nhằm nâng cao năng lực bảo đảm an toàn hàng không, an ninh hàng không đáp ứng tiêu chuấn của ICAO theo yêu cầu của Chương trình quốc gia về bảo đảm hoạt động bay, Phần phí giữ lại được hạch toán vào doanh thu của doanh nghiệp, phân phí còn lại (55%) nộp vào ngân sách nhà nước theo quy định của pháp luật về phí và lệ phí
+2.Bộ Xây dựng chỉ đạo doanh nghiệp được giao cung cấp dịch vụ quản lý không lưu định kỳ 02 năm, kế từ năm 2027 tông hợp, đánh giá tình hình thực hiện
+
+--- Trang 61/77 ---
+
+61
+tỷ lệ (%) quy định tại khoản 1 Điều này báo cáo Bộ Xây dựng; trường hợp cần điều chỉnh tỷ lệ (%), Bộ Xây dựng báo cáo Chính phủ để sửa đồi, bố sung cho phù hợp.
+3. Các nội dung chị từ nguồn phí được giữ lại a) Chi đảo tạo, huấn luyện nâng cao chất lượng nguồn nhân lực cho đội ngũ kiểm soát viên không lưu, nhân viên kỹ thuật bảo đảm hoạt động bay và các lực lượng trực tiếp tham gia bảo đảm hoạt động bay; b) Chi hợp tác quốc tế bao gồm: tham gia đàm phán, ký kết, thực hiện các điều ước quốc tế, thỏa thuận quốc tế, tham gia các diễn đàn quốc tế, trao đổi, chia sẻ thông tin, kinh nghiệm quốc tế trong lĩnh vực bảo đảm hoạt động bay; hiệp đồng, trao đổi dữ liệu, tối ưu hóa vùng trời, mở rộng hợp tác song phương và đa phương;
+In
+c) Chi đầu tư phát triển, hiện đại hóa hệ thống bảo đảm hoạt động bay nhằm nâng cao năng lực bảo đảm an toàn hàng không, an ninh hàng không đáp ứng tiêu chuẩn của ICAO bao gồm:
+WLVN
+Đầu tư, mua sắm thiết bị cho: hệ thống radar, thông tin, dẫn đường, giám sát tự động hóa (CNS/ATM); hệ thống kỹ thuật điều hành bay; hệ thống quản lý an toàn, an ninh, chất lượng, công nghệ thông tin, quản lý điều hành; Thực hiện các nhiệm vụ chuyển đổi số và đổi mới công nghệ trong lĩnh vực điều hành bay.
+LO
+Mục 7
+ĐƠN VỊ ĐO LƯỜNG TRONG HÀNG KHÔNG
+L
+lượng
+Điều 120. Hệ thống đơn vị đo lường
+1. Trong hoạt động đo lường hàng không, hệ đơn vị đo quốc tế (SI) được sử dụng làm cơ sở theo quy định của pháp luật về đo lường.
+2. Việc sử dụng đơn vị đo không thuộc hệ đơn vị đo quốc tế (non-SI) trong hoạt động hàng không phù hợp với thông lệ quốc tế theo quy định của Bộ trưởng Bộ Xây dựng
+ur
+ng
+Chương IX
+PHỐI HỢP ĐIỀU HÀNH HOẠT ĐỘNG BAY
+Điều 121. Nguyên tắc và nội dung phối hợp quản lý hoạt động bay hàng không dân dụng và hoạt động bay của lực lượng vũ trang Nguyên tắc phối hợp quản lý hoạt động bay hàng không dân dụng và hoạt
+
+--- Trang 62/77 ---
+
+62
+động bay của lực lượng vũ trang bao gồm
+1. Bảo đảm yêu cầu về quốc phòng, an ninh, an toàn và hiệu quả của hoạt động hàng không dân dụng;
+2, Tuân theo quy định của Nghị định này khi hoạt động bay trong vùng trời hàng không dân dụng, vùng trời sân bay dùng chung trong vùng trời Việt Nam và vùng thông báo bay do Việt Nam quản lý.
+3. Thực hiện hoạt động nghiệp vụ và giải quyết các vấn đề phát sinh trong phạm vi nhiệm vụ, quyền hạn của mình
+4. Việc phối hợp phải bảo đảm không làm thay đổi thẩm quyền quản lý nhà nước, thấm quyên cấp phép bay và trách nhiệm pháp lý của từng cơ quan; đơn vị.
+L
+Điều 122.Phối hợp điều hành hoạt động bay 1. Cơ sở ATS điều hành chuyến bay thực hiện hoạt động hàng không dân WLVN
+dụng, chuyến bay khác do cơ quan cấp phép bay ủy nhiệm bằng văn bản. Đơn vị thuộc hệ thống quản lý, điều hành bay quân sự điều hành chuyển bay thực hiện hoạt động bay quân sự, Đơn vị thuộc hệ thống quản lý, điều hành bay của lực lượng Công an nhân dân điều hành chuyến bay thực hiện hoạt động bay của lực lượng Công an nhân dân
+2. Khi có hoạt động bay hỗn hợp trong vùng trời hàng không dân dụng vùng trời sân bay dùng chung, việc chỉ huy điều hành được thực hiện trên cơ sở phối hợp điều hành bay đối với hoạt động bay dân dụng và công tác chỉ huy; điều hành bay đối với hoạt động bay quân sự, Công an nhân dân 33 Khi có hoạt động bay hỗn hợp trong vùng trời sân bay dùng chung, việc phối hợp chỉ huy, điều hành được thực hiện thông qua một cơ sở ATS được xác định trong quy chế bay hoặc phương thức hoạt động của sân bay dùng chung 4. Khi huấn luyện bay trong vùng trời sân bay, cơ sở huấn luyện phải bố trí người có năng lực chuyên môn phù hợp tại cơ sở ATS để hồ trợ công tác huấn luyện
+5. Việc điều hành tàu bay quân sự, Công an nhân dân hoạt động trong vùng trời hàng không dân dụng và vùng trời sân bay dùng chung phải trên cơ sa sở hiệp đông giữa cơ sở ATS dân dụng với đơn vị quản lý, điều hành bay quân sự, Công an nhân dân
+6. Việc chủ trì hiệp đồng điều hành hoạt động bay thựo các nguyên tắc sau đây:
+
+--- Trang 63/77 ---
+
+63
+a) Cơ sở ATS dân dụng chủ trì hiệp đồng đối với hoạt động bay trong vùng trời hàng không dân dụng và vùng trời sân bay dùng chung; ba b) Chỉ huy bay quân sự, Công an nhân dân chủ trì hiệp đồng đối với hoạt động bay ngoài khu vực quy định tại điểm a khoản này; c) Đối với hoạt động bay trong vùng trời sân bay, thực hiện theo phương thức bay, phương thức hoạt động hoặc quy chế bay trong khu vực sân bay 7. Lập và hiệp đồng kế hoạch hoạt được thực hiện như sau: tir
+a) Trung tâm quản lý luồng không lưu lập kế hoạch hoạt động bay dân dụng theo mùa, theo ngày và gửi cho Trung tâm Quản lý điều hành bay quốc gia, Cục Hàng không Việt Nam
+b) Trung tâm Quản lý điều hành bay quốc gia tổng hợp kế hoạch hoạt động bay theo ngày chung trong cả nước và triển khai đến các đơn vị quản lý vùng trời, quản lý bay thuộc Bộ Quốc phòng, thực hiện quản lý, phối hợp điều hành WLVN
+kế hoạch hoạt động bay chúng trong cả nước; gửi kế hoạch hoạt động bay quân sự liên quan đến hoạt động bay dân dụng cho Trung tâm quản lý luông không lưu c) Trung tâm quản lý luồng không lưu tổng hợp kế hoạch hoạt động bay dân dụng và quân sự, gửi các cơ sở ATS, cảng vụ hàng không và người khai thác cảng hàng không;
+d) Các cơ sở ATS, cảng vụ hàng không và người khai thác cảng hàng không có trách nhiệm triển khai thực hiện theo kế hoạch hoạt động bay đã được thông báo
+8. Cơ sở cung cấp dịch vụ bảo đảm hoạt động bay có trách nhiệm thu thập tổng hợp các thông tin liên quan đến các hoạt động bay thuộc phạm vi trách nhiệm trong phần vùng thông báo bay trên biến quốc tế do Việt Nam quản lý và thông báo cho Trung tâm Quản lý điều hành bay quốc gia Điều 123. Phân cách bay giữa tàu bay của lực lượng vũ trang và tàu bay dân dụng
+gtri
+Phân cách giữa tàu bay của lực lượng vũ trang và tàu bay dân dụng khí bay trong đường hàng không được áp dụng tương tự như phân cách giữa các tàu bay dân dụng
+Điều 124, Phối hợp sử dụng vùng trời và quản lý, điều hành bay; chia sẻ dữ liệu và sử dụng tần số thuộc nghiệp vụ hàng không dân dụng 1. Việc phối hợp sử dụng vùng trời và quản lý, điều hành bay thực hiện
+
+--- Trang 64/77 ---
+
+64
+trên cơ sở sử dụng vùng trời linh hoạt bảo đảm quốc phòng, an ninh, an toàn, điều hòa và hiệu quả hoạt động bay
+2. Cục Hàng không Việt Nam và các cơ quan, đơn vị liên quan của Bộ Quốc phòng, Bộ Công an thiết lập các quy tắc, phương thức và giao diện kỹ thuật để phối hợp ra quyết định, chia sẻ thông tin, dữ liệu hoạt động bay, dữ liệu giám sát và dữ liệu liên quan khác. Việc phối hợp bao gôm các nội dung chính sau đây
+a) Phân định trách nhiệm và thẩm quyến ra quyết định; b) Thiết lập các thỏa thuận phối hợp và quy trình vận hành tiêu chuẩn để bảo đảm tính thống nhất trong điều hành bay giữa các bên liên quan; các chia sẻ dữ liệu giám sát hàng không và dữ liệu kế hoạch bay giữa các hệ thống bảo đảm hoạt động bay của các bên liên quan; d) Cơ chế xử lý tình huống khẩn nguy, can thiệp bất hợp pháp và các tình WLVN
+huống phát sinh trên không
+3. Việc sử dụng tần số vô tuyến điện thuộc nghiệp vụ hàng không dân dụng thực hiện theo Luật Hàng không dân dụng Việt Nam, pháp luật về tân số vô tuyến điện, quy hoạch tân số vô tuyên điện quốc gia, quy định của Bộ Khoa học và Công nghệ và quy định chuyên ngành hàng không, cơ quan, đơn vị thuộc Bộ Quốc phòng, Bộ Công an, Bộ Xây dựng có trách nhiệm phối hợp để bảo đảm sử dụng tần số an toàn, hiệu quả, không gây có hại.
+4. Bộ Quốc phòng, Bộ Công an có trách nhiệm phối hợp với Bộ Xây dựng trong việc lắp đặt, vận hành các hệ thống, thiết bị CNS sử dụng chung cho mục đích hàng không dân dụng và quốc phòng, an ninh trên cùng một địa bàn 5. Doanh nghiệp khai thác cảng hàng không khi thực hiện triển khai mới sửa chữa các công trình, hệ thông trong khu vực cảng hàng không phải phối hợp chặt chẽ với doanh nghiệp cung cấp dịch vụ bảo đảm hoạt động bay để bảo đảm đồng bộ, không ảnh hưởng đến hoạt động của các hệ thống, thiết bị Điều 125. Phối hợp và chia sẻ dữ liệu
+C
+In
+1. Các cơ quan, đơn vị liên quan thuộc Bộ Quốc phòng, Bộ Công an và Bộ Xây dựng có trách nhiệm phối hợp thiết lập, duy trì đường truyên liên lạc trực thoại, đường truyền dữ liệu và phương thức chia sẻ thông tin chuyến bay, dữ liệu giám sát hoạt động bay nhằm nhận dạng tàu bay, phối hợp điều hành, xử lý tình huống theo thời gian thực
+19 22 Các cơ quan liên quan thuộc Bộ Quốc phòng, Bộ Công an và Bộ Xây
+
+--- Trang 65/77 ---
+
+65
+dựng thống nhất nội dung phối hợp về việc sử dụng chung vùng trời linh hoạt và việc phối hợp ra quyết định để tối ưu hóa năng lực khai thác cho cả kinh tế và quốc phòng
+3. Việc kết nối, chia sẻ dữ liệu phải xác định rõ phạm vi dữ liệu, mục đích sử dụng, trách nhiệm quản lý, phân quyền truy cập, tiêu chuẩn kỹ thuật, phương án dự phòng và chế độ kiểm tra, đánh gỳ
+Chương X
+TÌM KIẾM, CỨU NẠN HÀNG KHÔNG
+BAL
+Điều 126. Việc cung cấp dịch vụ tìm kiếm, cứu nạn hàng không 1. Việc cung cấp dịch vụ tìm kiếm, cứu nạn hàng không phải tuân thủ các quy định của ICAO và quy định có liên quan của pháp luật Việt Nam 2. Việc tổ chức cung cấp dịch vụ tìm kiếm, cứu nạn hàng không phải bảo đảm đầy đủ các thành phần cơ bản gồm: hệ thống văn bản, kế hoạch tìm kiếm, cứu nạn hàng không, trách nhiệm của các cơ quan, đơn vị, tổ chức, cá nhân thực hiện tìm kiêm, cứu nạn hàng không, nguôn lực về hệ thống trang thiết bị; ILVN
+phương tiện và nhân lực được đảo tạo, huấn luyện đề thực hiện nhiệm vụ tìm kiếm, cứu nạn hàng không theo quy định của Bộ trưởng Bộ Xây dựng 3. Cơ sở cung cấp dịch vụ tìm kiểm, cứu nạn hàng không có trách nhiệm phối hợp và hợp tác huấn luyện, diễn tập chụng với các cơ sở cung cấp dịch vụ tìm kiếm, cứu nạn hàng không của các quốc gia liên quan trong khu vực Điều 127. Nguyên tắc trong công tác phối hợp tìm kiếm, cứu nạn hàng không
+1.Hoạt động tìm kiếm cứu nạn hàng không đặt dưới sự chỉ đạo thống nhất của Ban Chỉ đạo Phòng thủ dân sự quốc gia, phối hợp, hiệp đồng kịp thời và chặt chế các lực lượng, phương tiện tham gia hoạt động tìm kiếm, cứu nạn hàng không khi có tình huống xảy ra.
+2. Phối, kết hợp mọi nguồn lực để công tác tìm kiếm, cứu nạn hàng không được triển khai thực hiện nhanh chóng, kịp thời, hiệu quả; ưu tiên các hoạt động để cứu người bị nạn và bảo vệ môi trường
+ig
+3. Bảo đảm tính nhân đạo, công bằng, minh bạng giới và ưu tiên đối tượng dễ bị tổn thương, Trong điều kiện cho phép, hoạt động tìm kiếm và cứu nạn diễn ra cho đến khi tất cả những người sống sót được đưa đến nơi an toàn hoặc cho đến khi không còn dấu hiệu về người cần được cứu nạn còn sống sót.
+4. Chủ động xây dựng các kế hoạch, phương án chuẩn bị sắn sàng lực
+
+--- Trang 66/77 ---
+
+66
+lượng để ứng phó theo khu vực, tính chất vụ việc, phù hợp với chức năng nhiệm vụ.
+5. Công tác tìm kiếm, cứu nạn hàng không được thực hiện theo phương châm bốn tại chỗ: chỉ huy tại chỗ, lực lượng tại chỗ, phương tiện, vật tư tại chố; hậu cần tại chỗ.
+6. Công tác tìm kiếm, cứu nạn hàng không phải liên tục, kịp thời trong đó Nhà nước giữ vai trò chủ đạo; cơ quan, đơn vị, doanh nghiệp và tổ chức, cá nhân có trách nhiệm phối hợp theo quy chế phối hợp, phương án, kế hoạch tìm kiểm cứu nạn để thực hiện tìm kiếm, cứu nạn, trợ giúp tàu bay, hành khách, tổ bay và tài sản.
+7. Bảo đảm yêu cầu về an ninh, quốc phòng
+8. Bảo đảm án toàn cho người, phương tiện tham gia hoạt động tìm kiếm cứu nạn và bảo vệ môi trường; hạn chế mức thấp nhất sự cố, tai nạn do chính hoạt động tìm kiếm, cứu nạn gây ra.
+WLVN
+9. Cơ sở cung cấp dịch vụ tìm kiếm cứu nạn hàng không của doanh nghiệp bảo đảm hoạt động bay là đầu mối phối hợp hoạt động tìm kiêm, cứu nạn hàng không, thông báo về các yêu cầu, điều kiện cụ thể theo quy định của Việt Nam và biện pháp, cách thức phôi hợp tìm kiêm cứu nạn giữa lực lượng và phương tiện nước ngoài với lực lượng và phương tiện tìm kiếm cứu nạn Việt Nam Điều 128. Cơ quan chủ trì tìm kiếm, cứu nạn hàng không 1. Trường hợp tàu bay lâm nguy, lâm nạn tại cảng hàng không và khu vực lân cận của cảng hàng không, doanh nghiệp cảng hàng không chủ trì, phối hợp với các cơ quan, tổ chức, chính quyền địa phương liên quan tại địa bàn thực hiện nhiệm vụ tìm kiểm, cứu nạn
+O
+2. Trường hợp tàu bay lâm nguy, lâm nạn trên biển, cơ quan chủ trì tìm kiếm, cứu nạn trên biển do Thủ tướng Chính phủ quy định. Cơ sở cung cấp dịch vụ tìm kiếm cứu nạn hàng không của doanh nghiệp bảo đảm hoạt động bay chủ trì xác định khu vực ưu tiên tìm kiếm, cứu nạn St
+3, Tàu bay lâm nguy, lâm nạn ngoài khu vực quy định tại khoản 1 và khoản 2 Điều này:
+Chi nha Ban Chỉ đạo Phòng thủ dân sự quốc gia chủ trì chỉ đạo hoặc chỉ định cơ quan chủ trì tìm kiếm, cứu nạn theo quy định của Luật Phòng thủ dân sự; ba bị Cơ sở cung cấp dịch vụ tìm kiêm, cứu nạn hàng không của doanh nghiệp bảo đảm hoạt động bay có trách nhiệm chủ trì, xác định khu vực ưu tiên tìm
+
+--- Trang 67/77 ---
+
+67
+kiếm, cứu nạn; phối hợp, hiệp đồng với Ban Chỉ huy Phòng thủ dân sự cấp tỉnh, thành phố trực thuộc trung ương nơi tàu bay lâm nạn và các cơ quan, tổ chức; chính quyền địa phương liên quan thực hiện công tác tìm kiếm xác định vị trí tàu bay lâm nạn;
+c) Sau khi xác định được vị trí tàu bay lâm nạn, Ban Chỉ huy Phòng thủ dân sự cấp tỉnh, thành phố trực thuộc trung ương nơi tàu bay lâm nạn có trách nhiệm chủ trì cứu nạn tàu bay. Trường hợp xác định vị trí tàu bay lâm nạn tại khu vực giáp ranh giữa hai tỉnh, thành phố trực thuộc trung ương, Cục Hàng không Việt Nam báo cáo Ban Chỉ đạo Phòng thủ dân sự Quốc gia xem xét, chi định Ban Chỉ huy Phòng thủ dân sự cấp tỉnh, thành phố trực thuộc trung ương chủ trì cứu nạn
+4. Bộ Quốc phòng chủ trì tổ chức tìm kiếm, cứu nạn tàu bay thực hiện hoạt động hàng không dân dụng trong khu quân sự.
+O
+5. Trường hợp vượt quá khả năng ứng phó của các cơ quan, đơn vị được quy định tại khoản 1, khoản 2 và khoản 3 Điều này, cơ quan chủ trì tìm kiếm, WLVN
+cứu nạn báo cáo Ban Chỉ đạo Phòng thủ dân sự Quốc gia Căn cứ vào tính chất và điều kiện cụ thể, Ban Chỉ đạo Phòng thủ dân sự Quốc gia điều động bổ sung lực lượng, phương tiện để tiếp tục thực hiện tìm kiếm, cứu nạn hoặc chỉ định một cơ quan khác chủ trì hoặc trực tiếp chủ trì tìm kiếm, cứu nạn tàu bay.
+6. Thủ tướng Chính phủ quy định, ban hành Quy chế phối hợp, tìm kiếm cứu nạn hàng không dân dụng
+oa
+Điều 129. Vùng tìm kiếm cứu nạn
+Ch
+Vùng tìm kiếm, cứu nạn hàng không được xác định phù hợp với vùng thông báo bay do Việt Nam quản lý hoặc theo thỏa thuận dần đường khu vực, bảo đảm tính liền kề và không chống lấn với vùng tìm kiếm, cứu nạn của các quốc gia láng giếng
+Điều 130. Điều hành tại hiện trường và kết thúc hoạt động Lar
+1. Cơ quan chủ trì tìm kiếm, cứu nạn chỉ định chỉ huy hiện trường theo quy định tại Quy chế tìm kiếm cứu nạn hàng không ban hành theo Quyết định của Thủ tướng Chính phủ
+2. Khi đã cứu được toàn bộ nạn nhân hoặc hoạt động tìm kiếm, cứu nạn không có kết quả hoặc không thể tiếp tục trên thực tế, cơ quan chủ trì tìm kiếm cứu nạn tham vấn ý kiến Ban Chỉ đạo Phòng thủ dân sự Quốc gia và công bố quyết định kết thúc, tạm dừng hoặc tiếp tục các hoạt động tìm kiêm, cứu nạn
+
+--- Trang 68/77 ---
+
+68
+3. Sau khi hoàn tất cứu nạn và điều tra tai nạn, Nhà nước hoặc chủ tàu bay dưới sự giám sát của Nhà nước có trách nhiệm di dời, xử lý xác tàu bay nếu xác tàu bay gây nguy hiểm hoặc cản trở hoạt động hàng hải, hàng không Điều 131. Công tác diễn tập tìm kiếm, cứu nạn hàng không 1. Công tác diễn tập tìm kiếm, cứu nạn hàng không cấp quốc gia được tổ chức theo định kỳ tối thiểu hai năm một lần nhằm kiểm tra, đánh giá và nâng cao năng lực phối hợp giữa các lực lượng
+2. Cục Hàng không Việt Nam chủ trì, phối hợp với các cơ quan liên quan xây dựng dự thảo Kế hoạch diễn tập quốc gia, báo cáo Bộ Xây dựng trình Ban Chỉ đạo Phòng thủ dân sự Quốc gia ban hành theo thẩm quyền 3. Căn cứ vào Kế hoạch diễn tập đã được phê duyệt, các bộ, ngành, địa phương và các cơ quan, đơn vị liên quan có trách nhiệm xây dựng kế hoạch triển khai chi tiết để bảo đảm thực hiện đồng bộ, hiệu quả công tác diễn tập tìm kiếm, cứu nạn hàng không trên phạm vi toàn quốc WLVN
+AN Chương XI
+TỔ CHỨC THI HÀNH
+S
+Điều 132. Trách nhiệm của Bộ Xây dựng
+1. Chỉ đạo, kiểm tra trong công tác quản lý nhà nước về hoạt động bay hàng không dân dụng, kết hợp chặt chẽ với công tác quản lý quy hoạch không gian, kiến trúc và trật tự xây dựng thuộc phạm vi trách nhiệm của Bộ Xây dựng 2. Chỉ đạo Cục Hàng không Việt Nam tổ chức thực hiệt lập phân loại và quản lý việc khai thác, sử dụng vùng trời hàng không dân dụng đường hàng không, phương thức bay hàng không dân dụng theo quy định 3. Đối với nội dung quản lý chướng ngại vật hàng không: s
+a) Phối hợp Bộ Quốc phòng và Ủy ban nhân dân cấp tỉnh trong việc quản lý quy hoạch xây dựng công trình, bảo đảm không gian kiến trúc và cảnh quán đô thị tuân thủ nghiêm ngặt các bề mặt giới hạn chướng ngại vật hàng không đã được công bố;
+b) Chủ trì, phối hợp với Bộ Quốc phòng, các bộ, ngành và Ủy ban nhân dân cấp tỉnh có liên quan để thống nhất việc quản lý độ cao chướng ngại vật hàng không đối với sân bay dùng chung;
+Các) Chủ trì, phối hợp với Bộ Quốc phòng công khai trên Công
+
+--- Trang 69/77 ---
+
+69
+thông tin điện tử: các bề mặt chướng ngại vật hàng không sân bay dùng chung; khu vực giới hạn bảo đảm hoạt động của các công trình, đài, trạm vô tuyên điện hàng không; mức cao công trình, chướng ngại vật hàng không ảnh hưởng đến bề mặt chướng ngại vật hàng không trong khu vực sân bay dùng chung; bề mặt thu thập dữ liệu chướng ngại vật hàng không; d) Phối hợp với Ủy ban nhân dân cấp tỉnh, Bộ Quốc phòng và các bộ, ngành quản lý khu vực giới hạn bảo đảm hoạt động của các công trình, đải, trạm vô tuyên điện hàng không bảo đảm hoạt động bay nằm ngoài sân bay và bề mặt chướng ngại vật hàng không; quản lý, thanh tra, kiểm tra, xử lý khiếu nại, tố cáo liên quan đến việc chấp hành các quy định về vị trí, độ cao và việc lắp đặt, dụy trì hệ thống cảnh báo hàng không; ngăn ngừa và xử lý di dời hoặc hạ thấp độ cao các công trình vi phạm bề mặt chướng ngại vật hàng không ảnh hưởng đến hoạt động bay; tuyên truyền, phổ biến cho các cơ quan, đoàn thế; cộng đông dân cư nơi có sân bay, khu vực phụ cận sân bay; duy trì, quản lý các bề mặt chướng ngại vật, nhằm bảo đảm an toàn cho các hoạt động bay và khu dân cư;
+t
+1
+đ) Hướng dẫn Ủy ban nhân dân cấp tỉnh lập đồ án quy hoạch chung để NLVN
+19
+xây dựng các khu đô thị, khu nhà ở cao tâng, khu hạ tâng kỹ thuật công nghiệp, khu kinh tế, khu đặc thù, khu công nghệ cao sau khi có văn bản thống nhất với Bộ Tổng tham mưu Quân đội nhân dân Việt Nam để làm cơ sở cấp phép xây dựng;
+e) Chỉ đạo cơ quan có thấm quyền phối hợp với cơ quan chức năng của Bộ Quốc phòng, Ủy ban nhân dân cấp tỉnh trong quản lý bề mặt chướng ngại vật hàng không, giám sát việc cấp phép xây dựng công trình của địa phương trong các bề mặt chướng ngại vật hàng không tại các sân bay dùng chung; g) Căn cứ tính chất hoạt động của sân bay dùng chung, điều kiện thực tế của địa hình, nhu cầu phát triển không gian đô thị và các tiêu chuẩn quy định 19, tại các Phụ lục Ia, Ib, II, III, IV ban hành kèm theo Nghị định này đề thiết lập các bề mặt chướng ngại vật hàng không, khu vực giới hạn bảo đảm hoạt động của các công trình bảo đảm hoạt động bay nằm ngoài sân bay theo nguyên tắc bảo đảm an toàn, hiệu quả chung, tạo thuận lợi phát triển kinh tế xã hội, sử dụng hiệu quả tài nguyên không gian của đất nước; In
+h) Chủ trì, phối hợp với Bộ Quốc phòng hướng dẫn Ủy ban nhân dân cấp tỉnh trong việc yêu cầu chủ sở hữu thực hiện đánh dấu chướng ngại vật tự nhiên, nhân tạo có thể ảnh hưởng đến an toàn hoạt động bay.
+4. Đối với quy định thể thức bay chặn, bay kèm, bay ép tàu bay vi phạm vùng trời Việt Nam hạ cáng hàng không, sân bay
+
+--- Trang 70/77 ---
+
+70
+a) Xây dựng, đào tạo, huấn luyện và trang bị các phương tiện, thiết bị kỹ thuật cần thiết cho lực lượng chức năng thuộc quyền quản lý; ba b) Chỉ đạo xây dựng các phương án bố trí, điều động lực lượng, các nguồn lực và tác nghiệp cụ thể của các lực lượng thuộc quyền quản lý; c) Chủ trì, phối hợp với các ban, bộ, ngành liên quan trong hợp tác quốc tế đề xử lý tình huống đối với tàu bay quốc tịch nước ngoài vi phạm vùng trời Việt Nam bị bay chặn, bay kèm, ép hạ cánh tại cảng hàng không, sân bay; d) Giao Cục Hàng không Việt Nam đề xuất các nội dung, tổ chức các cuộc diễn tập cấp quốc gia theo chỉ đạo của Chủ tịch Ủy ban An ninh hàng không dân dụng quốc gia về xử lý tình huông khi tàu bay vi phạm vùng trời Việt Nam bị bay chặn, bay kèm, bay ép hạ cánh tại cảng hàng không, sân bay.
+5. Chỉ đạo Cục Hàng không Việt Nam thực hiện chức năng nhà chức trách hàng không trong việc cấp phép, giám sát, quản lý an toàn hoạt động bay và thực thi các điều ước quốc tế mà Việt Nam là thành viên. Phối hợp với ICAO WLVN
+trong việc sử dụng tần số vô tuyến điện thuộc nghiệp vụ hàng không Điều 133. Trách nhiệm của Bộ Quốc phòng
+1. Chủ trì việc thiết lập, điều chinh, hủy bỏ khu vực cấm bay, khu vực hạn chế bay, khu vực nguy hiểm và các khu vực tương ứng tạm thời để bảo đảm quốc phòng, an ninh, an toàn hoạt động bay 2. Chủ trì, phối hợp với Bộ Xây dựng về việc thiết lập, điều chỉnh, hủy bỏ đường hàng không
+3. Phối hợp với Bộ Xây dựng, các bộ, ngàn nhân dân cấp tỉnh có liên quan đề lấy ý kiến về việc quản lý độ cao chướng ngại vật hàng không đối với sân bay dùng chung
+U
+4. Thông báo cho Ủy ban nhân dân cấp tỉnh và các bộ, ngành có liên quan về quy hoạch phát triển hệ thống sân bay của lực lượng vũ trang, đã được cấp có thẩm quyền phê duyệt, các bề mặt chướng ngại vật sân bay của lực lượng vũ trang, các khu vực giới hạn độ cao xây dựng công trình nhằm bảo đảm bị mật các công trình quân sự và hoạt động tác chiên phòng không 5. Phối hợp với các bộ, ngành, chính quyền địa phương có liên quan trong quản lý, thanh tra, kiểm tra, xử lý khiếu nại, tố cáo liên quan đến việc chấp hành các quy định về vị trí, độ cao và việc lắp đặt, duy trì hệ thông cảnh báo hàng không, ngăn ngừa và xử lý di dời hoặc hạ thấp độ cao các công trình vi phạm bề mặt chướng ngại vật hàng không ảnh hưởng đến hoạt động bay, tuyên
+
+--- Trang 71/77 ---
+
+71
+truyền, phổ biến cho các cơ quan, đoàn thế, cộng đồng dân cư nơi có sân bay, khu vực phụ cận sân bay, duy trì, quản lý các bề mặt chướng ngại vật, nhăm bảo đảm an toàn cho các hoạt động bay và khu dân cư 6. Phân cấp quản lý, giám sát chướng ngại vật hàng không a) Bộ Tổng Tham mưu Quân đội nhân dân Việt Nam ban hành và công bố công khai bề mặt độ cao công trình thuộc đồ án quy hoạch chung, đồ án quy hoạch chỉ tiết xây dựng khu công nghiệp, khu đô thị, khu dân cư và các cao trình khác năm ngoài bề mặt chướng ngại vật hàng không tại các sân bay dùng chung, sân bay của lực lượng vũ trang đã được công bố, sau khi Ủy ban nhân dân cấp tỉnh có văn bản đề nghị và đã có ý kiến thống nhất với Bộ Xây dựng Bộ Công an (khi có liên quan đến hoạt động bay của Bộ Công an); b) Bộ Tư lệnh Thủ đô Hà Nội, Bộ Tư lệnh Thành piốh , Bộ chỉ huy quân sự tỉnh, thành phố chủ trì, phối hợp với cơ quan, đơn vị đóng quân trên địa bàn tham mưu, đề xuất với Ủy ban nhân dân cấp tỉnh về việc quy hoạch độ cao công trình thuộc đồ án quy hoạch chung, đồ án quy hoạch chi tiết xây F
+thu dựng khu công nghiệp, khu đô thị, khu dân cư và các cao trình khác, giám sát ULVN
+việc cấp phép xây dựng công trình của địa phương trong các bê mặt chướng ngại vật hàng không tại các sân bay dùng chung, sân bay của lực lượng vũ trang và các bề mặt độ cao công trình thuộc đồ án quy hoạch chung, đồ án quy hoạch chi tiết xây dựng khu công nghiệp, khu đô thị, khu dân cư và các cao trình khác đã được Bộ Tông Tham mưu Quân đội nhân dân Việt Nam công bô; C) Cục Tác chiến, Bộ Tổng Tham mưu Quân đội nhân dân Việt Nam tiếp nhận và giải quyết thủ tục hành chính về chấp thuận độ cao công trình năm ngoài bề mặt chướng ngại vật hàng không tại các sân báy dùng chung, sân bay của lực lượng vũ trang đã được công bố, nằm ngoài bề mặt độ cao công trình đã được công bố tại điểm a khoản 6 Điều này.
+1
+7. Đối với quy định thể thức bay chặn, bay kèm, bay ép tàu bay vi phạm vùng trời Việt Nam hạ cáng hàng không, sân bay: a) Chủ trì tổ chức bay chặn, bay kèm, bay ép tàu bay vi phạm vùng trời Việt Nam hạ cánh tại cảng hàng không, sân bay; o
+b) Chủ trì, phối hợp với Bộ Xây dựng và các ban, bộ, ngành trung ương Ủy ban nhân dân các tỉnh, thành phố trực thuộc trung ương có cảng hàng không sân bay để triển khai lực lượng tổ chức bay chặn, bay kèm, bay ép tàu bay vi phạm vùng trời Việt Nam hạ cáng hàng không, sân bay; Các chỉ đạo cơ quan, đơn vị xây dựng kê hoạch, tăng cường luyện tập các
+
+--- Trang 72/77 ---
+
+72
+phương án bay chặn, bay kèm, bay ép tàu bùy vi phạm vùng trời Việt Nam phù hợp với tính chất nhiệm vụ, loại máy bay do đơn vị đang khai thác sử dụng Điều 134. Trách nhiệm của Bộ Công an
+1. Chịu trách nhiệm trước Chính phủ thực hiện quản lý nhà nước về an ninh hàng không trong hoạt động bay
+2. Chủ trì, phối hợp với các cơ quan liên quan trong việc xử lý các hành vì can thiệp bất hợp pháp vào hoạt động bay.
+3. Phối hợp với Bộ Quốc phòng và Bộ Xây dựng trong việc thiết lập các khu vực cầm bay, hạn chế bay vì lý do an ninh quốc gia, trật tự an toàn xã hội 4. Chỉ đạo các đơn vị nghiệp vụ của Bộ Công an chủ trì, phối hợp với các đơn vị liên quan của Bộ Quốc phòng, Bộ Xây dựng đề xuất phương thức bay phương thức hoạt động cho hoạt động bay của lực lượng Công an nhân dân tại sân bay dùng chung
+WLVN
+X
+5. Đối với quy định thể thức bay chặn, bay kèm, bay ép tàu bay vi phạm vùng trời Việt Nam hạ cáng hàng không, sân bay a) Chủ trì, phối hợp với Bộ Xây dựng, Bộ Quốc phòng điều hành, tổ chức các biện pháp bảo đảm an ninh hàng không khi tàu bay vi phạm hạ cánh tại cảng hàng không, sân bay
+toa
+b) Chỉ đạo các cơ quan, đơn vị công an phối hợp với các đơn vị thuộc các ban, bộ, ngành và chính quyền địa phương có liên quan trong việc thực hiện các biện pháp xử lý đối với tàu bay vi phạm và người trên tàu bay sau khi tàu bay vi phạm hạ cáng hàng không, sân bay.
+R
+Điều 135. Trách nhiệm của các bộ, ngành liên quan và Ủy ban nhân dân các cấp
+G
+1. Các bộ, ngành liên quan, trong phạm vi nhiệm vụ, quyên hạn của mình, có trách nhiệm phối hợp với Bộ Xây dựng, Bộ Quốc phòng, Bộ Công an trong việc quản lý nhà nước về hoạt động bay.
+O
+2. Ủy ban nhân dân các tỉnh, thành phố trực thuộc trung ương có trách nhiệm phối hợp quản lý chướng ngại vật và xử lý các vấn đề liên quan đến an then toàn, an ninh, môi trường phát sinh từ hoạt động bịy trong địa bàn quản lý 3. Quản lý hoạt động xây dựng các công trình, việc trông cây xanh khu và vực lân cận cảng hàng không bảo đảm các công trình, cây xanh không vi phạm bề mặt chướng ngại vật của cảng hàng không, của thiết bị cung cấp dịch vụ bảo
+
+--- Trang 73/77 ---
+
+73
+đảm hoạt động bay; phối hợp với người khai thác cảng hàng không thực hiện các biện pháp phù hợp để hạn chế tiếng ồn phát sinh trong hoạt động của cảng hàng không, không để ảnh hưởng đến các khu dân cư xung quanh cảng hàng không, chủ trì phối hợp với Cảng vụ hàng không và người khai thác cảng hàng không để di dời hoặc giảm độ cao chướng ngại vật hàng không, triển khai việc sơn đánh dấu, chiếu sáng chướng ngại vật.
+4.ỦỦ ban nhân dân các tỉnh, thành phố trực thuộc trung ương đối với nội dung quản lý chướng ngại vật hàng không:
+a) Phối hợp với Bộ Quốc phòng, Bộ Xây dựng lập quy hoạch tổng thể phát triển hệ thống sân bay dùng chung, sân bay của lực lượng vũ trang và hệ thống thiết bị bảo đảm hoạt động bay; chủ trì quy hoạch và có văn bản đề nghị Bộ Tổng Tham mưu Quân đội nhân dân Việt Nam ban hành bề mặt giới hạn độ cao công trình thuộc đồ án quy hoạch chung, đồ án quy hoạch chi tiết xây dựng khu công nghiệp, khù đô thị, khu dân cư và các cao trình khác nằm ngoài bề mặt chướng ngại vật hàng không đối với sân bay dùng chung, sân bay của lực lượng vũ trang và hệ thống thiết bị bảo đảm hoạt động bay đã được công bô; litting
+b) Phối hợp với Bộ Quốc phòng, Bộ Xây dựng và các cơ quan liên quan ILVN
+thống nhất việc quản lý các bề mặt chướng ngại vật hàng không đối với sân bay dinh dùng chung, sân bay của lực lượng vũ trang và hệ thông thiết bị bảo đảm hoạt động bay, quản lý độ cao công trình thuộc đồ án quy hoạch chung, đồ án quy hoạch chi tiết xây dựng khu công nghiệp, khu dâ thị, khu dân cư, các cao trình khác;
+c
+các) Chỉ đạo cơ quan chức năng của tỉnh cấp pựng các công trình dưới bề mặt chướng ngại vật hàng không tại sân bay dùng chung, sân bay của lực lượng vũ trang và các đài, trạm vô tuyến điện hàng không đã công bố, cấp phép xây dựng các công trình dưới bê mặt chướng ngại vật thuộc đô án quy hoạch chung, đồ án quy hoạch chi tiết xây dựng khu công nghiệp, khu đô thị khu dân cư và các cao trình khác đã được Bộ Tông Tham mưu Quân đội nhân dân Việt Nam công bố;
+Lad) Chủ trì, phối hợp với Bộ Quốc phòng, Bộ Xây dựng và các cơ quan liên quan duy trì, quản lý các bề mặt chướng ngại vật nhằm bảo đảm an toàn cho hoạt động bay tại các sân bay; ngăn ngừa, xử lý, cưỡng chế di dời hoặc hạ thấp độ cao theo quy định của pháp luật đối với các công trình vi phạm các bế mặt chướng ngại vật ảnh hưởng đến hoạt động bay; kiếm tra, xử lý việc xây dựng công trình và lắp đặt, duy trì hệ thông cảnh báo hàng không theo quy định; đã đi đhi độ Phối hợp với Bộ Quốc phòng, Bộ Công an và các bộ, ngành có liên quan thanh tra, kiêm tra, giải quyết khiếu nại, tố cáo các hoạt động, lĩnh vực
+
+--- Trang 74/77 ---
+
+74
+liên quan đến vi phạm các bề mặt chướng ngại vật ảnh hưởng đến hoạt động bay tại các sân bay;
+The Ca I Chủ trì, phôi hợp với các cơ quan, đơn vị thuộc Bộ Quốc phòng, Bộ Nam Xây dựng trong việc lập quy hoạch quản lý, sử dụng không gian trên địa bàn; rà soát, điều chỉnh, bổ sung quy hoạch phát triển kinh tế - xã hội và quy hoạch ngành, lĩnh vực của địa phương gắn với các quy hoạch tổng thể phát triển hệ thống sân bay dùng chung, sân bay của lực lượng vũ trang; gia gia thì thì trì, phôi hợp với các bộ, ngành có liên quan chỉ đạo triển khai thực hiện và tuyên truyền giáo dục pháp luật các nội dung Nghị định này; phổ biến tới các cơ quan, tổ chức, cá nhân ở địa phương trong việc duy trì, quản lý các bề mặt chướng ngại vật nhằm bảo đảm an toàn cho hoạt động bay tại các sân bay;
+h) Phối hợp với Bộ Quốc phòng, Bộ Công an, Bộ Xây dựng và các cơ quan, đơn vị liên quan trong quá trình tố chức thực hiện nhiệm vụ WLVN
+5. Ủy ban nhân dân các tỉnh, thành phố trực thuộc trung ương nơi có cảng hàng không, sân bay đối với quy định thế thức bay chặn, bay kèm, bay ép tàu bay vi phạm vùng trời Việt Nam hạ cánh tại cảng hàng không, sân bay a) Ban Chỉ đạo phòng, chống khủng bố tỉnh, thành phố trực thuộc trung ương phối hợp với lực lượng của đơn vị thuộc Bộ Quốc phòng và các cơ quan; đơn vị liên quan xử lý tàu bay vi phạm bị ép hạ cánh tại cảng hàng không, sân bay trên địa bàn;
+b
+b) Xây dựng các phương án, quy trình triển khai xử lý tàu bay vi phạm và vùng trời Việt Nam bị ép hạ cánh tại cảng hàng không, sân bay theo quy định của pháp luật
+O
+c) Phối hợp với Bộ Quốc phòng, Bộ Công an, Bộ Xây dựng và các cơ quan, đơn vị liên quan trong quá trình tổ chức thực hiên nhiệm vụ.99 n
+gtr
+6. Bộ Tài chính
+a) Chỉ đạo các đơn vị hải quan tại các cảng hàng không quốc tế chủ trí kiếm tra, kiểm soát hàng hóa xuất khâu, quá cảnh, hành lý của người xuất cảnh, nhập cảnh, quá cảnh theo quy định của pháp luật khi tàu bay vi phạm vùng trời Việt Nam hạ cáng hàng không, sân bay; ba b) Chỉ đạo các đơn vị hải quan tại các cảng hàng kếông quốc tế phối hợp với lực lượng an ninh hàng không và các lực lượng chức năng của Ban Chỉ đạo
+
+--- Trang 75/77 ---
+
+75
+phòng, chống khủng bố trong suốt quá trình điều tra, xác minh theo quy định của pháp luật đối với các vật phẩm nguy hiểm quy định tại điểm đ khoản 1 Điều 94 Luật Hàng không dân dụng Việt Nam
+7. Bộ Ngoại giao phối hợp với Bộ Xây dựng, Bộ Quốc phòng, Bộ Công an và các ban, bộ, ngành liên quan thực hiện hợp tác quốc tế trong xử lý đối với tàu bay mang quốc tịch nước ngoài vi phạm vùng trời Việt Nam bị bay chặn, bay kèm, bay ép hạ cánh tại cảng hàng không, sân bay theo quy định pháp luật Việt Nam và điều ước quốc tế mà nước Cộng hòa xã hội chủ nghĩa Việt Nam là thành viên.
+Điều 136. Trách nhiệm của các chủ đầu tư, chủ sở hữu công trình 1. Thực hiện các thủ tục về đề nghị chấp thuận độ cao của công trình theo quy định tại Điều 86 của Nghị định này, chịu trách nhiệm về độ chính xác của các thông tin theo quy định tại Điều 83 và Điều 84 Nghị định này 2. Chấp hành các quy định về độ cao được cấp phép, trong quá trình thi WLVN
+công phải bảo đảm cần trục, tháp cấu, thiết bị thi công không vươn vượt quá độ chinh cao tỉnh không đã được chấp thuận trong suốt quá trình thi công, chịu trách nhiệm đầu tư lắp đặt, duy trì liên tục hoạt động bình thường của hệ thống cảnh báo hàng không đối với công trình và thiết bị thi công.
+3. Cung cấp dữ liệu cho Cục Hàng không Việt Nam và Tổng công ty Quản lý bay Việt Nam qua địa chỉ được nêu tại Điều 85 của Nghị định này.
+4. Chịu sự thanh tra, kiểm tra của các cơ quan chức năng về thực hiện cấp phép và các nội dung quy định trong giấy phép xây dựng, các văn bản chấp thuận độ cao tĩnh không và lắp đặt hệ thống cảnh báo hàng không r
+Chương XII
+luu
+uqu
+ĐIỀU KHOÁN THI HÀNH
+Điều 137. Kinh phí cho công tác quy hoạch, thiết lập, công bố, quản lý bề mặt chướng ngại vật hàng không và các đài, trạm vô tuyến điện hàng không
+Kinh phí cho công tác quy hoạch, thiết lập, công bố, quản lý bề mặt chướng ngại vật hàng không và các đài, trạm vô tuyến điện hàng không do ngân sách nhà nước bảo đảm theo phân cấp ngân sách hiện hành, Lập dự toán, quản lý và quyết toán kinh phí theo quy định của Luật Ngân sách nhà nước và các văn bản quy định chi tiết và hướng dần thi hành
+
+--- Trang 76/77 ---
+
+76
+Điều 138.Hiệu lực thi hành
+1. Nghị định này có hiệu lực thi hành từ ngày 01 tháng 7 năm 2026 
+2.Các Nghị định hết hiệu lực kể từ ngày Nghị định này có hiệu lực thi hành: 
+a) Nghị định số 125/2015/NĐ-CP ngày 04 tháng 12 năm 2015 của Chính phủ quy định chi tiết về quản lý hoạt động bay; 
+b) Nghị định số 139/2024/NĐ-CP ngày 24 tháng 10 năm 2024 của Chính phủ quy định thế thức bay chặn, bay kèm, bay ép tàu bay vi phạm vùng trời Việt Nam hạ cánh tại cảng hàng không, sân bay; các Nghị định số 32/2016/NĐ-CP ngày 06 tháng 5 năm 2016 của Chính phủ quy định về quản lý độ cao chướng ngại vật hàng không 
+3. Bãi bỏ nội dung ?tàu bay quân sự vào tham gia tìm kiêm, cứu nạn trong vùng thông báo bay của Việt Nam hoặc do Việt Nam đảm nhiệm? tại điểm b WLVN
+khoản 1 Điều 9 và nội dung "chuyển bay nước ngoài thực hiện hoạt động bay tim kiêm, cứu nạn? tại điểm b khoản 2 Điều 9 Nghị định số 95/2010/NĐ-CP ngày 16 tháng 9 năm 2010 của Chính phủ quy định về cấp phép và phối hợp hoạt động với lực lượng tìm kiếm, cứu nạn nước ngoài tại Việt Nam 
+4. Bãi bỏ Chương XXIV của Nghị định số 14/2026/NĐ-CP ngày 13 tháng 01 năm 2026 của Chính phủ sửa đồi, bổ sung một số điều của Nghị định số 125/2015/NĐ-CP ngày 04 tháng 12 năm 2015 của Chính phủ quy định chi tiết về quản lý hoạt động bay
+
+Điều 139.Quy định chuyển tiếp
+
+1. Các bề mặt chướng ngại vật hàng không của các cảng hàng không, sân bay đã được công bố phải được công bố lại trong thời hạn 24 tháng kế từ ngày Nghị định này có hiệu lực
+U
+2. Các khu vực cấm bay, khu vực hạn chế bay, khu vực nguy hiểm, các phương thức bay, dữ liệu tin tức hàng không; các văn bản phê chuần, chấp thuận, công bố và quy chế phối hợp đã được ban hành trước ngày Nghị định này có hiệu lực tiếp tục được áp dụng cho đến khi được sửa đổi, thay thế hoặc bãi bỏ, nếu không trái với Nghị định này
+19 33 Trong thời hạn 12 tháng kê từ ngày Nghị định này có hiệu lực, Bộ Xây và dựng chủ trì, phôi hợp với Bộ Quốc phòng và Bộ Công an ban hành hoặc trình cấp có thấm quyền ban hành quy chế phối hợp sử dụng vùng trời linh hoạt, kế hoạch sử dụng vùng trời và kế hoạch sử dụng vùng trời cập nhật theo quy đinh của Nghị định này
+
+--- Trang 77/77 ---
+
+77
+Điều 140. Tổ chức thực hiện Bộ trưởng, Thủ trưởng cơ quan ngang bộ, Chủ tịch Ủy ban nhân dân tỉnh, thành phố và các cơ quap; tổ chức, cá nhân có liên quan chịu trách nhiệm thi hành Nghị định này.
+Nơi nhận:
+TM. CHÍNH PHỦ
+- Ban Bí thư Trung ương Đảng; KT. THỦ TƯỚNG
+Thủ tướng, các Phó Thủ tướng Chính phủ; - Các bộ, cơ quan ngang bộ; PHÓ THỦ TƯỚNG
+- HĐND, UBND các tỉnh, thành phố trựng ương Văn phòng Trung ương và các Ban của Đảng; Văn phòng Tổng Bí thư
+PIS
+Văn phòng Chủ tịch nước;
+z
+Hội đồng Dân tộc và các Ủy ban của Quốc hội n
+rt
+nm
+- Văn phòng Quốc hội;
+- Tòa án nhân dân tối cao; NJH5
+Viện kiểm sát nhân dân tối cao; - Kiểm toán nhà nước;
+SO
+Ủy ban Trung ương Mặt trận Tổ quốc Việt Nam Phạm Gia Túc
+- Cơ quan trung ương của các tổ chức chính trị - xã hội; WLVN
+VPCP: BTCN, các PCN, Trợ lý TTg các Vụ, Cục, Công báo;
+AM
+Lưu: VT, CN (2);
+1L
+Ban
+An toa
+nc
+0010000000001000

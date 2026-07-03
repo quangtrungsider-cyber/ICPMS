@@ -136,7 +136,10 @@ class TextRecognizer:
         
         #seq2seq
         config = Cfg.load_config_from_name('vgg_seq2seq')
-        config['weights'] = os.path.join(get_project_base_directory(), "vietocr", "weight", "vgg_seq2seq.pth")
+        local_weight = os.path.join(get_project_base_directory(), "vietocr", "weight", "vgg_seq2seq.pth")
+        if os.path.exists(local_weight):
+            config['weights'] = local_weight
+        # else: use the URL from config (vietocr will auto-download)
 
         #transformer
         #config = Cfg.load_config_from_name('vgg_transformer')

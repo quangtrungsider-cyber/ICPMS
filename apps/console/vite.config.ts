@@ -58,9 +58,20 @@ export default defineConfig({
     host: "0.0.0.0",
     proxy: {
       "/api": {
-        target: "http://localhost:80",
+        target: "http://localhost:8080",
         changeOrigin: true,
       },
+    },
+    warmup: {
+      clientFiles: [
+        "./src/main.tsx",
+        "./src/App.tsx",
+        "./src/routes.tsx",
+        "./src/environments.ts",
+        "./src/pages/**/*.tsx",
+        "./src/components/**/*.tsx",
+        "./src/providers/**/*.tsx",
+      ],
     },
   },
   resolve: {

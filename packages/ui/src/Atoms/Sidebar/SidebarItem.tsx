@@ -51,7 +51,7 @@ export function SidebarItem(props: Props) {
           sidebarItem({ ...props, active: isActive, isCollapsed })}
       >
         {props.icon && <props.icon size={16} />}
-        {isCollapsed ? null : props.label}
+        {isCollapsed ? null : <span className="text-[0.85rem] leading-tight">{props.label}</span>}
       </NavLink>
       {props.children && <ul className="mt-3 ml-5">{props.children}</ul>}
     </li>

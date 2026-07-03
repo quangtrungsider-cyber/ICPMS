@@ -109,6 +109,37 @@ func (s *IcpmsCodeService) ReserveBlock(
 	return firstSeq, err
 }
 
+// ResetSequence resets the counter for (module, documentCode, year) back to 1.
+// Call this before ReserveBlock when regenerating codes for a document from scratch,
+// so that codes start at 0001 instead of continuing from a previous run.
+func (s *IcpmsCodeService) ResetSequence(
+	ctx context.Context,
+	scope coredata.Scoper,
+	orgID gid.GID,
+	module string,
+	documentCode string,
+	year int,
+) error {
+	return s.svc.pg.WithConn(ctx, func(ctx context.Context, conn pg.Querier) error {
+		_, err := conn.Exec(ctx, `
+			UPDATE icpms_code_sequences
+			   SET next_val = 1
+			 WHERE tenant_id     = @tenant_id
+			   AND organization_id = @org_id
+			   AND module         = @module
+			   AND document_code  = @document_code
+			   AND year           = @year
+		`, pgx.StrictNamedArgs{
+			"tenant_id":     scope.GetTenantID(),
+			"org_id":        orgID,
+			"module":        module,
+			"document_code": documentCode,
+			"year":          year,
+		})
+		return err
+	})
+}
+
 // FormatCode returns the formatted business code string.
 func FormatBusinessCode(module, documentCode string, year, seq int) string {
 	return fmt.Sprintf("%s-%s-%d-%04d", module, documentCode, year, seq)

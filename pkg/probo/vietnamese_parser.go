@@ -59,6 +59,11 @@ var (
 
 	// PHỤ LỤC without separator (just the keyword with optional id on same line)
 	rePhuLucSimple = regexp.MustCompile(`^(?:PHỤ LỤC|Phụ lục)\s*([IVXLCDM0-9A-Z]*)$`)
+
+	// Vietnamese section titles that mark a definitions block to skip:
+	//   - Giải thích từ ngữ / Giải thích thuật ngữ
+	//   - Thuật ngữ / Định nghĩa
+	reVietSkipSectionTitle = regexp.MustCompile(`(?i)^\s*(gi[aả]i\s+th[ií]ch\s+(t[ừu]\s+ng[ưữ]|thu[aậ]t\s+ng[ưữ])|thu[aậ]t\s+ng[ưữ]|[đd][ịi]nh\s+ngh[ĩi]a)\s*$`)
 )
 
 // ParseVietnameseDocument parses a Vietnamese legal document text into a section tree.
@@ -72,13 +77,50 @@ func ParseVietnameseDocument(text string) *VietnameseParseResult {
 	total := 0
 	var lastNode *ParsedSectionNode
 
+	// inSkippedSection is true while inside a Definitions/Thuật ngữ block.
+	inSkippedSection := false
+	skipSectionDepth := 0
+
 	for i, rawLine := range lines {
 		line := strings.TrimSpace(rawLine)
 		if line == "" {
 			continue
 		}
 
+		// Skip header/footer lines (ICAO page refs, date-only, Vietnamese pagination).
+		if isHeaderFooterLine(line) {
+			continue
+		}
+
 		node := matchVietnameseLine(line, i)
+
+		// If this heading's title marks a definitions block, enter skip mode.
+		if node != nil && reVietSkipSectionTitle.MatchString(node.Title) {
+			inSkippedSection = true
+			skipSectionDepth = node.DepthLevel
+			lastNode = nil
+			continue
+		}
+
+		// Standalone definitions header line (not matched as any heading type).
+		if node == nil && reVietSkipSectionTitle.MatchString(line) {
+			inSkippedSection = true
+			skipSectionDepth = 1 // exit on next Chương (depth 1) or Phần/Phụ lục (depth 0)
+			lastNode = nil
+			continue
+		}
+
+		// While inside a skipped section, exit only when we see a heading at
+		// the same level or higher (lower depth number = higher in hierarchy).
+		if inSkippedSection {
+			if node != nil && node.DepthLevel <= skipSectionDepth {
+				inSkippedSection = false
+				// Fall through — process this heading normally.
+			} else {
+				continue
+			}
+		}
+
 		if node == nil {
 			if lastNode != nil {
 				// If the previous heading's title looks incomplete (doesn't end with

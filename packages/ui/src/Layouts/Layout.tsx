@@ -56,7 +56,7 @@ export function Layout({
   return (
     <LayoutContext value={layoutContext}>
       <div className="text-txt-primary bg-level-0 min-h-screen">
-        <header className="fixed top-0 z-2 left-0 right-0 px-4 flex items-center border-b border-border-solid h-12 bg-level-0">
+        <header className="fixed top-0 z-2 left-0 right-0 px-4 flex items-center border-b border-border-solid h-12 bg-level-1" style={{ boxShadow: "0 1px 4px rgba(0,0,0,0.08)" }}>
           <Link to="/" className="flex items-center">
             <Logo withPicto />
           </Link>

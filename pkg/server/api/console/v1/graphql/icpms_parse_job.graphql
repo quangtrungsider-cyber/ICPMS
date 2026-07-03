@@ -86,6 +86,11 @@ type IcpmsParsedDocumentSection implements Node @goModel(model: "go.probo.inc/pr
   updatedAt: Datetime!
 }
 
+type IcpmsArticleContent {
+  article: IcpmsParsedDocumentSection!
+  sections: [IcpmsParsedDocumentSection!]!
+}
+
 input CreateIcpmsDocumentParseJobInput {
   ingestionJobId: ID!
 }
@@ -107,4 +112,6 @@ extend type Query {
   latestParseJobForIngestionJob(ingestionJobId: ID!): IcpmsDocumentParseJob @goField(forceResolver: true)
   latestIcaoParseJobForIngestionJob(ingestionJobId: ID!): IcpmsDocumentParseJob @goField(forceResolver: true)
   parsedSectionsForJob(parseJobId: ID!): [IcpmsParsedDocumentSection!]! @goField(forceResolver: true)
+  articleSectionForSection(sectionId: ID!): IcpmsParsedDocumentSection @goField(forceResolver: true)
+  articleSectionWithDescendants(sectionId: ID!): IcpmsArticleContent @goField(forceResolver: true)
 }

@@ -77,6 +77,15 @@ var (
 
 	// Example.— EXAMPLE.—
 	icaoExample = regexp.MustCompile(`(?i)^\s*EXAMPLE\s*[.\-—:]+\s*(.*)$`)
+
+	// TOC entry: 3+ dots followed by ICAO page reference like "1-1", "A-3", "2-11"
+	// Matches lines from the Table of Contents that should be skipped.
+	icaoTocPageRef = regexp.MustCompile(`\.{3,}\s*[A-Z]?\d+[-–]\d+\s*$`)
+
+	// Section titles that mark a block to skip entirely:
+	//   - Definitions / Definition (glossary chapter)
+	//   - Contents / Table of Contents (TOC header)
+	icaoSkipSectionTitle = regexp.MustCompile(`(?i)^\s*(definitions?|table\s+of\s+contents?|contents?)\s*$`)
 )
 
 // numericParent returns the parent number for a dotted section string.
@@ -141,13 +150,74 @@ func ParseIcaoDocument(text string) *IcaoParseResult {
 	maxDepth := 0
 	var counts IcaoSectionCounts
 
+	// inSkippedSection is true while we are inside a Definitions or TOC block.
+	// skipSectionDepth is the DepthLevel of the heading that triggered the skip;
+	// we exit skip mode when we encounter a heading at depth ≤ skipSectionDepth.
+	inSkippedSection := false
+	skipSectionDepth := 0
+
 	for i, rawLine := range lines {
 		line := strings.TrimSpace(rawLine)
 		if line == "" {
 			continue
 		}
 
+		// Skip header/footer lines (ICAO page refs, date-only, Vietnamese pagination).
+		if isHeaderFooterLine(line) {
+			continue
+		}
+
+		// Skip TOC entries: lines that end with 3+ dots followed by an ICAO page
+		// reference (e.g. "CHAPTER 1. Definitions ............. 1-1").
+		if icaoTocPageRef.MatchString(line) {
+			continue
+		}
+
+		lowerLine := strings.ToLower(line)
+
+		// Detect TOC / Definitions header lines. Use substring search for "table of
+		// contents" because the PDF often appends the document title on the same line
+		// (e.g. "Table of Contents Annex 11 — Air Traffic Services Page (vii) ...").
+		if strings.Contains(lowerLine, "table of contents") ||
+			icaoSkipSectionTitle.MatchString(line) {
+			inSkippedSection = true
+			skipSectionDepth = 0 // exit on next structural heading (PART/CHAPTER/APPENDIX)
+			continue
+		}
+
 		node := matchIcaoHeading(line, i)
+
+		// If this heading marks a block to skip, enter skip mode.
+		// Check both the isolated Title and the full heading line, because PDFs
+		// sometimes merge the running header into the chapter line so that the
+		// Title field reads "Annex 11 — ..." rather than "Definitions".
+		if node != nil {
+			lowerHeading := strings.ToLower(node.FullHeading)
+			titleMatches := icaoSkipSectionTitle.MatchString(node.Title)
+			headingHasTOC := strings.Contains(lowerHeading, "table of contents")
+			// For CHAPTER-level nodes only: also skip if the heading contains
+			// "definition" anywhere — covers the case where the PDF merged the
+			// running header with "Chapter 1. Definitions" into one line.
+			chapterHasDefinitions := node.Type == coredata.IcpmsDocumentSectionTypeChapter &&
+				strings.Contains(lowerHeading, "definition")
+			if titleMatches || headingHasTOC || chapterHasDefinitions {
+				inSkippedSection = true
+				skipSectionDepth = node.DepthLevel
+				continue
+			}
+		}
+
+		// While inside a skipped section, only exit when we see a heading at the
+		// same level or higher (lower depth number = higher in the hierarchy).
+		if inSkippedSection {
+			if node != nil && node.DepthLevel <= skipSectionDepth {
+				inSkippedSection = false
+				// Fall through — process this heading normally.
+			} else {
+				continue
+			}
+		}
+
 		if node == nil {
 			// Accumulate body content into current section
 			if currentNode != nil {

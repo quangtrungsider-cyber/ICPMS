@@ -227,83 +227,95 @@ func (s *IcpmsRequirementService) GenerateFromParseJob(
 		return nil, 0, fmt.Errorf("cannot create generation job: %w", err)
 	}
 
-	// Load existing section IDs that already have requirements (deduplication)
-	existingSectionIDs, err := s.loadExistingSectionIDs(ctx, scope, parseJob.OrganizationID, parseJobID)
-	if err != nil {
+	// Delete all existing requirements for this parse job before regenerating
+	if err := s.deleteRequirementsForParseJob(ctx, scope, parseJob.OrganizationID, parseJobID); err != nil {
 		errMsg := err.Error()
 		genJob.Status = coredata.IcpmsRequirementGenerationJobStatusFailed
 		genJob.ErrorMessage = &errMsg
 		_ = s.updateGenerationJob(ctx, genJob)
-		return genJob, 0, fmt.Errorf("cannot load existing section IDs: %w", err)
+		return genJob, 0, fmt.Errorf("cannot delete existing requirements: %w", err)
 	}
 
-	// Extract requirements from sections
+	// ── Phase 1: keyword matching ────────────────────────────────────────────
+	// Collect all keyword-matched candidates (sections with body content whose
+	// text contains normative keywords). We do not create requirements yet.
+
 	language := parseJob.Language
-	var toCreate []*coredata.IcpmsRequirement
-	totalCandidates := 0
-	totalDuplicates := 0
 	totalSkipped := 0
 
-	// Pre-count eligible sections to reserve a block of sequence numbers upfront.
 	genJobShort := genJob.ID.String()
 	if len(genJobShort) > 6 {
 		genJobShort = genJobShort[len(genJobShort)-6:]
 	}
-
-	// Load document to get document_code for business codes.
 	reqDoc, _ := s.svc.IcpmsDocuments.Get(ctx, scope, parseJob.DocumentID)
-	var reqBaseSeq int
-	var reqDocCode string
 	reqYear := time.Now().Year()
-	eligibleCount := 0
-	for _, sec := range sections {
-		if SectionIsEligible(sec.SectionType) {
-			result := ExtractFromSection(sec.FullHeading, language)
-			if result != nil {
-				eligibleCount++
-			}
-		}
-	}
-	if reqDoc != nil && reqDoc.DocumentCode != nil && *reqDoc.DocumentCode != "" && eligibleCount > 0 {
-		reqDocCode = *reqDoc.DocumentCode
-		reqBaseSeq, _ = s.svc.IcpmsCodes.ReserveBlock(ctx, scope, parseJob.OrganizationID, "REQ", reqDocCode, reqYear, eligibleCount)
-	}
-	reqLocalIdx := 0
 
+	var candidates []reqCandidate
 	for i, sec := range sections {
-		if !SectionIsEligible(sec.SectionType) {
+		if !SectionIsEligible(sec.SectionType) || sec.DepthLevel > 5 {
 			totalSkipped++
 			continue
 		}
-
-		// Build text to analyze (sanitize so ExtractFromSection sees clean UTF-8)
-		cleanHeading, _ := sanitizeText(sec.FullHeading, 2000)
-		text := cleanHeading
-		if sec.ContentText != nil && *sec.ContentText != "" {
-			cleanContent, _ := sanitizeText(*sec.ContentText, 3000)
-			text = cleanHeading + " " + cleanContent
+		// Only extract from sections with actual body content (not heading-only).
+		if sec.ContentText == nil || strings.TrimSpace(*sec.ContentText) == "" {
+			totalSkipped++
+			continue
 		}
-
-		result := ExtractFromSection(text, language)
+		cleanHeading, _ := sanitizeText(sec.FullHeading, 2000)
+		cleanContent, _ := sanitizeText(*sec.ContentText, 3000)
+		result := ExtractFromSection(cleanHeading+" "+cleanContent, language)
 		if result == nil {
 			totalSkipped++
 			continue
 		}
+		candidates = append(candidates, reqCandidate{sec: sec, result: result, secIdx: i})
+	}
 
-		totalCandidates++
+	// ── Phase 2: AI filter ────────────────────────────────────────────────────
+	// If Gemini is configured for this organisation, send candidates in batches
+	// to remove false positives and enrich title/description. Fails open: any
+	// API error keeps the candidate rather than silently dropping it.
 
-		// Deduplication: skip if this section already has a requirement
-		secID := sec.ID
-		if existingSectionIDs[secID.String()] {
-			totalDuplicates++
-			continue
+	aiCfg, _ := s.svc.IcpmsAiConfigs.Get(ctx, scope, parseJob.OrganizationID, "GEMINI")
+	if aiCfg != nil && aiCfg.IsEnabled && aiCfg.APIKey != nil &&
+		aiCfg.DefaultModel != nil && *aiCfg.DefaultModel != "RULE_BASED" && *aiCfg.DefaultModel != "" {
+		candidates = filterRequirementCandidates(ctx, *aiCfg.APIKey, *aiCfg.DefaultModel, language, candidates)
+	}
+
+	// ── Phase 3: reserve codes and build requirement structs ─────────────────
+
+	totalCandidates := len(candidates)
+	var reqBaseSeq int
+	var reqDocCode string
+	if reqDoc != nil && reqDoc.DocumentCode != nil && *reqDoc.DocumentCode != "" && totalCandidates > 0 {
+		reqDocCode = *reqDoc.DocumentCode
+		// Reset sequence so regenerated codes always start from 0001, not continue
+		// from a previous run's counter (which would cause e.g. REQ-TEST-2026-5811).
+		_ = s.svc.IcpmsCodes.ResetSequence(ctx, scope, parseJob.OrganizationID, "REQ", reqDocCode, reqYear)
+		reqBaseSeq, _ = s.svc.IcpmsCodes.ReserveBlock(ctx, scope, parseJob.OrganizationID, "REQ", reqDocCode, reqYear, totalCandidates)
+	}
+
+	var toCreate []*coredata.IcpmsRequirement
+	for idx, cand := range candidates {
+		sec := cand.sec
+
+		// Title: prefer AI-enriched version, fall back to original heading.
+		title, _ := sanitizeText(sec.FullHeading, 200)
+		if cand.aiTitle != "" {
+			t := cand.aiTitle
+			if len([]rune(t)) > 200 {
+				r := []rune(t)
+				t = string(r[:200])
+			}
+			title = t
 		}
 
-		// Build title: sanitize UTF-8 and truncate by rune count (not bytes)
-		title, _ := sanitizeText(sec.FullHeading, 200)
-
+		// Description: prefer AI-enriched version, fall back to raw content.
 		var desc *string
-		if sec.ContentText != nil && *sec.ContentText != "" {
+		if cand.aiDesc != "" {
+			d := cand.aiDesc
+			desc = &d
+		} else if sec.ContentText != nil && *sec.ContentText != "" {
 			content, truncated := sanitizeText(*sec.ContentText, 500)
 			if truncated {
 				content += "..."
@@ -313,13 +325,13 @@ func (s *IcpmsRequirementService) GenerateFromParseJob(
 
 		var code string
 		if reqDocCode != "" {
-			code = FormatBusinessCode("REQ", reqDocCode, reqYear, reqBaseSeq+reqLocalIdx)
+			code = FormatBusinessCode("REQ", reqDocCode, reqYear, reqBaseSeq+idx)
 		} else {
-			code = fmt.Sprintf("REQ-%s-%04d", genJobShort, i+1)
+			code = fmt.Sprintf("REQ-%s-%04d", genJobShort, cand.secIdx+1)
 		}
-		reqLocalIdx++
-		priority := PriorityFromScore(result.Score)
-		keywords := KeywordsToJSON(result.Keywords)
+
+		priority := PriorityFromScore(cand.result.Score)
+		keywords := KeywordsToJSON(cand.result.Keywords)
 		sectionID := sec.ID
 
 		req := &coredata.IcpmsRequirement{
@@ -333,11 +345,11 @@ func (s *IcpmsRequirementService) GenerateFromParseJob(
 			RequirementCode:     code,
 			Title:               title,
 			Description:         desc,
-			RequirementType:     result.ReqType,
+			RequirementType:     cand.result.ReqType,
 			ApplicabilityStatus: coredata.IcpmsApplicabilityStatusUnknown,
 			ReviewStatus:        coredata.IcpmsRequirementReviewStatusCandidate,
 			Priority:            priority,
-			CandidateScore:      result.Score,
+			CandidateScore:      cand.result.Score,
 			KeywordMatches:      keywords,
 			IsAutoGenerated:     true,
 			CreatedBy:           &createdByPtr,
@@ -360,7 +372,7 @@ func (s *IcpmsRequirementService) GenerateFromParseJob(
 	genJob.TotalCandidates = totalCandidates
 	genJob.TotalCreated = len(toCreate)
 	genJob.TotalSkipped = totalSkipped
-	genJob.TotalDuplicates = totalDuplicates
+	genJob.TotalDuplicates = 0
 	genJob.FinishedAt = &finishedAt
 	if err := s.updateGenerationJob(ctx, genJob); err != nil {
 		return genJob, len(toCreate), fmt.Errorf("cannot update generation job: %w", err)
@@ -396,6 +408,96 @@ func (s *IcpmsRequirementService) GetLatestGenerationJobForParseJob(
 		return nil, nil
 	}
 	return &job, err
+}
+
+// updateApplicabilityFromAI directly sets applicability_status, applicability_note and
+// ai_reviewed_at on a requirement. Used by the auto-pipeline after Gemini review.
+func (s *IcpmsRequirementService) updateApplicabilityFromAI(
+	ctx context.Context,
+	scope coredata.Scoper,
+	reqID gid.GID,
+	status coredata.IcpmsApplicabilityStatus,
+	note *string,
+) error {
+	return s.svc.pg.WithTx(ctx, func(ctx context.Context, tx pg.Tx) error {
+		_, err := tx.Exec(ctx, `
+			UPDATE icpms_requirements SET
+				applicability_status = @status,
+				applicability_note   = @note,
+				review_status        = @review_status,
+				ai_reviewed_at       = NOW(),
+				updated_at           = NOW()
+			WHERE tenant_id = @tenant_id AND id = @id AND NOT is_deleted`,
+			pgx.StrictNamedArgs{
+				"tenant_id":     scope.GetTenantID(),
+				"id":            reqID,
+				"status":        status,
+				"note":          note,
+				"review_status": coredata.IcpmsRequirementReviewStatusReviewed,
+			},
+		)
+		return err
+	})
+}
+
+// listByParseJobDirect returns all non-deleted requirements for a parse job.
+// Unlike List(), it does not require orgID and skips the join to parse jobs table.
+func (s *IcpmsRequirementService) listByParseJobDirect(
+	ctx context.Context,
+	scope coredata.Scoper,
+	parseJobID gid.GID,
+) ([]*coredata.IcpmsRequirement, error) {
+	var reqs []*coredata.IcpmsRequirement
+	err := s.svc.pg.WithConn(ctx, func(ctx context.Context, conn pg.Querier) error {
+		rows, err := conn.Query(ctx,
+			`SELECT * FROM icpms_requirements
+			 WHERE tenant_id = @tenant_id AND parse_job_id = @parse_job_id AND NOT is_deleted
+			 ORDER BY candidate_score DESC, created_at ASC`,
+			pgx.StrictNamedArgs{
+				"tenant_id":    scope.GetTenantID(),
+				"parse_job_id": parseJobID,
+			},
+		)
+		if err != nil {
+			return err
+		}
+		reqs, err = pgx.CollectRows(rows, pgx.RowToAddrOfStructByName[coredata.IcpmsRequirement])
+		return err
+	})
+	return reqs, err
+}
+
+// ApproveAllForParseJob marks every reviewed requirement in a parse job as APPROVED.
+// Returns the number of requirements approved.
+func (s *IcpmsRequirementService) ApproveAllForParseJob(
+	ctx context.Context,
+	scope coredata.Scoper,
+	parseJobID gid.GID,
+) (int, error) {
+	var count int
+	err := s.svc.pg.WithTx(ctx, func(ctx context.Context, tx pg.Tx) error {
+		tag, err := tx.Exec(ctx, `
+			UPDATE icpms_requirements SET
+				review_status = @approved,
+				updated_at    = NOW()
+			WHERE tenant_id = @tenant_id
+			  AND parse_job_id = @parse_job_id
+			  AND NOT is_deleted
+			  AND review_status IN (@reviewed, @candidate)`,
+			pgx.StrictNamedArgs{
+				"tenant_id":    scope.GetTenantID(),
+				"parse_job_id": parseJobID,
+				"approved":     coredata.IcpmsRequirementReviewStatusApproved,
+				"reviewed":     coredata.IcpmsRequirementReviewStatusReviewed,
+				"candidate":    coredata.IcpmsRequirementReviewStatusCandidate,
+			},
+		)
+		if err == nil {
+			count = int(tag.RowsAffected())
+		}
+		return err
+	})
+	return count, err
 }
 
 // --- private helpers ---
@@ -438,6 +540,113 @@ func (s *IcpmsRequirementService) loadSectionsForParseJob(
 		return err
 	})
 	return sections, err
+}
+
+func (s *IcpmsRequirementService) deleteRequirementsForParseJob(
+	ctx context.Context,
+	scope coredata.Scoper,
+	orgID gid.GID,
+	parseJobID gid.GID,
+) error {
+	return s.svc.pg.WithTx(ctx, func(ctx context.Context, tx pg.Tx) error {
+		args := pgx.StrictNamedArgs{
+			"tenant_id":    scope.GetTenantID(),
+			"org_id":       orgID,
+			"parse_job_id": parseJobID,
+		}
+		// Soft-delete AI review suggestions that reference requirements from this
+		// parse job — they become orphaned once requirements are re-generated,
+		// causing the Requirement resolver to fail and returning empty results.
+		_, err := tx.Exec(ctx, `
+			UPDATE icpms_ai_review_suggestions
+			   SET deleted_at = NOW()
+			 WHERE tenant_id = @tenant_id
+			   AND deleted_at IS NULL
+			   AND requirement_id IN (
+			         SELECT id FROM icpms_requirements
+			          WHERE tenant_id    = @tenant_id
+			            AND organization_id = @org_id
+			            AND parse_job_id = @parse_job_id
+			            AND NOT is_deleted
+			       )`, args)
+		if err != nil {
+			return err
+		}
+		// Now soft-delete the requirements themselves.
+		_, err = tx.Exec(ctx, `
+			UPDATE icpms_requirements SET is_deleted = TRUE, updated_at = NOW()
+			WHERE tenant_id = @tenant_id AND organization_id = @org_id AND parse_job_id = @parse_job_id AND NOT is_deleted`,
+			args,
+		)
+		return err
+	})
+}
+
+// DeleteForDocument soft-deletes all requirements for every version of a document.
+func (s *IcpmsRequirementService) DeleteForDocument(
+	ctx context.Context,
+	scope coredata.Scoper,
+	documentID gid.GID,
+) (int, error) {
+	var count int
+	err := s.svc.pg.WithTx(ctx, func(ctx context.Context, tx pg.Tx) error {
+		tag, err := tx.Exec(ctx, `
+			UPDATE icpms_requirements SET is_deleted = TRUE, updated_at = NOW()
+			WHERE tenant_id = @tenant_id AND document_id = @document_id AND NOT is_deleted`,
+			pgx.StrictNamedArgs{
+				"tenant_id":   scope.GetTenantID(),
+				"document_id": documentID,
+			},
+		)
+		if err == nil {
+			count = int(tag.RowsAffected())
+		}
+		return err
+	})
+	return count, err
+}
+
+// DeleteForVersion soft-deletes all requirements for a specific document version.
+func (s *IcpmsRequirementService) DeleteForVersion(
+	ctx context.Context,
+	scope coredata.Scoper,
+	documentVersionID gid.GID,
+) (int, error) {
+	var count int
+	err := s.svc.pg.WithTx(ctx, func(ctx context.Context, tx pg.Tx) error {
+		tag, err := tx.Exec(ctx, `
+			UPDATE icpms_requirements SET is_deleted = TRUE, updated_at = NOW()
+			WHERE tenant_id = @tenant_id AND document_version_id = @version_id AND NOT is_deleted`,
+			pgx.StrictNamedArgs{
+				"tenant_id":  scope.GetTenantID(),
+				"version_id": documentVersionID,
+			},
+		)
+		if err == nil {
+			count = int(tag.RowsAffected())
+		}
+		return err
+	})
+	return count, err
+}
+
+// DeleteOne soft-deletes a single requirement by ID.
+func (s *IcpmsRequirementService) DeleteOne(
+	ctx context.Context,
+	scope coredata.Scoper,
+	requirementID gid.GID,
+) error {
+	return s.svc.pg.WithConn(ctx, func(ctx context.Context, conn pg.Querier) error {
+		_, err := conn.Exec(ctx, `
+			UPDATE icpms_requirements SET is_deleted = TRUE, updated_at = NOW()
+			WHERE tenant_id = @tenant_id AND id = @id AND NOT is_deleted`,
+			pgx.StrictNamedArgs{
+				"tenant_id": scope.GetTenantID(),
+				"id":        requirementID,
+			},
+		)
+		return err
+	})
 }
 
 func (s *IcpmsRequirementService) loadExistingSectionIDs(

@@ -51,6 +51,7 @@ type IcpmsIngestionJob implements Node @goModel(model: "go.probo.inc/probo/pkg/c
   finishedAt: Datetime
   errorMessage: String
   warningMessage: String
+  aiModelUsed: String
   createdAt: Datetime!
   updatedAt: Datetime!
 }

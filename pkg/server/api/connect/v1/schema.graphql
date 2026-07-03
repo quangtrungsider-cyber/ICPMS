@@ -445,6 +445,7 @@ type Profile implements Node {
   additionalEmailAddresses: [EmailAddr!]!
   kind: String
   position: String
+  department: String
   contractStartDate: Datetime
   contractEndDate: Datetime
   createdAt: Datetime!
@@ -542,6 +543,7 @@ input CreateUserInput {
   additionalEmailAddresses: [EmailAddr!]
   kind: String
   position: String
+  department: String
   contractStartDate: Datetime @goField(omittable: true)
   contractEndDate: Datetime @goField(omittable: true)
 }
@@ -562,6 +564,7 @@ input UpdateUserInput {
   additionalEmailAddresses: [EmailAddr!]
   kind: String
   position: String
+  department: String
   contractStartDate: Datetime @goField(omittable: true)
   contractEndDate: Datetime @goField(omittable: true)
 }

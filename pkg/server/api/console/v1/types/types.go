@@ -422,6 +422,14 @@ type CancelAccessReviewCampaignPayload struct {
 	AccessReviewCampaign *AccessReviewCampaign `json:"accessReviewCampaign"`
 }
 
+type CancelIcpmsAiReviewJobInput struct {
+	ID gid.GID `json:"id"`
+}
+
+type CancelIcpmsAiReviewJobPayload struct {
+	Job *coredata.IcpmsAiReviewJob `json:"job"`
+}
+
 type CancelIcpmsAssignmentInput struct {
 	ID           gid.GID `json:"id"`
 	CancelReason string  `json:"cancelReason"`
@@ -1806,6 +1814,14 @@ type DeleteFrameworkPayload struct {
 	DeletedFrameworkID gid.GID `json:"deletedFrameworkId"`
 }
 
+type DeleteIcpmsAiReviewJobInput struct {
+	ID gid.GID `json:"id"`
+}
+
+type DeleteIcpmsAiReviewJobPayload struct {
+	ID gid.GID `json:"id"`
+}
+
 type DeleteIcpmsAssignmentInput struct {
 	ID gid.GID `json:"id"`
 }
@@ -2547,6 +2563,11 @@ type IcpmsAiReviewSuggestionEdge struct {
 type IcpmsAiReviewSuggestionFilter struct {
 	Status        *IcpmsAiReviewSuggestionStatus `json:"status,omitempty"`
 	RequirementID *gid.GID                       `json:"requirementId,omitempty"`
+}
+
+type IcpmsArticleContent struct {
+	Article  *coredata.IcpmsParsedDocumentSection   `json:"article"`
+	Sections []*coredata.IcpmsParsedDocumentSection `json:"sections"`
 }
 
 type IcpmsAssignmentConnection struct {

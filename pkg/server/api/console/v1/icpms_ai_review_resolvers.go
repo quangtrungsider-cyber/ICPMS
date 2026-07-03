@@ -163,6 +163,50 @@ func (r *mutationResolver) CreateIcpmsAiReviewJob(ctx context.Context, input typ
 	return &types.CreateIcpmsAiReviewJobPayload{Job: job}, nil
 }
 
+// CancelIcpmsAiReviewJob is the resolver for the cancelIcpmsAiReviewJob field.
+func (r *mutationResolver) CancelIcpmsAiReviewJob(ctx context.Context, input types.CancelIcpmsAiReviewJobInput) (*types.CancelIcpmsAiReviewJobPayload, error) {
+	jobID := input.ID
+	scope := coredata.NewScope(jobID.TenantID())
+	existing, err := r.probo.IcpmsAiReviews.Get(ctx, scope, jobID)
+	if err != nil {
+		return nil, fmt.Errorf("cannot find AI review job: %w", err)
+	}
+	if _, err := r.authorize(ctx, existing.OrganizationID, probo.ActionOrganizationUpdate); err != nil {
+		return nil, err
+	}
+	job, err := r.probo.IcpmsAiReviews.CancelJob(ctx, scope, jobID)
+	if err != nil {
+		return nil, fmt.Errorf("cannot cancel AI review job: %w", err)
+	}
+	return &types.CancelIcpmsAiReviewJobPayload{Job: job}, nil
+}
+
+// DeleteIcpmsAiReviewJob is the resolver for the deleteIcpmsAiReviewJob field.
+func (r *mutationResolver) DeleteIcpmsAiReviewJob(ctx context.Context, input types.DeleteIcpmsAiReviewJobInput) (*types.DeleteIcpmsAiReviewJobPayload, error) {
+	jobID := input.ID
+	scope := coredata.NewScope(jobID.TenantID())
+	existing, err := r.probo.IcpmsAiReviews.Get(ctx, scope, jobID)
+	if err != nil {
+		return nil, fmt.Errorf("cannot find AI review job: %w", err)
+	}
+	if _, err := r.authorize(ctx, existing.OrganizationID, probo.ActionOrganizationUpdate); err != nil {
+		return nil, err
+	}
+	if err := r.probo.IcpmsAiReviews.DeleteJob(ctx, scope, jobID); err != nil {
+		return nil, fmt.Errorf("cannot delete AI review job: %w", err)
+	}
+	return &types.DeleteIcpmsAiReviewJobPayload{ID: jobID}, nil
+}
+
+// DeleteIcpmsAiReviewSuggestion is the resolver for the deleteIcpmsAiReviewSuggestion field.
+func (r *mutationResolver) DeleteIcpmsAiReviewSuggestion(ctx context.Context, id gid.GID) (bool, error) {
+	scope := coredata.NewScope(id.TenantID())
+	if err := r.probo.IcpmsAiReviews.DeleteSuggestion(ctx, scope, id); err != nil {
+		return false, fmt.Errorf("cannot delete suggestion: %w", err)
+	}
+	return true, nil
+}
+
 // AcceptIcpmsAiReviewSuggestion is the resolver for the acceptIcpmsAiReviewSuggestion field.
 // Accepting a suggestion automatically creates a checklist in PENDING_REVIEW state (idempotent).
 func (r *mutationResolver) AcceptIcpmsAiReviewSuggestion(ctx context.Context, input types.AcceptIcpmsAiReviewSuggestionInput) (*types.AcceptIcpmsAiReviewSuggestionPayload, error) {

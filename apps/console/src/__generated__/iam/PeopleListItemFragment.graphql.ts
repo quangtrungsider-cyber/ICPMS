@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f8383da9cb37af6caca48c69a809346c>>
+ * @generated SignedSource<<55fbfa3861035aabd36a1c4c427e0fab>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type PeopleListItemFragment$data = {
   readonly canInvite: boolean;
   readonly canUpdate: boolean;
   readonly createdAt: string;
+  readonly department: string | null | undefined;
   readonly emailAddress: string;
   readonly fullName: string;
   readonly id: string;
@@ -102,6 +103,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "emailAddress",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "department",
       "storageKey": null
     },
     {
@@ -285,6 +293,6 @@ return {
 };
 })();
 
-(node as any).hash = "f10aa3067eeb7fc95eb7c7a893e7dd6e";
+(node as any).hash = "909749ceb418b334153d294e784a0ec4";
 
 export default node;

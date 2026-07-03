@@ -31,6 +31,7 @@ import { useFormWithSchema } from "#/hooks/useFormWithSchema";
 import { useMutationWithToasts } from "#/hooks/useMutationWithToasts";
 import { useOrganizationId } from "#/hooks/useOrganizationId";
 import { CurrentUser } from "#/providers/CurrentUser";
+import { VATM_UNITS } from "#/constants/vatmUnits";
 
 const fragment = graphql`
   fragment PersonFormFragment on Profile {
@@ -43,6 +44,7 @@ const fragment = graphql`
     }
     kind
     position
+    department
     additionalEmailAddresses
     contractStartDate
     contractEndDate
@@ -77,6 +79,7 @@ const schema = z.object({
   emailAddress: z.string().email(),
   role: z.enum(roles),
   position: z.string().min(1).optional().nullable(),
+  department: z.string().min(1).optional().nullable(),
   additionalEmailAddresses: z.preprocess(
     // Empty additional emails are skipped
     v => (v as string[]).filter(v => !!v),
@@ -107,6 +110,7 @@ export function PersonForm(props: {
       additionalEmailAddresses: [],
       kind: "EMPLOYEE",
       position: null,
+      department: null,
       contractStartDate: null,
       contractEndDate: null,
     },
@@ -145,6 +149,7 @@ export function PersonForm(props: {
       additionalEmailAddresses: data.additionalEmailAddresses,
       kind: data.kind,
       position: data.position,
+      department: data.department,
       contractStartDate: formatDatetime(data.contractStartDate) ?? null,
       contractEndDate: formatDatetime(data.contractEndDate) ?? null,
     };
@@ -254,6 +259,20 @@ export function PersonForm(props: {
         placeholder={__("e.g. CEO, CFO, etc.")}
         disabled={disabled || scimManaged}
       />
+      <ControlledField
+        control={control}
+        name="department"
+        type="select"
+        label="Đơn vị công tác"
+        disabled={disabled || scimManaged}
+      >
+        <Option value="">-- Chọn đơn vị --</Option>
+        {VATM_UNITS.map(unit => (
+          <Option key={unit} value={unit}>
+            {unit}
+          </Option>
+        ))}
+      </ControlledField>
       <EmailsField control={control} register={register} disabled={disabled || scimManaged} />
       <Field label={__("Contract start date")}>
         <Input
@@ -297,6 +316,7 @@ export function PersonFormLoader(props: { fragmentRef: PersonFormFragment$key })
           emailAddress: person.emailAddress,
           role: person.membership.role,
           position: person.position,
+          department: person.department,
           additionalEmailAddresses: [...person.additionalEmailAddresses],
           contractStartDate: person.contractStartDate?.split("T")[0] || "",
           contractEndDate: person.contractEndDate?.split("T")[0] || "",

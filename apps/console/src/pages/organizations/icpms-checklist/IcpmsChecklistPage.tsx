@@ -21,6 +21,7 @@ import {
 } from "@probo/ui";
 import { useCallback, useEffect, useState } from "react";
 import { fetchQuery, graphql, useMutation, useRelayEnvironment } from "react-relay";
+import { useNavigate } from "react-router";
 import { useOrganizationId } from "#/hooks/useOrganizationId";
 import { formatError } from "#/utils/formatError";
 
@@ -34,12 +35,22 @@ const listChecklistsQuery = graphql`
           id
           checklistCode
           checklistQuestion
+          requirementText
+          sourceReference
           priority
           status
           approvalStatus
           createdFrom
           responsibleUnit
+          responsibleRole
           complianceDomain
+          frequency
+          implementationMethod
+          currentStatusText
+          actionPlan
+          requiredEvidence
+          riskIfNotComplied
+          dueDays
           createdAt
           updatedAt
           document {
@@ -162,18 +173,49 @@ const createFromAiSuggestionsMutation = graphql`
   }
 `;
 
+const updateChecklistMutation = graphql`
+  mutation IcpmsChecklistPageUpdateMutation($input: UpdateIcpmsChecklistInput!) {
+    updateIcpmsChecklist(input: $input) {
+      checklist {
+        id
+        implementationMethod
+        currentStatusText
+        actionPlan
+        requiredEvidence
+        riskIfNotComplied
+        dueDays
+        responsibleUnit
+        responsibleRole
+        complianceDomain
+        frequency
+        updatedAt
+      }
+    }
+  }
+`;
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type Checklist = {
   id: string;
   checklistCode: string;
   checklistQuestion: string;
+  requirementText?: string | null;
+  sourceReference?: string | null;
   priority: string;
   status: string;
   approvalStatus: string;
   createdFrom: string;
   responsibleUnit?: string | null;
+  responsibleRole?: string | null;
   complianceDomain?: string | null;
+  frequency?: string | null;
+  implementationMethod?: string | null;
+  currentStatusText?: string | null;
+  actionPlan?: string | null;
+  requiredEvidence?: string | null;
+  riskIfNotComplied?: string | null;
+  dueDays?: number | null;
   createdAt: string;
   updatedAt: string;
   document: { id: string; code: string; title: string };
@@ -200,6 +242,19 @@ type AiSuggestionItem = {
   suggestedResponsibleUnit?: string | null;
   suggestedPriority?: string | null;
   requirement: { id: string; requirementCode: string; title: string };
+};
+
+type UpdateFields = {
+  implementationMethod: string;
+  responsibleUnit: string;
+  responsibleRole: string;
+  requiredEvidence: string;
+  actionPlan: string;
+  currentStatusText: string;
+  riskIfNotComplied: string;
+  dueDays: number | null;
+  complianceDomain: string;
+  frequency: string;
 };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -264,12 +319,28 @@ const SUG_STATUS_LABELS: Record<string, string> = {
   AI_SUGGESTED: "AI gợi ý",
 };
 
+const textareaClass =
+  "w-full border border-border-low rounded-lg p-2.5 text-sm text-txt-primary bg-level-1 focus:outline-none focus:ring-1 focus:ring-blue-400 resize-none";
+const inputClass =
+  "w-full border border-border-low rounded-lg px-3 py-2 text-sm text-txt-primary bg-level-1 focus:outline-none focus:ring-1 focus:ring-blue-400";
+
 function fmtDate(s: string | null | undefined): string {
   if (!s) return "—";
   return new Date(s).toLocaleString("vi-VN", {
     day: "2-digit", month: "2-digit", year: "numeric",
     hour: "2-digit", minute: "2-digit",
   });
+}
+
+// ─── Field helper ─────────────────────────────────────────────────────────────
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <label className="block text-xs text-txt-tertiary font-medium mb-1">{label}</label>
+      {children}
+    </div>
+  );
 }
 
 // ─── Reject Dialog ────────────────────────────────────────────────────────────
@@ -293,7 +364,7 @@ function RejectDialog({
         </p>
         <label className="block text-sm text-txt-secondary mb-1">Lý do từ chối</label>
         <textarea
-          className="w-full border border-border-low rounded-lg p-3 text-sm text-txt-primary bg-level-1 focus:outline-none resize-none"
+          className={textareaClass}
           rows={3}
           placeholder="Nhập lý do từ chối..."
           value={reason}
@@ -310,6 +381,182 @@ function RejectDialog({
   );
 }
 
+// ─── Update Dialog ────────────────────────────────────────────────────────────
+
+function UpdateDialog({
+  checklist,
+  onSave,
+  onCancel,
+  saving,
+}: {
+  checklist: Checklist;
+  onSave: (data: UpdateFields) => void;
+  onCancel: () => void;
+  saving: boolean;
+}) {
+  const [form, setForm] = useState({
+    implementationMethod: checklist.implementationMethod ?? "",
+    responsibleUnit: checklist.responsibleUnit ?? "",
+    responsibleRole: checklist.responsibleRole ?? "",
+    requiredEvidence: checklist.requiredEvidence ?? "",
+    actionPlan: checklist.actionPlan ?? "",
+    currentStatusText: checklist.currentStatusText ?? "",
+    riskIfNotComplied: checklist.riskIfNotComplied ?? "",
+    dueDays: checklist.dueDays?.toString() ?? "",
+    complianceDomain: checklist.complianceDomain ?? "",
+    frequency: checklist.frequency ?? "",
+  });
+
+  const setField = (k: string) =>
+    (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
+      setForm(prev => ({ ...prev, [k]: e.target.value }));
+
+  const handleSave = () => {
+    onSave({
+      implementationMethod: form.implementationMethod,
+      responsibleUnit: form.responsibleUnit,
+      responsibleRole: form.responsibleRole,
+      requiredEvidence: form.requiredEvidence,
+      actionPlan: form.actionPlan,
+      currentStatusText: form.currentStatusText,
+      riskIfNotComplied: form.riskIfNotComplied,
+      dueDays: form.dueDays.trim() !== "" ? parseInt(form.dueDays) : null,
+      complianceDomain: form.complianceDomain,
+      frequency: form.frequency,
+    });
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
+      <div className="bg-level-1 rounded-2xl shadow-lg w-full max-w-2xl mx-4 flex flex-col max-h-[85vh]">
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 py-4 border-b border-border-low shrink-0">
+          <div>
+            <h3 className="text-sm font-semibold text-txt-primary">Cập nhật chi tiết thực thi</h3>
+            <p className="text-xs text-txt-tertiary mt-0.5 font-mono">{checklist.checklistCode}</p>
+          </div>
+          <button onClick={onCancel} className="text-txt-tertiary hover:text-txt-primary p-1">
+            <IconCrossLargeX size={16} />
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+          <Field label="Phương thức thực hiện">
+            <textarea
+              rows={3}
+              className={textareaClass}
+              value={form.implementationMethod}
+              onChange={setField("implementationMethod")}
+              placeholder="Mô tả cách đơn vị thực hiện tuân thủ yêu cầu này..."
+            />
+          </Field>
+
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Đơn vị chủ trì">
+              <input
+                type="text"
+                className={inputClass}
+                value={form.responsibleUnit}
+                onChange={setField("responsibleUnit")}
+                placeholder="VD: Phòng An toàn hàng không"
+              />
+            </Field>
+            <Field label="Vai trò / Chức danh">
+              <input
+                type="text"
+                className={inputClass}
+                value={form.responsibleRole}
+                onChange={setField("responsibleRole")}
+                placeholder="VD: Trưởng phòng, Chuyên viên"
+              />
+            </Field>
+          </div>
+
+          <Field label="Bằng chứng yêu cầu">
+            <textarea
+              rows={2}
+              className={textareaClass}
+              value={form.requiredEvidence}
+              onChange={setField("requiredEvidence")}
+              placeholder="Liệt kê các tài liệu, hồ sơ cần nộp làm bằng chứng tuân thủ..."
+            />
+          </Field>
+
+          <Field label="Tình trạng hiện tại">
+            <textarea
+              rows={2}
+              className={textareaClass}
+              value={form.currentStatusText}
+              onChange={setField("currentStatusText")}
+              placeholder="Mô tả tình trạng tuân thủ hiện tại của đơn vị..."
+            />
+          </Field>
+
+          <Field label="Kế hoạch hành động">
+            <textarea
+              rows={2}
+              className={textareaClass}
+              value={form.actionPlan}
+              onChange={setField("actionPlan")}
+              placeholder="Các bước cần thực hiện để đạt tuân thủ..."
+            />
+          </Field>
+
+          <Field label="Rủi ro nếu không tuân thủ">
+            <textarea
+              rows={2}
+              className={textareaClass}
+              value={form.riskIfNotComplied}
+              onChange={setField("riskIfNotComplied")}
+              placeholder="Hệ quả pháp lý, an toàn nếu không thực hiện..."
+            />
+          </Field>
+
+          <div className="grid grid-cols-3 gap-4">
+            <Field label="Thời hạn (ngày)">
+              <input
+                type="number"
+                min={0}
+                className={inputClass}
+                value={form.dueDays}
+                onChange={setField("dueDays")}
+                placeholder="VD: 30"
+              />
+            </Field>
+            <Field label="Lĩnh vực tuân thủ">
+              <input
+                type="text"
+                className={inputClass}
+                value={form.complianceDomain}
+                onChange={setField("complianceDomain")}
+                placeholder="VD: An toàn bay"
+              />
+            </Field>
+            <Field label="Tần suất">
+              <input
+                type="text"
+                className={inputClass}
+                value={form.frequency}
+                onChange={setField("frequency")}
+                placeholder="VD: Hàng năm"
+              />
+            </Field>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="px-5 py-3 border-t border-border-low flex gap-2 justify-end shrink-0">
+          <Button variant="secondary" onClick={onCancel}>Huỷ</Button>
+          <Button disabled={saving} onClick={handleSave}>
+            {saving ? "Đang lưu..." : "Lưu thay đổi"}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Detail Panel ─────────────────────────────────────────────────────────────
 
 function DetailPanel({
@@ -317,14 +564,28 @@ function DetailPanel({
   onClose,
   onApprove,
   onReject,
+  onUpdate,
+  onGotoAssignments,
 }: {
   checklist: Checklist;
   onClose: () => void;
   onApprove: () => void;
   onReject: () => void;
+  onUpdate: () => void;
+  onGotoAssignments: () => void;
 }) {
+  const hasExecInfo =
+    checklist.implementationMethod ||
+    checklist.responsibleUnit ||
+    checklist.dueDays != null ||
+    checklist.complianceDomain ||
+    checklist.frequency;
+
+  const hasStatusInfo =
+    checklist.currentStatusText || checklist.actionPlan || checklist.riskIfNotComplied;
+
   return (
-    <Card padded className="sticky top-4 space-y-3">
+    <Card padded className="sticky top-4 space-y-3 overflow-y-auto max-h-[calc(100vh-160px)]">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold text-txt-primary">Chi tiết checklist</h3>
         <button onClick={onClose}>
@@ -332,11 +593,16 @@ function DetailPanel({
         </button>
       </div>
 
+      {/* Code + Question */}
       <div className="bg-subtle rounded-lg p-3 space-y-1">
         <p className="font-mono text-xs text-txt-secondary">{checklist.checklistCode}</p>
         <p className="text-sm font-medium text-txt-primary leading-snug">{checklist.checklistQuestion}</p>
+        {checklist.sourceReference && (
+          <p className="text-xs text-txt-tertiary mt-1">Nguồn: {checklist.sourceReference}</p>
+        )}
       </div>
 
+      {/* Base info */}
       <div className="space-y-2 text-sm">
         <DetailRow label="Tài liệu" value={`${checklist.document.code} — ${checklist.document.title}`} />
         <DetailRow label="Phiên bản" value={`v${checklist.documentVersion.versionCode}`} />
@@ -346,18 +612,13 @@ function DetailPanel({
             value={`${checklist.requirement.requirementCode}: ${checklist.requirement.title}`}
           />
         )}
-        {checklist.responsibleUnit && (
-          <DetailRow label="Đơn vị thực hiện" value={checklist.responsibleUnit} />
-        )}
-        {checklist.complianceDomain && (
-          <DetailRow label="Lĩnh vực tuân thủ" value={checklist.complianceDomain} />
-        )}
         <DetailRow label="Ưu tiên" value={PRIORITY_LABELS[checklist.priority] ?? checklist.priority} />
         <DetailRow label="Nguồn tạo" value={CREATED_FROM_LABELS[checklist.createdFrom] ?? checklist.createdFrom} />
         <DetailRow label="Ngày tạo" value={fmtDate(checklist.createdAt)} />
         <DetailRow label="Cập nhật" value={fmtDate(checklist.updatedAt)} />
       </div>
 
+      {/* Status badges */}
       <div className="flex gap-2 items-center">
         <Badge variant={STATUS_COLORS[checklist.status] ?? "neutral"}>
           {STATUS_LABELS[checklist.status] ?? checklist.status}
@@ -367,6 +628,90 @@ function DetailPanel({
         </Badge>
       </div>
 
+      {/* ── Section: Thực thi ── */}
+      <div className="border-t border-border-low pt-3">
+        <p className="text-xs font-semibold text-green-700 mb-2 flex items-center gap-1">
+          <span className="inline-block w-2 h-2 rounded-full bg-green-500" />
+          Thực thi
+        </p>
+        <div
+          className="rounded-lg p-3 space-y-2 text-xs"
+          style={{ background: "rgba(240,253,244,0.7)", border: "1px solid #bbf7d0" }}
+        >
+          <ExecRow
+            label="Phương thức"
+            value={checklist.implementationMethod}
+            empty="Chưa thiết lập"
+          />
+          <ExecRow
+            label="Đơn vị chủ trì"
+            value={[checklist.responsibleUnit, checklist.responsibleRole].filter(Boolean).join(" · ") || null}
+            empty="Chưa thiết lập"
+          />
+          <ExecRow
+            label="Thời hạn"
+            value={checklist.dueDays != null ? `${checklist.dueDays} ngày` : null}
+            empty="Chưa thiết lập"
+          />
+          {checklist.complianceDomain && (
+            <ExecRow label="Lĩnh vực" value={checklist.complianceDomain} />
+          )}
+          {checklist.frequency && (
+            <ExecRow label="Tần suất" value={checklist.frequency} />
+          )}
+          {!hasExecInfo && (
+            <p className="text-txt-tertiary italic">Chưa có thông tin thực thi. Bấm "Cập nhật chi tiết" để điền.</p>
+          )}
+        </div>
+      </div>
+
+      {/* ── Section: Bằng chứng yêu cầu ── */}
+      {checklist.requiredEvidence && (
+        <div className="border-t border-border-low pt-3">
+          <p className="text-xs font-semibold text-amber-700 mb-2 flex items-center gap-1">
+            <span className="inline-block w-2 h-2 rounded-full bg-amber-400" />
+            Bằng chứng yêu cầu
+          </p>
+          <div
+            className="rounded-lg p-3 text-xs text-txt-primary leading-relaxed"
+            style={{ background: "rgba(255,251,235,0.8)", border: "1px solid #fde68a" }}
+          >
+            {checklist.requiredEvidence}
+          </div>
+        </div>
+      )}
+
+      {/* ── Section: Tình trạng & Kế hoạch ── */}
+      {hasStatusInfo && (
+        <div className="border-t border-border-low pt-3">
+          <p className="text-xs font-semibold text-blue-700 mb-2 flex items-center gap-1">
+            <span className="inline-block w-2 h-2 rounded-full bg-blue-500" />
+            Tình trạng & Kế hoạch
+          </p>
+          <div className="space-y-2">
+            {checklist.currentStatusText && (
+              <div>
+                <p className="text-[10px] text-txt-tertiary mb-0.5">Tình trạng hiện tại</p>
+                <p className="text-xs text-txt-primary leading-relaxed">{checklist.currentStatusText}</p>
+              </div>
+            )}
+            {checklist.actionPlan && (
+              <div>
+                <p className="text-[10px] text-txt-tertiary mb-0.5">Kế hoạch hành động</p>
+                <p className="text-xs text-txt-primary leading-relaxed">{checklist.actionPlan}</p>
+              </div>
+            )}
+            {checklist.riskIfNotComplied && (
+              <div>
+                <p className="text-[10px] text-txt-tertiary mb-0.5">Rủi ro nếu không tuân thủ</p>
+                <p className="text-xs text-red-600 leading-relaxed">{checklist.riskIfNotComplied}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Approval actions */}
       {checklist.approvalStatus === "PENDING_REVIEW" && (
         <div className="flex gap-2 pt-2 border-t border-border-low">
           <Button icon={IconCheckmark1} onClick={onApprove}>
@@ -377,6 +722,16 @@ function DetailPanel({
           </Button>
         </div>
       )}
+
+      {/* Operational actions */}
+      <div className="flex gap-2 pt-2 border-t border-border-low">
+        <Button onClick={onUpdate}>
+          Cập nhật chi tiết
+        </Button>
+        <Button variant="secondary" onClick={onGotoAssignments}>
+          Giao việc →
+        </Button>
+      </div>
     </Card>
   );
 }
@@ -386,6 +741,17 @@ function DetailRow({ label, value }: { label: string; value: string }) {
     <div>
       <p className="text-xs text-txt-tertiary mb-0.5">{label}</p>
       <p className="text-sm text-txt-primary leading-snug">{value}</p>
+    </div>
+  );
+}
+
+function ExecRow({ label, value, empty }: { label: string; value?: string | null; empty?: string }) {
+  return (
+    <div className="flex gap-2">
+      <span className="text-txt-tertiary shrink-0 w-24">{label}:</span>
+      <span className={value ? "text-txt-primary font-medium" : "text-txt-tertiary italic"}>
+        {value ?? empty ?? "—"}
+      </span>
     </div>
   );
 }
@@ -629,11 +995,14 @@ export function IcpmsChecklistPage() {
   const organizationId = useOrganizationId();
   const environment = useRelayEnvironment();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const [checklists, setChecklists] = useState<Checklist[]>([]);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<Checklist | null>(null);
   const [rejectTarget, setRejectTarget] = useState<Checklist | null>(null);
+  const [updateTarget, setUpdateTarget] = useState<Checklist | null>(null);
+  const [updating, setUpdating] = useState(false);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("ALL");
   const [showAiModal, setShowAiModal] = useState(false);
 
@@ -641,6 +1010,7 @@ export function IcpmsChecklistPage() {
   const [commitReject] = useMutation(rejectChecklistMutation);
   const [commitDelete] = useMutation(deleteChecklistMutation);
   const [commitArchive] = useMutation(archiveChecklistMutation);
+  const [commitUpdate] = useMutation(updateChecklistMutation);
 
   const loadChecklists = useCallback(() => {
     setLoading(true);
@@ -725,6 +1095,41 @@ export function IcpmsChecklistPage() {
     });
   };
 
+  const handleUpdate = (cl: Checklist, fields: UpdateFields) => {
+    setUpdating(true);
+    commitUpdate({
+      variables: {
+        input: {
+          id: cl.id,
+          implementationMethod: fields.implementationMethod || null,
+          responsibleUnit: fields.responsibleUnit || null,
+          responsibleRole: fields.responsibleRole || null,
+          requiredEvidence: fields.requiredEvidence || null,
+          actionPlan: fields.actionPlan || null,
+          currentStatusText: fields.currentStatusText || null,
+          riskIfNotComplied: fields.riskIfNotComplied || null,
+          dueDays: fields.dueDays,
+          complianceDomain: fields.complianceDomain || null,
+          frequency: fields.frequency || null,
+        },
+      },
+      onCompleted: (res: any) => {
+        setUpdating(false);
+        const updated = res?.updateIcpmsChecklist?.checklist;
+        if (updated) {
+          setChecklists(prev => prev.map(c => c.id === cl.id ? { ...c, ...updated } : c));
+          if (selected?.id === cl.id) setSelected(prev => prev ? { ...prev, ...updated } : prev);
+        }
+        setUpdateTarget(null);
+        toast({ title: "Đã cập nhật chi tiết checklist", description: cl.checklistCode, variant: "success" });
+      },
+      onError: (err: Error) => {
+        setUpdating(false);
+        toast({ title: "Không thể cập nhật", description: formatError(err), variant: "error" });
+      },
+    });
+  };
+
   const filtered = checklists.filter(cl => {
     if (statusFilter === "ALL") return true;
     if (statusFilter === "PENDING_REVIEW") return cl.approvalStatus === "PENDING_REVIEW";
@@ -742,7 +1147,7 @@ export function IcpmsChecklistPage() {
     <div className="space-y-6">
       <PageHeader
         title="Checklist tuân thủ"
-        description="Danh sách các checklist tuân thủ ICPMS. Checklist được tạo từ gợi ý AI Review hoặc nhập thủ công và phải được phê duyệt trước khi áp dụng."
+        description="Nơi các đơn vị VATM thực thi tuân thủ — điền phương thức, cập nhật tình trạng, giao việc và theo dõi tiến độ hoàn thành."
       />
 
       {/* Stats bar */}
@@ -844,6 +1249,13 @@ export function IcpmsChecklistPage() {
                       <Td>
                         <p className="font-mono text-xs text-txt-secondary mb-0.5">{cl.checklistCode}</p>
                         <p className="text-xs text-txt-primary line-clamp-2 max-w-56">{cl.checklistQuestion}</p>
+                        {/* mini exec indicator */}
+                        {(cl.implementationMethod || cl.dueDays != null) && (
+                          <p className="text-[10px] text-green-600 mt-0.5">
+                            {cl.dueDays != null ? `⏱ ${cl.dueDays}d` : ""}
+                            {cl.implementationMethod ? " · Có PT thực hiện" : ""}
+                          </p>
+                        )}
                       </Td>
                       <Td>
                         <p className="text-xs font-medium text-txt-primary">{cl.document.code}</p>
@@ -933,6 +1345,8 @@ export function IcpmsChecklistPage() {
               onClose={() => setSelected(null)}
               onApprove={() => handleApprove(selected)}
               onReject={() => setRejectTarget(selected)}
+              onUpdate={() => setUpdateTarget(selected)}
+              onGotoAssignments={() => navigate(`/organizations/${organizationId}/assignments`)}
             />
           </div>
         )}
@@ -952,7 +1366,7 @@ export function IcpmsChecklistPage() {
                 <strong>Cách 2 (Từ phiên cũ):</strong> Bấm <strong>"Tạo từ AI Review"</strong> bên trên, chọn phiên đã hoàn thành và tạo checklist hàng loạt.
               </p>
               <p className="text-xs text-txt-tertiary mt-0.5">
-                <strong>Sau khi tạo:</strong> Kiểm tra nội dung và bấm <strong>"Phê duyệt"</strong> để checklist có hiệu lực (trạng thái: Đang áp dụng).
+                <strong>Sau khi tạo:</strong> Phê duyệt checklist, sau đó bấm <strong>"Cập nhật chi tiết"</strong> để điền phương thức thực thi, đơn vị chủ trì và thời hạn. Cuối cùng bấm <strong>"Giao việc →"</strong> để tạo nhiệm vụ thực hiện.
               </p>
             </div>
           </div>
@@ -978,6 +1392,16 @@ export function IcpmsChecklistPage() {
           checklist={rejectTarget}
           onConfirm={reason => handleRejectConfirm(rejectTarget, reason)}
           onCancel={() => setRejectTarget(null)}
+        />
+      )}
+
+      {/* Update dialog */}
+      {updateTarget && (
+        <UpdateDialog
+          checklist={updateTarget}
+          saving={updating}
+          onSave={fields => handleUpdate(updateTarget, fields)}
+          onCancel={() => setUpdateTarget(null)}
         />
       )}
     </div>

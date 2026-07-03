@@ -115,9 +115,10 @@ func (s *IcpmsIngestionJobService) Update(
 				finished_at = @finished_at,
 				error_message = @error_message,
 				warning_message = @warning_message,
+				ai_model_used = @ai_model_used,
 				updated_at = NOW()
 			WHERE id = @id AND tenant_id = @tenant_id`
-			
+
 			args := pgx.StrictNamedArgs{
 				"status":            job.Status,
 				"progress_percent":  job.ProgressPercent,
@@ -129,6 +130,7 @@ func (s *IcpmsIngestionJobService) Update(
 				"finished_at":       job.FinishedAt,
 				"error_message":     job.ErrorMessage,
 				"warning_message":   job.WarningMessage,
+				"ai_model_used":     job.AIModelUsed,
 				"id":                job.ID,
 				"tenant_id":         job.TenantID,
 			}

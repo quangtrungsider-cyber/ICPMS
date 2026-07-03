@@ -92,7 +92,11 @@ export const makeFetchQuery = (endpoint: string): FetchFunction => {
             throw new InternalServerError();
         }
 
-        const json = await response.json();
+        const text = await response.text();
+        if (!text) {
+            throw new InternalServerError();
+        }
+        const json = JSON.parse(text);
 
         if (json.errors) {
             const errors = json.errors as GraphQLError[];
@@ -120,6 +124,12 @@ export const makeFetchQuery = (endpoint: string): FetchFunction => {
             const forbiddenError = errors.find(hasForbiddenError);
             if (forbiddenError) {
                 throw new ForbiddenError(forbiddenError.message);
+            }
+
+            // Catch-all: surface the first generic error so onError callbacks fire
+            const firstError = errors[0];
+            if (firstError) {
+                throw new Error(firstError.message);
             }
         }
 

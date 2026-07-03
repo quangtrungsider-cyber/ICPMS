@@ -39,7 +39,7 @@ services:
     volumes:
       - minio-data:/data
     ports:
-      - "9000:9000"
+      - "9002:9000"
       - "9001:9001"
     healthcheck:
       test: ["CMD", "mc", "ready", "local"]
@@ -75,14 +75,15 @@ services:
       # mount đúng vị trí cạnh vatm_pdf_to_word_app.py (/app) để code tự nhận
       # diện qua _find_bundled_dir("paddlex_cache"), không cần tải lại từ mạng.
       - ./ocr-service/paddlex_cache:/app/paddlex_cache
+      - ./ocr-service/torch_cache:/root/.cache/torch
     ports:
       - "8765:8765"
     healthcheck:
       test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8765/healthz')"]
-      interval: 10s
-      timeout: 10s
-      retries: 5
-      start_period: 30s
+      interval: 30s
+      timeout: 30s
+      retries: 20
+      start_period: 120s
 
   # --- Application server (backend + embedded frontend) -----------
   app:

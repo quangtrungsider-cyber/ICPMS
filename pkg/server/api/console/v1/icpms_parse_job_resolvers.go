@@ -76,3 +76,26 @@ func (r *queryResolver) ParsedSectionsForJob(ctx context.Context, parseJobID gid
 	}
 	return sections, nil
 }
+
+// ArticleSectionForSection is the resolver for the articleSectionForSection field.
+func (r *queryResolver) ArticleSectionForSection(ctx context.Context, sectionID gid.GID) (*coredata.IcpmsParsedDocumentSection, error) {
+	scope := coredata.NewScope(sectionID.TenantID())
+	sec, err := r.probo.IcpmsParseJobs.GetArticleSectionForSection(ctx, scope, sectionID)
+	if err != nil {
+		return nil, fmt.Errorf("cannot get article section: %w", err)
+	}
+	return sec, nil
+}
+
+// ArticleSectionWithDescendants is the resolver for the articleSectionWithDescendants field.
+func (r *queryResolver) ArticleSectionWithDescendants(ctx context.Context, sectionID gid.GID) (*types.IcpmsArticleContent, error) {
+	scope := coredata.NewScope(sectionID.TenantID())
+	article, descendants, err := r.probo.IcpmsParseJobs.GetArticleWithDescendants(ctx, scope, sectionID)
+	if err != nil {
+		return nil, fmt.Errorf("cannot get article with descendants: %w", err)
+	}
+	if descendants == nil {
+		descendants = []*coredata.IcpmsParsedDocumentSection{}
+	}
+	return &types.IcpmsArticleContent{Article: article, Sections: descendants}, nil
+}

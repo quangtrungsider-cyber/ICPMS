@@ -36,6 +36,7 @@ type (
 		FinishedAt        *time.Time `db:"finished_at"`
 		ErrorMessage      *string    `db:"error_message"`
 		WarningMessage    *string    `db:"warning_message"`
+		AIModelUsed       *string    `db:"ai_model_used"`
 		CreatedBy         gid.GID    `db:"created_by"`
 		CreatedAt         time.Time  `db:"created_at"`
 		UpdatedAt         time.Time  `db:"updated_at"`

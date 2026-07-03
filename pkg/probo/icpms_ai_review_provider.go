@@ -31,6 +31,7 @@ type AIReviewOutput struct {
 	SuggestedPlainLanguageText    *string
 	SuggestedRequirementType      *string
 	SuggestedApplicabilityStatus  *string
+	SuggestedApplicabilityNote    *string
 	SuggestedPriority             *string
 	SuggestedComplianceDomain     *string
 	AiConfidence                  float64

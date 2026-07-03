@@ -35,6 +35,8 @@ import { graphql } from "relay-runtime";
 
 import type { SidebarFragment$key } from "#/__generated__/iam/SidebarFragment.graphql";
 import { useOrganizationId } from "#/hooks/useOrganizationId";
+import { canAccess, loadPermissions, type IcpmsRole } from "#/hooks/useIcpmsPermissions";
+import type { Role } from "@probo/helpers";
 
 const fragment = graphql`
     fragment SidebarFragment on Organization {
@@ -68,99 +70,73 @@ const fragment = graphql`
     }
 `;
 
-export function Sidebar(props: { fKey: SidebarFragment$key }) {
-  const { fKey } = props;
+export function Sidebar(props: { fKey: SidebarFragment$key; role: Role }) {
+  const { fKey, role } = props;
 
   const organizationId = useOrganizationId();
-
   const organization = useFragment<SidebarFragment$key>(fragment, fKey);
+  const matrix = loadPermissions(organizationId);
+  const r = role as IcpmsRole;
+  const can = (mod: Parameters<typeof canAccess>[1]) => canAccess(matrix, mod, r);
 
   const prefix = `/organizations/${organizationId}`;
 
   return (
     <ul className="space-y-[2px]">
-      {organization.canGetContext && (
-        <SidebarItem
-          label="Tổng quan"
-          icon={IconPageTextSolid}
-          to={`${prefix}/context`}
-        />
+      {can("dashboard") && (
+        <SidebarItem label="Tổng quan" icon={IconPageTextSolid} to={`${prefix}/icpms-overview`} />
       )}
-      {organization.canListDocuments && (
-        <SidebarItem
-          label="Tài liệu"
-          icon={IconPageTextLine}
-          to={`${prefix}/icpms-documents`}
-        />
+      {can("documents") && organization.canListDocuments && (
+        <SidebarItem label="Tài liệu" icon={IconPageTextLine} to={`${prefix}/icpms-documents`} />
+      )}
+      {can("ingestion") && (
+        <SidebarItem label="Bóc tách tài liệu" icon={IconSettingsGear2} to={`${prefix}/ingestion-jobs`} />
+      )}
+      {can("requirements") && (
+        <SidebarItem label="Yêu cầu" icon={IconTodo} to={`${prefix}/requirements`} />
+      )}
+      {can("ai-review") && (
+        <SidebarItem label="AI Review" icon={IconMagnifyingGlass} to={`${prefix}/ai-review`} />
+      )}
+      {can("checklist") && (
+        <SidebarItem label="Checklist" icon={IconBook} to={`${prefix}/checklist`} />
+      )}
+      {can("assignments") && (
+        <SidebarItem label="Giao việc" icon={IconInboxEmpty} to={`${prefix}/assignments`} />
+      )}
+      {can("evidence") && (
+        <SidebarItem label="Bằng chứng" icon={IconPageCheck} to={`${prefix}/evidence`} />
+      )}
+      {can("risks") && organization.canListRisks && (
+        <SidebarItem label="Rủi ro an toàn" icon={IconFire3} to={`${prefix}/risks`} />
+      )}
+      {can("audits") && organization.canListAudits && (
+        <SidebarItem label="Kiểm tra / Đánh giá" icon={IconMedal} to={`${prefix}/audits`} />
+      )}
+      {can("reports") && (
+        <SidebarItem label="Báo cáo" icon={IconCircleProgress} to={`${prefix}/reports`} />
+      )}
+      {can("search") && (
+        <SidebarItem label="Tra cứu" icon={IconMagnifyingGlass} to={`${prefix}/search`} />
       )}
 
-      <SidebarItem
-        label="Bóc tách tài liệu"
-        icon={IconSettingsGear2}
-        to={`${prefix}/ingestion-jobs`}
-      />
-      <SidebarItem
-        label="Yêu cầu"
-        icon={IconTodo}
-        to={`${prefix}/requirements`}
-      />
-      <SidebarItem
-        label="AI Review"
-        icon={IconMagnifyingGlass}
-        to={`${prefix}/ai-review`}
-      />
-      <SidebarItem
-        label="Checklist"
-        icon={IconBook}
-        to={`${prefix}/checklist`}
-      />
-      <SidebarItem
-        label="Giao việc"
-        icon={IconInboxEmpty}
-        to={`${prefix}/assignments`}
-      />
-      <SidebarItem
-        label="Bằng chứng"
-        icon={IconPageCheck}
-        to={`${prefix}/evidence-placeholder`}
-      />
-      {organization.canListRisks && (
-        <SidebarItem
-          label="Rủi ro an toàn"
-          icon={IconFire3}
-          to={`${prefix}/risks`}
-        />
+      {/* ── Quản trị ── */}
+      {(can("people") || can("roles") || can("nhat-ky") || can("settings")) && (
+        <li className="px-2 pt-4 pb-1">
+          <p className="text-[10px] font-semibold text-txt-tertiary uppercase tracking-wider">Quản trị</p>
+        </li>
       )}
-      {organization.canListAudits && (
-        <SidebarItem
-          label="Kiểm tra / Đánh giá"
-          icon={IconMedal}
-          to={`${prefix}/audits`}
-        />
+      {can("people") && organization.canListMembers && (
+        <SidebarItem label="Người dùng" icon={IconGroup1} to={`${prefix}/people`} />
       )}
-      <SidebarItem
-        label="Báo cáo"
-        icon={IconCircleProgress}
-        to={`${prefix}/reports`}
-      />
-      <SidebarItem
-        label="Tra cứu"
-        icon={IconMagnifyingGlass}
-        to={`${prefix}/search`}
-      />
-      {organization.canUpdateOrganization && (
-        <SidebarItem
-          label="Cấu hình"
-          icon={IconSettingsGear2}
-          to={`${prefix}/settings`}
-        />
+      {can("roles") && (
+        <SidebarItem label="Phân quyền" icon={IconMedal} to={`${prefix}/roles`} />
       )}
-      {organization.canListMembers && (
-        <SidebarItem
-          label="Người dùng"
-          icon={IconGroup1}
-          to={`${prefix}/people`}
-        />
+      {can("nhat-ky") && (
+        <SidebarItem label="Nhật ký" icon={IconCircleProgress} to={`${prefix}/nhat-ky`} />
+      )}
+      {can("settings") && organization.canUpdateOrganization && (
+        <SidebarItem label="Cấu hình" icon={IconSettingsGear2} to={`${prefix}/settings`} />
       )}
 
       {/* Hidden modules from Probo 

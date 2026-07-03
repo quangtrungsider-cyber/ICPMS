@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<113726f3e57dbdd5c0f20352a44deca9>>
+ * @generated SignedSource<<d11afa29d3fa1123a6193d2baf43e58f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type PersonFormFragment$data = {
   readonly canUpdate: boolean;
   readonly contractEndDate: string | null | undefined;
   readonly contractStartDate: string | null | undefined;
+  readonly department: string | null | undefined;
   readonly emailAddress: string;
   readonly fullName: string;
   readonly id: string;
@@ -106,6 +107,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "department",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "additionalEmailAddresses",
       "storageKey": null
     },
@@ -141,6 +149,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "37e8a56333b217e5b6d3b94b455d7d40";
+(node as any).hash = "8f0cfc1f8daa8672f0d92127a8e80d5c";
 
 export default node;

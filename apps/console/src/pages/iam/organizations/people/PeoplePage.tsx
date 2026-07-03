@@ -63,11 +63,11 @@ export function PeoplePage(props: {
 
   return (
     <div className="space-y-6">
-      <PageHeader title={__("People")}>
+      <PageHeader title="Danh sách người dùng">
         {organization.canCreateUser
           && (
             <AddPersonDialog connectionId={connectionId}>
-              <Button variant="secondary">{__("Add Person")}</Button>
+              <Button variant="secondary">Thêm người dùng</Button>
             </AddPersonDialog>
           )}
       </PageHeader>

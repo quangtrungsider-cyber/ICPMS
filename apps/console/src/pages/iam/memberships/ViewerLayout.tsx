@@ -18,6 +18,7 @@ import { graphql, type PreloadedQuery, usePreloadedQuery } from "react-relay";
 import { Outlet } from "react-router";
 
 import type { ViewerLayoutQuery } from "#/__generated__/iam/ViewerLayoutQuery.graphql";
+import { UiSettingsBar } from "#/components/UiSettingsBar";
 
 import { ViewerDropdown } from "./_components/ViewerDropdown";
 
@@ -41,16 +42,21 @@ export function ViewerLayout(props: {
   );
 
   return (
-    <Layout
-      headerTrailing={(
-        <div className="ml-auto">
-          <Suspense fallback={<Skeleton className="w-32 h-8" />}>
-            <ViewerDropdown fKey={viewer} />
-          </Suspense>
-        </div>
-      )}
-    >
-      <Outlet />
-    </Layout>
+    <>
+      <UiSettingsBar />
+      <div style={{ paddingBottom: 40 }}>
+        <Layout
+          headerTrailing={(
+            <div className="ml-auto">
+              <Suspense fallback={<Skeleton className="w-32 h-8" />}>
+                <ViewerDropdown fKey={viewer} />
+              </Suspense>
+            </div>
+          )}
+        >
+          <Outlet />
+        </Layout>
+      </div>
+    </>
   );
 }

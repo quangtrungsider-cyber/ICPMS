@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<87d07de57247f129b66225595215a2b4>>
+ * @generated SignedSource<<3217eb99997adb08d8bc2cd8d0f88a29>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ export type UpdateUserInput = {
   additionalEmailAddresses?: ReadonlyArray<string> | null | undefined;
   contractEndDate?: string | null | undefined;
   contractStartDate?: string | null | undefined;
+  department?: string | null | undefined;
   fullName: string;
   id: string;
   kind?: string | null | undefined;

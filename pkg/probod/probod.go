@@ -565,7 +565,6 @@ func (impl *Implm) Run(
 		TimeoutSeconds: impl.cfg.ICPMSOCRService.TimeoutSeconds,
 		Enabled:        impl.cfg.ICPMSOCRService.Enabled,
 	}
-
 	trustService := trust.NewService(
 		pgClient,
 		s3Client,

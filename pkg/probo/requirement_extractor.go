@@ -150,11 +150,11 @@ func ExtractFromSection(text string, language string) *ExtractResult {
 }
 
 // SectionIsEligible returns true for section types that can produce requirements.
+// Chỉ trích xuất đến cấp Khoản (Clause) — không trích xuất Điểm (Point) để tránh rời rạc.
 func SectionIsEligible(sectionType coredata.IcpmsDocumentSectionType) bool {
 	switch sectionType {
 	case coredata.IcpmsDocumentSectionTypeArticle,
 		coredata.IcpmsDocumentSectionTypeClause,
-		coredata.IcpmsDocumentSectionTypePoint,
 		coredata.IcpmsDocumentSectionTypeParagraph,
 		coredata.IcpmsDocumentSectionTypeSubparagraph,
 		coredata.IcpmsDocumentSectionTypeAppendix,

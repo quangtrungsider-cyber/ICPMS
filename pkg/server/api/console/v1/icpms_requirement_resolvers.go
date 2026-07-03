@@ -33,6 +33,55 @@ func (r *icpmsRequirementResolver) Document(ctx context.Context, obj *coredata.I
 	return types.NewIcpmsDocument(doc), nil
 }
 
+// SourceReference is the resolver for the sourceReference field.
+// It walks up the parent chain to produce a full reference such as
+// "Điểm a, Khoản 1, Điều 8, Chương III".
+func (r *icpmsRequirementResolver) SourceReference(ctx context.Context, obj *coredata.IcpmsRequirement) (*string, error) {
+	if obj.SourceSectionID == nil {
+		return nil, nil
+	}
+	scope := coredata.NewScope(obj.TenantID)
+
+	var chain []*coredata.IcpmsParsedDocumentSection
+	currentID := *obj.SourceSectionID
+	for i := 0; i < 8; i++ {
+		sec, err := r.probo.IcpmsParseJobs.GetSectionByID(ctx, scope, currentID)
+		if err != nil {
+			break
+		}
+		chain = append(chain, sec)
+		// Stop when we reach chapter level (depthLevel 0 or 1) or no parent.
+		if sec.ParentID == nil || sec.DepthLevel <= 1 {
+			break
+		}
+		currentID = *sec.ParentID
+	}
+
+	ref := formatSourceReferenceChain(chain)
+	return &ref, nil
+}
+
+// SourceSectionSummary is the resolver for the sourceSectionSummary field.
+func (r *icpmsRequirementResolver) SourceSectionSummary(ctx context.Context, obj *coredata.IcpmsRequirement) (*string, error) {
+	if obj.SourceSectionID == nil {
+		return nil, nil
+	}
+	scope := coredata.NewScope(obj.TenantID)
+	sec, err := r.probo.IcpmsParseJobs.GetSectionByID(ctx, scope, *obj.SourceSectionID)
+	if err != nil {
+		return nil, nil //nolint:nilerr // best-effort
+	}
+	summary := sec.FullHeading
+	if sec.ContentText != nil && *sec.ContentText != "" {
+		runes := []rune(*sec.ContentText)
+		if len(runes) > 500 {
+			runes = runes[:500]
+		}
+		summary += "\n\n" + string(runes)
+	}
+	return &summary, nil
+}
+
 // RequirementType is the resolver for the requirementType field.
 func (r *icpmsRequirementResolver) RequirementType(ctx context.Context, obj *coredata.IcpmsRequirement) (types.IcpmsRequirementType, error) {
 	return types.IcpmsRequirementType(obj.RequirementType), nil
@@ -110,6 +159,45 @@ func (r *mutationResolver) UpdateIcpmsRequirement(ctx context.Context, input typ
 	}
 
 	return &types.UpdateIcpmsRequirementPayload{Requirement: req}, nil
+}
+
+// DeleteIcpmsRequirementsForDocument is the resolver for the deleteIcpmsRequirementsForDocument field.
+func (r *mutationResolver) DeleteIcpmsRequirementsForDocument(ctx context.Context, documentID gid.GID) (int, error) {
+	scope := coredata.NewScope(documentID.TenantID())
+	count, err := r.probo.IcpmsRequirements.DeleteForDocument(ctx, scope, documentID)
+	if err != nil {
+		return 0, fmt.Errorf("cannot delete requirements for document: %w", err)
+	}
+	return count, nil
+}
+
+// DeleteIcpmsRequirementsForVersion is the resolver for the deleteIcpmsRequirementsForVersion field.
+func (r *mutationResolver) DeleteIcpmsRequirementsForVersion(ctx context.Context, documentVersionID gid.GID) (int, error) {
+	scope := coredata.NewScope(documentVersionID.TenantID())
+	count, err := r.probo.IcpmsRequirements.DeleteForVersion(ctx, scope, documentVersionID)
+	if err != nil {
+		return 0, fmt.Errorf("cannot delete requirements for version: %w", err)
+	}
+	return count, nil
+}
+
+// DeleteIcpmsRequirement is the resolver for the deleteIcpmsRequirement field.
+func (r *mutationResolver) DeleteIcpmsRequirement(ctx context.Context, id gid.GID) (bool, error) {
+	scope := coredata.NewScope(id.TenantID())
+	if err := r.probo.IcpmsRequirements.DeleteOne(ctx, scope, id); err != nil {
+		return false, fmt.Errorf("cannot delete requirement: %w", err)
+	}
+	return true, nil
+}
+
+// ApproveIcpmsRequirementsForParseJob is the resolver for the approveIcpmsRequirementsForParseJob field.
+func (r *mutationResolver) ApproveIcpmsRequirementsForParseJob(ctx context.Context, parseJobID gid.GID) (int, error) {
+	scope := coredata.NewScope(parseJobID.TenantID())
+	count, err := r.probo.IcpmsRequirements.ApproveAllForParseJob(ctx, scope, parseJobID)
+	if err != nil {
+		return 0, fmt.Errorf("cannot approve requirements: %w", err)
+	}
+	return count, nil
 }
 
 // IcpmsRequirementsForOrganization is the resolver for the icpmsRequirementsForOrganization field.

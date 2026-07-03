@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ab776ce220197f677509065c09266a6c>>
+ * @generated SignedSource<<b71c0ecd6b562766b9c6d48a61ccebac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -311,6 +311,13 @@ return {
                           {
                             "alias": null,
                             "args": null,
+                            "kind": "ScalarField",
+                            "name": "department",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
                             "concreteType": "Membership",
                             "kind": "LinkedField",
                             "name": "membership",
@@ -498,12 +505,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "15a5dd79df1b16aa1a66ccb8024f9627",
+    "cacheID": "7f2506f10df83dddc0eabd4377a9ff1e",
     "id": null,
     "metadata": {},
     "name": "PeopleListFragment_RefetchQuery",
     "operationKind": "query",
-    "text": "query PeopleListFragment_RefetchQuery(\n  $after: CursorKey = null\n  $before: CursorKey = null\n  $first: Int = 20\n  $last: Int = null\n  $order: ProfileOrder = {direction: ASC, field: FULL_NAME}\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...PeopleListFragment_16fISc\n    id\n  }\n}\n\nfragment PeopleListFragment_16fISc on Organization {\n  profiles(first: $first, after: $after, last: $last, before: $before, orderBy: $order) {\n    totalCount\n    edges {\n      node {\n        id\n        ...PeopleListItemFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n\nfragment PeopleListItemFragment on Profile {\n  id\n  source\n  state\n  fullName\n  emailAddress\n  membership {\n    id\n    role\n    canUpdate: permission(action: \"iam:membership:update\")\n  }\n  lastInvitation: pendingInvitations(first: 1, orderBy: {field: CREATED_AT, direction: DESC}) {\n    edges {\n      node {\n        id\n        createdAt\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  createdAt\n  canUpdate: permission(action: \"iam:membership-profile:update\")\n  canInvite: permission(action: \"iam:invitation:create\")\n  canDelete: permission(action: \"iam:membership-profile:delete\")\n}\n"
+    "text": "query PeopleListFragment_RefetchQuery(\n  $after: CursorKey = null\n  $before: CursorKey = null\n  $first: Int = 20\n  $last: Int = null\n  $order: ProfileOrder = {direction: ASC, field: FULL_NAME}\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...PeopleListFragment_16fISc\n    id\n  }\n}\n\nfragment PeopleListFragment_16fISc on Organization {\n  profiles(first: $first, after: $after, last: $last, before: $before, orderBy: $order) {\n    totalCount\n    edges {\n      node {\n        id\n        ...PeopleListItemFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n\nfragment PeopleListItemFragment on Profile {\n  id\n  source\n  state\n  fullName\n  emailAddress\n  department\n  membership {\n    id\n    role\n    canUpdate: permission(action: \"iam:membership:update\")\n  }\n  lastInvitation: pendingInvitations(first: 1, orderBy: {field: CREATED_AT, direction: DESC}) {\n    edges {\n      node {\n        id\n        createdAt\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  createdAt\n  canUpdate: permission(action: \"iam:membership-profile:update\")\n  canInvite: permission(action: \"iam:invitation:create\")\n  canDelete: permission(action: \"iam:membership-profile:delete\")\n}\n"
   }
 };
 })();

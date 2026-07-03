@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"regexp"
 	"strings"
 	"time"
 	"unicode"
@@ -43,14 +44,15 @@ type ocrResponse struct {
 	Pages      []ocrPage `json:"pages"`
 	TotalPages int       `json:"total_pages"`
 	TotalChars int       `json:"total_chars"`
+	OCRError   string    `json:"ocr_error,omitempty"` // set when worker crashes
 }
 
 // callOCRService uploads PDF bytes to the OCR microservice and converts
 // the page results to textBlock slices (1 page = 1 block).
 func callOCRService(ctx context.Context, cfg OCRServiceConfig, data []byte) ([]textBlock, error) {
 	timeout := time.Duration(cfg.TimeoutSeconds) * time.Second
-	if timeout <= 0 {
-		timeout = 120 * time.Second
+	if timeout < 24*time.Hour {
+		timeout = 24 * time.Hour // OCR for 180 pages on CPU can take hours
 	}
 	client := &http.Client{Timeout: timeout}
 
@@ -85,15 +87,22 @@ func callOCRService(ctx context.Context, cfg OCRServiceConfig, data []byte) ([]t
 	if err = json.NewDecoder(resp.Body).Decode(&result); err != nil {
 		return nil, fmt.Errorf("ocr: decode response: %w", err)
 	}
+	if result.OCRError != "" {
+		return nil, fmt.Errorf("ocr: worker error: %s", result.OCRError)
+	}
 
 	var blocks []textBlock
 	for _, p := range result.Pages {
 		if strings.TrimSpace(p.Text) == "" {
 			continue
 		}
-		norm := normalizeVietnameseText(p.Text)
+		cleaned := cleanOCRText(p.Text)
+		if cleaned == "" {
+			continue
+		}
+		norm := normalizeVietnameseText(cleaned)
 		blocks = append(blocks, textBlock{
-			rawText:   p.Text,
+			rawText:   cleaned,
 			normText:  norm,
 			pageNum:   p.PageNumber,
 			blockType: coredata.IcpmsExtractedTextBlockTypeParagraph,
@@ -279,6 +288,226 @@ func wordCount(s string) int {
 	return len(strings.Fields(s))
 }
 
+// rePageHeader matches OCR page-separator lines like "--- Trang 3/77 ---".
+var rePageHeader = regexp.MustCompile(`(?i)^-{2,}\s*trang\s+\d+/\d+\s*-{2,}$`)
+
+// reStandalonePageNum matches a line that is only a bare page number (1–3 digits).
+var reStandalonePageNum = regexp.MustCompile(`^\d{1,3}$`)
+
+// reWatermark matches watermark tokens injected by the PDF renderer.
+var reWatermark = regexp.MustCompile(`\b(WLVN|NLVN|ILVN|WLVN)\b`)
+
+// reMultiBlank collapses 3+ consecutive blank lines to two.
+var reMultiBlank = regexp.MustCompile(`\n{3,}`)
+
+// reIcaoPageFooter matches ICAO-style footer lines combining a page reference and a date,
+// e.g. "2-1  8/11/18", "ATM-1  1/11/18", "A-3  25/11/21".
+var reIcaoPageFooter = regexp.MustCompile(`(?i)^\s*[A-Z]*\d+[-–]\d+\s{1,6}\d{1,2}/\d{1,2}/\d{2,4}\s*$`)
+
+// reIcaoPageRef matches a standalone ICAO page reference like "2-1", "A-3", "ATM-1".
+// More general than reStandalonePageNum which only handles bare integers.
+var reIcaoPageRef = regexp.MustCompile(`(?i)^\s*[A-Z]{0,5}\d+[-–]\d+\s*$`)
+
+// reStandaloneDate matches a standalone date line in common formats: "8/11/18", "01/01/2025".
+var reStandaloneDate = regexp.MustCompile(`^\s*\d{1,2}/\d{1,2}/\d{2,4}\s*$`)
+
+// reVietPageNum matches Vietnamese pagination like "Trang 3", "Trang 3/77".
+var reVietPageNum = regexp.MustCompile(`(?i)^\s*trang\s+\d+(/\d+)?\s*$`)
+
+// stripBoundaryHeaderFooterParas removes the first and last paragraph from a page's
+// paragraph slice when they look like running headers or footers (short, ≤ 12 words,
+// not a section heading keyword).
+func stripBoundaryHeaderFooterParas(paras []string) []string {
+	if len(paras) <= 1 {
+		return paras
+	}
+	first := strings.TrimSpace(paras[0])
+	last := strings.TrimSpace(paras[len(paras)-1])
+	start, end := 0, len(paras)
+	if first != "" && looksLikePageBoundaryLine(first) {
+		start = 1
+	}
+	if end-start > 1 && last != "" && looksLikePageBoundaryLine(last) {
+		end--
+	}
+	return paras[start:end]
+}
+
+// isHeaderFooterLine returns true when a trimmed line looks like a running page header
+// or footer rather than document content.
+func isHeaderFooterLine(line string) bool {
+	t := strings.TrimSpace(line)
+	if t == "" {
+		return false
+	}
+	return reIcaoPageFooter.MatchString(t) ||
+		reIcaoPageRef.MatchString(t) ||
+		reStandaloneDate.MatchString(t) ||
+		reVietPageNum.MatchString(t)
+}
+
+// isGarbageLine returns true when a trimmed line looks like a stray OCR artifact:
+//   - single letter (not a digit),
+//   - 2-char all-ASCII-letter string (e.g. "UU", "GL", "In"),
+//   - 3–4 char all-ASCII-letter string with no ASCII vowel (e.g. "gtr", "ngtr").
+//
+// Longer lines and lines with Vietnamese diacritics are never classified as garbage
+// to avoid false positives on valid short Vietnamese words.
+func isGarbageLine(line string) bool {
+	trimmed := strings.TrimSpace(line)
+	runes := []rune(trimmed)
+	n := len(runes)
+	if n == 0 || n > 4 {
+		return false
+	}
+	// Must be all letters to be a fragment candidate.
+	if !isAllLetters(trimmed) {
+		return false
+	}
+	// Any non-ASCII character means Vietnamese diacritic → real word, not garbage.
+	for _, r := range runes {
+		if r > 127 {
+			return false
+		}
+	}
+	// Single ASCII letter → stray artifact.
+	if n == 1 {
+		return true
+	}
+	// 2-char all-ASCII letters → almost always an OCR artifact in Vietnamese law text.
+	if n == 2 {
+		return true
+	}
+	// 3–4 char all-ASCII letters: only garbage when there is no ASCII vowel at all
+	// (e.g. "gtr", "ngtr"), because consonant clusters cannot form a Vietnamese syllable.
+	hasVowel := false
+	for _, r := range runes {
+		lr := unicode.ToLower(r)
+		if lr == 'a' || lr == 'e' || lr == 'i' || lr == 'o' || lr == 'u' || lr == 'y' {
+			hasVowel = true
+			break
+		}
+	}
+	return !hasVowel
+}
+
+// cleanOCRText removes watermarks, page headers, standalone page numbers, short garbage
+// lines, and header/footer lines from OCR text before it is stored as a text block.
+// It operates on the raw per-page text returned by the OCR service.
+func cleanOCRText(text string) string {
+	if text == "" {
+		return ""
+	}
+	text = strings.ReplaceAll(text, "\r\n", "\n")
+	text = strings.ReplaceAll(text, "\r", "\n")
+
+	lines := strings.Split(text, "\n")
+	kept := make([]string, 0, len(lines))
+	for _, line := range lines {
+		trimmed := strings.TrimSpace(line)
+		// Drop page separator headers.
+		if rePageHeader.MatchString(trimmed) {
+			continue
+		}
+		// Drop bare page numbers.
+		if reStandalonePageNum.MatchString(trimmed) {
+			continue
+		}
+		// Drop header/footer lines (ICAO page refs, dates, Vietnamese pagination).
+		if isHeaderFooterLine(trimmed) {
+			continue
+		}
+		// Drop short garbage artifacts.
+		if isGarbageLine(trimmed) {
+			continue
+		}
+		// Strip watermark tokens inline (they may appear at end of real sentences).
+		cleaned := strings.TrimSpace(reWatermark.ReplaceAllString(line, ""))
+		kept = append(kept, cleaned)
+	}
+
+	// Additionally strip the first and last non-empty lines of the page if they
+	// look like running headers or footers (short lines, ≤ 12 words).
+	kept = stripPageBoundaryHeaderFooter(kept)
+
+	result := strings.Join(kept, "\n")
+	result = reMultiBlank.ReplaceAllString(result, "\n\n")
+	return strings.TrimSpace(result)
+}
+
+// stripPageBoundaryHeaderFooter removes the first and/or last non-empty line from
+// a slice of kept lines when they look like running page headers or footers:
+// short (≤ 12 words) and not starting with a known section keyword.
+func stripPageBoundaryHeaderFooter(lines []string) []string {
+	if len(lines) == 0 {
+		return lines
+	}
+
+	// Find first non-empty line index.
+	first := -1
+	for i, l := range lines {
+		if strings.TrimSpace(l) != "" {
+			first = i
+			break
+		}
+	}
+	// Find last non-empty line index.
+	last := -1
+	for i := len(lines) - 1; i >= 0; i-- {
+		if strings.TrimSpace(lines[i]) != "" {
+			last = i
+			break
+		}
+	}
+	if first < 0 || first == last {
+		return lines
+	}
+
+	skip := make(map[int]bool)
+	if looksLikePageBoundaryLine(lines[first]) {
+		skip[first] = true
+	}
+	if !skip[last] && looksLikePageBoundaryLine(lines[last]) {
+		skip[last] = true
+	}
+
+	if len(skip) == 0 {
+		return lines
+	}
+	out := make([]string, 0, len(lines)-len(skip))
+	for i, l := range lines {
+		if !skip[i] {
+			out = append(out, l)
+		}
+	}
+	return out
+}
+
+// looksLikePageBoundaryLine returns true when a line is short enough (≤ 12 words)
+// and does not start with a known section-heading keyword.
+// Used to detect running headers and footers at the top/bottom of OCR pages.
+func looksLikePageBoundaryLine(line string) bool {
+	t := strings.TrimSpace(line)
+	if t == "" {
+		return false
+	}
+	if wordCount(t) > 12 {
+		return false // too long to be a header/footer
+	}
+	// Do not strip lines that are actual section headings.
+	up := strings.ToUpper(t)
+	for _, kw := range []string{
+		"CHAPTER ", "SECTION ", "ANNEX ", "ARTICLE ", "PART ",
+		"APPENDIX", "ATTACHMENT",
+		"ĐIỀU ", "CHƯƠNG ", "MỤC ", "PHỤ LỤC", "KHOẢN ", "PHẦN ",
+	} {
+		if strings.HasPrefix(up, kw) {
+			return false
+		}
+	}
+	return true
+}
+
 // blockTypeFromLine infers block type from the line content heuristic.
 func blockTypeFromLine(line string, isFirstInPage bool) coredata.IcpmsExtractedTextBlockType {
 	l := strings.ToUpper(strings.TrimSpace(line))
@@ -344,6 +573,8 @@ func extractPDFNative(data []byte) ([]textBlock, int, error) {
 		}
 
 		rawParas := strings.Split(text, "\n\n")
+		// Filter out leading/trailing paragraphs that are page headers/footers.
+		rawParas = stripBoundaryHeaderFooterParas(rawParas)
 		prevCount := len(blocks)
 		isFirst := true
 		for _, para := range rawParas {
@@ -412,7 +643,7 @@ func extractPDFWithPdftotext(pdfToText string, data []byte) ([]textBlock, error)
 			continue
 		}
 
-		rawParas := strings.Split(pageText, "\n\n")
+		rawParas := stripBoundaryHeaderFooterParas(strings.Split(pageText, "\n\n"))
 		prevCount := len(blocks)
 		for _, para := range rawParas {
 			norm := normalizeVietnameseText(para)
@@ -431,7 +662,9 @@ func extractPDFWithPdftotext(pdfToText string, data []byte) ([]textBlock, error)
 
 		// Fallback: no double-newline paragraphs → split line-by-line.
 		if len(blocks) == prevCount {
-			for _, line := range strings.Split(pageText, "\n") {
+			lineSlice := strings.Split(pageText, "\n")
+			lineSlice = stripPageBoundaryHeaderFooter(lineSlice)
+			for _, line := range lineSlice {
 				norm := normalizeVietnameseText(line)
 				if len(norm) < 5 {
 					continue

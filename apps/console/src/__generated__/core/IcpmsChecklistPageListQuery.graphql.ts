@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<14dc6686ff45048e85bf3565418293a7>>
+ * @generated SignedSource<<d17240723b8f9a7670f897501fb1477f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,12 +19,14 @@ export type IcpmsChecklistPageListQuery$data = {
   readonly icpmsChecklists: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly actionPlan: string | null | undefined;
         readonly approvalStatus: IcpmsChecklistApprovalStatus;
         readonly checklistCode: string;
         readonly checklistQuestion: string;
         readonly complianceDomain: string | null | undefined;
         readonly createdAt: string;
         readonly createdFrom: IcpmsChecklistCreatedFrom;
+        readonly currentStatusText: string | null | undefined;
         readonly document: {
           readonly code: string;
           readonly id: string;
@@ -34,14 +36,22 @@ export type IcpmsChecklistPageListQuery$data = {
           readonly id: string;
           readonly versionCode: string;
         };
+        readonly dueDays: number | null | undefined;
+        readonly frequency: string | null | undefined;
         readonly id: string;
+        readonly implementationMethod: string | null | undefined;
         readonly priority: string;
+        readonly requiredEvidence: string | null | undefined;
         readonly requirement: {
           readonly id: string;
           readonly requirementCode: string;
           readonly title: string;
         } | null | undefined;
+        readonly requirementText: string | null | undefined;
+        readonly responsibleRole: string | null | undefined;
         readonly responsibleUnit: string | null | undefined;
+        readonly riskIfNotComplied: string | null | undefined;
+        readonly sourceReference: string | null | undefined;
         readonly status: IcpmsChecklistStatus;
         readonly updatedAt: string;
       };
@@ -125,6 +135,20 @@ v3 = [
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "requirementText",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "sourceReference",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "priority",
                 "storageKey": null
               },
@@ -160,7 +184,63 @@ v3 = [
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "responsibleRole",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "complianceDomain",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "frequency",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "implementationMethod",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "currentStatusText",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "actionPlan",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "requiredEvidence",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "riskIfNotComplied",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "dueDays",
                 "storageKey": null
               },
               {
@@ -264,16 +344,16 @@ return {
     "selections": (v3/*: any*/)
   },
   "params": {
-    "cacheID": "93393440ffb8806a648fa20898628ace",
+    "cacheID": "4dfc4cb990681d2cf622fc19700b5262",
     "id": null,
     "metadata": {},
     "name": "IcpmsChecklistPageListQuery",
     "operationKind": "query",
-    "text": "query IcpmsChecklistPageListQuery(\n  $organizationId: ID!\n) {\n  icpmsChecklists(organizationId: $organizationId) {\n    edges {\n      node {\n        id\n        checklistCode\n        checklistQuestion\n        priority\n        status\n        approvalStatus\n        createdFrom\n        responsibleUnit\n        complianceDomain\n        createdAt\n        updatedAt\n        document {\n          id\n          code\n          title\n        }\n        documentVersion {\n          id\n          versionCode\n        }\n        requirement {\n          id\n          requirementCode\n          title\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query IcpmsChecklistPageListQuery(\n  $organizationId: ID!\n) {\n  icpmsChecklists(organizationId: $organizationId) {\n    edges {\n      node {\n        id\n        checklistCode\n        checklistQuestion\n        requirementText\n        sourceReference\n        priority\n        status\n        approvalStatus\n        createdFrom\n        responsibleUnit\n        responsibleRole\n        complianceDomain\n        frequency\n        implementationMethod\n        currentStatusText\n        actionPlan\n        requiredEvidence\n        riskIfNotComplied\n        dueDays\n        createdAt\n        updatedAt\n        document {\n          id\n          code\n          title\n        }\n        documentVersion {\n          id\n          versionCode\n        }\n        requirement {\n          id\n          requirementCode\n          title\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f27222778d8b6b437d70a0011c6b145e";
+(node as any).hash = "9af2b6e36c2d676764fe17d4b34a82c6";
 
 export default node;

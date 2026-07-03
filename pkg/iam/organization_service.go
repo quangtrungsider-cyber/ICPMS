@@ -107,6 +107,7 @@ type (
 		AdditionalEmailAddresses mail.Addrs
 		Kind                     *string
 		Position                 *string
+		Department               *string
 		ContractStartDate        **time.Time
 		ContractEndDate          **time.Time
 	}
@@ -117,6 +118,7 @@ type (
 		AdditionalEmailAddresses mail.Addrs
 		Kind                     *string
 		Position                 *string
+		Department               *string
 		ContractStartDate        **time.Time
 		ContractEndDate          **time.Time
 	}
@@ -1025,6 +1027,7 @@ func (s *OrganizationService) CreateUser(ctx context.Context, req *CreateUserReq
 				Kind:                     req.Kind,
 				AdditionalEmailAddresses: req.AdditionalEmailAddresses,
 				Position:                 req.Position,
+				Department:               req.Department,
 				// User is created inactive
 				State:     coredata.ProfileStateInactive,
 				CreatedAt: now,
@@ -1095,6 +1098,7 @@ func (s *OrganizationService) UpdateUser(ctx context.Context, req *UpdateUserReq
 				profile.Kind = req.Kind
 				profile.AdditionalEmailAddresses = req.AdditionalEmailAddresses
 				profile.Position = req.Position
+				profile.Department = req.Department
 			}
 
 			if req.ContractStartDate != nil {

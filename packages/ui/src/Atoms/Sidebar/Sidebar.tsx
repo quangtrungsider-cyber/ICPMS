@@ -46,9 +46,10 @@ export function Sidebar({ children }: PropsWithChildren) {
     <sidebarContext.Provider value={{ open }}>
       <aside
         className={clsx(
-          "border-r border-border-solid pt-16 flex-none flex flex-col",
-          open && "w-[220px]",
+          "border-r border-border-solid pt-16 flex-none flex flex-col bg-level-1",
+          open && "w-[270px]",
         )}
+        style={{ boxShadow: "2px 0 8px rgba(0,0,0,0.06)" }}
       >
         <div
           className={clsx(
@@ -60,7 +61,7 @@ export function Sidebar({ children }: PropsWithChildren) {
         </div>
         <div
           className={clsx(
-            "sticky bottom-0 flex-none border-t border-border-solid bg-level-0 py-2",
+            "sticky bottom-0 flex-none border-t border-border-solid bg-level-1 py-2",
             open ? "px-4" : "px-2",
           )}
         >

@@ -1,0 +1,18 @@
+export const VATM_UNITS = [
+  "Văn phòng - Pháp chế",
+  "Ban Tài chính",
+  "Ban Kế hoạch - Đầu tư",
+  "Ban Kế hoạch doanh nghiệp - Chuyển đổi số",
+  "Ban Tổ chức cán bộ",
+  "Trung tâm Huấn luyện đào tạo",
+  "Ban Không lưu",
+  "Ban Kỹ thuật - CNS/IT/Môi trường",
+  "Ban An toàn - Chất lượng",
+  "Ban An ninh hàng không",
+  "Trung tâm Khí tượng hàng không",
+  "Trung tâm Thông báo tin tức hàng không",
+  "Trung tâm Quản lý luồng không lưu",
+  "Trung tâm Tìm kiếm cứu nạn hàng không",
+  "Công ty Quản lý bay khu vực Bắc/Trung/Nam",
+  "Các đơn vị/cơ sở ANS trực thuộc",
+] as const;

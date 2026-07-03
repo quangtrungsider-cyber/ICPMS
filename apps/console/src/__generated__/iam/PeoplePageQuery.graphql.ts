@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<86b86e1209fbe58b62c2be028fb0482c>>
+ * @generated SignedSource<<0059d7f62486af8b7973977823781851>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -276,6 +276,13 @@ return {
                           {
                             "alias": null,
                             "args": null,
+                            "kind": "ScalarField",
+                            "name": "department",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
                             "concreteType": "Membership",
                             "kind": "LinkedField",
                             "name": "membership",
@@ -463,12 +470,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "af366ea24d2c96763b104acc69d9b3ff",
+    "cacheID": "432fe042f06c8a94cb0f47b75f3df7e5",
     "id": null,
     "metadata": {},
     "name": "PeoplePageQuery",
     "operationKind": "query",
-    "text": "query PeoplePageQuery(\n  $organizationId: ID!\n) {\n  organization: node(id: $organizationId) {\n    __typename\n    ... on Organization {\n      canCreateUser: permission(action: \"iam:membership-profile:create\")\n      ...PeopleListFragment_8lnpd\n    }\n    id\n  }\n}\n\nfragment PeopleListFragment_8lnpd on Organization {\n  profiles(first: 20, orderBy: {direction: ASC, field: FULL_NAME}) {\n    totalCount\n    edges {\n      node {\n        id\n        ...PeopleListItemFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n\nfragment PeopleListItemFragment on Profile {\n  id\n  source\n  state\n  fullName\n  emailAddress\n  membership {\n    id\n    role\n    canUpdate: permission(action: \"iam:membership:update\")\n  }\n  lastInvitation: pendingInvitations(first: 1, orderBy: {field: CREATED_AT, direction: DESC}) {\n    edges {\n      node {\n        id\n        createdAt\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  createdAt\n  canUpdate: permission(action: \"iam:membership-profile:update\")\n  canInvite: permission(action: \"iam:invitation:create\")\n  canDelete: permission(action: \"iam:membership-profile:delete\")\n}\n"
+    "text": "query PeoplePageQuery(\n  $organizationId: ID!\n) {\n  organization: node(id: $organizationId) {\n    __typename\n    ... on Organization {\n      canCreateUser: permission(action: \"iam:membership-profile:create\")\n      ...PeopleListFragment_8lnpd\n    }\n    id\n  }\n}\n\nfragment PeopleListFragment_8lnpd on Organization {\n  profiles(first: 20, orderBy: {direction: ASC, field: FULL_NAME}) {\n    totalCount\n    edges {\n      node {\n        id\n        ...PeopleListItemFragment\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n\nfragment PeopleListItemFragment on Profile {\n  id\n  source\n  state\n  fullName\n  emailAddress\n  department\n  membership {\n    id\n    role\n    canUpdate: permission(action: \"iam:membership:update\")\n  }\n  lastInvitation: pendingInvitations(first: 1, orderBy: {field: CREATED_AT, direction: DESC}) {\n    edges {\n      node {\n        id\n        createdAt\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  createdAt\n  canUpdate: permission(action: \"iam:membership-profile:update\")\n  canInvite: permission(action: \"iam:invitation:create\")\n  canDelete: permission(action: \"iam:membership-profile:delete\")\n}\n"
   }
 };
 })();

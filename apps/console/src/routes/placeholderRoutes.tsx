@@ -16,15 +16,6 @@ export const placeholderRoutes: AppRoute[] = [
     ),
   },
   {
-    path: "evidence-placeholder",
-    Component: () => (
-      <ComingSoonPage
-        title="Sắp triển khai: Bằng chứng"
-        description="Chức năng quản lý tập trung toàn bộ hồ sơ minh chứng."
-      />
-    ),
-  },
-  {
     path: "reports",
     Component: () => (
       <ComingSoonPage

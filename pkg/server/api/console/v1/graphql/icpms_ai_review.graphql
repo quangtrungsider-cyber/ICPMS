@@ -151,10 +151,35 @@ type RejectIcpmsAiReviewSuggestionPayload {
   suggestion: IcpmsAiReviewSuggestion!
 }
 
+input CancelIcpmsAiReviewJobInput {
+  id: ID!
+}
+
+type CancelIcpmsAiReviewJobPayload {
+  job: IcpmsAiReviewJob!
+}
+
+input DeleteIcpmsAiReviewJobInput {
+  id: ID!
+}
+
+type DeleteIcpmsAiReviewJobPayload {
+  id: ID!
+}
+
 extend type Mutation {
   createIcpmsAiReviewJob(
     input: CreateIcpmsAiReviewJobInput!
   ): CreateIcpmsAiReviewJobPayload!
+
+  cancelIcpmsAiReviewJob(
+    input: CancelIcpmsAiReviewJobInput!
+  ): CancelIcpmsAiReviewJobPayload!
+
+  deleteIcpmsAiReviewJob(
+    input: DeleteIcpmsAiReviewJobInput!
+  ): DeleteIcpmsAiReviewJobPayload!
+  deleteIcpmsAiReviewSuggestion(id: ID!): Boolean!
 
   acceptIcpmsAiReviewSuggestion(
     input: AcceptIcpmsAiReviewSuggestionInput!

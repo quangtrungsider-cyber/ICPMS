@@ -23,6 +23,11 @@ for _p in (_ROOT, _HERE):
 from fastapi import FastAPI, File, HTTPException, UploadFile
 import uvicorn
 
+# Patch PIL.Image.ANTIALIAS for Pillow 10+ compatibility
+from PIL import Image
+if not hasattr(Image, "ANTIALIAS"):
+    Image.ANTIALIAS = getattr(Image, "LANCZOS", 1)
+
 # Import helpers từ ICPMS_OCR — model CHƯA load ở bước này
 from ICPMS_OCR import _ocr_image, _pdf_to_images_from_bytes
 

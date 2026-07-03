@@ -1,0 +1,9 @@
+services:
+  icpms-ocr:
+    deploy:
+      resources:
+        limits:
+          memory: 5G
+        reservations:
+          memory: 3G
+    restart: unless-stopped
