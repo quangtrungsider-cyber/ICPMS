@@ -46,7 +46,13 @@ func (r *icpmsChecklistResolver) Requirement(ctx context.Context, obj *coredata.
 		return nil, nil
 	}
 	scope := coredata.NewScope(obj.TenantID)
-	return r.probo.IcpmsRequirements.Get(ctx, scope, *obj.RequirementID)
+	req, err := r.probo.IcpmsRequirements.Get(ctx, scope, *obj.RequirementID)
+	if err != nil {
+		// Yêu cầu gốc đã bị xóa (ví dụ tài liệu được tạo lại yêu cầu) — trả về
+		// nil thay vì lỗi để không làm fail toàn bộ danh sách checklist.
+		return nil, nil
+	}
+	return req, nil
 }
 
 // Status is the resolver for the status field.

@@ -21,6 +21,7 @@ import { useCallback, useEffect, useState } from "react";
 import { fetchQuery, graphql, useMutation, useRelayEnvironment } from "react-relay";
 import { useOrganizationId } from "#/hooks/useOrganizationId";
 import { usePageTitle } from "@probo/hooks";
+import { parseResponsibleUnit } from "../icpms-ai-review/vatmResponsibilityMatrix";
 
 // ─── GraphQL ──────────────────────────────────────────────────────────────────
 
@@ -300,6 +301,8 @@ function CreateFromChecklistsModal({ checklists, onClose, onCreated }: CreateMod
   const [dueDate, setDueDate] = useState("");
   const [priority, setPriority] = useState("MEDIUM");
   const [requiresEvidence, setRequiresEvidence] = useState(false);
+  // Mặc định giao việc theo đúng Chủ trì/Phối hợp ghi trong từng checklist
+  const [autoUnits, setAutoUnits] = useState(true);
 
   const [commitCreate, creating] = useMutation(createFromChecklistsMutation);
 
@@ -327,14 +330,15 @@ function CreateFromChecklistsModal({ checklists, onClose, onCreated }: CreateMod
       toast({ title: "Vui lòng chọn ít nhất một checklist", description: "", variant: "error" });
       return;
     }
-    if (!leadUnitName.trim()) {
-      toast({ title: "Vui lòng nhập đơn vị chủ trì", description: "", variant: "error" });
+    if (!autoUnits && !leadUnitName.trim()) {
+      toast({ title: "Vui lòng nhập đơn vị chủ trì", description: "Hoặc bật chế độ tự động theo checklist.", variant: "error" });
       return;
     }
 
     const input: Record<string, unknown> = {
       checklistIds: Array.from(selectedIds),
-      leadUnitName: leadUnitName.trim(),
+      // Rỗng = backend tự lấy Chủ trì/Phối hợp từ từng checklist
+      leadUnitName: autoUnits ? "" : leadUnitName.trim(),
       priority,
       requiresEvidence,
     };
@@ -376,16 +380,28 @@ function CreateFromChecklistsModal({ checklists, onClose, onCreated }: CreateMod
 
         <div className="flex-1 overflow-y-auto p-5 space-y-4">
           {/* Form fields */}
+          <label className="flex items-center gap-2 text-sm cursor-pointer bg-blue-50 border border-blue-200 rounded-lg px-3 py-2">
+            <input
+              type="checkbox"
+              checked={autoUnits}
+              onChange={(e) => setAutoUnits(e.target.checked)}
+            />
+            <span>
+              <span className="font-medium">Giao việc theo Chủ trì / Phối hợp của từng checklist</span>
+              <span className="block text-xs text-txt-tertiary">Đơn vị chủ trì và phối hợp lấy từ phân công đã duyệt trong checklist (AI Review gợi ý).</span>
+            </span>
+          </label>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">
-                Đơn vị chủ trì <span className="text-destructive">*</span>
+                Đơn vị chủ trì {!autoUnits && <span className="text-destructive">*</span>}
               </label>
               <input
-                className="w-full border rounded px-3 py-2 text-sm"
-                placeholder="VD: Ban Kỹ thuật - BKT"
-                value={leadUnitName}
+                className="w-full border rounded px-3 py-2 text-sm disabled:opacity-50 disabled:bg-bg-alt"
+                placeholder={autoUnits ? "Tự động theo từng checklist" : "VD: Ban Kỹ thuật - BKT"}
+                value={autoUnits ? "" : leadUnitName}
                 onChange={(e) => setLeadUnitName(e.target.value)}
+                disabled={autoUnits}
               />
             </div>
             <div>
@@ -459,11 +475,17 @@ function CreateFromChecklistsModal({ checklists, onClose, onCreated }: CreateMod
                       <div className="text-xs text-muted-foreground truncate">
                         {c.checklistQuestion}
                       </div>
-                      {c.responsibleUnit && (
-                        <div className="text-xs text-muted-foreground">
-                          Đơn vị chịu trách nhiệm: {c.responsibleUnit}
-                        </div>
-                      )}
+                      {c.responsibleUnit && (() => {
+                        const { leadUnit, coordinationUnits } = parseResponsibleUnit(c.responsibleUnit);
+                        return (
+                          <div className="text-xs text-muted-foreground">
+                            Chủ trì: <span className="font-medium text-txt-primary">{leadUnit}</span>
+                            {coordinationUnits.length > 0 && (
+                              <> · Phối hợp: {coordinationUnits.join("; ")}</>
+                            )}
+                          </div>
+                        );
+                      })()}
                     </div>
                   </label>
                 ))}
@@ -478,7 +500,7 @@ function CreateFromChecklistsModal({ checklists, onClose, onCreated }: CreateMod
           </Button>
           <Button
             onClick={handleCreate}
-            disabled={creating || selectedIds.size === 0 || !leadUnitName.trim()}
+            disabled={creating || selectedIds.size === 0 || (!autoUnits && !leadUnitName.trim())}
           >
             {creating ? "Đang tạo..." : `Tạo ${selectedIds.size} giao việc`}
           </Button>
@@ -696,6 +718,8 @@ export function IcpmsAssignmentsPage() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("ALL");
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState<Assignment | null>(null);
+  // Tổ chức theo tài liệu: null = đang ở màn chọn tài liệu
+  const [selectedDocId, setSelectedDocId] = useState<string | null>(null);
 
   const loadData = useCallback(() => {
     if (!organizationId) return;
@@ -743,10 +767,46 @@ export function IcpmsAssignmentsPage() {
     loadData();
   }, [loadData]);
 
+  // Nhóm giao việc theo tài liệu (giao việc không gắn tài liệu → nhóm "Khác")
+  const NO_DOC = "__none__";
+  const docGroups = assignments.reduce<Record<string, {
+    id: string; code: string; title: string;
+    total: number; inProgress: number; overdue: number; completed: number;
+  }>>((acc, a) => {
+    const key = a.document?.id ?? NO_DOC;
+    if (!acc[key]) {
+      acc[key] = {
+        id: key,
+        code: a.document?.code ?? "—",
+        title: a.document?.title ?? "Giao việc khác (không gắn tài liệu)",
+        total: 0, inProgress: 0, overdue: 0, completed: 0,
+      };
+    }
+    const g = acc[key];
+    g.total += 1;
+    if (a.status === "IN_PROGRESS" || a.status === "SUBMITTED") g.inProgress += 1;
+    if (a.status === "COMPLETED" || a.status === "CLOSED") g.completed += 1;
+    if (a.isOverdue) g.overdue += 1;
+    return acc;
+  }, {});
+  const docList = Object.values(docGroups).sort((a, b) => a.code.localeCompare(b.code));
+  const selectedDoc = selectedDocId ? docGroups[selectedDocId] : null;
+
+  const inScope = selectedDocId
+    ? assignments.filter((a) => (a.document?.id ?? NO_DOC) === selectedDocId)
+    : assignments;
+
   const filtered =
     statusFilter === "ALL"
-      ? assignments
-      : assignments.filter((a) => a.status === statusFilter);
+      ? inScope
+      : inScope.filter((a) => a.status === statusFilter);
+
+  const scopeStats = {
+    total: inScope.length,
+    assigned: inScope.filter((a) => a.status === "ASSIGNED" || a.status === "ACCEPTED").length,
+    inProgress: inScope.filter((a) => a.status === "IN_PROGRESS" || a.status === "SUBMITTED").length,
+    overdue: inScope.filter((a) => a.isOverdue).length,
+  };
 
   return (
     <div className="space-y-5">
@@ -764,15 +824,79 @@ export function IcpmsAssignmentsPage() {
         </Button>
       </PageHeader>
 
-      {/* Stats */}
-      {stats && (
-        <div className="grid grid-cols-4 gap-3">
-          <StatCard label="Tổng giao việc" value={stats.totalAssignments} color="#6366f1" />
-          <StatCard label="Đã giao / Đã nhận" value={stats.assigned + stats.accepted} color="#3b82f6" />
-          <StatCard label="Đang thực hiện" value={stats.inProgress + stats.submitted} color="#f59e0b" />
-          <StatCard label="Quá hạn" value={stats.overdue} color="#ef4444" />
-        </div>
+      {/* ── Màn 1: chọn tài liệu ── */}
+      {!selectedDocId && (
+        <>
+          {stats && (
+            <div className="grid grid-cols-4 gap-3">
+              <StatCard label="Tổng giao việc" value={stats.totalAssignments} color="#6366f1" />
+              <StatCard label="Đã giao / Đã nhận" value={stats.assigned + stats.accepted} color="#3b82f6" />
+              <StatCard label="Đang thực hiện" value={stats.inProgress + stats.submitted} color="#f59e0b" />
+              <StatCard label="Quá hạn" value={stats.overdue} color="#ef4444" />
+            </div>
+          )}
+
+          <Card>
+            <div className="p-4 border-b border-border-low">
+              <h3 className="text-sm font-semibold text-txt-primary">Danh sách tài liệu ({docList.length})</h3>
+            </div>
+            {loading && <div className="p-6 text-center text-sm text-txt-tertiary">Đang tải...</div>}
+            {!loading && docList.length === 0 && (
+              <div className="py-16 text-center">
+                <p className="text-muted-foreground text-sm">
+                  Chưa có giao việc nào. Bấm "Tạo giao việc" để bắt đầu giao việc từ checklist.
+                </p>
+              </div>
+            )}
+            {!loading && docList.length > 0 && (
+              <div className="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {docList.map((doc) => (
+                  <button
+                    key={doc.id}
+                    onClick={() => { setSelectedDocId(doc.id); setSelectedAssignment(null); setStatusFilter("ALL"); }}
+                    className="text-left rounded-xl border border-border-mid bg-level-0 hover:border-primary hover:shadow-md transition-all duration-150 group p-5"
+                  >
+                    <span className="text-xs font-mono text-txt-tertiary">{doc.code}</span>
+                    <h3 className="text-sm font-semibold text-txt-primary line-clamp-2 mt-0.5 group-hover:text-primary transition-colors">
+                      {doc.title}
+                    </h3>
+                    <div className="flex items-center gap-3 text-xs text-txt-secondary pt-3 mt-3 border-t border-border-mid">
+                      <span><span className="font-semibold text-txt-primary">{doc.total}</span> giao việc</span>
+                    </div>
+                    <div className="flex items-center gap-2 mt-2.5 flex-wrap">
+                      {doc.inProgress > 0 && <Badge variant="warning">{doc.inProgress} đang thực hiện</Badge>}
+                      {doc.completed > 0 && <Badge variant="success">{doc.completed} hoàn thành</Badge>}
+                      {doc.overdue > 0 && <Badge variant="danger">{doc.overdue} quá hạn</Badge>}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+          </Card>
+        </>
       )}
+
+      {/* ── Màn 2: giao việc của tài liệu đã chọn ── */}
+      {selectedDocId && (
+        <>
+          <div className="flex items-center gap-2 text-sm">
+            <button
+              onClick={() => { setSelectedDocId(null); setSelectedAssignment(null); }}
+              className="text-txt-tertiary hover:text-txt-primary transition-colors"
+            >
+              ← Danh sách tài liệu
+            </button>
+            <span className="text-border-mid">/</span>
+            <span className="font-mono text-xs text-txt-tertiary">{selectedDoc?.code}</span>
+            <span className="font-semibold text-txt-primary truncate max-w-md">{selectedDoc?.title}</span>
+          </div>
+
+          <div className="grid grid-cols-4 gap-3">
+            <StatCard label="Tổng giao việc" value={scopeStats.total} color="#6366f1" />
+            <StatCard label="Đã giao / Đã nhận" value={scopeStats.assigned} color="#3b82f6" />
+            <StatCard label="Đang thực hiện" value={scopeStats.inProgress} color="#f59e0b" />
+            <StatCard label="Quá hạn" value={scopeStats.overdue} color="#ef4444" />
+          </div>
 
       {/* Filter */}
       <div className="flex items-center gap-3">
@@ -800,8 +924,8 @@ export function IcpmsAssignmentsPage() {
         {filtered.length === 0 && !loading ? (
           <div className="py-16 text-center">
             <p className="text-muted-foreground text-sm">
-              {assignments.length === 0
-                ? "Chưa có giao việc nào. Bấm \"Tạo giao việc\" để bắt đầu giao việc từ checklist."
+              {inScope.length === 0
+                ? "Tài liệu này chưa có giao việc nào."
                 : "Không có giao việc nào khớp với bộ lọc."}
             </p>
           </div>
@@ -872,6 +996,8 @@ export function IcpmsAssignmentsPage() {
           </Table>
         )}
       </Card>
+        </>
+      )}
 
       {/* Modals & panels */}
       {showCreateModal && (

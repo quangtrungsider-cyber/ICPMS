@@ -361,8 +361,8 @@ make build
 # 5. Generate local dev config
 make dev-config
 
-# 6. Run server
-bin/probod -cfg-file cfg/dev.yaml
+# 6. Run server (hoặc sử dụng start_dev.bat trên Windows)
+./probod -cfg-file cfg/dev.yaml
 ```
 
 Web console chạy tại:
@@ -375,26 +375,26 @@ http://localhost:8080
 
 ## Lộ trình phát triển
 
-| Phase    | Nội dung                                      |
-| -------- | --------------------------------------------- |
-| Phase 1  | Đổi nhận diện Probo thành VATM ICPMS          |
-| Phase 2  | Tạo danh mục tổ chức VATM và nhóm quyền ICPMS |
-| Phase 3  | Quản lý tài liệu                              |
-| Phase 4  | Quản lý phiên bản tài liệu                    |
-| Phase 5  | Upload file gốc                               |
-| Phase 6  | Ingestion Jobs / Bóc tách tài liệu            |
-| Phase 7  | Parser văn bản Việt Nam                       |
-| Phase 8  | Parser tài liệu ICAO                          |
-| Phase 9  | Requirements                                  |
-| Phase 10 | AI Review                                     |
-| Phase 11 | Checklist chính thức                          |
-| Phase 12 | Giao việc                                     |
-| Phase 13 | Bằng chứng                                    |
-| Phase 14 | Dashboard                                     |
-| Phase 15 | Báo cáo                                       |
-| Phase 16 | Kiểm thử dữ liệu mẫu                          |
-| Phase 17 | Phân quyền và lịch sử thao tác                |
-| Phase 18 | Đóng gói demo                                 |
+| Phase    | Nội dung                                      | Trạng thái |
+| -------- | --------------------------------------------- | ---------- |
+| Phase 1  | Đổi nhận diện Probo thành VATM ICPMS          | [x]        |
+| Phase 2  | Tạo danh mục tổ chức VATM và nhóm quyền ICPMS | [x]        |
+| Phase 3  | Quản lý tài liệu                              | [x]        |
+| Phase 4  | Quản lý phiên bản tài liệu                    | [x]        |
+| Phase 5  | Upload file gốc                               | [x]        |
+| Phase 6  | Ingestion Jobs / Bóc tách tài liệu            | [x]        |
+| Phase 7  | Parser văn bản Việt Nam                       | [x]        |
+| Phase 8  | Parser tài liệu ICAO                          | [x]        |
+| Phase 9  | Requirements                                  | [x]        |
+| Phase 10 | AI Review                                     | [x]        |
+| Phase 11 | Checklist chính thức                          | [x]        |
+| Phase 12 | Giao việc                                     | [x]        |
+| Phase 13 | Bằng chứng                                    | [ ]        |
+| Phase 14 | Dashboard                                     | [ ]        |
+| Phase 15 | Báo cáo                                       | [ ]        |
+| Phase 16 | Kiểm thử dữ liệu mẫu                          | [ ]        |
+| Phase 17 | Phân quyền và lịch sử thao tác                | [ ]        |
+| Phase 18 | Đóng gói demo                                 | [ ]        |
 
 ---
 

@@ -264,9 +264,9 @@ export function PersonForm(props: {
         name="department"
         type="select"
         label="Đơn vị công tác"
+        placeholder="-- Chọn đơn vị --"
         disabled={disabled || scimManaged}
       >
-        <Option value="">-- Chọn đơn vị --</Option>
         {VATM_UNITS.map(unit => (
           <Option key={unit} value={unit}>
             {unit}

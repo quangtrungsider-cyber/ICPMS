@@ -1,0 +1,1173 @@
+{
+  "mo_ta": "Danh mục cơ quan, đơn vị VATM kèm chức năng nhiệm vụ và từ khóa định tuyến giao việc. Tổng hợp từ 45 văn bản điều lệ/quy chế/phân công nhiệm vụ (OCR - cần đối chiếu bản gốc khi trích dẫn chính thức).",
+  "ngay_tong_hop": "2026-07-07",
+  "don_vi": [
+    {
+      "ma": "VPTCT",
+      "ten_day_du": "Văn phòng Tổng công ty Quản lý bay Việt Nam",
+      "loai": "ban_tham_muu",
+      "van_ban": [
+        {
+          "so": "1984/QĐ-QLB",
+          "ngay": "08/04/2024",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Văn phòng Tổng công ty"
+        }
+      ],
+      "chuc_nang": "Văn phòng Tổng công ty là cơ quan tham mưu, giúp việc cho Hội đồng thành viên và Tổng giám đốc trong lãnh đạo, điều hành, quản lý hoạt động của Tổng công ty. Phụ trách công tác hành chính, văn thư, lưu trữ, bảo vệ bí mật nhà nước, pháp chế, đối ngoại, truyền thông và quản lý cơ sở vật chất - kỹ thuật phục vụ Khối cơ quan Tổng công ty.",
+      "nhiem_vu_chinh": [
+        "Điều phối, tổng hợp phục vụ hoạt động chỉ đạo điều hành của Hội đồng thành viên và Tổng giám đốc.",
+        "Xây dựng kế hoạch hoạt động của Hội đồng thành viên, Tổng giám đốc và theo dõi, đôn đốc thực hiện.",
+        "Chuẩn bị nội dung, tài liệu, biên bản các cuộc họp của Hội đồng thành viên và Ban điều hành.",
+        "Thực hiện công tác pháp chế, tư vấn pháp luật, giải quyết đơn thư khiếu nại tố cáo, tranh chấp.",
+        "Quản lý công tác văn thư, lưu trữ, bảo vệ bí mật nhà nước và quản lý sử dụng con dấu toàn Tổng công ty.",
+        "Tổng hợp, lập báo cáo tình hình thực hiện nhiệm vụ phục vụ lãnh đạo và báo cáo cơ quan Nhà nước.",
+        "Tham mưu công tác đối ngoại, hợp tác quốc tế của Tổng công ty.",
+        "Thực hiện công tác truyền thông, quảng bá thương hiệu, hình ảnh trên các phương tiện thông tin đại chúng.",
+        "Quản lý vận hành tòa nhà trụ sở, cơ sở vật chất, lễ tân, hậu cần, xe, bảo vệ, y tế cơ quan.",
+        "Tham mưu, giúp việc Ban chỉ huy quân sự; phòng chống cháy nổ, lụt bão, thiên tai tại Khối cơ quan.",
+        "Tổ chức tuyên truyền, giáo dục truyền thống lịch sử ngành hàng không, quản lý Bảo tàng Hàng không.",
+        "Quản lý khai thác hệ thống Văn phòng điện tử (Portal Office), email và lưu trữ điện tử OCR.",
+        "Là cơ quan thường trực Ban biên tập Trang thông tin điện tử và Ban Chỉ đạo Quy chế dân chủ ở cơ sở."
+      ],
+      "tu_khoa": [
+        "hành chính",
+        "văn thư",
+        "lưu trữ",
+        "pháp chế",
+        "bí mật nhà nước",
+        "đối ngoại",
+        "hợp tác quốc tế",
+        "truyền thông",
+        "quản trị cơ sở vật chất",
+        "hậu cần",
+        "lễ tân",
+        "phòng chống cháy nổ",
+        "thiên tai",
+        "truyền thống lịch sử",
+        "văn phòng điện tử",
+        "khiếu nại tố cáo",
+        "họp hội đồng thành viên",
+        "con dấu",
+        "quy chế dân chủ",
+        "y tế cơ quan"
+      ],
+      "co_cau_to_chuc": [
+        "Bộ phận Văn thư",
+        "Bộ phận Tổng hợp",
+        "Bộ phận Thư ký - Pháp chế",
+        "Bộ phận Truyền thông",
+        "Bộ phận Đối ngoại - Hành chính",
+        "Bộ phận Quản trị khai thác tòa nhà",
+        "Bộ phận Y tế",
+        "Đội Xe",
+        "Đội bảo vệ"
+      ]
+    },
+    {
+      "ma": "BKHDT",
+      "ten_day_du": "Ban Kế hoạch - Đầu tư",
+      "loai": "ban_tham_muu",
+      "van_ban": [
+        {
+          "so": "1985/QĐ-QLB",
+          "ngay": "08/04/2024",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Ban Kế hoạch - Đầu tư"
+        }
+      ],
+      "chuc_nang": "Ban Kế hoạch - Đầu tư là cơ quan tham mưu, giúp việc cho Hội đồng thành viên và Tổng giám đốc về công tác kế hoạch và đầu tư của Tổng công ty. Chịu trách nhiệm về đầu tư xây dựng, bảo trì công trình hàng không, kế hoạch sản xuất kinh doanh, đấu thầu, đất đai và chiến lược, quy hoạch phát triển.",
+      "nhiem_vu_chinh": [
+        "Tham mưu công tác đầu tư xây dựng, bảo trì công trình hàng không; thẩm định, giao kế hoạch sản xuất kinh doanh và đầu tư xây dựng.",
+        "Kiểm tra, giám sát việc thực hiện kế hoạch; tổng hợp, phân tích, đánh giá kết quả thực hiện kế hoạch sản xuất kinh doanh.",
+        "Theo dõi thực hiện kế hoạch bảo trì kết cấu hạ tầng bảo đảm hoạt động bay.",
+        "Hướng dẫn, kiểm tra, giám sát các đơn vị về thủ tục đầu tư, đầu tư xây dựng và đấu thầu.",
+        "Lập báo cáo giám sát, đánh giá đầu tư và tiến độ thực hiện các dự án đầu tư, đầu tư xây dựng.",
+        "Chuẩn bị phương án đầu tư, thẩm định phương án đầu tư và khai thác đối với dự án đầu tư mới của công ty con.",
+        "Quản lý công tác bảo hiểm tài sản, bảo hiểm trách nhiệm người điều hành bay, bảo hiểm con người.",
+        "Kiểm tra việc áp dụng định mức kinh tế kỹ thuật trong xây dựng kế hoạch của các đơn vị.",
+        "Tham mưu, theo dõi công tác quản lý, sử dụng đất đai, quy hoạch xây dựng cơ sở nhà đất của Tổng công ty.",
+        "Theo dõi danh mục tài sản cố định, thực hiện thủ tục điều chuyển tài sản cố định, công cụ dụng cụ.",
+        "Tham mưu chiến lược, quy hoạch phát triển của Tổng công ty."
+      ],
+      "tu_khoa": [
+        "kế hoạch sản xuất kinh doanh",
+        "đầu tư xây dựng",
+        "đấu thầu",
+        "bảo trì công trình hàng không",
+        "quy hoạch phát triển",
+        "chiến lược",
+        "đất đai",
+        "tài sản cố định",
+        "bảo hiểm tài sản",
+        "định mức kinh tế kỹ thuật",
+        "giám sát đầu tư",
+        "dự án đầu tư",
+        "kế hoạch kinh doanh",
+        "điều chuyển tài sản",
+        "công ty con",
+        "quy hoạch sân bay"
+      ],
+      "co_cau_to_chuc": [
+        "Bộ phận Đầu tư xây dựng",
+        "Bộ phận Kế hoạch kinh doanh",
+        "Bộ phận Kế hoạch tổng hợp",
+        "Bộ phận Đầu tư mua sắm"
+      ]
+    },
+    {
+      "ma": "BTC",
+      "ten_day_du": "Ban Tài chính",
+      "loai": "ban_tham_muu",
+      "van_ban": [
+        {
+          "so": "1986/QĐ-QLB",
+          "ngay": "08/04/2024",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Ban Tài chính"
+        }
+      ],
+      "chuc_nang": "Ban Tài chính là cơ quan tham mưu, giúp việc cho Hội đồng thành viên và Tổng giám đốc về công tác quản lý tài chính, kế toán, vốn và tài sản của Tổng công ty. Chịu trách nhiệm về quản lý vốn, doanh thu, chi phí, các quỹ, kế hoạch tài chính và hạch toán kế toán, kiểm toán, báo cáo tài chính.",
+      "nhiem_vu_chinh": [
+        "Xây dựng phương án bổ sung, tăng vốn điều lệ và các biện pháp bảo toàn vốn của Tổng công ty.",
+        "Đề xuất phương án đảm bảo nguồn vốn, huy động vốn và đầu tư vốn ra ngoài Tổng công ty.",
+        "Xây dựng quy định quản lý, sử dụng tài sản cố định, vật tư thiết bị; trích khấu hao; thẩm tra quyết toán vốn đầu tư hoàn thành.",
+        "Tổ chức kiểm kê, thanh lý, nhượng bán tài sản cố định; là cơ quan thường trực Hội đồng thanh lý, kiểm kê tài sản.",
+        "Quản lý vốn của Tổng công ty tại công ty con, thẩm định phương án vốn điều lệ và thu lợi nhuận từ công ty con.",
+        "Xây dựng quy định quản lý tài chính, kế toán, quản lý nợ, giá và đơn giá sản phẩm dịch vụ.",
+        "Thực hiện thu tiền điều hành bay, xử lý nợ; là cơ quan thường trực Hội đồng xử lý nợ.",
+        "Xây dựng, triển khai chương trình thực hành tiết kiệm chống lãng phí; quản lý chi phí và nghĩa vụ ngân sách nhà nước.",
+        "Xây dựng, theo dõi, đánh giá kế hoạch tài chính trung hạn, hàng năm; công khai thông tin tài chính.",
+        "Tổ chức công tác kế toán, lập báo cáo tài chính; phối hợp kiểm toán độc lập và kiểm tra quyết toán tài chính hàng năm.",
+        "Phân tích số liệu kế toán, tham mưu giải pháp phục vụ quản trị và quyết định kinh tế tài chính."
+      ],
+      "tu_khoa": [
+        "tài chính",
+        "kế toán",
+        "vốn điều lệ",
+        "tài sản cố định",
+        "khấu hao",
+        "quyết toán vốn đầu tư",
+        "công ty con",
+        "quản lý nợ",
+        "thu tiền điều hành bay",
+        "tiết kiệm chống lãng phí",
+        "báo cáo tài chính",
+        "kiểm toán độc lập",
+        "kế hoạch tài chính",
+        "thuế",
+        "quỹ phát triển khoa học công nghệ",
+        "thanh lý tài sản",
+        "kiểm kê tài sản",
+        "ngân sách nhà nước"
+      ],
+      "co_cau_to_chuc": [
+        "Bộ phận Tài chính",
+        "Bộ phận Kế toán tổng hợp",
+        "Bộ phận Kế toán đầu tư",
+        "Bộ phận Thuế"
+      ]
+    },
+    {
+      "ma": "BKT",
+      "ten_day_du": "Ban Kỹ thuật",
+      "loai": "ban_tham_muu",
+      "van_ban": [
+        {
+          "so": "1990/QĐ-QLB",
+          "ngay": "08/04/2024",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Ban Kỹ thuật"
+        },
+        {
+          "so": "709/BC-KT",
+          "ngay": "21/05/2025",
+          "noi_dung": "Báo cáo điều chỉnh phân công nhiệm vụ trong Ban Kỹ thuật"
+        },
+        {
+          "so": "không rõ số/BC-KT",
+          "ngay": "01/2026",
+          "noi_dung": "Báo cáo phân công nhiệm vụ trong Ban Kỹ thuật"
+        }
+      ],
+      "chuc_nang": "Ban Kỹ thuật là cơ quan tham mưu, giúp việc cho Hội đồng thành viên và Tổng giám đốc về công tác thông tin, dẫn đường, giám sát (CNS), khí tượng hàng không, công nghệ thông tin, cơ điện, khoa học công nghệ và bảo vệ môi trường của Tổng công ty. Gồm 3 bộ phận chuyên môn: CNS, Công nghệ thông tin (CNTT) và Cơ điện (M-E).",
+      "nhiem_vu_chinh": [
+        "Xây dựng đề án, phương án, kế hoạch phát triển ngành kỹ thuật phục vụ bảo đảm hoạt động bay.",
+        "Theo dõi, giám sát công tác quản lý vật tư, trang thiết bị kỹ thuật và bảo đảm kỹ thuật của Tổng công ty.",
+        "Tham mưu nghiên cứu ứng dụng khoa học công nghệ; là cơ quan thường trực Hội đồng khoa học và công nghệ.",
+        "Tham mưu công tác đảm bảo an toàn, an ninh thông tin trong ứng dụng công nghệ thông tin.",
+        "Thẩm định kỹ thuật - công nghệ và bảo vệ môi trường đối với các phương án, dự án, công trình.",
+        "Thẩm định hồ sơ cấp giấy phép tần số vô tuyến điện, giấy phép mạng viễn thông, giấy phép khai thác thiết bị, giấy phép cơ sở CNS.",
+        "Triển khai, giám sát thực hiện quy định về khoa học công nghệ và bảo vệ môi trường.",
+        "Thẩm định và theo dõi việc áp dụng các định mức kinh tế kỹ thuật liên quan thiết bị kỹ thuật.",
+        "Quản lý lĩnh vực Thông tin - Dẫn đường - Giám sát (CNS) và khí tượng hàng không qua Bộ phận CNS.",
+        "Quản lý chuyển đổi số, an toàn thông tin và công nghệ thông tin qua Bộ phận CNTT.",
+        "Quản lý hệ thống thiết bị cơ điện, bảo vệ môi trường, phòng chống cháy nổ qua Bộ phận Cơ điện.",
+        "Theo dõi, giám sát các dự án kỹ thuật lớn: radar, AWOS, ATN mặt đất, ATFM, các cảng hàng không."
+      ],
+      "tu_khoa": [
+        "cns",
+        "thông tin dẫn đường giám sát",
+        "khí tượng hàng không",
+        "công nghệ thông tin",
+        "cơ điện",
+        "chuyển đổi số",
+        "an toàn an ninh thông tin",
+        "khoa học công nghệ",
+        "đổi mới sáng tạo",
+        "bảo vệ môi trường",
+        "giấy phép tần số vô tuyến điện",
+        "giấy phép khai thác thiết bị",
+        "cấp phép cơ sở cns",
+        "radar",
+        "awos",
+        "atfm",
+        "định mức kinh tế kỹ thuật",
+        "phòng chống cháy nổ",
+        "thiết bị kỹ thuật hàng không"
+      ],
+      "co_cau_to_chuc": [
+        "Bộ phận Thông tin - Dẫn đường - Giám sát (CNS)",
+        "Bộ phận Công nghệ thông tin (CNTT)",
+        "Bộ phận Cơ điện (M-E)"
+      ]
+    },
+    {
+      "ma": "BTCCB",
+      "ten_day_du": "Ban Tổ chức cán bộ - Lao động",
+      "loai": "ban_tham_muu",
+      "van_ban": [
+        {
+          "so": "1991/QĐ-QLB",
+          "ngay": "08/04/2024",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Ban Tổ chức cán bộ - Lao động"
+        }
+      ],
+      "chuc_nang": "Ban Tổ chức cán bộ - Lao động là cơ quan tham mưu, giúp việc cho Hội đồng thành viên và Tổng giám đốc về công tác tổ chức, cán bộ, lao động, tiền lương, đào tạo huấn luyện và thi đua khen thưởng của Tổng công ty.",
+      "nhiem_vu_chinh": [
+        "Nghiên cứu, đề xuất mô hình cơ cấu tổ chức của Tổng công ty và các đơn vị trực thuộc.",
+        "Xây dựng chiến lược đào tạo phát triển nguồn nhân lực của Tổng công ty.",
+        "Xây dựng điều lệ tổ chức hoạt động của Tổng công ty; thẩm định điều lệ, quy chế các đơn vị và công ty con.",
+        "Xây dựng quy hoạch, kế hoạch tuyển dụng, bố trí, điều động, luân chuyển, bổ nhiệm, miễn nhiệm cán bộ.",
+        "Tổ chức tuyển dụng; đánh giá hiệu quả làm việc, chất lượng nguồn nhân lực; khen thưởng, kỷ luật cán bộ nhân viên.",
+        "Xây dựng định biên lao động, tiêu chuẩn chức danh, vị trí việc làm và chỉ số KPI.",
+        "Xây dựng kế hoạch sử dụng lao động, tiền lương, bảo hiểm, bảo hộ lao động, chế độ chính sách.",
+        "Theo dõi, hướng dẫn thực hiện chế độ lao động, tiền lương, bảo hiểm xã hội, an toàn vệ sinh lao động.",
+        "Xây dựng, sửa đổi Thỏa ước lao động tập thể, Nội quy lao động; tổ chức hội nghị người lao động.",
+        "Thực hiện công tác thi đua - khen thưởng của Tổng công ty.",
+        "Quản lý thủ tục cấp, gia hạn, thu hồi giấy phép, năng định nhân viên hàng không theo quy định của Cục HKVN.",
+        "Xây dựng chiến lược, chính sách đào tạo, huấn luyện; quản lý, giám sát hoạt động các cơ sở đào tạo, huấn luyện.",
+        "Là cơ quan thường trực Hội đồng tuyển dụng, Hội đồng lương, Hội đồng Thi đua - Khen thưởng, Hội đồng an toàn vệ sinh lao động."
+      ],
+      "tu_khoa": [
+        "tổ chức cán bộ",
+        "nhân sự",
+        "tiền lương",
+        "bổ nhiệm miễn nhiệm",
+        "tuyển dụng",
+        "định biên lao động",
+        "đào tạo huấn luyện",
+        "thi đua khen thưởng",
+        "bảo hiểm xã hội",
+        "an toàn vệ sinh lao động",
+        "thỏa ước lao động tập thể",
+        "nội quy lao động",
+        "giấy phép năng định nhân viên hàng không",
+        "cơ cấu tổ chức",
+        "kpi",
+        "chính sách lao động",
+        "hồ sơ cán bộ"
+      ],
+      "co_cau_to_chuc": [
+        "Bộ phận Nhân sự",
+        "Bộ phận Tiền lương",
+        "Bộ phận Đào tạo - Huấn luyện",
+        "Bộ phận Thi đua - Khen thưởng"
+      ]
+    },
+    {
+      "ma": "BKL",
+      "ten_day_du": "Ban Không lưu",
+      "loai": "ban_tham_muu",
+      "van_ban": [
+        {
+          "so": "1987/QĐ-QLB",
+          "ngay": "08/04/2024",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Ban Không lưu (văn bản gốc, đã được thay thế)"
+        },
+        {
+          "so": "736/QĐ-QLB",
+          "ngay": "10/02/2025",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Ban Không lưu (sửa đổi, bổ sung, hiện hành)"
+        }
+      ],
+      "chuc_nang": "Ban Không lưu là cơ quan tham mưu, giúp việc cho Hội đồng thành viên và Tổng giám đốc về công tác quản lý không lưu (ATM), dịch vụ không lưu, quản lý luồng không lưu, tổ chức và sử dụng vùng trời. Đồng thời phụ trách các lĩnh vực Thông báo tin tức hàng không (AIS), Khí tượng hàng không (MET) và Tìm kiếm cứu nạn hàng không (SAR).",
+      "nhiem_vu_chinh": [
+        "Xây dựng, hướng dẫn thực hiện quy trình, quy phạm về quản lý không lưu (ATM), dịch vụ không lưu (ATS), quản lý luồng không lưu (ATFM), quản lý sử dụng vùng trời (ASM).",
+        "Xây dựng, hướng dẫn quy trình, quy phạm về Thông báo tin tức hàng không (AIS), Khí tượng hàng không (MET), Tìm kiếm cứu nạn hàng không (SAR).",
+        "Tham mưu các phương án, phương thức khai thác thuộc lĩnh vực không lưu, AIS, MET, SAR.",
+        "Thẩm định Tài liệu hướng dẫn khai thác và hồ sơ đề nghị cấp Giấy phép khai thác của các cơ sở cung cấp dịch vụ.",
+        "Tham mưu quản lý hệ thống văn bản hiệp đồng của các đơn vị liên quan.",
+        "Tham mưu công tác tổ chức vùng trời, đường hàng không và phân công trách nhiệm điều hành bay.",
+        "Chủ trì, định hướng công tác thiết kế phương thức bay.",
+        "Đề xuất phương thức đánh giá năng lực đường cất hạ cánh và các phân vùng trời liên quan.",
+        "Chủ trì, phối hợp công tác phối hợp ra quyết định tại sân bay (A-CDM)."
+      ],
+      "tu_khoa": [
+        "không lưu",
+        "atm",
+        "dịch vụ không lưu",
+        "ats",
+        "quản lý luồng không lưu",
+        "atfm",
+        "quản lý vùng trời",
+        "asm",
+        "thông báo tin tức hàng không",
+        "ais",
+        "khí tượng hàng không",
+        "met",
+        "tìm kiếm cứu nạn",
+        "sar",
+        "phương thức bay",
+        "đường hàng không",
+        "điều hành bay",
+        "a-cdm",
+        "giấy phép khai thác dịch vụ",
+        "văn bản hiệp đồng"
+      ],
+      "co_cau_to_chuc": [
+        "Bộ phận Không lưu",
+        "Bộ phận Quản lý luồng không lưu",
+        "Bộ phận Quản lý và tổ chức vùng trời không lưu"
+      ]
+    },
+    {
+      "ma": "BAT",
+      "ten_day_du": "Ban An toàn - Chất lượng",
+      "loai": "ban_tham_muu",
+      "van_ban": [
+        {
+          "so": "1988/QĐ-QLB",
+          "ngay": "07/04/2024",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Ban An toàn - Chất lượng"
+        }
+      ],
+      "chuc_nang": "Ban An toàn - Chất lượng là cơ quan tham mưu, giúp việc cho Hội đồng thành viên và Tổng giám đốc về công tác quản lý an toàn và quản lý chất lượng của Tổng công ty. Chịu trách nhiệm duy trì hệ thống quản lý an toàn, điều tra sự cố và xây dựng hệ thống quản lý chất lượng.",
+      "nhiem_vu_chinh": [
+        "Duy trì, vận hành và phát triển hệ thống quản lý an toàn của Tổng công ty.",
+        "Kiểm tra, đánh giá và điều tra xác minh nội bộ các vụ việc, sự cố bảo đảm hoạt động bay.",
+        "Thu thập, chuẩn hóa, lưu trữ và phân tích dữ liệu an toàn và chất lượng.",
+        "Quản lý, theo dõi các tiêu chuẩn dịch vụ mà Tổng công ty cung cấp.",
+        "Chủ trì xây dựng, triển khai, giám sát và đánh giá hiệu quả Hệ thống quản lý chất lượng.",
+        "Xây dựng, đề xuất định hướng chiến lược, giải pháp bảo đảm an toàn và chất lượng.",
+        "Tham mưu thiết lập Chính sách, Mục tiêu và chỉ số thực hiện an toàn; Chính sách và mục tiêu chất lượng.",
+        "Là cơ quan thường trực giúp việc Ban chỉ đạo an toàn và Ban chỉ đạo hệ thống quản lý chất lượng."
+      ],
+      "tu_khoa": [
+        "an toàn hàng không",
+        "hệ thống quản lý an toàn",
+        "sms",
+        "quản lý chất lượng",
+        "điều tra sự cố",
+        "sự cố bảo đảm hoạt động bay",
+        "tiêu chuẩn dịch vụ",
+        "chính sách an toàn",
+        "mục tiêu chất lượng",
+        "kiểm tra đánh giá an toàn",
+        "dữ liệu an toàn",
+        "ban chỉ đạo an toàn"
+      ],
+      "co_cau_to_chuc": [
+        "Bộ phận Quản lý hệ thống an toàn",
+        "Bộ phận Kiểm tra, đánh giá",
+        "Bộ phận Tổng hợp và phân tích dữ liệu",
+        "Bộ phận Quản lý chất lượng"
+      ]
+    },
+    {
+      "ma": "BANHK",
+      "ten_day_du": "Ban An ninh hàng không",
+      "loai": "ban_tham_muu",
+      "van_ban": [
+        {
+          "so": "1989/QĐ-QLB",
+          "ngay": "08/04/2024",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Ban An ninh hàng không"
+        },
+        {
+          "so": "không số (BANHK 4.9.2024)",
+          "ngay": "07/2024",
+          "noi_dung": "Phân công nhiệm vụ đối với cán bộ, nhân viên Ban An ninh hàng không"
+        }
+      ],
+      "chuc_nang": "Ban An ninh hàng không là cơ quan tham mưu, giúp việc cho Hội đồng thành viên và Tổng giám đốc về công tác an ninh hàng không và phòng chống khủng bố của Tổng công ty. Chịu trách nhiệm xây dựng, vận hành hệ thống quản lý an ninh hàng không và phối hợp với các lực lượng chức năng.",
+      "nhiem_vu_chinh": [
+        "Tham mưu định hướng chiến lược, quy hoạch, kế hoạch duy trì, vận hành, phát triển Hệ thống quản lý an ninh hàng không (ANHK).",
+        "Xây dựng Quy chế ANHK, quy định, tiêu chuẩn, quy trình, kế hoạch về an ninh hàng không và phòng chống khủng bố.",
+        "Tham mưu triển khai quy chế phối hợp với Công an, Quân đội, chính quyền địa phương và doanh nghiệp hàng không.",
+        "Thẩm định, trình phê duyệt Kế hoạch khẩn nguy đối phó hành vi can thiệp bất hợp pháp vào hoạt động hàng không.",
+        "Kiểm tra, đánh giá, thẩm định hồ sơ bổ nhiệm, cấp thẻ giám sát viên ANHK và thẻ kiểm soát an ninh nội bộ.",
+        "Xây dựng, duy trì hệ thống cơ sở dữ liệu an ninh hàng không của Tổng công ty.",
+        "Hướng dẫn, kiểm tra, giám sát các đơn vị thực hiện Quy chế ANHK, kiểm soát an ninh nội bộ nhân viên hàng không.",
+        "Thực hiện kiểm soát chất lượng ANHK cấp Tổng công ty và xây dựng tài liệu kiểm soát chất lượng.",
+        "Là cơ quan thường trực Tiểu ban chỉ đạo phòng chống khủng bố và Hội đồng đánh giá rủi ro an ninh hàng không.",
+        "Xây dựng hệ thống đánh giá rủi ro an ninh hàng không và làm đầu mối phối hợp trong, ngoài ngành hàng không.",
+        "Xây dựng và phát triển văn hóa an ninh hàng không trong Tổng công ty."
+      ],
+      "tu_khoa": [
+        "an ninh hàng không",
+        "anhk",
+        "phòng chống khủng bố",
+        "kế hoạch khẩn nguy",
+        "can thiệp bất hợp pháp",
+        "thẻ kiểm soát an ninh",
+        "giám sát viên an ninh hàng không",
+        "đánh giá rủi ro an ninh",
+        "kiểm soát chất lượng anhk",
+        "an ninh thông tin chuyên ngành",
+        "cơ sở dữ liệu an ninh hàng không",
+        "văn hóa an ninh hàng không",
+        "vũ khí công cụ hỗ trợ"
+      ],
+      "co_cau_to_chuc": [
+        "Bộ phận Quản lý hệ thống an ninh",
+        "Bộ phận Kiểm tra, đánh giá"
+      ]
+    },
+    {
+      "ma": "BKTNB",
+      "ten_day_du": "Ban Kiểm toán nội bộ",
+      "loai": "ban_tham_muu",
+      "van_ban": [
+        {
+          "so": "155/QĐ-HĐTV",
+          "ngay": "03/2025 (ngày cụ thể không rõ do lỗi OCR)",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Ban Kiểm toán nội bộ (đổi tên từ Ban Kiểm soát nội bộ), hiệu lực từ 01/04/2025"
+        }
+      ],
+      "chuc_nang": "Ban Kiểm toán nội bộ là cơ quan tham mưu, giúp việc cho Hội đồng thành viên và Tổng giám đốc về công tác kiểm toán nội bộ và kiểm tra, giám sát hoạt động sản xuất kinh doanh, quản lý điều hành trong Tổng công ty. Được đổi tên từ Ban Kiểm soát nội bộ, hoạt động độc lập, khách quan theo quy chế riêng.",
+      "nhiem_vu_chinh": [
+        "Xây dựng quy chế, quy trình kiểm toán nội bộ trình Hội đồng thành viên ban hành.",
+        "Xây dựng kế hoạch kiểm toán nội bộ hàng năm trình Hội đồng thành viên phê duyệt.",
+        "Tổ chức thực hiện kiểm toán nội bộ theo kế hoạch và đột xuất theo yêu cầu của Hội đồng thành viên, Tổng giám đốc.",
+        "Đề xuất biện pháp sửa chữa, khắc phục sai sót, xử lý vi phạm, hoàn thiện hệ thống kiểm soát nội bộ.",
+        "Lập báo cáo kiểm toán, theo dõi, đôn đốc, kiểm tra kết quả thực hiện kiến nghị sau kiểm toán.",
+        "Phối hợp với Ban Tài chính lựa chọn, kiểm soát sử dụng dịch vụ kiểm toán độc lập.",
+        "Giám sát việc thực hiện nghị quyết, quyết định của Hội đồng thành viên và hoạt động sản xuất kinh doanh.",
+        "Kiểm tra, giám sát hoạt động đầu tư, quản lý vốn của Tổng công ty tại công ty con.",
+        "Thực hiện giám sát tài chính, đánh giá hiệu quả hoạt động và xếp loại doanh nghiệp.",
+        "Theo dõi, đôn đốc công bố, công khai thông tin trên hệ thống T-Public của Bộ Xây dựng.",
+        "Theo dõi, lập báo cáo kết quả thực hiện kết luận, kiến nghị sau thanh tra, kiểm tra, kiểm toán.",
+        "Là cơ quan thường trực, giúp việc cho Ban chỉ đạo phòng, chống tham nhũng của Tổng công ty."
+      ],
+      "tu_khoa": [
+        "kiểm toán nội bộ",
+        "kiểm tra giám sát",
+        "kiểm soát nội bộ",
+        "giám sát vốn nhà nước",
+        "giám sát công ty con",
+        "giám sát tài chính",
+        "xếp loại doanh nghiệp",
+        "kết luận thanh tra kiểm toán",
+        "phòng chống tham nhũng",
+        "công bố thông tin doanh nghiệp",
+        "t-public",
+        "báo cáo kiểm toán",
+        "kiến nghị sau kiểm toán"
+      ],
+      "co_cau_to_chuc": [
+        "Bộ phận Kiểm toán nội bộ",
+        "Bộ phận Kiểm tra, giám sát nội bộ",
+        "Bộ phận Tổng hợp"
+      ]
+    },
+    {
+      "ma": "BKS",
+      "ten_day_du": "Ban Kiểm soát tại Tổng công ty Quản lý bay Việt Nam",
+      "loai": "ban_tham_muu",
+      "van_ban": [
+        {
+          "so": "16/QLB-BKS",
+          "ngay": "14/05/2026",
+          "noi_dung": "Phân công nhiệm vụ trong Ban Kiểm soát tại Tổng công ty Quản lý bay Việt Nam"
+        }
+      ],
+      "chuc_nang": "Ban Kiểm soát là cơ quan do Bộ Xây dựng (cơ quan đại diện chủ sở hữu) thành lập tại Công ty mẹ - VATM, thực hiện chức năng giám sát độc lập việc quản lý, sử dụng vốn nhà nước và hoạt động quản trị doanh nghiệp. Không thuộc bộ máy điều hành của VATM mà báo cáo trực tiếp Bộ Xây dựng, hoạt động độc lập với Hội đồng thành viên và Ban Tổng giám đốc.",
+      "nhiem_vu_chinh": [
+        "Giám sát độc lập việc quản lý, sử dụng vốn nhà nước và hoạt động quản trị doanh nghiệp tại VATM.",
+        "Rà soát, phân tích, đánh giá và kiến nghị bảo toàn, phát triển vốn nhà nước, nâng cao hiệu quả hoạt động.",
+        "Giám sát, kiểm tra, đánh giá hoạt động của Hội đồng thành viên và Tổng giám đốc trong quản lý điều hành sản xuất kinh doanh.",
+        "Giám sát chế độ lao động, tiền lương, tiền thưởng của người quản lý, kiểm soát viên và người lao động.",
+        "Giám sát, đánh giá tính hợp pháp, trung thực trong thực hiện quyền chủ sở hữu và tái cơ cấu doanh nghiệp.",
+        "Giám sát tổ chức thực hiện chiến lược phát triển, kế hoạch kinh doanh 5 năm và hàng năm.",
+        "Giám sát các dự án đầu tư lớn, hợp đồng/giao dịch kinh doanh lớn hoặc bất thường theo ngưỡng quy định.",
+        "Theo dõi, giám sát hoạt động tài chính, kiểm tra quyết toán, bảo toàn vốn và tăng vốn điều lệ.",
+        "Theo dõi, giám sát hoạt động khoa học công nghệ, đổi mới sáng tạo và công tác an toàn cung cấp dịch vụ bảo đảm hoạt động bay.",
+        "Đôn đốc thực hiện kết luận thanh tra, kiểm toán, kiểm tra; báo cáo, kiến nghị rủi ro tiềm ẩn.",
+        "Báo cáo định kỳ (tháng, quý, năm) về kết quả kiểm soát gửi Bộ Xây dựng."
+      ],
+      "tu_khoa": [
+        "kiểm soát viên",
+        "giám sát vốn nhà nước",
+        "quản trị doanh nghiệp",
+        "cơ quan đại diện chủ sở hữu",
+        "bộ xây dựng",
+        "giám sát hội đồng thành viên",
+        "giám sát tổng giám đốc",
+        "giám sát tiền lương",
+        "giám sát dự án đầu tư",
+        "giám sát tài chính doanh nghiệp",
+        "tái cơ cấu doanh nghiệp",
+        "phân phối lợi nhuận",
+        "bảo toàn vốn",
+        "rủi ro tiềm ẩn doanh nghiệp"
+      ],
+      "co_cau_to_chuc": [
+        "Trưởng Ban Kiểm soát",
+        "Kiểm soát viên"
+      ]
+    },
+    {
+      "ma": "QLBMB",
+      "ten_day_du": "Công ty Quản lý bay miền Bắc (NORATS)",
+      "loai": "don_vi_truc_thuoc",
+      "van_ban": [
+        {
+          "so": "5694/QD-QLB",
+          "ngay": "12/9/2024",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Công ty Quản lý bay miền Bắc, thay thế Quyết định số 3099/QD-QLB ngày 12/06/2017"
+        }
+      ],
+      "chuc_nang": "Là đơn vị hạch toán phụ thuộc - Chi nhánh của Tổng công ty Quản lý bay Việt Nam, cung ứng dịch vụ bảo đảm hoạt động bay trong vùng thông báo bay Hà Nội (FIR/HAN). Cung cấp dịch vụ không lưu, thông tin dẫn đường giám sát, khí tượng cho tàu bay dân dụng và vận tải quân sự tại các cảng hàng không, sân bay khu vực miền Bắc. Quản lý, khai thác các cơ sở cung cấp dịch vụ bảo đảm hoạt động bay được giao trong khu vực.",
+      "nhiem_vu_chinh": [
+        "Cung ứng dịch vụ không lưu gồm điều hành bay, thông báo bay, tư vấn không lưu và báo động.",
+        "Cung ứng dịch vụ thông tin, dẫn đường, giám sát trong vùng FIR Hà Nội.",
+        "Cung ứng dịch vụ khí tượng hàng không cho khu vực trách nhiệm.",
+        "Quản lý, khai thác và tổ chức đảm bảo kỹ thuật cho các cơ sở cung cấp dịch vụ bảo đảm hoạt động bay được giao.",
+        "Xây dựng, triển khai kế hoạch đầu tư, mua sắm trang thiết bị, vật tư bảo đảm hoạt động bay.",
+        "Thực hiện công tác hiệp đồng, phối hợp tìm kiếm cứu nạn tàu bay, khẩn nguy sân bay trong phạm vi trách nhiệm.",
+        "Phối hợp bảo đảm an ninh, an toàn hàng không tại các cảng hàng không, sân bay khu vực.",
+        "Nghiên cứu, ứng dụng kỹ thuật công nghệ, đề xuất quy hoạch cơ sở vật chất kỹ thuật.",
+        "Tổ chức huấn luyện nâng cao trình độ chuyên môn nghiệp vụ cho người lao động.",
+        "Vận hành Trung tâm Kiểm soát Đường dài và Trung tâm Kiểm soát Tiếp cận Nội Bài.",
+        "Vận hành các Đài Kiểm soát không lưu tại Cát Bi, Vinh, Đồng Hới, Điện Biên, Thọ Xuân, Vân Đồn.",
+        "Thực hiện các nhiệm vụ khác theo quy chế quản lý nội bộ và khi được Tổng công ty giao."
+      ],
+      "tu_khoa": [
+        "quản lý bay miền bắc",
+        "norats",
+        "fir hà nội",
+        "kiểm soát đường dài",
+        "kiểm soát tiếp cận nội bài",
+        "đài kiểm soát không lưu",
+        "cát bi",
+        "vinh",
+        "đồng hới",
+        "điện biên",
+        "thọ xuân",
+        "vân đồn",
+        "dịch vụ không lưu",
+        "điều hành bay miền bắc",
+        "khí tượng miền bắc"
+      ],
+      "co_cau_to_chuc": [
+        "Văn phòng",
+        "Phòng Tổ chức cán bộ - Lao động",
+        "Phòng Kế hoạch",
+        "Phòng Tài chính",
+        "Phòng Kỹ thuật",
+        "Phòng Không lưu",
+        "Phòng An toàn - Chất lượng và An ninh",
+        "Văn phòng Đảng - Đoàn thể",
+        "Trung tâm Kiểm soát Đường dài",
+        "Trung tâm Kiểm soát Tiếp cận - Tại sân Nội Bài",
+        "Trung tâm Bảo đảm kỹ thuật",
+        "Đài Kiểm soát không lưu Cát Bi",
+        "Đài Kiểm soát không lưu Vinh",
+        "Đài Kiểm soát không lưu Đồng Hới",
+        "Đài Kiểm soát không lưu Điện Biên",
+        "Đài Kiểm soát không lưu Thọ Xuân",
+        "Đài Kiểm soát không lưu Vân Đồn"
+      ]
+    },
+    {
+      "ma": "QLBMT",
+      "ten_day_du": "Công ty Quản lý bay miền Trung (MIRATS)",
+      "loai": "don_vi_truc_thuoc",
+      "van_ban": [
+        {
+          "so": "5695/QD-QLB",
+          "ngay": "12/9/2024",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Công ty Quản lý bay miền Trung, thay thế Quyết định số 3102/QD-QLB ngày 12/06/2017"
+        }
+      ],
+      "chuc_nang": "Là đơn vị hạch toán phụ thuộc - Chi nhánh của Tổng công ty Quản lý bay Việt Nam, cung ứng dịch vụ bảo đảm hoạt động bay tại các cảng hàng không, sân bay và vùng trời khu vực miền Trung. Cung cấp dịch vụ không lưu, thông tin giám sát, khí tượng cho tàu bay dân dụng và vận tải quân sự. Trụ sở tại Đà Nẵng, phụ trách các sân bay Đà Nẵng, Cam Ranh, Phú Bài, Phù Cát, Chu Lai, Pleiku, Tuy Hòa.",
+      "nhiem_vu_chinh": [
+        "Cung ứng dịch vụ không lưu gồm điều hành bay, thông báo bay, tư vấn không lưu và báo động.",
+        "Cung ứng dịch vụ thông tin, giám sát cho khu vực miền Trung.",
+        "Cung ứng dịch vụ khí tượng hàng không cho khu vực trách nhiệm.",
+        "Quản lý, khai thác và tổ chức đảm bảo kỹ thuật cho các cơ sở cung cấp dịch vụ bảo đảm hoạt động bay được giao.",
+        "Xây dựng, triển khai kế hoạch đầu tư, mua sắm trang thiết bị, vật tư bảo đảm hoạt động bay.",
+        "Thực hiện công tác hiệp đồng, phối hợp tìm kiếm cứu nạn tàu bay, khẩn nguy sân bay trong phạm vi trách nhiệm.",
+        "Phối hợp bảo đảm an ninh, an toàn hàng không tại các cảng hàng không, sân bay khu vực.",
+        "Nghiên cứu, ứng dụng kỹ thuật công nghệ, đề xuất quy hoạch cơ sở vật chất kỹ thuật.",
+        "Tổ chức huấn luyện nâng cao trình độ chuyên môn nghiệp vụ cho người lao động.",
+        "Vận hành Trung tâm Kiểm soát Tiếp cận tại sân Đà Nẵng và Cam Ranh.",
+        "Vận hành các Đài Kiểm soát không lưu tại Phú Bài, Phù Cát, Chu Lai, Pleiku, Tuy Hòa.",
+        "Thực hiện các nhiệm vụ khác theo quy chế quản lý nội bộ và khi được Tổng công ty giao."
+      ],
+      "tu_khoa": [
+        "quản lý bay miền trung",
+        "mirats",
+        "đà nẵng",
+        "cam ranh",
+        "phú bài",
+        "phù cát",
+        "chu lai",
+        "pleiku",
+        "tuy hòa",
+        "kiểm soát tiếp cận",
+        "đài kiểm soát không lưu",
+        "dịch vụ không lưu",
+        "điều hành bay miền trung",
+        "khí tượng miền trung"
+      ],
+      "co_cau_to_chuc": [
+        "Văn phòng",
+        "Phòng Tổ chức cán bộ - Lao động",
+        "Phòng Kế hoạch",
+        "Phòng Tài chính",
+        "Phòng Kỹ thuật",
+        "Phòng Không lưu",
+        "Phòng An toàn - Chất lượng và An ninh",
+        "Trung tâm Kiểm soát Tiếp cận - Tại sân Đà Nẵng",
+        "Trung tâm Kiểm soát Tiếp cận - Tại sân Cam Ranh",
+        "Trung tâm Bảo đảm kỹ thuật",
+        "Đài Kiểm soát không lưu Phú Bài",
+        "Đài Kiểm soát không lưu Phù Cát",
+        "Đài Kiểm soát không lưu Chu Lai",
+        "Đài Kiểm soát không lưu Pleiku",
+        "Đài Kiểm soát không lưu Tuy Hòa"
+      ]
+    },
+    {
+      "ma": "QLBMN",
+      "ten_day_du": "Công ty Quản lý bay miền Nam (SORATS)",
+      "loai": "don_vi_truc_thuoc",
+      "van_ban": [
+        {
+          "so": "5696/QD-QLB",
+          "ngay": "12/9/2024",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Công ty Quản lý bay miền Nam, thay thế Quyết định số 3100/QD-QLB ngày 12/06/2017"
+        }
+      ],
+      "chuc_nang": "Là đơn vị hạch toán phụ thuộc - Chi nhánh của Tổng công ty Quản lý bay Việt Nam, cung ứng dịch vụ bảo đảm hoạt động bay trong vùng thông báo bay Hồ Chí Minh (FIR/HCM). Cung cấp dịch vụ không lưu, thông tin giám sát, khí tượng cho tàu bay dân dụng và vận tải quân sự tại các cảng hàng không, sân bay khu vực miền Nam. Trụ sở tại Thành phố Hồ Chí Minh.",
+      "nhiem_vu_chinh": [
+        "Cung ứng dịch vụ không lưu gồm điều hành bay, thông báo bay, tư vấn không lưu và báo động.",
+        "Cung ứng dịch vụ thông tin, giám sát trong vùng FIR Hồ Chí Minh.",
+        "Cung ứng dịch vụ khí tượng hàng không cho khu vực trách nhiệm.",
+        "Quản lý, khai thác và tổ chức đảm bảo kỹ thuật cho các cơ sở cung cấp dịch vụ bảo đảm hoạt động bay được giao.",
+        "Xây dựng, triển khai kế hoạch đầu tư, mua sắm trang thiết bị, vật tư bảo đảm hoạt động bay.",
+        "Thực hiện công tác hiệp đồng, phối hợp tìm kiếm cứu nạn tàu bay, khẩn nguy sân bay trong phạm vi trách nhiệm.",
+        "Phối hợp bảo đảm an ninh, an toàn hàng không tại các cảng hàng không, sân bay khu vực.",
+        "Nghiên cứu, ứng dụng kỹ thuật công nghệ, đề xuất quy hoạch cơ sở vật chất kỹ thuật.",
+        "Tổ chức huấn luyện nâng cao trình độ chuyên môn nghiệp vụ cho người lao động.",
+        "Vận hành Trung tâm Kiểm soát Đường dài và Trung tâm Kiểm soát Tiếp cận Tân Sơn Nhất.",
+        "Vận hành các Đài Kiểm soát không lưu tại Côn Sơn, Liên Khương, Phú Quốc, Rạch Giá, Cần Thơ, Buôn Ma Thuột, Cà Mau.",
+        "Thực hiện các nhiệm vụ khác theo quy chế quản lý nội bộ và khi được Tổng công ty giao."
+      ],
+      "tu_khoa": [
+        "quản lý bay miền nam",
+        "sorats",
+        "fir hồ chí minh",
+        "tân sơn nhất",
+        "kiểm soát đường dài",
+        "kiểm soát tiếp cận",
+        "côn sơn",
+        "liên khương",
+        "phú quốc",
+        "rạch giá",
+        "cần thơ",
+        "buôn ma thuột",
+        "cà mau",
+        "dịch vụ không lưu",
+        "điều hành bay miền nam"
+      ],
+      "co_cau_to_chuc": [
+        "Văn phòng",
+        "Phòng Tổ chức cán bộ - Lao động",
+        "Phòng Kế hoạch",
+        "Phòng Tài chính",
+        "Phòng Kỹ thuật",
+        "Phòng Không lưu",
+        "Phòng An toàn - Chất lượng và An ninh",
+        "Văn phòng Đảng - Đoàn thể",
+        "Trung tâm Kiểm soát Đường dài",
+        "Trung tâm Kiểm soát Tiếp cận - Tại sân Tân Sơn Nhất",
+        "Trung tâm Bảo đảm kỹ thuật",
+        "Đài Kiểm soát không lưu Côn Sơn",
+        "Đài Kiểm soát không lưu Liên Khương",
+        "Đài Kiểm soát không lưu Phú Quốc",
+        "Đài Kiểm soát không lưu Rạch Giá",
+        "Đài Kiểm soát không lưu Cần Thơ",
+        "Đài Kiểm soát không lưu Buôn Ma Thuột",
+        "Đài Kiểm soát không lưu Cà Mau"
+      ]
+    },
+    {
+      "ma": "ATFMC",
+      "ten_day_du": "Trung tâm Quản lý luồng không lưu (ATFMC)",
+      "loai": "don_vi_truc_thuoc",
+      "van_ban": [
+        {
+          "so": "5697/QD-QLB",
+          "ngay": "12/9/2024",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Trung tâm Quản lý luồng không lưu, thay thế Quyết định số 2695/QD-QLB ngày 25/07/2016"
+        }
+      ],
+      "chuc_nang": "Là đơn vị hạch toán phụ thuộc - Chi nhánh của Tổng công ty Quản lý bay Việt Nam, thực hiện quản lý luồng không lưu (ATFM) tại Việt Nam, thông báo hiệp đồng bay và cấp phép bay theo ủy quyền. Quản lý hoạt động bay hàng ngày trên toàn quốc và các vùng thông báo bay do Việt Nam quản lý, tối ưu hóa sử dụng năng lực vùng trời và sân bay. Trụ sở tại Hà Nội.",
+      "nhiem_vu_chinh": [
+        "Tổ chức quản lý luồng không lưu tại Việt Nam và thông báo hiệp đồng bay.",
+        "Quản lý hoạt động bay hàng ngày tại các cảng hàng không, sân bay trên toàn quốc và vùng trời thuộc chủ quyền, vùng FIR do Việt Nam quản lý.",
+        "Cấp, sửa đổi và hủy bỏ phép bay theo ủy quyền của Cục Hàng không Việt Nam.",
+        "Tổng hợp, lập kế hoạch hoạt động bay dân dụng và kế hoạch hoạt động bay quân sự liên quan.",
+        "Thu thập, thống kê, phân tích số liệu điều hành bay xây dựng cơ sở dữ liệu phục vụ nhiệm vụ ATFM.",
+        "Điều chỉnh hoạt động bay, tối ưu hóa sử dụng năng lực vùng trời, sân bay theo lưu lượng hoạt động bay.",
+        "Chủ trì, phối hợp thực hiện phối hợp ra quyết định (CDM) và các biện pháp quản lý luồng không lưu.",
+        "Chủ trì rà soát, đánh giá hiệu quả công tác quản lý luồng không lưu, đề xuất giải pháp tăng năng lực hệ thống ATM.",
+        "Là đầu mối phối hợp, trao đổi thông tin ATFM có ảnh hưởng đến năng lực khai thác sân bay/vùng trời.",
+        "Kết nối quản lý luồng không lưu quốc gia với hệ thống ATFM của các nước trong khu vực theo lộ trình ICAO.",
+        "Tham gia điều phối giờ hạ, cất cánh tại các cảng hàng không, sân bay Việt Nam.",
+        "Tham gia hiệp đồng đảm bảo hoạt động tìm kiếm cứu nạn hàng không.",
+        "Quản lý, vận hành, sửa chữa, bảo trì các hệ thống trang thiết bị thông tin, công nghệ thông tin, cơ điện thuộc trách nhiệm được giao.",
+        "Tổ chức huấn luyện nâng cao trình độ chuyên môn nghiệp vụ ATFM cho người lao động."
+      ],
+      "tu_khoa": [
+        "quản lý luồng không lưu",
+        "atfmc",
+        "atfm",
+        "thông báo hiệp đồng bay",
+        "cấp phép bay",
+        "cdm",
+        "điều phối giờ cất hạ cánh",
+        "kế hoạch hoạt động bay",
+        "vùng trời",
+        "năng lực sân bay",
+        "trung tâm điều phối luồng không lưu",
+        "tối ưu hóa luồng bay"
+      ],
+      "co_cau_to_chuc": [
+        "Văn phòng",
+        "Phòng Tổ chức cán bộ - Lao động",
+        "Phòng Kế hoạch",
+        "Phòng Tài chính",
+        "Phòng An toàn - Chất lượng",
+        "Phòng Nghiệp vụ ATFM",
+        "Phòng Kỹ thuật",
+        "Trung tâm Điều phối luồng không lưu",
+        "Trung tâm Thông báo Hiệp đồng bay",
+        "Trung tâm Bảo đảm kỹ thuật"
+      ]
+    },
+    {
+      "ma": "VNAIC",
+      "ten_day_du": "Trung tâm Thông báo tin tức hàng không (VNAIC)",
+      "loai": "don_vi_truc_thuoc",
+      "van_ban": [
+        {
+          "so": "5698/QD-QLB",
+          "ngay": "12/9/2024",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Trung tâm Thông báo tin tức hàng không, thay thế Quyết định số 3101/QD-QLB ngày 12/06/2017"
+        }
+      ],
+      "chuc_nang": "Là đơn vị hạch toán phụ thuộc - Chi nhánh của Tổng công ty Quản lý bay Việt Nam, cung cấp dịch vụ thông báo tin tức hàng không (AIS), thủ tục bay, bản đồ, sơ đồ, cơ sở dữ liệu hàng không. Xây dựng, thiết kế vùng trời, đường hàng không, phương thức bay dân dụng theo tiêu chuẩn ICAO. Trụ sở tại Hà Nội.",
+      "nhiem_vu_chinh": [
+        "Cung cấp dịch vụ thông báo tin tức hàng không, thủ tục bay theo tiêu chuẩn ICAO.",
+        "Xây dựng, thiết kế vùng trời, đường hàng không, phương thức bay hàng không dân dụng.",
+        "Cung cấp các loại bản đồ, sơ đồ hàng không theo tiêu chuẩn ICAO.",
+        "Xây dựng, quản lý, cập nhật và khai thác cơ sở dữ liệu hàng không, bao gồm dữ liệu địa hình và chướng ngại vật điện tử (eTOD).",
+        "Ký kết văn bản thỏa thuận, hiệp đồng trao đổi dữ liệu hàng không với các cơ quan khởi tạo dữ liệu, hãng hàng không, quốc gia và các Phòng NOTAM.",
+        "Quản lý, khai thác và tổ chức đảm bảo kỹ thuật cho các cơ sở cung cấp dịch vụ bảo đảm hoạt động bay được giao.",
+        "Quản lý, khai thác phần mềm chuyên dùng cho thiết kế phương thức bay, bản đồ, sơ đồ, cơ sở dữ liệu hàng không (AIM).",
+        "Quản lý khai thác, bảo dưỡng, nâng cấp thiết bị in ấn bản đồ, sơ đồ hàng không.",
+        "Thực hiện đầu tư mua sắm trang thiết bị, phụ tùng phục vụ nhiệm vụ AIS/AIM.",
+        "Sản xuất, thiết kế, xuất nhập khẩu, kinh doanh sản phẩm liên quan tin tức hàng không, bản đồ, sơ đồ, cơ sở dữ liệu.",
+        "Xây dựng quy trình, tài liệu nghiệp vụ và hướng dẫn khai thác cho các cơ sở AIS được giao.",
+        "Tổ chức huấn luyện nâng cao trình độ chuyên môn nghiệp vụ AIS cho người lao động."
+      ],
+      "tu_khoa": [
+        "thông báo tin tức hàng không",
+        "vnaic",
+        "ais",
+        "notam",
+        "aip",
+        "bản đồ hàng không",
+        "sơ đồ hàng không",
+        "cơ sở dữ liệu hàng không",
+        "thiết kế phương thức bay",
+        "etod",
+        "aro/ais",
+        "vùng trời đường hàng không"
+      ],
+      "co_cau_to_chuc": [
+        "Văn phòng",
+        "Phòng Kế hoạch",
+        "Phòng Tài chính",
+        "Phòng Tổ chức cán bộ - Lao động",
+        "Phòng An toàn - Chất lượng",
+        "Phòng Nghiệp vụ",
+        "Phòng Bảo đảm kỹ thuật",
+        "Phòng Bản đồ - Phương thức bay",
+        "Phòng NOTAM quốc tế",
+        "Phòng AIP",
+        "Trung tâm ARO/AIS Nội Bài",
+        "Trung tâm ARO/AIS Đà Nẵng",
+        "Trung tâm ARO/AIS Tân Sơn Nhất",
+        "Trung tâm ARO/AIS Cam Ranh",
+        "Trung tâm Cơ sở dữ liệu hàng không"
+      ]
+    },
+    {
+      "ma": "ARCC",
+      "ten_day_du": "Trung tâm Phối hợp tìm kiếm cứu nạn hàng không (ARCC)",
+      "loai": "don_vi_truc_thuoc",
+      "van_ban": [
+        {
+          "so": "5699/QĐ-QLB",
+          "ngay": "04/9/2024",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Trung tâm Phối hợp tìm kiếm cứu nạn hàng không, thay thế Quyết định số 2634/QĐ-QLB ngày 11/5/2022"
+        }
+      ],
+      "chuc_nang": "Là đơn vị hạch toán phụ thuộc - Chi nhánh của Tổng công ty Quản lý bay Việt Nam, cung ứng dịch vụ tìm kiếm cứu nạn hàng không theo tiêu chuẩn ICAO. Là cơ quan thường trực của Ban Chỉ huy tìm kiếm cứu nạn hàng không, Ban Chỉ huy Phòng chống thiên tai và Tìm kiếm cứu nạn, Ban Chỉ huy Phòng cháy chữa cháy và cứu nạn cứu hộ của Tổng công ty. Tổ chức lực lượng thường trực 24/24 xử lý các tình huống tàu bay lâm nguy, lâm nạn.",
+      "nhiem_vu_chinh": [
+        "Tham mưu cho Lãnh đạo Tổng công ty về công tác tìm kiếm cứu nạn hàng không, ứng phó khẩn nguy khi tàu bay lâm nguy, lâm nạn.",
+        "Chủ trì xác định khu vực ưu tiên tìm kiếm, xây dựng phương án và kế hoạch bay tìm kiếm cứu nạn tàu bay lâm nguy, lâm nạn.",
+        "Trực tiếp tham gia công tác tìm kiếm cứu nạn hiện trường theo phương án đã phê duyệt.",
+        "Chủ trì xây dựng văn bản hiệp đồng, phương án, quy trình phòng chống thiên tai và tìm kiếm cứu nạn của Tổng công ty.",
+        "Chủ trì kiểm tra, giám sát công tác tìm kiếm cứu nạn hàng không, phòng chống thiên tai, phòng cháy chữa cháy đối với các đơn vị trực thuộc Tổng công ty.",
+        "Tổ chức lực lượng thường trực 24/24 tiếp nhận, phân tích, xử lý thông tin tình huống tàu bay lâm nguy, lâm nạn.",
+        "Phối hợp, hiệp đồng với Trung tâm Phối hợp tìm kiếm cứu nạn hàng hải Việt Nam, Trung tâm khẩn nguy sân bay và các cơ quan liên quan.",
+        "Bảo đảm hệ thống thông tin liên lạc, trang thiết bị cho Ban Chỉ huy tìm kiếm cứu nạn và Trung tâm Chỉ huy khẩn nguy Hàng không Quốc gia.",
+        "Lập kế hoạch huấn luyện, diễn tập tìm kiếm cứu nạn hàng không và tổ chức triển khai thực hiện.",
+        "Là cơ quan thường trực của các Ban Chỉ huy tìm kiếm cứu nạn, phòng chống thiên tai, phòng cháy chữa cháy của Tổng công ty."
+      ],
+      "tu_khoa": [
+        "tìm kiếm cứu nạn hàng không",
+        "arcc",
+        "sar",
+        "khẩn nguy hàng không",
+        "tàu bay lâm nạn",
+        "phòng chống thiên tai",
+        "phòng cháy chữa cháy",
+        "cứu nạn cứu hộ",
+        "trực ban 24/24",
+        "hiệp đồng tìm kiếm cứu nạn"
+      ],
+      "co_cau_to_chuc": [
+        "Phòng Hành chính - Tổng hợp",
+        "Phòng Nghiệp vụ",
+        "Trung tâm Hiệp đồng tìm kiếm cứu nạn miền Bắc",
+        "Trung tâm Hiệp đồng tìm kiếm cứu nạn miền Nam"
+      ]
+    },
+    {
+      "ma": "ATMTC",
+      "ten_day_du": "Trung tâm Đào tạo - Huấn luyện nghiệp vụ Quản lý bay (ATMTC)",
+      "loai": "don_vi_truc_thuoc",
+      "van_ban": [
+        {
+          "so": "5755/QĐ-QLB",
+          "ngay": "16/9/2024",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Trung tâm Đào tạo - Huấn luyện nghiệp vụ Quản lý bay, tổ chức lại thành đơn vị hạch toán phụ thuộc - Chi nhánh"
+        }
+      ],
+      "chuc_nang": "Là đơn vị hạch toán phụ thuộc - Chi nhánh của Tổng công ty Quản lý bay Việt Nam, là cơ sở đào tạo, huấn luyện nghiệp vụ nhân viên hàng không chuyên ngành bảo đảm hoạt động bay (ANS) được Cục Hàng không Việt Nam phê chuẩn. Đào tạo cơ bản, huấn luyện nâng cao các lĩnh vực không lưu, ATFM, thông báo hiệp đồng bay, CNS, khí tượng, AIS, tìm kiếm cứu nạn và đào tạo cán bộ quản lý. Trụ sở tại Hà Nội.",
+      "nhiem_vu_chinh": [
+        "Xây dựng, tổ chức thực hiện đề án, chiến lược, kế hoạch phát triển đào tạo phù hợp Chiến lược phát triển Tổng công ty.",
+        "Duy trì, phát triển cơ sở đào tạo, huấn luyện nghiệp vụ nhân viên hàng không được Cục Hàng không Việt Nam phê chuẩn.",
+        "Tổ chức đào tạo cơ bản, huấn luyện nâng cao lĩnh vực bảo đảm hoạt động bay (ANS): không lưu, ATFM, thông báo hiệp đồng bay, CNS, khí tượng, AIS, tìm kiếm cứu nạn.",
+        "Đào tạo huấn luyện an toàn, an ninh hàng không.",
+        "Đào tạo bồi dưỡng đội ngũ giáo viên, huấn luyện viên đạt chuẩn trình độ giảng dạy.",
+        "Đào tạo bồi dưỡng cán bộ quản lý, nhân viên chuyên môn nghiệp vụ (tài chính, kế hoạch, đầu tư, lao động tiền lương, hành chính).",
+        "Tổ chức biên soạn, xây dựng chương trình, giáo trình, học liệu đào tạo huấn luyện.",
+        "Tổ chức kiểm tra, thi, xét công nhận tốt nghiệp; in phôi, cấp phát chứng chỉ chuyên môn theo quy định của Bộ GTVT.",
+        "Duy trì hệ thống quản lý chất lượng ISO 9001:2015, tổ chức kiểm định, đánh giá chất lượng đào tạo.",
+        "Tổ chức quản lý, khai thác hệ thống đào tạo trực tuyến (E-Learning) và thư viện điện tử.",
+        "Tham gia tổ chức sát hạch trình độ tiếng Anh và phối hợp sát hạch năng định nhân viên hàng không.",
+        "Thực hiện hợp tác quốc tế trong đào tạo, tổ chức đào tạo huấn luyện tại nước ngoài, thuê chuyên gia nước ngoài giảng dạy."
+      ],
+      "tu_khoa": [
+        "đào tạo huấn luyện",
+        "atmtc",
+        "huấn luyện nghiệp vụ quản lý bay",
+        "chứng chỉ chuyên môn",
+        "giáo viên huấn luyện viên",
+        "sát hạch tiếng anh",
+        "sát hạch năng định",
+        "e-learning",
+        "iso 9001",
+        "đào tạo ans",
+        "nhân viên hàng không"
+      ],
+      "co_cau_to_chuc": [
+        "Phòng Hành chính - Kế hoạch",
+        "Phòng Đào tạo",
+        "Phòng Quản lý chất lượng"
+      ]
+    },
+    {
+      "ma": "AMC",
+      "ten_day_du": "Trung tâm Khí tượng Hàng không (AMC)",
+      "loai": "don_vi_truc_thuoc",
+      "van_ban": [
+        {
+          "so": "56../QĐ-QLB (OCR không rõ)",
+          "ngay": "24/12/2020",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Trung tâm Khí tượng hàng không, trên cơ sở Quyết định số 662/QĐ-HĐTV ngày 04/11/2020 thành lập Trung tâm"
+        }
+      ],
+      "chuc_nang": "Là đơn vị hạch toán phụ thuộc - Chi nhánh của Tổng công ty Quản lý bay Việt Nam, cung ứng dịch vụ khí tượng hàng không theo tiêu chuẩn ICAO. Chỉ đạo nghiệp vụ đối với các Trạm Quan trắc khí tượng thuộc các Công ty Quản lý bay khu vực. Cung cấp, trao đổi thông tin, bản tin khí tượng hàng không với các hãng hàng không, doanh nghiệp khai thác cảng hàng không trong và ngoài nước. Trụ sở tại Hà Nội.",
+      "nhiem_vu_chinh": [
+        "Tổ chức triển khai cung cấp dịch vụ khí tượng hàng không theo tiêu chuẩn ICAO và pháp luật Việt Nam.",
+        "Chỉ đạo nghiệp vụ đối với các Trạm Quan trắc khí tượng thuộc các Công ty Quản lý bay khu vực.",
+        "Phối hợp, hiệp đồng, hợp tác với cơ quan, đơn vị trong và ngoài nước bảo đảm cung cấp dịch vụ khí tượng chất lượng, hiệu quả.",
+        "Ký kết văn bản thỏa thuận về cung cấp, trao đổi thông tin khí tượng hàng không phục vụ hoạt động bay, phòng chống thiên tai và tìm kiếm cứu nạn.",
+        "Tổ chức nghiên cứu ứng dụng khoa học công nghệ nâng cao chất lượng dịch vụ khí tượng hàng không.",
+        "Xây dựng chiến lược, kế hoạch phát triển Trung tâm; xây dựng văn bản quản lý nội bộ, quy trình, tài liệu chuyên môn khí tượng hàng không.",
+        "Tổ chức đào tạo, huấn luyện chuyên môn nghiệp vụ khí tượng cho người lao động và lực lượng quan trắc khí tượng khu vực.",
+        "Thực hiện kiểm tra, đánh giá, nâng cao chất lượng dịch vụ khí tượng hàng không.",
+        "Quản lý, khai thác hiệu quả nguồn nhân lực, kinh phí, cơ sở vật chất, hệ thống kỹ thuật khí tượng được giao.",
+        "Báo cáo thường xuyên hoặc đột xuất về tình trạng hệ thống kỹ thuật, thiết bị khí tượng và công tác khí tượng hàng không."
+      ],
+      "tu_khoa": [
+        "khí tượng hàng không",
+        "amc",
+        "bản tin khí tượng",
+        "quan trắc khí tượng",
+        "trạm khí tượng",
+        "cảnh báo thời tiết",
+        "dự báo thời tiết hàng không",
+        "metar taf",
+        "khí tượng nội bài đà nẵng tân sơn nhất"
+      ],
+      "co_cau_to_chuc": [
+        "Phòng Hành chính - Tổng hợp",
+        "Phòng Nghiệp vụ",
+        "Trung tâm Cảnh báo thời tiết",
+        "Trung tâm Khí tượng hàng không Nội Bài",
+        "Trung tâm Khí tượng hàng không Đà Nẵng",
+        "Trung tâm Khí tượng hàng không Tân Sơn Nhất"
+      ]
+    },
+    {
+      "ma": "ATTECH",
+      "ten_day_du": "Công ty TNHH Kỹ thuật Quản lý bay (ATTECH)",
+      "loai": "cong_ty_con",
+      "van_ban": [
+        {
+          "so": "423/QĐ-HĐTV",
+          "ngay": "26/9/2024",
+          "noi_dung": "Điều lệ tổ chức và hoạt động của Công ty TNHH Kỹ thuật Quản lý bay, thay thế Quyết định số 396/QĐ-HĐTV ngày 16/9/2016"
+        }
+      ],
+      "chuc_nang": "Là công ty con do Tổng công ty Quản lý bay Việt Nam làm chủ sở hữu 100% vốn điều lệ (279.084 tỷ đồng), tổ chức dưới hình thức công ty TNHH một thành viên. Cung ứng dịch vụ thông tin, dẫn đường, giám sát hàng không, dịch vụ bay kiểm tra hiệu chuẩn, sản xuất và cung ứng sản phẩm công nghiệp hàng không (CNS/ATM). Kinh doanh đa ngành gồm xây dựng, công nghệ thông tin, sản xuất thiết bị điện tử viễn thông.",
+      "nhiem_vu_chinh": [
+        "Cung ứng dịch vụ bảo đảm hoạt động bay, dịch vụ thông tin, dẫn đường, giám sát hàng không (CNS).",
+        "Cung ứng dịch vụ bay kiểm tra, hiệu chuẩn hệ thống thiết bị bảo đảm hoạt động bay, bay đánh giá phương thức bay.",
+        "Đào tạo huấn luyện nghiệp vụ nhân viên hàng không.",
+        "Nghiên cứu khoa học, phát triển công nghệ lĩnh vực bảo đảm hoạt động bay.",
+        "Cung cấp, lắp đặt, sửa chữa, bảo dưỡng thiết bị bảo đảm hoạt động bay.",
+        "Dịch vụ công nghệ thông tin liên quan hỗ trợ vận tải hàng không.",
+        "Sản xuất thiết bị điện, dây cáp điện, thiết bị đo lường, kiểm tra, định hướng, điều khiển, linh kiện điện tử.",
+        "Xây dựng công trình kỹ thuật dân dụng, viễn thông, lắp đặt hệ thống điện, cấp thoát nước, điều hòa không khí.",
+        "Xuất nhập khẩu hàng hóa phục vụ kinh doanh của Công ty.",
+        "Kinh doanh bất động sản, cho thuê tài sản trên đất, văn phòng, mặt bằng kinh doanh.",
+        "Quản lý, vận hành các đơn vị trực thuộc: Xí nghiệp Chế tạo thiết bị hàng không, Đội Bay kiểm tra hiệu chuẩn, Trung tâm Huấn luyện CNS.",
+        "Bảo toàn và phát triển vốn chủ sở hữu, kinh doanh có lãi theo mục tiêu Tổng công ty giao."
+      ],
+      "tu_khoa": [
+        "attech",
+        "kỹ thuật quản lý bay",
+        "cns/atm",
+        "bay kiểm tra hiệu chuẩn",
+        "thiết bị bảo đảm hoạt động bay",
+        "chế tạo thiết bị hàng không",
+        "công ty con vatm",
+        "dẫn đường giám sát",
+        "lắp đặt sửa chữa thiết bị",
+        "công nghiệp hàng không"
+      ],
+      "co_cau_to_chuc": [
+        "Chủ tịch Công ty",
+        "Giám đốc",
+        "Ban kiểm soát",
+        "Xí nghiệp Chế tạo thiết bị hàng không",
+        "Ban Quản lý các dự án đầu tư và xây dựng chuyên ngành",
+        "Chi nhánh tại Thành phố Hồ Chí Minh",
+        "Xưởng Dịch vụ kỹ thuật",
+        "Đội Bay kiểm tra hiệu chuẩn",
+        "Trung tâm Huấn luyện CNS",
+        "Phòng Nghiên cứu - Phát triển"
+      ]
+    },
+    {
+      "ma": "VATM",
+      "ten_day_du": "Tổng công ty Quản lý bay Việt Nam (VATM)",
+      "loai": "tong_cong_ty",
+      "van_ban": [
+        {
+          "so": "739/QĐ-BGTVT",
+          "ngay": "21/6/2023",
+          "noi_dung": "Phê duyệt Điều lệ tổ chức và hoạt động của Tổng công ty Quản lý bay Việt Nam, thay thế Quyết định số 1472/QĐ-BGTVT ngày 13/5/2016 và số 2379/QĐ-BGTVT ngày 01/8/2016"
+        }
+      ],
+      "chuc_nang": "Là doanh nghiệp nhà nước, công ty TNHH một thành viên do Nhà nước nắm 100% vốn điều lệ (3.827,63 tỷ đồng), Bộ Giao thông vận tải là cơ quan đại diện chủ sở hữu. Bảo đảm hoạt động bay an toàn, điều hòa, hiệu quả cho tàu bay dân dụng và vận tải quân sự trên toàn quốc; là nòng cốt cho ngành công nghiệp hàng không Việt Nam. Quản lý các đơn vị trực thuộc và công ty con (ATTECH) theo mô hình công ty mẹ - công ty con.",
+      "nhiem_vu_chinh": [
+        "Cung ứng dịch vụ bảo đảm hoạt động bay (dịch vụ không lưu, thông tin dẫn đường giám sát, khí tượng, thông báo tin tức hàng không) trên toàn quốc.",
+        "Quản lý, điều hành trực tiếp toàn diện các đơn vị trực thuộc hạch toán phụ thuộc - Chi nhánh.",
+        "Quản lý công ty con ATTECH theo quyền và trách nhiệm của chủ sở hữu.",
+        "Xây dựng, phê duyệt chiến lược, kế hoạch đầu tư phát triển 5 năm và kế hoạch sản xuất kinh doanh hàng năm.",
+        "Quản lý, sử dụng, bảo toàn và phát triển vốn nhà nước đầu tư tại Tổng công ty và các doanh nghiệp thành viên.",
+        "Đầu tư xây dựng cơ sở hạ tầng, trang thiết bị bảo đảm hoạt động bay trên toàn quốc.",
+        "Ban hành quy chế quản lý tài chính, quy chế tổ chức và hoạt động của các đơn vị trực thuộc.",
+        "Quyết định quy hoạch, bổ nhiệm, miễn nhiệm, khen thưởng, kỷ luật cán bộ quản lý các đơn vị trực thuộc.",
+        "Đại diện, chịu trách nhiệm trước Nhà nước, Bộ Giao thông vận tải về an toàn, an ninh hàng không.",
+        "Hợp tác quốc tế trong lĩnh vực quản lý bay, tham gia các tổ chức, điều ước quốc tế về hàng không.",
+        "Tham gia xây dựng chính sách, văn bản quy phạm pháp luật về hàng không dân dụng."
+      ],
+      "tu_khoa": [
+        "vatm",
+        "tổng công ty quản lý bay việt nam",
+        "hội đồng thành viên",
+        "tổng giám đốc",
+        "công ty mẹ",
+        "điều lệ vatm",
+        "bộ giao thông vận tải",
+        "quản lý vốn nhà nước",
+        "chủ sở hữu",
+        "chiến lược phát triển ngành hàng không"
+      ],
+      "co_cau_to_chuc": [
+        "Hội đồng thành viên",
+        "Tổng giám đốc",
+        "Ban Kiểm soát",
+        "Các Phó Tổng giám đốc, Kế toán trưởng",
+        "Các cơ quan tham mưu, giúp việc (Văn phòng và các Ban chuyên môn)",
+        "Công ty Quản lý bay miền Bắc",
+        "Công ty Quản lý bay miền Trung",
+        "Công ty Quản lý bay miền Nam",
+        "Trung tâm Quản lý luồng không lưu",
+        "Trung tâm Thông báo tin tức hàng không",
+        "Trung tâm Đào tạo huấn luyện nghiệp vụ Quản lý bay",
+        "Trung tâm Phối hợp tìm kiếm cứu nạn hàng không",
+        "Trung tâm Khí tượng Hàng không",
+        "Ban Quản lý dự án chuyên ngành Quản lý bay",
+        "Công ty TNHH một thành viên Kỹ thuật Quản lý bay (ATTECH)"
+      ]
+    },
+    {
+      "ma": "BQLDA_CNQLB",
+      "ten_day_du": "Ban Quản lý dự án chuyên ngành Quản lý bay",
+      "loai": "ban_qlda",
+      "van_ban": [
+        {
+          "so": "195/QĐ-HĐTV",
+          "ngay": "06/12/2019 (số hiệu/ngày ký chính xác bị mờ do lỗi OCR)",
+          "noi_dung": "Quy chế tổ chức và hoạt động của Ban Quản lý dự án chuyên ngành Quản lý bay, trên cơ sở Quyết định số 614/QĐ-HĐTV ngày 06/12/2019 thành lập Ban"
+        },
+        {
+          "so": "236/QĐ-QLDA",
+          "ngay": "khoảng năm 2022 (ngày cụ thể bị mờ do OCR)",
+          "noi_dung": "Quy định về chức năng, nhiệm vụ và cơ cấu tổ chức của các phòng thuộc Ban Quản lý dự án chuyên ngành Quản lý bay, thay thế Quyết định số 09/QĐ-PMU ngày 31/7/2020"
+        }
+      ],
+      "chuc_nang": "Là đơn vị hạch toán phụ thuộc - Chi nhánh của Tổng công ty Quản lý bay Việt Nam (VATM PMU), thực hiện chức năng Chủ đầu tư (khi được giao) và quản lý dự án đầu tư xây dựng của Tổng công ty. Quản lý các dự án từ giai đoạn chuẩn bị đầu tư đến nghiệm thu, bàn giao và quyết toán vốn đầu tư hoàn thành. Trụ sở tại Hà Nội (Tòa nhà B, Tổng công ty Quản lý bay Việt Nam).",
+      "nhiem_vu_chinh": [
+        "Thực hiện chức năng Chủ đầu tư khi được giao, quản lý toàn diện các dự án đầu tư xây dựng của Tổng công ty.",
+        "Lập, trình phê duyệt kế hoạch thực hiện dự án hàng năm, xác định nguồn lực, tiến độ, mục tiêu chất lượng.",
+        "Tổ chức lập dự án, trình thẩm định, phê duyệt dự án; thực hiện thủ tục quy hoạch, đất đai, môi trường liên quan dự án.",
+        "Thuê tư vấn khảo sát, thiết kế xây dựng; tổ chức thẩm định, phê duyệt thiết kế, dự toán xây dựng.",
+        "Chủ trì phối hợp thực hiện công tác bồi thường, giải phóng mặt bằng, tái định cư và thu hồi, giao nhận đất.",
+        "Tổ chức lựa chọn nhà thầu, ký kết hợp đồng, quản lý giám sát thực hiện hợp đồng theo quy định pháp luật.",
+        "Tổ chức nghiệm thu, bàn giao công trình hoàn thành; quyết toán, thanh lý hợp đồng xây dựng và vốn đầu tư.",
+        "Tiếp nhận, giải ngân vốn theo tiến độ thực hiện dự án và hợp đồng ký kết với nhà thầu.",
+        "Thực hiện giám sát, đánh giá đầu tư; báo cáo định kỳ kết quả thực hiện dự án với Người quyết định đầu tư.",
+        "Tư vấn quản lý dự án, tư vấn xây dựng theo hợp đồng ký kết với các Chủ đầu tư khác khi được cho phép.",
+        "Quản lý, vận hành các phòng chức năng: Văn phòng, Kế hoạch, Tài chính, Nghiệp vụ, Phòng Dự án 1 và Phòng Dự án 2.",
+        "Thực hiện quản lý Dự án Thành phần 2 các công trình phục vụ quản lý bay thuộc dự án Cảng HKQT Long Thành Giai đoạn 1 (giai đoạn trước khi chuyển giao cho Ban QLDA Long Thành)."
+      ],
+      "tu_khoa": [
+        "ban quản lý dự án chuyên ngành quản lý bay",
+        "vatm pmu",
+        "bqlda cnqlb",
+        "chủ đầu tư",
+        "quản lý dự án đầu tư xây dựng",
+        "đấu thầu",
+        "giải ngân vốn đầu tư",
+        "quyết toán vốn đầu tư",
+        "giám sát thi công",
+        "nghiệm thu công trình",
+        "phòng dự án"
+      ],
+      "co_cau_to_chuc": [
+        "Văn phòng Ban Quản lý dự án",
+        "Phòng Kế hoạch",
+        "Phòng Tài chính",
+        "Phòng Nghiệp vụ",
+        "Phòng Dự án 1",
+        "Phòng Dự án 2"
+      ]
+    },
+    {
+      "ma": "BQLDA_LT",
+      "ten_day_du": "Ban Quản lý dự án Long Thành",
+      "loai": "ban_qlda",
+      "van_ban": [
+        {
+          "so": "953/QĐ-QLB",
+          "ngay": "25/3/2022",
+          "noi_dung": "Thành lập Ban Quản lý dự án Long Thành (Tổng Giám đốc VATM ký)"
+        },
+        {
+          "so": "08/QLDA-LT",
+          "ngay": "19/4/2022",
+          "noi_dung": "Quy chế làm việc và phân công nhiệm vụ của Ban Quản lý dự án Long Thành"
+        },
+        {
+          "so": "473/QLDALT",
+          "ngay": "14/5/2025",
+          "noi_dung": "Phân công nhiệm vụ Ban Quản lý dự án Long Thành (cập nhật)"
+        }
+      ],
+      "chuc_nang": "Thuộc Tổng công ty Quản lý bay Việt Nam, được thành lập để thực hiện quản lý Dự án thành phần 2 'Các công trình phục vụ Quản lý bay' thuộc Dự án đầu tư xây dựng Cảng hàng không quốc tế Long Thành giai đoạn 1. Ban được điều chuyển toàn bộ chức năng, nhiệm vụ, quyền hạn quản lý dự án này từ Ban Quản lý dự án chuyên ngành Quản lý bay sang, đảm bảo tính kế thừa, không gián đoạn tiến độ.",
+      "nhiem_vu_chinh": [
+        "Tham mưu, giúp việc cho Chủ đầu tư (VATM) và trình phê duyệt các nội dung công việc chưa phân cấp, ủy quyền trong giai đoạn thực hiện dự án Long Thành.",
+        "Chịu trách nhiệm tổ chức thực hiện, báo cáo Chủ đầu tư trình Người quyết định đầu tư các nội dung thuộc thẩm quyền cấp trên.",
+        "Thực hiện công tác quản lý dự án, quản lý tiến độ thực hiện dự án theo quy định pháp luật về xây dựng, đấu thầu.",
+        "Thực hiện một phần hoặc toàn bộ trách nhiệm của Bên mời thầu, tổ chức lựa chọn nhà thầu cho các gói thầu thuộc dự án.",
+        "Thương thảo, hoàn thiện hợp đồng trình Chủ đầu tư ký, phê duyệt; quản lý thực hiện, theo dõi các hợp đồng đã ký.",
+        "Theo dõi, quản lý các khoản chi theo hạng mục công trình, hợp đồng đã ký và chi phí quản lý dự án.",
+        "Thực hiện công tác kiểm toán cho các hợp đồng và kiểm toán dự án theo quy định pháp luật.",
+        "Lập hồ sơ quyết toán từng hạng mục công trình và hồ sơ quyết toán toàn bộ dự án Long Thành.",
+        "Tổ chức kiểm định, giám sát, nghiệm thu các giai đoạn thi công; tổ chức bàn giao công trình sau khi Chủ đầu tư nghiệm thu.",
+        "Quản lý các gói thầu xây dựng (XD01, XD02), thiết bị (TB01-TB04: radar PSR/SSR, thiết bị đài KSKL, D-ATIS, MIPS, AWOS) và tư vấn (TV01-TV11).",
+        "Quản lý, lưu giữ hồ sơ pháp lý liên quan công việc thuộc trách nhiệm được giao và nộp lưu Văn thư Tổng công ty."
+      ],
+      "tu_khoa": [
+        "ban quản lý dự án long thành",
+        "bqlda long thành",
+        "cảng hàng không quốc tế long thành",
+        "dự án thành phần 2",
+        "công trình phục vụ quản lý bay",
+        "đài kiểm soát không lưu long thành",
+        "radar psr ssr",
+        "gói thầu xây dựng long thành",
+        "chủ đầu tư dự án long thành",
+        "quản lý dự án đầu tư xây dựng"
+      ],
+      "co_cau_to_chuc": [
+        "Lãnh đạo Ban (Trưởng ban, các Phó trưởng ban)",
+        "Bộ phận Kế hoạch, tổng hợp",
+        "Bộ phận Xây dựng",
+        "Bộ phận Kỹ thuật",
+        "Bộ phận Tài chính"
+      ]
+    }
+  ]
+}

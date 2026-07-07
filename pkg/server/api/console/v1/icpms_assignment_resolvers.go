@@ -8,10 +8,12 @@ package console_v1
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"go.probo.inc/probo/pkg/coredata"
 	"go.probo.inc/probo/pkg/gid"
+	"go.probo.inc/probo/pkg/probo"
 	"go.probo.inc/probo/pkg/server/api/authn"
 	"go.probo.inc/probo/pkg/server/api/console/v1/schema"
 	"go.probo.inc/probo/pkg/server/api/console/v1/types"
@@ -248,9 +250,24 @@ func (r *mutationResolver) CreateIcpmsAssignmentsFromChecklists(ctx context.Cont
 			continue
 		}
 
+		// leadUnitName rỗng = chế độ tự động: lấy Chủ trì/Phối hợp từ chính
+		// checklist (phân công do AI Review gợi ý, đã được duyệt).
+		lead := strings.TrimSpace(input.LeadUnitName)
+		coordThis := coord
+		if lead == "" && checklist.ResponsibleUnit != nil {
+			autoLead, autoCoord := probo.SplitResponsibleUnit(*checklist.ResponsibleUnit)
+			lead = autoLead
+			if coordThis == "" {
+				coordThis = autoCoord
+			}
+		}
+		if lead == "" {
+			lead = "Cần rà soát đơn vị chủ trì"
+		}
+
 		item, isDup, err := r.probo.IcpmsAssignments.CreateFromChecklist(
 			ctx, scope, checklist, identity.ID, "GV",
-			input.LeadUnitName, coord, dueDate, priority, requiresEvidence, "",
+			lead, coordThis, dueDate, priority, requiresEvidence, "",
 		)
 		if err != nil {
 			errCount++

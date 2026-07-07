@@ -272,6 +272,17 @@ func (impl *Implm) Run(
 		o.UsePathStyle = impl.cfg.AWS.UsePathStyle
 	})
 
+	// Ensure the S3 bucket exists — local dev object stores (MinIO/SeaweedFS)
+	// can start with an empty volume, and every upload/download would then
+	// fail with NoSuchBucket. Safe to ignore "already exists" errors.
+	if _, err := s3Client.HeadBucket(ctx, &s3.HeadBucketInput{Bucket: &impl.cfg.AWS.Bucket}); err != nil {
+		if _, cerr := s3Client.CreateBucket(ctx, &s3.CreateBucketInput{Bucket: &impl.cfg.AWS.Bucket}); cerr != nil {
+			l.ErrorCtx(ctx, "cannot create S3 bucket "+impl.cfg.AWS.Bucket, log.Error(cerr))
+		} else {
+			l.InfoCtx(ctx, "created missing S3 bucket: "+impl.cfg.AWS.Bucket)
+		}
+	}
+
 	err = migrator.NewMigrator(pgClient, coredata.Migrations, l.Named("migrations")).Run(ctx, "migrations")
 	if err != nil {
 		return fmt.Errorf("cannot migrate database schema: %w", err)

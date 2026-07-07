@@ -731,9 +731,11 @@ export function IcpmsAiReviewPage() {
         const edges = data?.icpmsAiReviewSuggestions?.edges ?? [];
         setSuggestions(edges.map((e: any) => e.node));
       })
-      .catch(() => {})
+      .catch((err: Error) => {
+        toast({ title: "Không thể tải checklist draft", description: err?.message ?? "Lỗi không xác định", variant: "error" });
+      })
       .finally(() => setLoadingSugs(false));
-  }, [environment]);
+  }, [environment, toast]);
 
   const openArticlePanel = useCallback((sug: AiSuggestion) => {
     const ref = sug.requirement.sourceReference ?? sug.requirement.requirementCode;
@@ -1558,8 +1560,16 @@ export function IcpmsAiReviewPage() {
 
                       return (
                         <Fragment key={sug.id}>
-                          {/* ── Data row ── */}
-                          <tr className={`border-b border-border-low hover:bg-bg-alt transition-colors ${isEditing ? "bg-blue-50 border-blue-200" : ""}`}>
+                          {/* ── Data row — double-click mở/đóng chi tiết như nút Sửa ── */}
+                          <tr
+                            onDoubleClick={(e) => {
+                              // Bỏ qua khi bấm đúp trúng nút/ô nhập để không kích hoạt nhầm
+                              if ((e.target as HTMLElement).closest("button, input, textarea, select, a")) return;
+                              setEditingId(isEditing ? null : sug.id);
+                            }}
+                            title="Bấm đúp để xem chi tiết / chỉnh sửa"
+                            className={`border-b border-border-low hover:bg-bg-alt transition-colors cursor-pointer select-none ${isEditing ? "bg-blue-50 border-blue-200" : ""}`}
+                          >
                             {/* STT */}
                             <td className="px-2 py-2 text-txt-tertiary align-top">{idx + 1}</td>
 

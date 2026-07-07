@@ -208,22 +208,49 @@ export function matchVatmDomain(text: string): VatmDomainConfig | null {
   return null;
 }
 
-/** Parse the "Chủ trì: X\nPhối hợp: Y; Z" format into parts. */
+/**
+ * Parse the "Chủ trì: X\nPhối hợp: Y; Z" format into parts.
+ * Chấp nhận cả biến thể AI hay trả về: "Phối hợp:" nằm cùng dòng với Chủ trì
+ * ("Chủ trì: X. Phối hợp: Y; Z"), hoặc không có nhãn mà chỉ liệt kê nhiều
+ * đơn vị phân tách bằng ";" (đơn vị đầu là chủ trì, còn lại là phối hợp).
+ */
 export function parseResponsibleUnit(raw: string | null | undefined): {
   leadUnit: string;
   coordinationUnits: string[];
 } {
-  if (!raw) return { leadUnit: "Cần rà soát thêm đơn vị phụ trách", coordinationUnits: [] };
-  const lines = raw.split("\n");
-  let leadUnit = raw;
+  if (!raw?.trim()) return { leadUnit: "Cần rà soát thêm đơn vị phụ trách", coordinationUnits: [] };
+  const text = raw.trim();
   const coordinationUnits: string[] = [];
-  for (const line of lines) {
-    if (line.startsWith("Chủ trì:")) {
-      leadUnit = line.replace("Chủ trì:", "").trim();
-    } else if (line.startsWith("Phối hợp:")) {
-      const parts = line.replace("Phối hợp:", "").trim().split(";");
-      coordinationUnits.push(...parts.map(p => p.trim()).filter(Boolean));
-    }
+
+  // Tách phần "Phối hợp:" dù nằm ở dòng riêng hay cùng dòng.
+  const coordIdx = text.indexOf("Phối hợp:");
+  let leadPart = coordIdx >= 0 ? text.slice(0, coordIdx) : text;
+  if (coordIdx >= 0) {
+    coordinationUnits.push(
+      ...text
+        .slice(coordIdx + "Phối hợp:".length)
+        .split(/[;\n]/)
+        .map(p => p.trim().replace(/^[-•,.\s]+|[,.\s]+$/g, ""))
+        .filter(Boolean),
+    );
   }
+
+  let leadUnit = leadPart
+    .replace(/Chủ trì:/g, "")
+    .replace(/[-•,.;:\s]+$/g, "")
+    .trim();
+
+  // Chủ trì chỉ được là MỘT đơn vị: nếu AI gộp nhiều đơn vị (nối bằng "và",
+  // ";", "&", ",") → giữ đơn vị đầu, chuyển phần còn lại sang phối hợp.
+  const leadParts = leadUnit
+    .split(/;|\svà\s|\s&\s/)
+    .map(p => p.trim().replace(/^[-•,.\s]+|[,.\s]+$/g, ""))
+    .filter(Boolean);
+  if (leadParts.length > 1) {
+    leadUnit = leadParts[0];
+    coordinationUnits.unshift(...leadParts.slice(1));
+  }
+
+  if (!leadUnit) leadUnit = "Cần rà soát thêm đơn vị phụ trách";
   return { leadUnit, coordinationUnits };
 }

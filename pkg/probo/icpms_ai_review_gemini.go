@@ -193,6 +193,11 @@ VATM KHÔNG PHẢI LÀ (dùng để xác định yêu cầu KHÔNG ÁP DỤNG):
 - Cơ quan cấp phép/bằng lái phi công — đó là Cục HKVN (CAAV)
 - Cơ quan quản lý nhà nước về hàng không — đó là Cục HKVN, Bộ GTVT
 - Tổ chức thiết kế phương thức bay (procedure design không phải hoạt động chính)
+
+CÁC ĐƠN VỊ CỦA VATM (chỉ dùng đúng các tên này cho trường responsibleUnit):
+- Ban tham mưu: Văn phòng Tổng công ty; Ban Kế hoạch - Đầu tư; Ban Tài chính; Ban Kỹ thuật; Ban Tổ chức cán bộ - Lao động; Ban Không lưu; Ban An toàn - Chất lượng; Ban An ninh hàng không; Ban Kiểm toán nội bộ
+- Đơn vị trực thuộc: Công ty Quản lý bay miền Bắc; Công ty Quản lý bay miền Trung; Công ty Quản lý bay miền Nam; Trung tâm Quản lý luồng không lưu; Trung tâm Thông báo tin tức hàng không; Trung tâm Phối hợp tìm kiếm cứu nạn hàng không; Trung tâm Đào tạo - Huấn luyện nghiệp vụ quản lý bay; Trung tâm Khí tượng hàng không
+- Công ty con: Công ty TNHH Kỹ thuật Quản lý bay (ATTECH)
 `
 
 func buildGeminiPrompt(input AIReviewInput) string {
@@ -212,7 +217,7 @@ func buildGeminiPrompt(input AIReviewInput) string {
 	sb.WriteString(`{
   "checklistQuestion": "Câu hỏi kiểm tra tuân thủ cụ thể, bắt đầu bằng 'Đơn vị có...'",
   "implementationMethod": "Phương pháp triển khai thực hiện yêu cầu tại VATM",
-  "responsibleUnit": "Đơn vị/ban chủ trì tại VATM. Bắt đầu bằng 'Chủ trì: ...'",
+  "responsibleUnit": "ĐÚNG định dạng 2 dòng: dòng 1 'Chủ trì: <MỘT đơn vị duy nhất chịu trách nhiệm chính>', dòng 2 'Phối hợp: <các đơn vị phối hợp, phân tách bằng dấu ;>'. Nếu không có đơn vị phối hợp thì bỏ dòng 2. KHÔNG gộp nhiều đơn vị vào dòng Chủ trì — dòng Chủ trì tuyệt đối không chứa từ 'và', dấu ';' hay dấu ','. Ví dụ: 'Chủ trì: Ban Không lưu\nPhối hợp: Trung tâm Quản lý luồng không lưu; Ban An toàn - Chất lượng'",
   "evidence": "Hồ sơ, bằng chứng cần có để chứng minh tuân thủ",
   "actionPlan": "Kế hoạch hành động khắc phục nếu chưa tuân thủ",
   "riskIfNotComplied": "Rủi ro khi không tuân thủ",
@@ -265,7 +270,7 @@ func geminiOutputToReview(sug *geminiSuggestionOutput, input AIReviewInput) *AIR
 	return &AIReviewOutput{
 		SuggestedChecklistQuestion:    strPtr(question),
 		SuggestedImplementationMethod: strPtr(sug.ImplementationMethod),
-		SuggestedResponsibleUnit:      strPtr(sug.ResponsibleUnit),
+		SuggestedResponsibleUnit:      strPtr(normalizeResponsibleUnit(sug.ResponsibleUnit)),
 		SuggestedEvidence:             strPtr(sug.Evidence),
 		SuggestedActionPlan:           strPtr(sug.ActionPlan),
 		SuggestedRiskIfNotComplied:    strPtr(sug.RiskIfNotComplied),
@@ -285,4 +290,69 @@ func truncateStr(s string, max int) string {
 		return s
 	}
 	return string(runes[:max]) + "..."
+}
+
+// SplitResponsibleUnit tách chuỗi trách nhiệm ("Chủ trì: X\nPhối hợp: Y; Z")
+// thành đơn vị chủ trì và chuỗi các đơn vị phối hợp. Dùng khi giao việc tự
+// động theo phân công trong checklist.
+func SplitResponsibleUnit(raw string) (lead string, coordination string) {
+	norm := normalizeResponsibleUnit(raw)
+	for _, ln := range strings.Split(norm, "\n") {
+		if strings.HasPrefix(ln, "Chủ trì:") {
+			lead = strings.TrimSpace(strings.TrimPrefix(ln, "Chủ trì:"))
+		} else if strings.HasPrefix(ln, "Phối hợp:") {
+			coordination = strings.TrimSpace(strings.TrimPrefix(ln, "Phối hợp:"))
+		}
+	}
+	return lead, coordination
+}
+
+// normalizeResponsibleUnit ép output của AI về đúng định dạng
+// "Chủ trì: <MỘT đơn vị>\nPhối hợp: <các đơn vị khác; ...>".
+// AI đôi khi gộp nhiều đơn vị vào dòng Chủ trì (nối bằng "và", ";", ",") —
+// giữ đơn vị đầu làm chủ trì, chuyển phần còn lại sang phối hợp.
+func normalizeResponsibleUnit(raw string) string {
+	text := strings.TrimSpace(raw)
+	if text == "" {
+		return text
+	}
+
+	var coordination []string
+
+	// Tách phần "Phối hợp:" (dù cùng dòng hay dòng riêng).
+	leadPart := text
+	if idx := strings.Index(text, "Phối hợp:"); idx >= 0 {
+		leadPart = text[:idx]
+		coordRaw := text[idx+len("Phối hợp:"):]
+		for _, p := range strings.FieldsFunc(coordRaw, func(r rune) bool { return r == ';' || r == '\n' }) {
+			if u := strings.Trim(strings.TrimSpace(p), "-•,. "); u != "" {
+				coordination = append(coordination, u)
+			}
+		}
+	}
+
+	lead := strings.ReplaceAll(leadPart, "Chủ trì:", "")
+	lead = strings.Trim(strings.TrimSpace(lead), "-•,.;: ")
+
+	// Dòng chủ trì chứa nhiều đơn vị → giữ đơn vị đầu, còn lại sang phối hợp.
+	for _, sep := range []string{" và ", "; ", " & "} {
+		if strings.Contains(lead, sep) {
+			parts := strings.Split(lead, sep)
+			extra := parts[1:]
+			lead = strings.Trim(strings.TrimSpace(parts[0]), ",. ")
+			for _, p := range extra {
+				if u := strings.Trim(strings.TrimSpace(p), "-•,. "); u != "" {
+					coordination = append(coordination, u)
+				}
+			}
+		}
+	}
+
+	if lead == "" {
+		return text
+	}
+	if len(coordination) == 0 {
+		return "Chủ trì: " + lead
+	}
+	return "Chủ trì: " + lead + "\nPhối hợp: " + strings.Join(coordination, "; ")
 }

@@ -220,7 +220,11 @@ func (r *mutationResolver) AcceptIcpmsAiReviewSuggestion(ctx context.Context, in
 
 	// Auto-create official checklist from accepted suggestion.
 	// CreateFromAiSuggestion is idempotent — returns existing if one already exists.
-	_, _, _ = r.probo.IcpmsChecklists.CreateFromAiSuggestion(ctx, scope, sug, identity.ID, "CL")
+	// Không nuốt lỗi: nếu tạo checklist thất bại người dùng phải được biết,
+	// nếu không sẽ thấy "đã duyệt" nhưng trang Checklist tuân thủ trống.
+	if _, _, cerr := r.probo.IcpmsChecklists.CreateFromAiSuggestion(ctx, scope, sug, identity.ID, "CL"); cerr != nil {
+		return nil, fmt.Errorf("suggestion accepted but cannot create checklist: %w", cerr)
+	}
 
 	return &types.AcceptIcpmsAiReviewSuggestionPayload{Suggestion: sug}, nil
 }

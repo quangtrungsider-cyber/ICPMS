@@ -227,8 +227,12 @@ func (s *IcpmsRequirementService) GenerateFromParseJob(
 		return nil, 0, fmt.Errorf("cannot create generation job: %w", err)
 	}
 
-	// Delete all existing requirements for this parse job before regenerating
-	if err := s.deleteRequirementsForParseJob(ctx, scope, parseJob.OrganizationID, parseJobID); err != nil {
+	// Delete all existing requirements for this document version before
+	// regenerating. Scoped by version (not parse job): re-parsing the document
+	// creates a new parse job, and cleaning only the current job would leave
+	// stale requirements behind while ResetSequence re-issues the same codes,
+	// producing duplicated requirement codes.
+	if err := s.deleteRequirementsForVersion(ctx, scope, parseJob.OrganizationID, parseJob.DocumentVersionID); err != nil {
 		errMsg := err.Error()
 		genJob.Status = coredata.IcpmsRequirementGenerationJobStatusFailed
 		genJob.ErrorMessage = &errMsg
@@ -542,21 +546,21 @@ func (s *IcpmsRequirementService) loadSectionsForParseJob(
 	return sections, err
 }
 
-func (s *IcpmsRequirementService) deleteRequirementsForParseJob(
+func (s *IcpmsRequirementService) deleteRequirementsForVersion(
 	ctx context.Context,
 	scope coredata.Scoper,
 	orgID gid.GID,
-	parseJobID gid.GID,
+	documentVersionID gid.GID,
 ) error {
 	return s.svc.pg.WithTx(ctx, func(ctx context.Context, tx pg.Tx) error {
 		args := pgx.StrictNamedArgs{
-			"tenant_id":    scope.GetTenantID(),
-			"org_id":       orgID,
-			"parse_job_id": parseJobID,
+			"tenant_id":  scope.GetTenantID(),
+			"org_id":     orgID,
+			"version_id": documentVersionID,
 		}
-		// Soft-delete AI review suggestions that reference requirements from this
-		// parse job — they become orphaned once requirements are re-generated,
-		// causing the Requirement resolver to fail and returning empty results.
+		// Soft-delete AI review suggestions that reference requirements of this
+		// document version — they become orphaned once requirements are
+		// re-generated, causing the Requirement resolver to fail.
 		_, err := tx.Exec(ctx, `
 			UPDATE icpms_ai_review_suggestions
 			   SET deleted_at = NOW()
@@ -564,9 +568,9 @@ func (s *IcpmsRequirementService) deleteRequirementsForParseJob(
 			   AND deleted_at IS NULL
 			   AND requirement_id IN (
 			         SELECT id FROM icpms_requirements
-			          WHERE tenant_id    = @tenant_id
+			          WHERE tenant_id       = @tenant_id
 			            AND organization_id = @org_id
-			            AND parse_job_id = @parse_job_id
+			            AND document_version_id = @version_id
 			            AND NOT is_deleted
 			       )`, args)
 		if err != nil {
@@ -575,7 +579,7 @@ func (s *IcpmsRequirementService) deleteRequirementsForParseJob(
 		// Now soft-delete the requirements themselves.
 		_, err = tx.Exec(ctx, `
 			UPDATE icpms_requirements SET is_deleted = TRUE, updated_at = NOW()
-			WHERE tenant_id = @tenant_id AND organization_id = @org_id AND parse_job_id = @parse_job_id AND NOT is_deleted`,
+			WHERE tenant_id = @tenant_id AND organization_id = @org_id AND document_version_id = @version_id AND NOT is_deleted`,
 			args,
 		)
 		return err
@@ -590,13 +594,28 @@ func (s *IcpmsRequirementService) DeleteForDocument(
 ) (int, error) {
 	var count int
 	err := s.svc.pg.WithTx(ctx, func(ctx context.Context, tx pg.Tx) error {
+		args := pgx.StrictNamedArgs{
+			"tenant_id":   scope.GetTenantID(),
+			"document_id": documentID,
+		}
+		// Dọn các gợi ý AI review tham chiếu tới những yêu cầu sắp bị xóa,
+		// tránh gợi ý mồ côi làm fail query checklist draft.
+		_, err := tx.Exec(ctx, `
+			UPDATE icpms_ai_review_suggestions
+			   SET deleted_at = NOW()
+			 WHERE tenant_id = @tenant_id
+			   AND deleted_at IS NULL
+			   AND requirement_id IN (
+			         SELECT id FROM icpms_requirements
+			          WHERE tenant_id = @tenant_id AND document_id = @document_id AND NOT is_deleted
+			       )`, args)
+		if err != nil {
+			return err
+		}
 		tag, err := tx.Exec(ctx, `
 			UPDATE icpms_requirements SET is_deleted = TRUE, updated_at = NOW()
 			WHERE tenant_id = @tenant_id AND document_id = @document_id AND NOT is_deleted`,
-			pgx.StrictNamedArgs{
-				"tenant_id":   scope.GetTenantID(),
-				"document_id": documentID,
-			},
+			args,
 		)
 		if err == nil {
 			count = int(tag.RowsAffected())
@@ -614,13 +633,27 @@ func (s *IcpmsRequirementService) DeleteForVersion(
 ) (int, error) {
 	var count int
 	err := s.svc.pg.WithTx(ctx, func(ctx context.Context, tx pg.Tx) error {
+		args := pgx.StrictNamedArgs{
+			"tenant_id":  scope.GetTenantID(),
+			"version_id": documentVersionID,
+		}
+		// Dọn các gợi ý AI review tham chiếu tới những yêu cầu sắp bị xóa.
+		_, err := tx.Exec(ctx, `
+			UPDATE icpms_ai_review_suggestions
+			   SET deleted_at = NOW()
+			 WHERE tenant_id = @tenant_id
+			   AND deleted_at IS NULL
+			   AND requirement_id IN (
+			         SELECT id FROM icpms_requirements
+			          WHERE tenant_id = @tenant_id AND document_version_id = @version_id AND NOT is_deleted
+			       )`, args)
+		if err != nil {
+			return err
+		}
 		tag, err := tx.Exec(ctx, `
 			UPDATE icpms_requirements SET is_deleted = TRUE, updated_at = NOW()
 			WHERE tenant_id = @tenant_id AND document_version_id = @version_id AND NOT is_deleted`,
-			pgx.StrictNamedArgs{
-				"tenant_id":  scope.GetTenantID(),
-				"version_id": documentVersionID,
-			},
+			args,
 		)
 		if err == nil {
 			count = int(tag.RowsAffected())
@@ -636,14 +669,23 @@ func (s *IcpmsRequirementService) DeleteOne(
 	scope coredata.Scoper,
 	requirementID gid.GID,
 ) error {
-	return s.svc.pg.WithConn(ctx, func(ctx context.Context, conn pg.Querier) error {
-		_, err := conn.Exec(ctx, `
+	return s.svc.pg.WithTx(ctx, func(ctx context.Context, tx pg.Tx) error {
+		args := pgx.StrictNamedArgs{
+			"tenant_id": scope.GetTenantID(),
+			"id":        requirementID,
+		}
+		// Dọn các gợi ý AI review tham chiếu tới yêu cầu này.
+		_, err := tx.Exec(ctx, `
+			UPDATE icpms_ai_review_suggestions
+			   SET deleted_at = NOW()
+			 WHERE tenant_id = @tenant_id AND deleted_at IS NULL AND requirement_id = @id`, args)
+		if err != nil {
+			return err
+		}
+		_, err = tx.Exec(ctx, `
 			UPDATE icpms_requirements SET is_deleted = TRUE, updated_at = NOW()
 			WHERE tenant_id = @tenant_id AND id = @id AND NOT is_deleted`,
-			pgx.StrictNamedArgs{
-				"tenant_id": scope.GetTenantID(),
-				"id":        requirementID,
-			},
+			args,
 		)
 		return err
 	})

@@ -23,7 +23,8 @@ import {
   Tr,
   useToast,
 } from "@probo/ui";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { useMutation, useRelayEnvironment } from "react-relay";
 import { useSearchParams } from "react-router";
 import { usePageTitle } from "@probo/hooks";
@@ -37,6 +38,58 @@ import RunParserMutationNode from "../../../__generated__/core/IcpmsIngestionJob
 function extractError(err: Error): string {
   const m = err.message.match(/got error\(s\):\s*(.+?)(?:\s*See the error|$)/s);
   return m ? m[1].trim() : err.message;
+}
+
+// Tooltip render qua portal với position: fixed — không bị vùng cuộn của
+// bảng cắt mất như tooltip absolute đặt trong hàng.
+function HoverTooltip({ trigger, children, width = 320 }: {
+  trigger: ReactNode;
+  children: ReactNode;
+  width?: number;
+}) {
+  const anchorRef = useRef<HTMLSpanElement>(null);
+  const [pos, setPos] = useState<{ top: number; left: number; above: boolean } | null>(null);
+
+  const show = () => {
+    const rect = anchorRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const margin = 8;
+    const spaceAbove = rect.top;
+    const above = spaceAbove > 240; // đủ chỗ thì hiện phía trên, không thì phía dưới
+    const left = Math.max(margin, Math.min(rect.left, window.innerWidth - width - margin));
+    setPos({
+      top: above ? rect.top - margin : rect.bottom + margin,
+      left,
+      above,
+    });
+  };
+
+  return (
+    <span
+      ref={anchorRef}
+      onMouseEnter={show}
+      onMouseLeave={() => setPos(null)}
+      className="inline-block"
+    >
+      {trigger}
+      {pos && createPortal(
+        <div
+          className="fixed text-white text-xs rounded-lg shadow-2xl p-3 pointer-events-none"
+          style={{
+            top: pos.top,
+            left: pos.left,
+            width,
+            zIndex: 9999,
+            backgroundColor: "#111827",
+            transform: pos.above ? "translateY(-100%)" : undefined,
+          }}
+        >
+          {children}
+        </div>,
+        document.body,
+      )}
+    </span>
+  );
 }
 
 const ListQueryNode = graphql`
@@ -465,6 +518,34 @@ function GenerateDialog({
 // Requirement Detail Panel
 // ---------------------------------------------------------------------------
 
+// Title (max 200 ký tự) và description thực chất là một đoạn văn bản bị parser
+// cắt đôi. Gộp lại thành một nội dung liền mạch để hiển thị/chỉnh sửa.
+function mergeReqContent(title: string, description?: string | null): string {
+  const t = (title ?? "").trim();
+  const d = (description ?? "").trim();
+  if (!d) return t;
+  // Tiêu đề kết thúc giữa chừng (không có dấu câu cuối) → phần mô tả là phần
+  // tiếp nối của câu, nối liền bằng dấu cách; ngược lại xuống đoạn mới.
+  return /[.!?:;)]$/.test(t) ? `${t}\n\n${d}` : `${t} ${d}`;
+}
+
+// Tách ngược lại khi lưu: title = ~200 ký tự đầu (cắt tại ranh giới từ),
+// description = phần còn lại. Không đổi schema phía server.
+function splitReqContent(content: string): { title: string; description: string | null } {
+  const text = content.trim();
+  const chars = Array.from(text);
+  const LIMIT = 200;
+  if (chars.length <= LIMIT) return { title: text, description: null };
+  let cut = LIMIT;
+  for (let i = LIMIT; i > LIMIT - 60; i--) {
+    if (/\s/.test(chars[i])) { cut = i; break; }
+  }
+  return {
+    title: chars.slice(0, cut).join("").trim(),
+    description: chars.slice(cut).join("").trim() || null,
+  };
+}
+
 function RequirementDetailPanel({
   req,
   onClose,
@@ -474,8 +555,7 @@ function RequirementDetailPanel({
   onClose: () => void;
   onSaved: (updated: Partial<Requirement>) => void;
 }) {
-  const [title, setTitle] = useState(req.title);
-  const [description, setDescription] = useState(req.description ?? "");
+  const [content, setContent] = useState(() => mergeReqContent(req.title, req.description));
   const [reqType, setReqType] = useState<IcpmsRequirementType>(req.requirementType);
   const [appStatus, setAppStatus] = useState<IcpmsApplicabilityStatus>(req.applicabilityStatus);
   const [reviewStatus, setReviewStatus] = useState<IcpmsRequirementReviewStatus>(req.reviewStatus);
@@ -488,18 +568,19 @@ function RequirementDetailPanel({
   const handleSave = useCallback(() => {
     setIsSaving(true);
     setSaveError("");
+    const { title, description } = splitReqContent(content);
     commitUpdate({
       variables: {
-        input: { id: req.id, title, description: description || null, requirementType: reqType, applicabilityStatus: appStatus, reviewStatus, priority },
+        input: { id: req.id, title, description, requirementType: reqType, applicabilityStatus: appStatus, reviewStatus, priority },
       },
       onCompleted: () => {
         setIsSaving(false);
         toast({ title: "Thành công", description: "Đã lưu yêu cầu", variant: "success" });
-        onSaved({ title, description: description || undefined, requirementType: reqType, applicabilityStatus: appStatus, reviewStatus, priority });
+        onSaved({ title, description: description ?? undefined, requirementType: reqType, applicabilityStatus: appStatus, reviewStatus, priority });
       },
       onError: (err) => { setIsSaving(false); setSaveError(extractError(err)); },
     });
-  }, [req.id, title, description, reqType, appStatus, reviewStatus, priority, commitUpdate, toast, onSaved]);
+  }, [req.id, content, reqType, appStatus, reviewStatus, priority, commitUpdate, toast, onSaved]);
 
   const createdAt = req.createdAt
     ? new Date(req.createdAt as string).toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric" })
@@ -527,26 +608,14 @@ function RequirementDetailPanel({
           <div className="space-y-3">
             <div>
               <p className="text-xs font-medium text-txt-tertiary mb-1.5">Nội dung yêu cầu</p>
-              <div className="rounded-lg border border-border-mid overflow-hidden">
-                <Textarea
-                  variant="bordered"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  rows={3}
-                  autogrow
-                  placeholder="Tiêu đề"
-                  className="border-0 border-b border-border-mid rounded-none"
-                />
-                <Textarea
-                  variant="bordered"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  rows={4}
-                  autogrow
-                  placeholder="Mô tả chi tiết (không bắt buộc)"
-                  className="border-0 rounded-none"
-                />
-              </div>
+              <Textarea
+                variant="bordered"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                rows={6}
+                autogrow
+                placeholder="Nội dung yêu cầu"
+              />
             </div>
           </div>
 
@@ -607,7 +676,7 @@ function RequirementDetailPanel({
 
         <div className="px-5 py-3.5 border-t border-border-mid flex justify-end gap-2">
           <Button variant="tertiary" onClick={onClose}>Đóng</Button>
-          <Button onClick={handleSave} disabled={isSaving}>{isSaving ? "Đang lưu..." : "Lưu thay đổi"}</Button>
+          <Button onClick={handleSave} disabled={isSaving || !content.trim()}>{isSaving ? "Đang lưu..." : "Lưu thay đổi"}</Button>
         </div>
       </div>
     </>
@@ -717,7 +786,7 @@ function DocumentPickerView({
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {docs.map((doc) => (
+            {docs.map((doc, idx) => (
               <div key={doc.id} className="relative rounded-xl border border-border-mid bg-level-0 hover:border-primary hover:shadow-md transition-all duration-150 group">
                 <button
                   onClick={() => onSelect(doc.id)}
@@ -725,7 +794,10 @@ function DocumentPickerView({
                 >
                   <div className="flex items-start justify-between gap-2 mb-3">
                     <div className="min-w-0">
-                      <span className="text-xs font-mono text-txt-tertiary">{doc.code}</span>
+                      <span className="text-xs font-mono text-txt-tertiary">
+                        <span className="inline-flex items-center justify-center h-5 min-w-5 px-1 mr-1.5 rounded-full bg-level-2 text-txt-secondary font-semibold not-italic tabular-nums align-middle">{idx + 1}</span>
+                        {doc.code}
+                      </span>
                       <h3 className="text-sm font-semibold text-txt-primary line-clamp-2 mt-0.5 group-hover:text-primary transition-colors">
                         {doc.title}
                       </h3>
@@ -852,12 +924,15 @@ function VersionPickerView({
           </div>
         ) : (
           <div className="max-w-2xl space-y-3">
-            {versions.map((ver) => (
+            {versions.map((ver, idx) => (
               <div key={ver.id} className="relative rounded-xl border border-border-mid bg-level-0 hover:border-primary hover:shadow-sm transition-all duration-150 group flex items-center">
                 <button
                   onClick={() => onSelect(ver.id)}
                   className="flex-1 text-left p-4 flex items-center justify-between min-w-0"
                 >
+                  <span className="inline-flex items-center justify-center h-6 min-w-6 px-1.5 mr-3 rounded-full bg-level-2 text-xs font-semibold text-txt-secondary tabular-nums shrink-0">
+                    {idx + 1}
+                  </span>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-sm font-semibold text-txt-primary group-hover:text-primary transition-colors">
@@ -1113,6 +1188,7 @@ function RequirementsListView({
           <Table>
             <Thead>
               <Tr>
+                <Th width={48}>STT</Th>
                 <Th width={140}>Mã</Th>
                 <Th>Yêu cầu</Th>
                 <Th width={110}>Nguồn</Th>
@@ -1125,28 +1201,31 @@ function RequirementsListView({
               </Tr>
             </Thead>
             <Tbody>
-              {filtered.map((req) => (
+              {filtered.map((req, idx) => (
                 <Tr key={req.id} onClick={() => setSelected(req)} className={selected?.id === req.id ? "bg-blue-50" : ""}>
+                  <Td noLink><span className="text-xs text-txt-tertiary tabular-nums">{idx + 1}</span></Td>
                   <Td noLink><span className="font-mono text-xs text-txt-tertiary">{req.requirementCode}</span></Td>
                   <Td noLink><span className="text-sm line-clamp-2 text-txt-primary">{req.title}</span></Td>
                   <Td noLink>
                     {req.sourceReference ? (
-                      <div className="relative group/src" style={{ isolation: "isolate" }}>
+                      req.sourceSectionSummary ? (
+                        <HoverTooltip
+                          width={320}
+                          trigger={
+                            <span className="inline-block bg-blue-50 border border-blue-200 text-blue-700 text-[10px] font-medium px-1.5 py-0.5 rounded leading-tight cursor-default whitespace-nowrap">
+                              {req.sourceReference}
+                            </span>
+                          }
+                        >
+                          <pre className="whitespace-pre-wrap font-sans leading-relaxed max-h-52 overflow-hidden" style={{ color: "#f9fafb" }}>
+                            {req.sourceSectionSummary}
+                          </pre>
+                        </HoverTooltip>
+                      ) : (
                         <span className="inline-block bg-blue-50 border border-blue-200 text-blue-700 text-[10px] font-medium px-1.5 py-0.5 rounded leading-tight cursor-default whitespace-nowrap">
                           {req.sourceReference}
                         </span>
-                        {req.sourceSectionSummary && (
-                          <div
-                            className="absolute bottom-full left-0 mb-2 hidden group-hover/src:block w-80 text-white text-xs rounded-lg shadow-2xl p-3 pointer-events-none"
-                            style={{ zIndex: 9999, backgroundColor: "#111827", opacity: 1 }}
-                          >
-                            <pre className="whitespace-pre-wrap font-sans leading-relaxed max-h-52 overflow-hidden" style={{ color: "#f9fafb" }}>
-                              {req.sourceSectionSummary}
-                            </pre>
-                            <div className="absolute top-full left-4 border-4 border-transparent" style={{ borderTopColor: "#111827" }} />
-                          </div>
-                        )}
-                      </div>
+                      )
                     ) : (
                       <span className="text-txt-tertiary text-[10px]">—</span>
                     )}
@@ -1155,17 +1234,13 @@ function RequirementsListView({
                   <Td noLink><Badge variant={REVIEW_STATUS_VARIANTS[req.reviewStatus]}>{REVIEW_STATUS_LABELS[req.reviewStatus]}</Badge></Td>
                   <Td noLink>
                     {req.applicabilityNote ? (
-                      <div className="relative group/app" style={{ isolation: "isolate" }}>
-                        <Badge variant={APPLICABILITY_VARIANTS[req.applicabilityStatus]}>{APPLICABILITY_LABELS[req.applicabilityStatus]}</Badge>
-                        <div
-                          className="absolute bottom-full left-0 mb-2 hidden group-hover/app:block w-72 text-white text-xs rounded-lg shadow-2xl p-3 pointer-events-none"
-                          style={{ zIndex: 9999, backgroundColor: "#111827" }}
-                        >
-                          <p className="text-[10px] font-semibold uppercase tracking-wide mb-1" style={{ color: "#9ca3af" }}>Nhận xét AI</p>
-                          <p className="leading-relaxed" style={{ color: "#f9fafb" }}>{req.applicabilityNote}</p>
-                          <div className="absolute top-full left-4 border-4 border-transparent" style={{ borderTopColor: "#111827" }} />
-                        </div>
-                      </div>
+                      <HoverTooltip
+                        width={288}
+                        trigger={<Badge variant={APPLICABILITY_VARIANTS[req.applicabilityStatus]}>{APPLICABILITY_LABELS[req.applicabilityStatus]}</Badge>}
+                      >
+                        <p className="text-[10px] font-semibold uppercase tracking-wide mb-1" style={{ color: "#9ca3af" }}>Nhận xét AI</p>
+                        <p className="leading-relaxed" style={{ color: "#f9fafb" }}>{req.applicabilityNote}</p>
+                      </HoverTooltip>
                     ) : (
                       <Badge variant={APPLICABILITY_VARIANTS[req.applicabilityStatus]}>{APPLICABILITY_LABELS[req.applicabilityStatus]}</Badge>
                     )}

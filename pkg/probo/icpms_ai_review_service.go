@@ -226,9 +226,11 @@ func (s *IcpmsAiReviewService) ListSuggestionsForJob(
 	jobID gid.GID,
 	statusFilter *coredata.IcpmsAiReviewSuggestionStatus,
 ) ([]*coredata.IcpmsAiReviewSuggestion, error) {
+	// INNER JOIN + NOT r.is_deleted: bỏ qua các gợi ý mồ côi (yêu cầu gốc đã bị
+	// xóa) — nếu trả về, resolver Requirement sẽ lỗi "no rows" làm fail cả query.
 	query := `
 		SELECT s.* FROM icpms_ai_review_suggestions s
-		LEFT JOIN icpms_requirements r ON r.id = s.requirement_id
+		JOIN icpms_requirements r ON r.id = s.requirement_id AND NOT r.is_deleted
 		WHERE s.tenant_id = @tenant_id AND s.ai_review_job_id = @job_id AND s.deleted_at IS NULL`
 	args := pgx.NamedArgs{
 		"tenant_id": scope.GetTenantID(),

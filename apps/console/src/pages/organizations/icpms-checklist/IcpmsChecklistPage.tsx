@@ -11,12 +11,6 @@ import {
   Option,
   PageHeader,
   Select,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
   useToast,
 } from "@probo/ui";
 import { useCallback, useEffect, useState } from "react";
@@ -24,6 +18,7 @@ import { fetchQuery, graphql, useMutation, useRelayEnvironment } from "react-rel
 import { useNavigate } from "react-router";
 import { useOrganizationId } from "#/hooks/useOrganizationId";
 import { formatError } from "#/utils/formatError";
+import { parseResponsibleUnit } from "../icpms-ai-review/vatmResponsibilityMatrix";
 
 // ─── GraphQL ─────────────────────────────────────────────────────────────────
 
@@ -761,11 +756,13 @@ function ExecRow({ label, value, empty }: { label: string; value?: string | null
 function FromAiReviewModal({
   organizationId,
   environment,
+  docCode,
   onClose,
   onCreated,
 }: {
   organizationId: string;
   environment: any;
+  docCode?: string | null;
   onClose: () => void;
   onCreated: (count: number) => void;
 }) {
@@ -777,6 +774,8 @@ function FromAiReviewModal({
   const [loadingSugs, setLoadingSugs] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [creating, setCreating] = useState(false);
+  // Mặc định chỉ hiện các gợi ý ĐÃ DUYỆT từ Checklist draft bên AI Review
+  const [onlyAccepted, setOnlyAccepted] = useState(true);
 
   const [commitCreate] = useMutation(createFromAiSuggestionsMutation);
 
@@ -785,15 +784,17 @@ function FromAiReviewModal({
       .toPromise()
       .then((data: any) => {
         const edges = data?.icpmsAiReviewJobs?.edges ?? [];
-        const completed = edges
+        let completed = edges
           .map((e: any) => e.node)
           .filter((j: AiJob) => j.status === "COMPLETED");
+        // Đang đứng trong một tài liệu → chỉ hiện các phiên của tài liệu đó
+        if (docCode) completed = completed.filter((j: AiJob) => j.document.code === docCode);
         setJobs(completed);
         if (completed.length > 0) setSelectedJobId(completed[0].id);
       })
       .catch(() => toast({ title: "Không thể tải danh sách phiên AI Review", description: "", variant: "error" }))
       .finally(() => setLoadingJobs(false));
-  }, [environment, organizationId, toast]);
+  }, [environment, organizationId, docCode, toast]);
 
   useEffect(() => {
     if (!selectedJobId) return;
@@ -804,17 +805,27 @@ function FromAiReviewModal({
       .toPromise()
       .then((data: any) => {
         const edges = data?.icpmsAiReviewSuggestions?.edges ?? [];
-        setSuggestions(edges.map((e: any) => e.node));
+        const items: AiSuggestionItem[] = edges.map((e: any) => e.node);
+        setSuggestions(items);
+        // Tick sẵn toàn bộ gợi ý đã duyệt để tạo nhanh
+        setSelectedIds(new Set(items.filter(s => s.status === "ACCEPTED").map(s => s.id)));
       })
-      .catch(() => {})
+      .catch((err: unknown) => {
+        toast({ title: "Không thể tải gợi ý của phiên này", description: formatError(err), variant: "error" });
+      })
       .finally(() => setLoadingSugs(false));
-  }, [environment, selectedJobId]);
+  }, [environment, selectedJobId, toast]);
+
+  // Danh sách hiển thị theo bộ lọc "chỉ đã duyệt"
+  const visibleSuggestions = onlyAccepted
+    ? suggestions.filter(s => s.status === "ACCEPTED")
+    : suggestions;
 
   const toggleAll = () => {
-    if (selectedIds.size === suggestions.length) {
+    if (selectedIds.size === visibleSuggestions.length) {
       setSelectedIds(new Set());
     } else {
-      setSelectedIds(new Set(suggestions.map(s => s.id)));
+      setSelectedIds(new Set(visibleSuggestions.map(s => s.id)));
     }
   };
 
@@ -890,15 +901,37 @@ function FromAiReviewModal({
               Đã duyệt: {selectedJob.totalAccepted} / {selectedJob.totalSuggestions} · Hoàn thành: {fmtDate(selectedJob.finishedAt)}
             </p>
           )}
+          <label className="flex items-center gap-2 text-xs text-txt-secondary mt-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={onlyAccepted}
+              onChange={e => setOnlyAccepted(e.target.checked)}
+              className="rounded"
+            />
+            Chỉ hiện gợi ý đã duyệt trong Checklist draft
+          </label>
         </div>
 
         {/* Suggestions list */}
         <div className="flex-1 overflow-y-auto">
           {loadingSugs ? (
             <div className="p-8 text-center text-sm text-txt-tertiary">Đang tải gợi ý...</div>
-          ) : suggestions.length === 0 ? (
-            <div className="p-8 text-center text-sm text-txt-secondary">
-              {selectedJobId ? "Không có gợi ý nào trong phiên này." : "Chọn phiên AI Review để xem gợi ý."}
+          ) : visibleSuggestions.length === 0 ? (
+            <div className="p-8 text-center space-y-2">
+              <p className="text-sm text-txt-secondary">
+                {!selectedJobId
+                  ? "Chọn phiên AI Review để xem gợi ý."
+                  : suggestions.length > 0
+                    ? "Phiên này chưa có gợi ý nào được duyệt — bỏ tick \"Chỉ hiện gợi ý đã duyệt\" để xem tất cả, hoặc sang AI Review duyệt trước."
+                    : "Không còn gợi ý hợp lệ trong phiên này."}
+              </p>
+              {selectedJobId && suggestions.length === 0 && (
+                <p className="text-xs text-txt-tertiary max-w-md mx-auto">
+                  Nguyên nhân thường gặp: các yêu cầu của phiên này đã bị xóa hoặc tạo lại
+                  (bấm "Tạo từ bản phân tích" ở trang Yêu cầu ICPMS). Hãy chạy một phiên
+                  AI Review mới trên bộ yêu cầu hiện tại rồi quay lại đây.
+                </p>
+              )}
             </div>
           ) : (
             <table className="w-full text-xs">
@@ -907,7 +940,7 @@ function FromAiReviewModal({
                   <th className="px-4 py-2 text-left w-8">
                     <input
                       type="checkbox"
-                      checked={selectedIds.size === suggestions.length && suggestions.length > 0}
+                      checked={selectedIds.size === visibleSuggestions.length && visibleSuggestions.length > 0}
                       onChange={toggleAll}
                       className="rounded"
                     />
@@ -919,7 +952,7 @@ function FromAiReviewModal({
                 </tr>
               </thead>
               <tbody>
-                {suggestions.map(sug => (
+                {visibleSuggestions.map(sug => (
                   <tr
                     key={sug.id}
                     className={`border-b border-border-low cursor-pointer hover:bg-bg-alt ${selectedIds.has(sug.id) ? "bg-blue-50" : ""}`}
@@ -1005,6 +1038,11 @@ export function IcpmsChecklistPage() {
   const [updating, setUpdating] = useState(false);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("ALL");
   const [showAiModal, setShowAiModal] = useState(false);
+  // Tổ chức theo tài liệu (key = document code): null = đang ở màn chọn tài liệu
+  const [selectedDocId, setSelectedDocId] = useState<string | null>(null);
+  const [docSearch, setDocSearch] = useState("");
+  // Các phiên AI Review hoàn thành — để tài liệu chưa có checklist vẫn hiện card
+  const [aiJobs, setAiJobs] = useState<AiJob[]>([]);
 
   const [commitApprove] = useMutation(approveChecklistMutation);
   const [commitReject] = useMutation(rejectChecklistMutation);
@@ -1014,12 +1052,20 @@ export function IcpmsChecklistPage() {
 
   const loadChecklists = useCallback(() => {
     setLoading(true);
-    (fetchQuery(environment, listChecklistsQuery, { organizationId }, { networkCacheConfig: { force: true } }) as any)
-      .toPromise()
-      .then((data: any) => {
-        const edges = data?.icpmsChecklists?.edges ?? [];
-        setChecklists(edges.map((e: any) => e.node));
-      })
+    Promise.all([
+      (fetchQuery(environment, listChecklistsQuery, { organizationId }, { networkCacheConfig: { force: true } }) as any)
+        .toPromise()
+        .then((data: any) => {
+          const edges = data?.icpmsChecklists?.edges ?? [];
+          setChecklists(edges.map((e: any) => e.node));
+        }),
+      (fetchQuery(environment, listAiJobsQuery, { organizationId }, { networkCacheConfig: { force: true } }) as any)
+        .toPromise()
+        .then((data: any) => {
+          const edges = data?.icpmsAiReviewJobs?.edges ?? [];
+          setAiJobs(edges.map((e: any) => e.node).filter((j: AiJob) => j.status === "COMPLETED"));
+        }),
+    ])
       .catch((err: unknown) => {
         console.error("[IcpmsChecklistPage] loadChecklists error:", err);
         toast({ title: "Không thể tải danh sách checklist", description: formatError(err), variant: "error" });
@@ -1130,7 +1176,41 @@ export function IcpmsChecklistPage() {
     });
   };
 
-  const filtered = checklists.filter(cl => {
+  // Nhóm theo tài liệu (key = document code) từ CẢ checklist lẫn phiên AI Review
+  // hoàn thành — để tài liệu đã rà soát nhưng chưa tạo checklist vẫn hiện card.
+  type DocGroup = {
+    id: string; code: string; title: string;
+    total: number; pending: number; approved: number; active: number;
+    versions: Set<string>; aiSessions: number; aiAccepted: number;
+  };
+  const docGroups = checklists.reduce<Record<string, DocGroup>>((acc, cl) => {
+    const d = cl.document;
+    if (!acc[d.code]) {
+      acc[d.code] = { id: d.code, code: d.code, title: d.title, total: 0, pending: 0, approved: 0, active: 0, versions: new Set(), aiSessions: 0, aiAccepted: 0 };
+    }
+    const g = acc[d.code];
+    g.total += 1;
+    if (cl.approvalStatus === "PENDING_REVIEW") g.pending += 1;
+    if (cl.approvalStatus === "APPROVED") g.approved += 1;
+    if (cl.status === "ACTIVE") g.active += 1;
+    g.versions.add(cl.documentVersion.versionCode);
+    return acc;
+  }, {});
+  for (const j of aiJobs) {
+    const code = j.document.code;
+    if (!docGroups[code]) {
+      docGroups[code] = { id: code, code, title: j.document.title, total: 0, pending: 0, approved: 0, active: 0, versions: new Set(), aiSessions: 0, aiAccepted: 0 };
+    }
+    docGroups[code].aiSessions += 1;
+    docGroups[code].aiAccepted += j.totalAccepted ?? 0;
+  }
+  const docList = Object.values(docGroups).sort((a, b) => a.code.localeCompare(b.code));
+  const selectedDoc = selectedDocId ? docGroups[selectedDocId] : null;
+
+  // Phạm vi thống kê + danh sách: theo tài liệu đang chọn
+  const inScope = selectedDocId ? checklists.filter(cl => cl.document.code === selectedDocId) : checklists;
+
+  const filtered = inScope.filter(cl => {
     if (statusFilter === "ALL") return true;
     if (statusFilter === "PENDING_REVIEW") return cl.approvalStatus === "PENDING_REVIEW";
     if (statusFilter === "APPROVED") return cl.approvalStatus === "APPROVED";
@@ -1139,9 +1219,9 @@ export function IcpmsChecklistPage() {
     return true;
   });
 
-  const pendingCount = checklists.filter(c => c.approvalStatus === "PENDING_REVIEW").length;
-  const approvedCount = checklists.filter(c => c.approvalStatus === "APPROVED").length;
-  const activeCount = checklists.filter(c => c.status === "ACTIVE").length;
+  const pendingCount = inScope.filter(c => c.approvalStatus === "PENDING_REVIEW").length;
+  const approvedCount = inScope.filter(c => c.approvalStatus === "APPROVED").length;
+  const activeCount = inScope.filter(c => c.status === "ACTIVE").length;
 
   return (
     <div className="space-y-6">
@@ -1150,22 +1230,136 @@ export function IcpmsChecklistPage() {
         description="Nơi các đơn vị VATM thực thi tuân thủ — điền phương thức, cập nhật tình trạng, giao việc và theo dõi tiến độ hoàn thành."
       />
 
-      {/* Stats bar */}
-      <div className="grid grid-cols-4 gap-4">
-        {[
-          { label: "Tổng checklist", value: checklists.length, color: "text-txt-primary" },
-          { label: "Chờ phê duyệt", value: pendingCount, color: pendingCount > 0 ? "text-amber-600 font-semibold" : "text-txt-primary" },
-          { label: "Đã duyệt", value: approvedCount, color: "text-green-600" },
-          { label: "Đang áp dụng", value: activeCount, color: "text-blue-600" },
-        ].map(stat => (
-          <Card padded key={stat.label}>
-            <p className="text-xs text-txt-tertiary">{stat.label}</p>
-            <p className={`text-2xl mt-1 ${stat.color}`}>{stat.value}</p>
-          </Card>
-        ))}
-      </div>
+      {/* ── Màn 1: chọn tài liệu — thiết kế bảng giống Danh sách phiên rà soát (AI Review) ── */}
+      {!selectedDocId && (
+        <Card>
+          <div className="p-4 border-b border-border-low flex items-center justify-between gap-3 flex-wrap">
+            <h3 className="text-sm font-semibold text-txt-primary">
+              Danh sách tài liệu <span className="font-normal text-txt-tertiary">{docList.length}</span>
+            </h3>
+            <div className="flex items-center gap-2">
+              <Button icon={IconPlusLarge} onClick={() => setShowAiModal(true)}>
+                Tạo từ AI Review
+              </Button>
+              <Button variant="secondary" icon={IconRotateCw} onClick={loadChecklists} disabled={loading}>
+                Làm mới
+              </Button>
+            </div>
+          </div>
+
+          {/* Thanh tìm kiếm */}
+          <div className="px-4 py-3 border-b border-border-low bg-subtle flex items-center gap-2">
+            <input
+              type="text"
+              placeholder="Tìm mã, tên tài liệu..."
+              value={docSearch}
+              onChange={e => setDocSearch(e.target.value)}
+              className="w-72 border border-border-low rounded-lg px-3 py-1.5 text-sm text-txt-primary bg-level-1 focus:outline-none focus:ring-1 focus:ring-blue-400 placeholder:text-txt-tertiary"
+            />
+          </div>
+
+          {loading && <div className="p-6 text-center text-sm text-txt-tertiary">Đang tải...</div>}
+
+          {!loading && docList.length === 0 && (
+            <div className="p-12 text-center space-y-4">
+              <p className="text-sm font-medium text-txt-secondary">Chưa có tài liệu nào được rà soát</p>
+              <p className="text-xs text-txt-tertiary max-w-sm mx-auto">
+                Hãy chạy phiên rà soát bên AI Review trước — tài liệu sẽ tự xuất hiện ở đây để tạo checklist và giao việc.
+              </p>
+            </div>
+          )}
+
+          {!loading && docList.length > 0 && (() => {
+            const q = docSearch.trim().toLowerCase();
+            const shown = q
+              ? docList.filter(d => d.code.toLowerCase().includes(q) || d.title.toLowerCase().includes(q))
+              : docList;
+            return shown.length === 0 ? (
+              <div className="p-10 text-center text-sm text-txt-tertiary">Không có tài liệu nào khớp tìm kiếm.</div>
+            ) : (
+              <table className="w-full text-sm">
+                <thead className="border-b border-border-low">
+                  <tr>
+                    <th className="text-left px-4 py-2.5 text-xs text-txt-tertiary font-medium uppercase tracking-wide w-12">STT</th>
+                    <th className="text-left px-4 py-2.5 text-xs text-txt-tertiary font-medium uppercase tracking-wide">Mã tài liệu</th>
+                    <th className="text-left px-4 py-2.5 text-xs text-txt-tertiary font-medium uppercase tracking-wide">Tài liệu</th>
+                    <th className="text-left px-4 py-2.5 text-xs text-txt-tertiary font-medium uppercase tracking-wide">Checklist</th>
+                    <th className="text-left px-4 py-2.5 text-xs text-txt-tertiary font-medium uppercase tracking-wide">Phiên AI Review</th>
+                    <th className="text-left px-4 py-2.5 text-xs text-txt-tertiary font-medium uppercase tracking-wide">Trạng thái</th>
+                    <th className="text-left px-4 py-2.5 text-xs text-txt-tertiary font-medium uppercase tracking-wide w-24">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {shown.map((doc, idx) => (
+                    <tr
+                      key={doc.id}
+                      onClick={() => { setSelectedDocId(doc.id); setSelected(null); setStatusFilter("ALL"); }}
+                      className="border-b border-border-low cursor-pointer hover:bg-bg-alt transition-colors"
+                    >
+                      <td className="px-4 py-3 text-txt-tertiary tabular-nums">{idx + 1}</td>
+                      <td className="px-4 py-3"><span className="font-mono text-xs text-txt-secondary">{doc.code}</span></td>
+                      <td className="px-4 py-3"><span className="font-medium text-txt-primary line-clamp-2">{doc.title}</span></td>
+                      <td className="px-4 py-3"><span className="font-semibold text-txt-primary tabular-nums">{doc.total}</span></td>
+                      <td className="px-4 py-3 text-txt-secondary tabular-nums">{doc.aiSessions}</td>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          {doc.pending > 0 && <Badge variant="warning">{doc.pending} chờ duyệt</Badge>}
+                          {doc.approved > 0 && <Badge variant="success">{doc.approved} đã duyệt</Badge>}
+                          {doc.active > 0 && <Badge variant="info">{doc.active} đang áp dụng</Badge>}
+                          {doc.total === 0 && doc.aiAccepted > 0 && (
+                            <Badge variant="warning">{doc.aiAccepted} gợi ý đã duyệt — chưa tạo checklist</Badge>
+                          )}
+                          {doc.total === 0 && doc.aiAccepted === 0 && (
+                            <span className="text-xs text-txt-tertiary">—</span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="text-xs font-medium text-blue-600 hover:underline">Xem →</span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            );
+          })()}
+        </Card>
+      )}
+
+      {/* ── Màn 2: checklist của tài liệu đã chọn ── */}
+      {selectedDocId && (
+        <>
+          {/* Breadcrumb + Stats */}
+          <div className="flex items-center gap-2 text-sm">
+            <button
+              onClick={() => { setSelectedDocId(null); setSelected(null); }}
+              className="text-txt-tertiary hover:text-txt-primary transition-colors"
+            >
+              ← Danh sách tài liệu
+            </button>
+            <span className="text-border-mid">/</span>
+            <span className="font-mono text-xs text-txt-tertiary">{selectedDoc?.code}</span>
+            <span className="font-semibold text-txt-primary truncate max-w-md">{selectedDoc?.title}</span>
+          </div>
+
+          <div className="grid grid-cols-4 gap-4">
+            {[
+              { label: "Tổng checklist", value: inScope.length, color: "text-txt-primary" },
+              { label: "Chờ phê duyệt", value: pendingCount, color: pendingCount > 0 ? "text-amber-600 font-semibold" : "text-txt-primary" },
+              { label: "Đã duyệt", value: approvedCount, color: "text-green-600" },
+              { label: "Đang áp dụng", value: activeCount, color: "text-blue-600" },
+            ].map(stat => (
+              <Card padded key={stat.label}>
+                <p className="text-xs text-txt-tertiary">{stat.label}</p>
+                <p className={`text-2xl mt-1 ${stat.color}`}>{stat.value}</p>
+              </Card>
+            ))}
+          </div>
+        </>
+      )}
 
       {/* Main content */}
+      {selectedDocId && (
       <div className={selected ? "grid grid-cols-5 gap-4" : ""}>
         {/* List */}
         <div className={selected ? "col-span-3" : ""}>
@@ -1205,134 +1399,179 @@ export function IcpmsChecklistPage() {
             {!loading && filtered.length === 0 && (
               <div className="p-12 text-center space-y-4">
                 <p className="text-sm font-medium text-txt-secondary">
-                  {checklists.length === 0
-                    ? "Chưa có checklist nào"
+                  {inScope.length === 0
+                    ? "Tài liệu này chưa có checklist nào"
                     : "Không có checklist phù hợp bộ lọc"}
                 </p>
-                {checklists.length === 0 && (
-                  <>
-                    <p className="text-xs text-txt-tertiary max-w-sm mx-auto">
-                      Vui lòng duyệt checklist draft từ AI Review hoặc tạo checklist từ phiên AI Review đã hoàn thành.
-                    </p>
-                    <div className="flex gap-2 justify-center mt-2">
-                      <Button icon={IconPlusLarge} onClick={() => setShowAiModal(true)}>
-                        Tạo từ AI Review
-                      </Button>
-                    </div>
-                  </>
-                )}
               </div>
             )}
 
             {!loading && filtered.length > 0 && (
-              <Table>
-                <Thead>
-                  <Tr>
-                    <Th>Mã / Câu hỏi</Th>
-                    <Th>Tài liệu</Th>
-                    <Th>Yêu cầu</Th>
-                    <Th>Ưu tiên</Th>
-                    <Th>Trạng thái</Th>
-                    <Th>Phê duyệt</Th>
-                    <Th>Nguồn</Th>
-                    <Th>Ngày tạo</Th>
-                    <Th>Thao tác</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {filtered.map(cl => (
-                    <Tr
-                      key={cl.id}
-                      className={`cursor-pointer hover:bg-bg-alt transition-colors ${selected?.id === cl.id ? "bg-blue-50" : ""}`}
-                      onClick={() => setSelected(cl.id === selected?.id ? null : cl)}
-                    >
-                      <Td>
-                        <p className="font-mono text-xs text-txt-secondary mb-0.5">{cl.checklistCode}</p>
-                        <p className="text-xs text-txt-primary line-clamp-2 max-w-56">{cl.checklistQuestion}</p>
-                        {/* mini exec indicator */}
-                        {(cl.implementationMethod || cl.dueDays != null) && (
-                          <p className="text-[10px] text-green-600 mt-0.5">
-                            {cl.dueDays != null ? `⏱ ${cl.dueDays}d` : ""}
-                            {cl.implementationMethod ? " · Có PT thực hiện" : ""}
-                          </p>
-                        )}
-                      </Td>
-                      <Td>
-                        <p className="text-xs font-medium text-txt-primary">{cl.document.code}</p>
-                        <p className="text-xs text-txt-tertiary">v{cl.documentVersion.versionCode}</p>
-                      </Td>
-                      <Td>
-                        {cl.requirement
-                          ? (
-                            <p className="font-mono text-xs text-txt-secondary">{cl.requirement.requirementCode}</p>
-                          )
-                          : <span className="text-xs text-txt-tertiary">—</span>}
-                      </Td>
-                      <Td>
-                        <span className={`text-xs ${PRIORITY_COLORS[cl.priority] ?? "text-txt-secondary"}`}>
-                          {PRIORITY_LABELS[cl.priority] ?? cl.priority}
-                        </span>
-                      </Td>
-                      <Td>
-                        <Badge variant={STATUS_COLORS[cl.status] ?? "neutral"}>
-                          {STATUS_LABELS[cl.status] ?? cl.status}
-                        </Badge>
-                      </Td>
-                      <Td>
-                        <Badge variant={APPROVAL_COLORS[cl.approvalStatus] ?? "neutral"}>
-                          {APPROVAL_LABELS[cl.approvalStatus] ?? cl.approvalStatus}
-                        </Badge>
-                      </Td>
-                      <Td>
-                        <span className="text-xs text-txt-tertiary">
-                          {CREATED_FROM_LABELS[cl.createdFrom] ?? cl.createdFrom}
-                        </span>
-                      </Td>
-                      <Td>
-                        <span className="text-xs text-txt-tertiary">{fmtDate(cl.createdAt)}</span>
-                      </Td>
-                      <Td noLink onClick={e => e.stopPropagation()}>
-                        <div className="flex gap-1">
-                          {cl.approvalStatus === "PENDING_REVIEW" && (
-                            <>
+              <div className="overflow-x-auto">
+                {/* Bảng giữ nguyên form Checklist draft của AI Review */}
+                <table className="w-full text-xs table-fixed">
+                  <colgroup>
+                    <col style={{ width: "3%" }} />   {/* STT */}
+                    <col style={{ width: "14%" }} />  {/* Yêu cầu */}
+                    <col style={{ width: "7%" }} />   {/* Nguồn */}
+                    <col style={{ width: "13%" }} />  {/* Phương pháp */}
+                    <col style={{ width: "10%" }} />  {/* Chủ trì */}
+                    <col style={{ width: "9%" }} />   {/* Phối hợp */}
+                    <col style={{ width: "11%" }} />  {/* Bằng chứng */}
+                    <col style={{ width: "8%" }} />   {/* Thực trạng */}
+                    <col style={{ width: "11%" }} />  {/* Kế hoạch */}
+                    <col style={{ width: "8%" }} />   {/* Trạng thái */}
+                    <col style={{ width: "6%" }} />   {/* Thao tác */}
+                  </colgroup>
+                  <thead className="sticky top-0 bg-level-1 border-b border-border-low">
+                    <tr>
+                      <th className="text-left px-2 py-2 text-txt-tertiary font-medium">STT</th>
+                      <th className="text-left px-2 py-2 text-txt-tertiary font-medium">Yêu cầu</th>
+                      <th className="text-left px-2 py-2 text-txt-tertiary font-medium">Nguồn</th>
+                      <th className="text-left px-2 py-2 text-txt-tertiary font-medium">Phương pháp thực hiện</th>
+                      <th className="text-left px-2 py-2 text-txt-tertiary font-medium">Chủ trì</th>
+                      <th className="text-left px-2 py-2 text-txt-tertiary font-medium">Phối hợp</th>
+                      <th className="text-left px-2 py-2 text-txt-tertiary font-medium">Bằng chứng</th>
+                      <th className="text-left px-2 py-2 text-txt-tertiary font-medium">Thực trạng</th>
+                      <th className="text-left px-2 py-2 text-txt-tertiary font-medium">Kế hoạch / Khắc phục</th>
+                      <th className="text-left px-2 py-2 text-txt-tertiary font-medium">Trạng thái</th>
+                      <th className="text-left px-2 py-2 text-txt-tertiary font-medium">Thao tác</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filtered.map((cl, idx) => {
+                      const { leadUnit, coordinationUnits } = parseResponsibleUnit(cl.responsibleUnit);
+                      return (
+                        <tr
+                          key={cl.id}
+                          className={`border-b border-border-low cursor-pointer hover:bg-bg-alt transition-colors ${selected?.id === cl.id ? "bg-blue-50" : ""}`}
+                          onClick={() => setSelected(cl.id === selected?.id ? null : cl)}
+                        >
+                          {/* STT */}
+                          <td className="px-2 py-2 text-txt-tertiary align-top">{idx + 1}</td>
+
+                          {/* Yêu cầu */}
+                          <td className="px-2 py-2 align-top">
+                            <p className="font-mono text-txt-secondary mb-0.5 truncate" title={cl.requirement?.requirementCode ?? cl.checklistCode}>
+                              {cl.requirement?.requirementCode ?? cl.checklistCode}
+                            </p>
+                            <p className="text-txt-primary line-clamp-3 leading-snug" title={cl.requirement?.title ?? cl.checklistQuestion}>
+                              {cl.requirement?.title ?? cl.checklistQuestion}
+                            </p>
+                          </td>
+
+                          {/* Nguồn */}
+                          <td className="px-2 py-2 align-top">
+                            {cl.sourceReference ? (
+                              <span className="inline-block bg-blue-50 border border-blue-200 text-blue-700 text-[10px] font-medium px-1.5 py-0.5 rounded leading-tight">
+                                {cl.sourceReference}
+                              </span>
+                            ) : (
+                              <span className="text-txt-tertiary text-[10px]">—</span>
+                            )}
+                          </td>
+
+                          {/* Phương pháp */}
+                          <td className="px-2 py-2 align-top">
+                            <p className="text-txt-primary line-clamp-4" title={cl.implementationMethod ?? undefined}>
+                              {cl.implementationMethod ?? "—"}
+                            </p>
+                          </td>
+
+                          {/* Chủ trì */}
+                          <td className="px-2 py-2 align-top">
+                            <p className="text-txt-primary font-medium line-clamp-3 leading-snug text-[11px]" title={leadUnit}>
+                              {leadUnit}
+                            </p>
+                          </td>
+
+                          {/* Phối hợp */}
+                          <td className="px-2 py-2 align-top">
+                            {coordinationUnits.length > 0 ? (
+                              <ul className="space-y-0.5">
+                                {coordinationUnits.map((u, i) => (
+                                  <li key={i} className="text-txt-secondary text-[11px] leading-snug line-clamp-1" title={u}>{u}</li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <span className="text-txt-tertiary text-[11px]">—</span>
+                            )}
+                          </td>
+
+                          {/* Bằng chứng */}
+                          <td className="px-2 py-2 align-top">
+                            <p className="text-txt-primary line-clamp-3" title={cl.requiredEvidence ?? undefined}>
+                              {cl.requiredEvidence ?? "—"}
+                            </p>
+                          </td>
+
+                          {/* Thực trạng */}
+                          <td className="px-2 py-2 align-top">
+                            <p className="text-txt-secondary line-clamp-3" title={cl.currentStatusText ?? undefined}>
+                              {cl.currentStatusText ?? "Chưa điền"}
+                            </p>
+                          </td>
+
+                          {/* Kế hoạch / Khắc phục */}
+                          <td className="px-2 py-2 align-top">
+                            <p className="text-txt-primary line-clamp-3" title={cl.actionPlan ?? undefined}>
+                              {cl.actionPlan ?? "—"}
+                            </p>
+                          </td>
+
+                          {/* Trạng thái */}
+                          <td className="px-2 py-2 align-top">
+                            <div className="space-y-1">
+                              <Badge variant={APPROVAL_COLORS[cl.approvalStatus] ?? "neutral"}>
+                                {APPROVAL_LABELS[cl.approvalStatus] ?? cl.approvalStatus}
+                              </Badge>
+                              <p className={`text-[10px] ${PRIORITY_COLORS[cl.priority] ?? "text-txt-tertiary"}`}>
+                                {PRIORITY_LABELS[cl.priority] ?? cl.priority} · {fmtDate(cl.createdAt)}
+                              </p>
+                            </div>
+                          </td>
+
+                          {/* Thao tác */}
+                          <td className="px-2 py-2 align-top" onClick={e => e.stopPropagation()}>
+                            <div className="flex flex-col gap-1">
+                              {cl.approvalStatus === "PENDING_REVIEW" && (
+                                <>
+                                  <button
+                                    onClick={() => handleApprove(cl)}
+                                    className="text-left text-xs font-medium text-green-600 hover:text-green-700 hover:underline"
+                                  >
+                                    Duyệt
+                                  </button>
+                                  <button
+                                    onClick={() => setRejectTarget(cl)}
+                                    className="text-left text-xs font-medium text-red-500 hover:text-red-600 hover:underline"
+                                  >
+                                    Từ chối
+                                  </button>
+                                </>
+                              )}
+                              {cl.status !== "ARCHIVED" && cl.status !== "DELETED" && (
+                                <button
+                                  onClick={() => handleArchive(cl)}
+                                  className="text-left text-xs font-medium text-txt-tertiary hover:text-txt-secondary hover:underline"
+                                >
+                                  Lưu trữ
+                                </button>
+                              )}
                               <button
-                                title="Phê duyệt"
-                                onClick={() => handleApprove(cl)}
-                                className="p-1 text-green-600 hover:bg-green-50 rounded"
+                                onClick={() => handleDelete(cl)}
+                                className="text-left text-xs font-medium text-red-400 hover:text-red-500 hover:underline"
                               >
-                                <IconCheckmark1 size={14} />
+                                Xóa
                               </button>
-                              <button
-                                title="Từ chối"
-                                onClick={() => setRejectTarget(cl)}
-                                className="p-1 text-red-500 hover:bg-red-50 rounded"
-                              >
-                                <IconCrossLargeX size={14} />
-                              </button>
-                            </>
-                          )}
-                          {cl.status !== "ARCHIVED" && cl.status !== "DELETED" && (
-                            <button
-                              title="Lưu trữ"
-                              onClick={() => handleArchive(cl)}
-                              className="p-1 text-txt-tertiary hover:bg-bg-alt rounded text-xs"
-                            >
-                              ↓
-                            </button>
-                          )}
-                          <button
-                            title="Xóa"
-                            onClick={() => handleDelete(cl)}
-                            className="p-1 text-red-400 hover:bg-red-50 rounded text-xs"
-                          >
-                            ✕
-                          </button>
-                        </div>
-                      </Td>
-                    </Tr>
-                  ))}
-                </Tbody>
-              </Table>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
             )}
           </Card>
         </div>
@@ -1351,6 +1590,7 @@ export function IcpmsChecklistPage() {
           </div>
         )}
       </div>
+      )}
 
       {/* How-to info (only when empty) */}
       {checklists.length === 0 && !loading && (
@@ -1378,6 +1618,7 @@ export function IcpmsChecklistPage() {
         <FromAiReviewModal
           organizationId={organizationId}
           environment={environment}
+          docCode={selectedDocId}
           onClose={() => setShowAiModal(false)}
           onCreated={() => {
             setShowAiModal(false);
