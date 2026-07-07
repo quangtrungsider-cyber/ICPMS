@@ -345,8 +345,8 @@ Các bước chạy môi trường phát triển:
 
 ```sh
 # 1. Clone source code
-git clone <repository-url>
-cd probo
+git clone https://github.com/quangtrungsider-cyber/ICPMS.git
+cd ICPMS
 
 # 2. Install dependencies
 go mod download
