@@ -361,15 +361,26 @@ make build
 # 5. Generate local dev config
 make dev-config
 
-# 6. Run server (hoặc sử dụng start_dev.bat trên Windows)
+# 6. Run server
+## Cách 1: Chạy thủ công trên Linux/macOS
 ./probod -cfg-file cfg/dev.yaml
+# Frontend chạy độc lập tại apps/console (npm run dev)
+
+## Cách 2: Chạy tự động trên Windows (Khuyến nghị)
+Sử dụng script `start_dev.bat`. Script này sẽ tự động:
+- Kiểm tra và khởi động Docker services (PostgreSQL, MinIO, Mailpit).
+- Khởi chạy Backend (`probod.exe`).
+- Khởi chạy Frontend Vite dev server.
+
+```cmd
+go build -o probod.exe ./cmd/probod
+start_dev.bat
 ```
 
-Web console chạy tại:
-
-```text
-http://localhost:8080
-```
+Các dịch vụ sẽ chạy tại:
+- **Frontend (Web Console)**: `http://localhost:5173`
+- **Backend API**: `http://localhost:8080`
+- **Mailpit**: `http://localhost:8025`
 
 ---
 
