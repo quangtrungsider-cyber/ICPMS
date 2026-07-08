@@ -19,10 +19,10 @@ jobs:
     permissions:
       contents: "read"
     steps:
-      - uses: "actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd" # v6
+      - uses: "actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0" # v6
         with:
           submodules: recursive
-      - uses: "runs-on/action@742bf56072eb4845a0f94b3394673e4903c90ff0" # v2
+      - uses: "runs-on/action@4e5f72399b6b17f2e79c511c1b38a315a64d22dc" # v2
       - uses: "./.github/actions/setup"
         with:
           go: "false"
@@ -67,10 +67,10 @@ jobs:
           - { goos: openbsd, goarch: amd64 }
           - { goos: openbsd, goarch: arm64 }
     steps:
-      - uses: "actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd" # v6
+      - uses: "actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0" # v6
         with:
           submodules: recursive
-      - uses: "runs-on/action@742bf56072eb4845a0f94b3394673e4903c90ff0" # v2
+      - uses: "runs-on/action@4e5f72399b6b17f2e79c511c1b38a315a64d22dc" # v2
       - uses: "./.github/actions/setup"
         with:
           node: "false"
@@ -126,10 +126,10 @@ jobs:
           - { goos: freebsd, goarch: amd64 }
           - { goos: freebsd, goarch: arm64 }
     steps:
-      - uses: "actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd" # v6
+      - uses: "actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0" # v6
         with:
           submodules: recursive
-      - uses: "runs-on/action@742bf56072eb4845a0f94b3394673e4903c90ff0" # v2
+      - uses: "runs-on/action@4e5f72399b6b17f2e79c511c1b38a315a64d22dc" # v2
       - uses: "./.github/actions/setup"
         with:
           node: "false"
@@ -165,10 +165,10 @@ jobs:
             platform: "linux/arm64"
             runner: "4cpu-linux-arm64"
     steps:
-      - uses: "actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd" # v6
-      - uses: "runs-on/action@742bf56072eb4845a0f94b3394673e4903c90ff0" # v2
-      - uses: "docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd" # v4.0.0
-      - uses: "docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121" # v4.1.0
+      - uses: "actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0" # v6
+      - uses: "runs-on/action@4e5f72399b6b17f2e79c511c1b38a315a64d22dc" # v2
+      - uses: "docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c" # v4.2.0
+      - uses: "docker/login-action@c99871dec2022cc055c062a10cc1a1310835ceb4" # v4.3.0
         with:
           registry: artifact.probo.inc
           username: ${{ secrets.HARBOR_USERNAME }}
@@ -213,10 +213,10 @@ jobs:
     permissions:
       contents: "read"
     steps:
-      - uses: "actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd" # v6
+      - uses: "actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0" # v6
         with:
           submodules: recursive
-      - uses: "runs-on/action@742bf56072eb4845a0f94b3394673e4903c90ff0" # v2
+      - uses: "runs-on/action@4e5f72399b6b17f2e79c511c1b38a315a64d22dc" # v2
       - uses: "anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610" # v0.24.0
         with:
           path: ./
@@ -236,10 +236,10 @@ jobs:
     permissions:
       contents: "read"
     steps:
-      - uses: "actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd" # v6
+      - uses: "actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0" # v6
         with:
           submodules: recursive
-      - uses: "runs-on/action@742bf56072eb4845a0f94b3394673e4903c90ff0" # v2
+      - uses: "runs-on/action@4e5f72399b6b17f2e79c511c1b38a315a64d22dc" # v2
       - uses: "./.github/actions/setup"
         with:
           node: "false"
@@ -274,10 +274,10 @@ jobs:
     permissions:
       contents: "read"
     steps:
-      - uses: "actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd" # v6
+      - uses: "actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0" # v6
         with:
           submodules: recursive
-      - uses: "runs-on/action@742bf56072eb4845a0f94b3394673e4903c90ff0" # v2
+      - uses: "runs-on/action@4e5f72399b6b17f2e79c511c1b38a315a64d22dc" # v2
       - uses: "./.github/actions/setup"
         with:
           node: "false"
@@ -295,14 +295,14 @@ jobs:
       contents: "read"
       pull-requests: "write"
     steps:
-      - uses: "actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd" # v6
+      - uses: "actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0" # v6
         with:
           submodules: recursive
-      - uses: "runs-on/action@742bf56072eb4845a0f94b3394673e4903c90ff0" # v2
+      - uses: "runs-on/action@4e5f72399b6b17f2e79c511c1b38a315a64d22dc" # v2
       - uses: "./.github/actions/setup"
         with:
           node: "false"
-      - uses: golangci/golangci-lint-action@db582008a42febd596419635a5abc9d9815daa9c # v9.2.1
+      - uses: golangci/golangci-lint-action@82606bf257cbaff209d206a39f5134f0cfbfd2ee # v9.2.1
         with:
           version: v2.12.2
           install-only: true
@@ -352,10 +352,10 @@ jobs:
       contents: "read"
       pull-requests: "write"
     steps:
-      - uses: "actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd" # v6
+      - uses: "actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0" # v6
         with:
           submodules: recursive
-      - uses: "runs-on/action@742bf56072eb4845a0f94b3394673e4903c90ff0" # v2
+      - uses: "runs-on/action@4e5f72399b6b17f2e79c511c1b38a315a64d22dc" # v2
       - uses: "./.github/actions/setup"
         with:
           go: "false"
@@ -380,10 +380,10 @@ jobs:
     permissions:
       contents: "read"
     steps:
-      - uses: "actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd" # v6
+      - uses: "actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0" # v6
         with:
           submodules: recursive
-      - uses: "runs-on/action@742bf56072eb4845a0f94b3394673e4903c90ff0" # v2
+      - uses: "runs-on/action@4e5f72399b6b17f2e79c511c1b38a315a64d22dc" # v2
       - uses: "./.github/actions/setup"
       - name: "Create placeholder dist files"
         run: |
@@ -421,13 +421,13 @@ jobs:
     permissions:
       contents: "read"
     steps:
-      - uses: "actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd" # v6
+      - uses: "actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0" # v6
         with:
           submodules: recursive
-      - uses: "runs-on/action@742bf56072eb4845a0f94b3394673e4903c90ff0" # v2
+      - uses: "runs-on/action@4e5f72399b6b17f2e79c511c1b38a315a64d22dc" # v2
       - uses: "./.github/actions/setup"
-      - uses: "docker/setup-compose-action@8cccb8c14b6500aaffebff1aa49c502c34d2e5e6" # v2.1.0
-      - uses: "docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121" # v4.1.0
+      - uses: "docker/setup-compose-action@4eb059ff7f16592f9c84d5ca339c53cb7c5064e2" # v2.3.0
+      - uses: "docker/login-action@c99871dec2022cc055c062a10cc1a1310835ceb4" # v4.3.0
         with:
           registry: artifact.probo.inc
           username: ${{ secrets.HARBOR_USERNAME }}
