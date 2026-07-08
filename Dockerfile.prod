@@ -34,7 +34,7 @@ RUN go generate ./pkg/server/api/mcp/v1
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
     go build -ldflags="-s -w" -o /probod ./cmd/probod/
 # ─── Stage 3: Minimal runtime image ──────────────────────────────────────────
-FROM alpine:3.21
+FROM alpine:3.24
 RUN apk add --no-cache ca-certificates tzdata && \
     addgroup -S probod && adduser -S -G probod probod
 COPY --from=go-builder /probod /usr/local/bin/probod
